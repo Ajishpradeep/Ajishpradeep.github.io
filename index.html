@@ -1,753 +1,589 @@
 <!DOCTYPE html>
-<html lang="en">
-
-<head>
-	<!-- Meta Data -->
-	<meta charset="UTF-8">
-	<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="author" content="nayeemdev" />
-	<meta name="description" content="Nayeem Hossain - Full Stack Software Engineer - Laravel | ReactJs | React Native">
-
-	<!-- Twitter Cards -->
-	<meta name="twitter:card"
-		content="Nayeem Hossain - Full Stack Software Engineer - Laravel | ReactJs | React Native">
-	<meta name="twitter:image" content="assets/img/logo/logo.png">
-	<meta name="twitter:title" content="Md Nayeem Hossain">
-	<meta name="twitter:site" content="@nayeemdev">
-	<meta name="twitter:creator" content="@nayeemdev">
-
-	<!-- Open Graph data -->
-	<meta property="og:locale" content="en_US">
-	<meta property="og:type" content="Portfolio">
-	<meta property="og:title"
-		content="Nayeem Hossain - Full Stack Software Engineer - Laravel | ReactJs | React Native">
-	<meta property="og:url" content="https://nayeemdev.github.io/">
-	<meta property="og:site_name" content="Md Nayeem Hossain">
-	<meta property="og:image" content="assets/img/logo/logo.png">
-
-	<!-- Google Meta -->
-	<meta name="google-site-verification" content="LXeirZYSBk47aNu0DDM0CSdKAXplRUl3loltDy9CjR4" />
-
-	<!-- Title -->
-	<title>Nayeem Hossain - Full Stack Software Engineer - Laravel | ReactJs | React Native</title>
-
-	<!-- Favicons -->
-	<link rel="apple-touch-icon" sizes="180x180" href="assets/img/favicons/apple-touch-icon.png">
-	<link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicons/favicon-32x32.png">
-	<link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicons/favicon-16x16.png">
-	<link rel="manifest" href="assets/img/favicons/site.webmanifest">
-	<link rel="mask-icon" href="assets/img/favicons/safari-pinned-tab.svg" color="#5bbad5">
-
-	<!-- Styles -->
-	<link rel="stylesheet" type="text/css" href="assets/styles/style.css" />
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.0/css/all.min.css">
-</head>
-
-<body>
-	<!-- Preloader -->
-	<div class="preloader">
-		<div class="preloader__wrap">
-			<div class="circle-pulse">
-				<div class="circle-pulse__1"></div>
-				<div class="circle-pulse__2"></div>
-			</div>
-			<div class="preloader__progress"><span></span></div>
-		</div>
-	</div>
-
-	<main class="main">
-		<!-- Dark/Light Toggle -->
-		<div class="dark-light m-3">
-			<div class="btn-group" role="group">
-				<button data-toggle="tooltip" title="Switch to Light Mode" type="button" class="btn toggle-btn light"><i
-						class="fas fa-sun"></i></button>
-				<button data-toggle="tooltip" title="Switch to Dark Mode" type="button" class="btn toggle-btn dark"><i
-						class="fas fa-moon"></i></button>
-			</div>
-		</div>
-
-		<!-- Header Image -->
-		<div class="header-image">
-			<div class="js-parallax" style="background-image: url(assets/img/header_bg_1x.png);"></div>
-		</div>
-
-		<div class="container gutter-top">
-			<!-- Header -->
-			<header class="header box">
-				<div class="header__left">
-					<div class="header__photo">
-						<img class="header__photo-img" src="assets/img/logo/logo.png" alt="Md Nayeem Hossain">
-					</div>
-					<div class="header__base-info">
-						<h4 class="title titl--h4">Md Nayeem Hossain</h4>
-						<div class="status">Full Stack Developer</div>
-						<ul class="header__social">
-							<li><a target="_blank" href="https://facebook.com/nayeemdev"><i
-										class="fab fa-facebook"></i></a></li>
-							<li><a target="_blank" href="https://twitter.com/nayeemdev"><i
-										class="fab fa-twitter"></i></a></li>
-							<li><a target="_blank" href="https://linkedin.com/in/nayeemdev"><i
-										class="fab fa-linkedin"></i></a></li>
-							<li><a target="_blank" href="https://github.com/nayeemdev"><i class="fab fa-github"></i></a>
-							</li>
-							<li><a target="_blank" href="https://medium.com/@nayeemdev"><i
-										class="fab fa-medium"></i></a></li>
-							<li><a target="_blank" href="https://stackoverflow.com/users/9841556"><i
-										class="fab fa-stack-overflow"></i></a></li>
-							<li><a target="_blank" href="https://hackerrank.com/nayeemdev"><i
-										class="fab fa-hackerrank"></i></a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="header__right">
-					<ul class="header__contact">
-						<li><span class="overhead">Email</span>nayeem9812@gmail.com</li>
-						<li><span class="overhead">Location</span>Dhaka, Bangladesh</li>
-					</ul>
-				</div>
-			</header>
-
-			<div class="row sticky-parent">
-				<!-- Sidebar nav -->
-				<aside class="col-12 col-md-12 col-lg-2">
-					<div class="sidebar box sticky-column">
-						<ul class="nav js-tabs">
-							<li class="nav__item"><a class="active" href="#about-tab"><i class="icon-user"></i>About</a>
-							</li>
-							<li class="nav__item"><a href="#resume-tab"><i class="icon-file-text"></i>Resume</a></li>
-							<!-- <li class="nav__item"><a href="#works-tab"><i class="icon-codesandbox"></i>Works</a></li> -->
-							<li class="nav__item"><a href="#blog-tab"><i class="icon-book-open"></i>Blog</a></li>
-							<li class="nav__item"><a href="#contact-tab"><i class="icon-book"></i>Contact</a></li>
-						</ul>
-					</div>
-				</aside>
-
-				<!-- Content -->
-				<div class="col-12 col-md-12 col-lg-10">
-					<div class="box box-content mb-5" id="content">
-
-						<div class="content">
-							<!-- ABOUT -->
-							<div id="about-tab" class="tabcontent active">
-								<div class="pb-0 pb-sm-2">
-									<h1 class="title title--h1 first-title title__separate">About Me</h1>
-									<p>
-										I am a team player with
-										excellent communication, passionate, and self-learned coders. Learning and
-										developing
-										secure, efficient, and scalable web applications and web-based management
-										systems
-										by writing standard, well-documented, and efficient codes. I want to utilize my
-										institutional skills along with my professional skills to implement innovative
-										ideas into
-										reality.
-									</p>
-									<p>
-										Currently I am working with a fintech company GeekPicker as a Full Stack
-										Software Engineer.
-									</p>
-								</div>
-
-								<!-- What -->
-								<div class="mt-1">
-									<h2 class="title title--h3">What I'm Doing</h2>
-									<div class="row">
-										<!-- Case Item -->
-										<div class="col-12 col-lg-6">
-											<div class="case-item">
-												<img class="case-item__icon" src="assets/icons/design.png" alt="" />
-												<div>
-													<h3 class="title title--h4">Web Design</h3>
-													<p class="case-item__caption">I like to code things from scratch,
-														and enjoy bringing ideas to life in the browser with simple
-														content structure, clean design patterns, and thoughtful
-														interactions.</p>
-												</div>
-											</div>
-										</div>
-
-										<!-- Case Item -->
-										<div class="col-12 col-lg-6">
-											<div class="case-item">
-												<img class="case-item__icon" src="assets/icons/development.png"
-													alt="" />
-												<div>
-													<h3 class="title title--h4">Web Development</h3>
-													<p class="case-item__caption">Developing secure, efficient, and
-														scalable web applications and web-based management systems by
-														writing standard, well-documented, and efficient codes.</p>
-												</div>
-											</div>
-										</div>
-
-										<!-- Case Item -->
-										<!-- <div class="col-12">
-											<div class="case-item">
-												<img class="case-item__icon"
-													src="assets/icons/mobile.png"
-													alt="" />
-												<div>
-													<h3 class="title title--h4">Mobile Apps</h3>
-													<p class="case-item__caption">Design and developing Android and iOS application using React Native by writing well documented, secure and scalable code.</p>
-												</div>
-											</div>
-										</div> -->
-									</div>
-								</div>
-
-								<!-- Testimonials -->
-								<!-- <div class="mt-2">
-									<h2 class="title title--h3">Testimonials</h2>
-									<div class="swiper-container js-carousel-review">
-										<div class="swiper-wrapper">
-											<div class="swiper-slide review-item">
-												<svg class="avatar avatar--80" viewBox="0 0 84 84">
-													<g class="avatar__hexagon">
-														<image xlink:href="assets/img/avatar_male.png" height="100%"
-															width="100%" />
-													</g>
-												</svg>
-												<div class="review-item__textbox">
-													<h4 class="title title--h5">Utsav Bhandari</h4>
-													<p class="review-item__caption">
-														He is the best developer that I have work with also he has a great mindset with his leadership skill. 
-													</p>
-												</div>
-											</div>
-
-											<div class="swiper-slide review-item">
-												<svg class="avatar avatar--80" viewBox="0 0 84 84">
-													<g class="avatar__hexagon">
-														<image xlink:href="assets/img/avatar_male.png" height="100%"
-															width="100%" />
-													</g>
-												</svg>
-												<div class="review-item__textbox">
-													<h4 class="title title--h5">Hsaasn Shuraf</h4>
-													<p class="review-item__caption">
-														Nayeem did a great job of following our direction on site development and managing our junior developer. We got just what we asked for and more. 	
-													</p>
-												</div>
-											</div>
-
-											<div class="swiper-slide review-item">
-												<svg class="avatar avatar--80" viewBox="0 0 84 84">
-													<g class="avatar__hexagon">
-														<image xlink:href="assets/img/avatar_male.png" height="100%"
-															width="100%" />
-													</g>
-												</svg>
-												<div class="review-item__textbox">
-													<h4 class="title title--h5">Muhammad Sohail</h4>
-													<p class="review-item__caption">
-														Nayeem is a pro deveoloper and friendly person. He completed our 5 projects before the deadline and saved our life.
-													</p>
-												</div>
-											</div>
-										</div>
-										<div class="swiper-pagination"></div>
-									</div>
-								</div> -->
-
-								<!-- Clients -->
-								<!-- <div class="mt-4">
-									<h2 class="title title--h3">Clients</h2>
-
-									<div class="swiper-container js-carousel-clients">
-										<div class="swiper-wrapper">
-											<div class="swiper-slide">
-												<a href="#"><img
-														src="assets/img/doormeet.png"
-														alt="Logo" /></a>
-											</div>
-
-											<div class="swiper-slide">
-												<a href="#"><img
-														src="assets/img/saneno.png"
-														alt="Logo" /></a>
-											</div>
-
-											<div class="swiper-slide">
-												<a href="#"><img
-														src="assets/img/leelaam.png"
-														alt="Logo" /></a>
-											</div>
-
-											<div class="swiper-slide">
-												<a href="#"><img
-														src="assets/img/sunbulahhome.png"
-														alt="Logo" /></a>
-											</div>
-											<div class="swiper-slide">
-												<a href="#"><img
-														src="assets/img/doormeet.png"
-														alt="Logo" /></a>
-											</div>
-
-											<div class="swiper-slide">
-												<a href="#"><img
-														src="assets/img/saneno.png"
-														alt="Logo" /></a>
-											</div>
-
-											<div class="swiper-slide">
-												<a href="#"><img
-														src="assets/img/leelaam.png"
-														alt="Logo" /></a>
-											</div>
-
-											<div class="swiper-slide">
-												<a href="#"><img
-														src="assets/img/sunbulahhome.png"
-														alt="Logo" /></a>
-											</div>
-										</div>
-
-										<div class="swiper-pagination"></div>
-									</div>
-								</div> -->
-							</div>
-
-							<!-- RESUME -->
-							<div id="resume-tab" class="tabcontent">
-								<div class="pb-2">
-									<h1 class="title title--h1 first-title title__separate">Resume</h1>
-								</div>
-
-								<!-- Experience -->
-								<div class="row">
-									<div class="col-12">
-										<h2 class="title title--h3"><img class="title-icon"
-												src="assets/icons/education.png" alt="" /> Education</h2>
-										<div class="timeline">
-											<!-- Item -->
-											<article class="timeline__item">
-												<h5 class="title title--h5 timeline__title">World University of
-													Bangladesh (WUB) - Dhaka</h5>
-												<span class="timeline__period">2021 — Present</span> <br>
-												<span class="timeline__period">BSC in Computer Science Engineering
-													(CSE)</span>
-												<!-- <p class="timeline__description"> simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make.</p> -->
-											</article>
-
-											<!-- Item -->
-											<article class="timeline__item">
-												<h5 class="title title--h5 timeline__title">Mangrove Institute of
-													Science and Technology (MIST) - Khulna</h5>
-												<span class="timeline__period">2015 — 2019</span><br>
-												<span class="timeline__period">Diploma in Computer Technology</span>
-												<!-- <p class="timeline__description"> simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make.</p> -->
-											</article>
-
-											<!-- Item -->
-											<article class="timeline__item">
-												<h5 class="title title--h5 timeline__title">Maijpara Secondary School -
-													Narail</h5>
-												<span class="timeline__period">2009 — 2014</span>
-												<!-- <p class="timeline__description"> simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make.</p> -->
-											</article>
-										</div>
-									</div>
-
-									<div class="col-12">
-										<h2 class="title title--h3"><img class="title-icon"
-												src="assets/icons/experience.png" alt="" /> Experience</h2>
-										<div class="timeline">
-
-											<!-- Item -->
-											<article class="timeline__item">
-												<h5 class="title title--h5 timeline__title">Full Stack Software Engineer
-												</h5>
-												<span class="timeline__period">JUNE 2021 — Present</span><br>
-												<span class="timeline__period">At <b>Geekpicker - Dhaka</b> </span>
-												<!-- 												<p class="timeline__description">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.</p> -->
-											</article>
-
-
-											<!-- Item -->
-											<article class="timeline__item">
-												<h5 class="title title--h5 timeline__title">Software Engineer</h5>
-												<span class="timeline__period">JAN 2020 — DEC 2021</span><br>
-												<span class="timeline__period">At <b>TheBorak - Dhaka</b> </span>
-												<!-- 												<p class="timeline__description">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.</p> -->
-											</article>
-
-											<!-- Item -->
-											<article class="timeline__item">
-												<h5 class="title title--h5 timeline__title">Software Engineer</h5>
-												<span class="timeline__period">OCT 2019 — SEP 2021</span><br>
-												<span class="timeline__period">At <b>IBIX Global Tech - Riyadh
-														(Remote)</b> </span>
-												<!-- 												<p class="timeline__description">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.</p> -->
-											</article>
-
-											<!-- Item -->
-											<article class="timeline__item">
-												<h5 class="title title--h5 timeline__title">Software Engineer</h5>
-												<span class="timeline__period">OCT 2018 — JAN 2020</span><br>
-												<span class="timeline__period">At <b>Print Wizard - Dhaka</b> </span>
-												<!-- 												<p class="timeline__description">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.</p> -->
-											</article>
-										</div>
-									</div>
-								</div>
-
-								<!-- Skills -->
-								<div class="row">
-									<div class="col-12">
-										<h2 class="title title--h3">My Skills</h2>
-										<div class="box box__border">
-											<!-- <div class="progress">
-												<div class="progress-bar" role="progressbar" aria-valuenow="95"
-													aria-valuemin="0" aria-valuemax="100">
-													<div class="progress-text"><span>Web Design</span><span>95%</span>
-													</div>
-												</div>
-												<div class="progress-text"><span>Web Design</span></div>
-											</div>
-
-											<div class="progress">
-												<div class="progress-bar" role="progressbar" aria-valuenow="95"
-													aria-valuemin="0" aria-valuemax="100">
-													<div class="progress-text"><span>Web Development</span><span>95%</span></div>
-												</div>
-												<div class="progress-text"><span>Web Development</span></div>
-											</div>
-
-											<div class="progress">
-												<div class="progress-bar" role="progressbar" aria-valuenow="80"
-													aria-valuemin="0" aria-valuemax="100">
-													<div class="progress-text"><span>Mobile Apps Development</span><span>80%</span>
-													</div>
-												</div>
-												<div class="progress-text"><span>Mobile Apps Development</span></div>
-											</div> -->
-											<div>
-												<span class="badge badge-primary">HTML</span>
-												<span class="badge badge-primary">CSS</span>
-												<span class="badge badge-primary">JS</span>
-												<span class="badge badge-primary">Bootstrap</span>
-												<span class="badge badge-primary">Jquery</span>
-												<span class="badge badge-primary">ReactJs</span>
-												<span class="badge badge-primary">VueJs</span>
-												<span class="badge badge-primary">PHP</span>
-												<span class="badge badge-primary">Laravel</span>
-												<span class="badge badge-primary">Lumen</span>
-												<span class="badge badge-primary">C</span>
-												<span class="badge badge-primary">Python</span>
-												<span class="badge badge-primary">MySQL</span>
-												<span class="badge badge-primary">Apache</span>
-												<span class="badge badge-primary">Nginx</span>
-												<span class="badge badge-primary">AWS</span>
-												<span class="badge badge-primary">Digital Ocean</span>
-												<span class="badge badge-primary">Rest API</span>
-												<span class="badge badge-primary">Git</span>
-												<span class="badge badge-primary">Redis</span>
-												<span class="badge badge-primary">Socket IO</span>
-												<span class="badge badge-primary">CI-CD</span>
-												<span class="badge badge-primary">Windows</span>
-												<span class="badge badge-primary">Linux</span>
-												<span class="badge badge-primary">MacOS</span>
-												<span class="badge badge-primary">PHP Storm</span>
-												<span class="badge badge-primary">VS Code</span>
-												<span class="badge badge-primary">Leadership</span>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-
-							<!-- WORKS -->
-							<div id="works-tab" class="tabcontent">
-								<div class="pb-2">
-									<h1 class="title title--h1 first-title title__separate">Portfolio</h1>
-								</div>
-
-								<!-- Filter -->
-								<div class="select">
-									<span class="placeholder">Select category</span>
-									<ul class="filter">
-										<li class="filter__item">Category</li>
-										<li class="filter__item active" data-filter="*"><a class="filter__link active"
-												href="#filter">All</a></li>
-										<li class="filter__item" data-filter=".web-development"><a class="filter__link"
-												href="#filter">Web Development</a></li>
-										<li class="filter__item" data-filter=".web-design"><a class="filter__link"
-												href="#filter">Web Design</a></li>
-										<li class="filter__item" data-filter=".mobile-apps"><a class="filter__link"
-												href="#filter">Mobile APPs Development</a></li>
-									</ul>
-									<input type="hidden" name="changemetoo" />
-								</div>
-
-								<!-- Gallery -->
-								<div class="gallery-grid js-grid-row js-filter-container">
-									<div class="gutter-sizer"></div>
-									<!-- Item 1 -->
-									<figure class="gallery-grid__item web-development">
-										<div class="gallery-grid__image-wrap">
-											<img class="gallery-grid__image cover lazyload"
-												src="assets/img/header_bg_1x.png" data-zoom alt="" />
-										</div>
-										<figcaption class="gallery-grid__caption">
-											<h4 class="title title--h6 gallery-grid__title">Half Avocado</h4>
-											<span class="gallery-grid__category">Web Development</span>
-										</figcaption>
-									</figure>
-
-									<!-- Item 2 -->
-									<figure class="gallery-grid__item web-development">
-										<div class="gallery-grid__image-wrap">
-											<img class="gallery-grid__image cover lazyload"
-												src="assets/img/header_bg_1x.png" data-zoom alt="" />
-										</div>
-										<figcaption class="gallery-grid__caption">
-											<h4 class="title title--h6 gallery-grid__title">Pink Flamingo</h4>
-											<span class="gallery-grid__category">Web Development</span>
-										</figcaption>
-									</figure>
-
-									<!-- Item 3 -->
-									<figure class="gallery-grid__item web-design">
-										<div class="gallery-grid__image-wrap">
-											<img class="gallery-grid__image cover lazyload"
-												src="assets/img/header_bg_1x.png" data-zoom alt="" />
-										</div>
-										<figcaption class="gallery-grid__caption">
-											<h4 class="title title--h6 gallery-grid__title">Abstract</h4>
-											<span class="gallery-grid__category">Web Design</span>
-										</figcaption>
-									</figure>
-
-									<!-- Item 4 -->
-									<figure class="gallery-grid__item web-design">
-										<div class="gallery-grid__image-wrap">
-											<img class="gallery-grid__image cover lazyload"
-												src="assets/img/header_bg_1x.png" data-zoom alt="" />
-										</div>
-										<figcaption class="gallery-grid__caption">
-											<h4 class="title title--h6 gallery-grid__title">Abstract #2</h4>
-											<span class="gallery-grid__category">Web Design</span>
-										</figcaption>
-									</figure>
-
-									<!-- Item 5 -->
-									<figure class="gallery-grid__item web-design">
-										<div class="gallery-grid__image-wrap">
-											<img class="gallery-grid__image cover lazyload"
-												src="assets/img/header_bg_1x.png" data-zoom alt="" />
-										</div>
-										<figcaption class="gallery-grid__caption">
-											<h4 class="title title--h6 gallery-grid__title">Abstract #3</h4>
-											<span class="gallery-grid__category">Web Design</span>
-										</figcaption>
-									</figure>
-
-									<!-- Item 6 -->
-									<figure class="gallery-grid__item mobile-apps">
-										<div class="gallery-grid__image-wrap">
-											<img class="gallery-grid__image cover lazyload"
-												src="assets/img/header_bg_1x.png" data-zoom alt="" />
-										</div>
-										<figcaption class="gallery-grid__caption">
-											<h4 class="title title--h6 gallery-grid__title">Golden Gate</h4>
-											<span class="gallery-grid__category">Mobile Apps</span>
-										</figcaption>
-									</figure>
-
-									<!-- Item 7 -->
-									<figure class="gallery-grid__item web-development">
-										<div class="gallery-grid__image-wrap">
-											<img class="gallery-grid__image cover lazyload"
-												src="assets/img/header_bg_1x.png" data-zoom alt="" />
-										</div>
-										<figcaption class="gallery-grid__caption">
-											<h4 class="title title--h6 gallery-grid__title">Peach</h4>
-											<span class="gallery-grid__category">Web Development</span>
-										</figcaption>
-									</figure>
-
-									<!-- Item 8 -->
-									<figure class="gallery-grid__item web-design">
-										<div class="gallery-grid__image-wrap">
-											<img class="gallery-grid__image cover lazyload"
-												src="assets/img/header_bg_1x.png" data-zoom alt="" />
-										</div>
-										<figcaption class="gallery-grid__caption">
-											<h4 class="title title--h6 gallery-grid__title">Abstract #4</h4>
-											<span class="gallery-grid__category">Web Design</span>
-										</figcaption>
-									</figure>
-
-									<!-- Item 9 -->
-									<figure class="gallery-grid__item mobile-apps">
-										<div class="gallery-grid__image-wrap">
-											<img class="gallery-grid__image cover lazyload"
-												src="assets/img/header_bg_1x.png" data-zoom alt="" />
-										</div>
-										<figcaption class="gallery-grid__caption">
-											<h4 class="title title--h6 gallery-grid__title">Hedgehog</h4>
-											<span class="gallery-grid__category">Mobile Apps</span>
-										</figcaption>
-									</figure>
-								</div><!-- Gallery End -->
-							</div>
-
-							<!-- BLOG -->
-							<div id="blog-tab" class="tabcontent">
-								<div class="pb-2">
-									<h1 class="title title--h1 first-title title__separate">Blog</h1>
-								</div>
-
-								<!-- News -->
-								<div class="news-grid">
-									<!-- Post -->
-									<article class="news-item box">
-										<div class="news-item__image-wrap overlay overlay--45">
-											<div class="news-item__date">Jun<span>2020</span></div>
-											<a class="news-item__link" target="_blank"
-												href="https://medium.com/%E0%A6%AA%E0%A7%8D%E0%A6%B0%E0%A7%8B%E0%A6%97%E0%A7%8D%E0%A6%B0%E0%A6%BE%E0%A6%AE%E0%A6%BF%E0%A6%82-%E0%A6%AA%E0%A6%BE%E0%A6%A4%E0%A6%BE/php-%E0%A6%A4%E0%A7%87-%E0%A6%A6%E0%A7%81%E0%A6%9F%E0%A6%BF-%E0%A6%B8%E0%A6%BF%E0%A6%95%E0%A6%BF%E0%A6%89%E0%A6%B0%E0%A6%BF%E0%A6%9F%E0%A6%BF-%E0%A6%AE%E0%A7%87%E0%A6%87%E0%A6%A8%E0%A6%9F%E0%A7%87%E0%A6%87%E0%A6%A8-%E0%A6%95%E0%A6%B0%E0%A6%BE%E0%A6%B0-%E0%A6%AA%E0%A6%A6%E0%A7%8D%E0%A6%A7%E0%A6%A4%E0%A6%BF-ac4016cc11e0"></a>
-											<img class="cover lazyload" src="assets/img/blog_1.png"
-												alt="PHP তে দুটি সিকিউরিটি মেইনটেইন করার পদ্ধতি" />
-										</div>
-										<div class="news-item__caption">
-											<h2 class="title title--h4">PHP তে দুটি সিকিউরিটি মেইনটেইন করার পদ্ধতি</h2>
-											<p>আজ আমরা WEB এর সবথেকে বড় এবং প্রচলিত দুটি সিকিউরিটি দুর্বলতা নিয়ে আলোচনা
-												করবো। আপনারা যারা....</p>
-										</div>
-									</article>
-
-									<!-- Post -->
-									<article class="news-item box">
-										<div class="news-item__image-wrap overlay overlay--45">
-											<div class="news-item__date">15<span>Jun</span></div>
-											<a class="news-item__link" target="_blank"
-												href="https://medium.com/@nayeemdev/how-to-send-sms-with-twilio-and-laravel-%E0%A6%95%E0%A6%BF%E0%A6%AD%E0%A6%BE%E0%A6%AC%E0%A7%87-twilio-%E0%A6%8F%E0%A6%AC%E0%A6%82-laravel-%E0%A6%8F%E0%A6%B0-%E0%A6%AE%E0%A6%BE%E0%A6%A7%E0%A7%8D%E0%A6%AF%E0%A6%AE%E0%A7%87-sms-%E0%A6%AA%E0%A6%BE%E0%A6%A0%E0%A6%BE%E0%A6%A4%E0%A7%87-%E0%A6%B9%E0%A7%9F-5330742cc3fe"></a>
-											<img class="cover lazyload" src="assets/img/blog_2.png"
-												alt="কিভাবে Twilio এবং Laravel এর মাধ্যমে sms পাঠাতে হয়" />
-										</div>
-										<div class="news-item__caption">
-											<h2 class="title title--h4">কিভাবে Twilio এবং Laravel এর মাধ্যমে sms পাঠাতে
-												হয়</h2>
-											<p>Twilio হল একটি Communication Service প্লাটফর্ম যেটি ক্যালিফোর্নিয়ার সান
-												ফ্রান্সিসকো ভিত্তিক একটি সংস্থা। ফোন কল....
-											</p>
-										</div>
-									</article>
-
-									<!-- Post -->
-									<article class="news-item box">
-										<div class="news-item__image-wrap overlay overlay--45">
-											<div class="news-item__date">Dec<span>2019</span></div>
-											<a class="news-item__link" target="_blank"
-												href="https://medium.com/@nayeemdev/how-to-create-multi-authentication-with-multiple-table-in-laravel-dbc43e229f9f"></a>
-											<img class="cover lazyload" src="assets/img/blog_3.png"
-												alt="How to Create Multi Authentication with Multiple Table in Laravel" />
-										</div>
-										<div class="news-item__caption">
-											<h2 class="title title--h4">How to Create Multi Authentication with Multiple
-												Table in Laravel</h2>
-											<p>We are working with laravel version 5.8. By default laravel
-												authentication comes up with users table. Today we....</p>
-										</div>
-									</article>
-								</div>
-							</div>
-
-							<!-- CONTACT -->
-							<!-- CONTACT -->
-							<div id="contact-tab" class="tabcontent">
-								<div class="pb-2">
-									<h1 class="title title--h1 first-title title__separate">Contact</h1>
-								</div>
-
-								<!-- Contact -->
-								<div class="map" id="map">
-									<iframe
-										src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d116796.76522066168!2d90.42195359999997!3d23.822193400000007!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x328e8db1a2b6ea86!2sKuratoli%20Bazar!5e0!3m2!1sen!2sbd!4v1612621523718!5m2!1sen!2sbd"
-										width="100%" height="100%" frameborder="0" style="border:0;" allowfullscreen=""
-										aria-hidden="false" tabindex="0"></iframe>
-								</div>
-								<h2 class="title title--h3">Contact Form</h2>
-
-								<form id="contact-form" class="contact-form" data-toggle="validator">
-									<div class="row">
-										<div class="form-group col-12 col-md-6">
-											<input type="text" class="form-control" id="nameContact" name="nameContact"
-												placeholder="Full name" required="required" autocomplete="on"
-												oninvalid="setCustomValidity('Fill in the field')"
-												onkeyup="setCustomValidity('')">
-											<div class="help-block with-errors"></div>
-										</div>
-										<div class="form-group col-12 col-md-6">
-											<input type="email" class="form-control" id="emailContact"
-												name="emailContact" placeholder="Email address" required="required"
-												autocomplete="on" oninvalid="setCustomValidity('Email is incorrect')"
-												onkeyup="setCustomValidity('')">
-											<div class="help-block with-errors"></div>
-										</div>
-										<div class="form-group col-12 col-md-12">
-											<textarea class="textarea form-control" id="messageContact"
-												name="messageContact" placeholder="Your Message" rows="4"
-												required="required" oninvalid="setCustomValidity('Fill in the field')"
-												onkeyup="setCustomValidity('')"></textarea>
-											<div class="help-block with-errors"></div>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-12 col-md-6 order-2 order-md-1 text-center text-md-left">
-											<div id="validator-contact" class="hidden"></div>
-										</div>
-										<div class="col-12 col-md-6 order-1 order-md-2 text-right">
-											<button type="submit" class="btn"><i class="font-icon icon-send"></i> Send
-												Message</button>
-										</div>
-									</div>
-								</form>
-							</div>
-						</div>
-					</div>
-					<!-- Footer -->
-					<footer class="footer">© 2021 @nayeemdev</footer>
-				</div>
-			</div>
-		</div>
-	</main>
-
-	<!-- BackToTop -->
-	<div class="back-to-top"></div>
-
-	<!-- JavaScripts -->
-	<script src="assets/js/jquery-3.4.1.min.js"></script>
-	<script src="assets/js/plugins.min.js"></script>
-	<script src="assets/js/common.js"></script>
-
-	<script>
-		if (localStorage.getItem("theme") === null) {
-			localStorage.setItem('theme', 'dark');
-		}
-		if (localStorage.getItem('theme') === 'dark') {
-			$('head').append('<link rel="stylesheet" id="dark-mode" type="text/css" href="assets/styles/style-dark.css" />');
-		} else {
-			$('head link[href="assets/styles/style-dark.css"]').remove();
-		}
-
-		$('.light').click(function () {
-			localStorage.setItem('theme', 'light');
-			$('head link[href="assets/styles/style-dark.css"]').remove();
-		});
-
-		$('.dark').click(function () {
-			localStorage.setItem('theme', 'dark');
-			$('head').append('<link rel="stylesheet" id="dark-mode" type="text/css" href="assets/styles/style-dark.css" />');
-		});
-
-		$('[data-toggle="tooltip"]').tooltip({
-			trigger: 'hover'
-		});
-	</script>
-</body>
-
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./assets/css/styles.min.css" />
+    <link rel="icon" type="image/svg+xml" href="./assets/img/favicon.svg" />
+    <link rel="stylesheet" href="https://use.typekit.net/kse0maf.css" />
+
+    <!-- Primary Meta Tags -->
+    <title>Israel Mitolu | Frontend Engineer and Technical Writer </title>
+    <meta
+      name="title"
+      content="Israel Mitolu | Frontend Engineer and Technical Writer"
+    />
+    <meta
+      name="Keywords"
+      content="Israel Mitolu, Israel Oyetunji, Israel Oyetunji Mitolu, Israel Portfolio, Frontend Engineer, Technical Writer, Code, Communication, Web Development, User Experience, UI/UX Design, Portfolio, Front-End Developer, Developer, UI Engineer, Nigeria"
+    />
+    <meta
+      name="description"
+      content=" Israel Mitolu is a skilled Frontend Engineer and Technical Writer with experience in crafting elegant and efficient code, and communicating technical solutions to a diverse audience."
+    />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://israelmitolu.netlify.app/" />
+    <meta
+      property="og:title"
+      content="Israel Mitolu | Frontend Engineer and Technical Writer"
+    />
+    <meta
+      property="og:description"
+      content=" Israel Mitolu is a skilled Frontend Engineer and Technical Writer with experience in crafting elegant and efficient code, and communicating technical solutions to a diverse audience."
+    />
+    <meta property="og:image" content="/assets/img/seo-img.png" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://israelmitolu.netlify.app/" />
+    <meta
+      property="twitter:title"
+      content="Israel Mitolu | Frontend Engineer and Technical Writer"
+    />
+    <meta
+      property="twitter:description"
+      content=" Israel Mitolu is a skilled Frontend Engineer and Technical Writer with experience in crafting elegant and efficient code, and communicating technical solutions to a diverse audience."
+    />
+    <meta
+      property="twitter:image"
+      content="https://israelmitolu.netlify.app/assets/img/seo-img.png"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.7.0/gsap.min.js"></script>
+
+    <!-- Google Verification tag -->
+    <meta
+      name="google-site-verification"
+      content="KOQzvRehV2wImo6OJO8Iem8SXZknToV3QZgqPGLNo2c"
+    />
+  </head>
+
+  <body class="body-wrap">
+    <div class="intro">
+      <div class="intro-text">
+        <h2 class="hide">
+          <span class="text">Creating innovations</span>
+        </h2>
+        <h2 class="hide">
+          <span class="text">For Everyday</span>
+        </h2>
+        <h2 class="hide">
+          <span class="text">people.</span>
+        </h2>
+      </div>
+      <button class="intro-btn" onclick="fadeOut()">EXPLORE</button>
+    </div>
+    <div class="slider"></div>
+    <div class="slider-2"></div>
+
+    <!-- custom mouse-->
+    <div class="cursor-effect"></div>
+
+    <!-- content -->
+    <div class="content">
+      <!-- Header Section -->
+      <header>
+        <!-- Shapes -->
+        <div class="effect-wrap">
+          <div class="effect effect-1"></div>
+          <div class="effect effect-2">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+          <div class="effect effect-3"></div>
+          <div class="effect effect-4">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+        <a href="index.html" class="logo">
+          <img src="./assets/img/favicon.svg" alt="" />
+        </a>
+
+        <div class="inner">
+          <span>i</span>
+          <h1>Hello 👋</h1>
+          <p>
+            Thanks for visiting my Portfolio website! If you like what you see
+            and you need me to work on a product, send me a
+            <a href="#contact">message</a>
+          </p>
+        </div>
+
+        <div class="toggle-container">
+          <input type="checkbox" id="switch" name="theme" /><label
+            class="toggle"
+            for="switch"
+            >Toggle</label
+          >
+        </div>
+
+        <div class="landing-text">
+          <h1>Israel Mitolu</h1>
+          <p
+            >My approach to frontend engineering and technical writing is
+            simple:
+            <i>create with purpose, empathy, and attention to detail.</i></p
+          >
+        </div>
+      </header>
+
+      <main>
+        <!-- About Section -->
+        <section class="about" id="about">
+          <div class="container">
+            <div class="profile-img">
+              <img
+                src="./assets/img/IMG_20210217_173633899-min.jpg"
+                alt="Israel Oyetunji Mitolu"
+              />
+            </div>
+            <div class="about-content">
+              <div class="about-heading">
+                <h2>About Me</h2>
+              </div>
+              <p
+                >Hello there, I'm Israel Mitolu - a frontend engineer and
+                technical writer with a passion for creating digital experiences
+                that are both beautiful and accessible. My mission is to build
+                websites and applications that delight users, while also making
+                them easy to use and navigate for everyone.
+                <br />
+                <br />
+                With 3+ years of experience in frontend development, I
+                specialize in creating responsive, user-friendly interfaces
+                using ReactJS, NextJS, TailwindCSS, and Typescript. I pay close
+                attention to detail, always striving to make sure that every
+                interaction is smooth, intuitive, and visually appealing. I'm
+                also a strong advocate for web accessibility, ensuring that all
+                my projects are accessible to all.
+                <br />
+                <br />
+                I'm also a passionate writer, with a
+                <a href="https://israelmitolu.hashnode.dev" target="_blank"
+                  >blog</a
+                >
+                and articles on
+                <a href="https://linktr.ee/israelmitolu" target="_blank"
+                  >various platforms</a
+                >, where I share my expertise and insights into the world of
+                frontend development. I enjoy sharing my knowledge with others
+                and helping fellow developers understand and be creative with
+                web technologies.
+              </p>
+
+              <div class="about-cta">
+                <a href="#contact" class="skills-cta">Hire me</a>
+                <span>—</span>
+                <a href="./about/" class="exp-cta">More about me</a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Services Section -->
+        <section class="services" id="services">
+          <div class="container">
+            <div class="services-content">
+              <div class="services-heading">
+                <h2>My Services</h2>
+              </div>
+            </div>
+            <div class="service-item-container">
+              <div class="service-item">
+                <ion-icon name="code-slash-outline"></ion-icon>
+                <h5>Frontend Development</h5>
+                <p
+                  >I craft responsive and user-friendly websites using modern
+                  web development technologies and frameworks such as React,
+                  NextJS and Typescript.</p
+                >
+              </div>
+              <div class="service-item">
+                <ion-icon name="book-outline"></ion-icon>
+                <h5>Technical Writing</h5>
+                <p
+                  >I specialize in creating clear and concise technical
+                  documentation, including user manuals, help documentation, and
+                  API guides, that simplify complex concepts, educate your
+                  users, and enhance your product.</p
+                >
+              </div>
+              <!-- <div class="service-item">
+                <ion-icon name="color-wand-outline"></ion-icon>
+                <h5>Web/UI Design</h5>
+                <p
+                  >I work with certain design tools to create high-fidelity
+                  designs and prototypes. I design accessible and usable
+                  products which aid business growth.</p
+                >
+              </div> -->
+            </div>
+          </div>
+        </section>
+
+        <!-- Portfolio Section -->
+        <section id="projects" class="project">
+          <h5>— check out some </h5>
+          <h2>Stuff I’ve worked on 💻</h2>
+          <div class="project-item-container">
+            <div class="project-box">
+              <a
+                href="https://im-iphone15.vercel.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="project-box__absolute-link"
+              >
+              </a>
+              <div class="project-box__link">
+                <a
+                  href="https://github.com/israelmitolu/iphone-15-pro"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <ion-icon name="logo-github"></ion-icon>
+                </a>
+                <a
+                  href="https://im-iphone15.vercel.app/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <ion-icon name="open-outline"></ion-icon>
+                </a>
+              </div>
+              <div class="project-box__content">
+                <h3> iPhone 15 Landing Page </h3>
+                <h5>React.js &nbsp; Tailwind CSS &nbsp; ThreeJS GSAP </h5>
+              </div>
+            </div>
+
+            <div class="project-box">
+              <a
+                href="https://www.olufemivictor.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="project-box__absolute-link"
+              >
+              </a>
+              <div class="project-box__link">
+                <a
+                  href="https://www.olufemivictor.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <ion-icon name="open-outline"></ion-icon>
+                </a>
+              </div>
+              <div class="project-box__content">
+                <h3>Folio for Machine Learning Engineer</h3>
+                <h5
+                  >Next.js &nbsp; Tailwind CSS &nbsp; Typescript GSAP Framer
+                  Motion
+                </h5>
+              </div>
+            </div>
+
+            <div class="project-box">
+              <a
+                href="https://shop-context.netlify.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="project-box__absolute-link"
+              >
+              </a>
+              <div class="project-box__link">
+                <a
+                  href="https://github.com/israelmitolu/Learn-Context-by-Building-a-Shopping-Website"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <ion-icon name="logo-github"></ion-icon>
+                </a>
+                <a
+                  href="https://shop-context.netlify.app/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <ion-icon name="open-outline"></ion-icon>
+                </a>
+              </div>
+              <div class="project-box__content">
+                <h3> Minimal Ecommerce shop </h3>
+                <h5>React.js &nbsp; Styled components &nbsp; Context API </h5>
+              </div>
+            </div>
+
+            <div class="project-box">
+              <a
+                href="https://weirdos-nft.netlify.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="project-box__absolute-link"
+              >
+              </a>
+              <div class="project-box__link">
+                <a
+                  href="https://github.com/israelmitolu/The-Weirdos-NFT"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <ion-icon name="logo-github"></ion-icon>
+                </a>
+                <a
+                  href="https://weirdos-nft.netlify.app/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <ion-icon name="open-outline"></ion-icon>
+                </a>
+              </div>
+              <div class="project-box__content">
+                <h3> Weirdos NFT </h3>
+                <h5>React.js &nbsp; Styled components &nbsp; GSAP</h5>
+              </div>
+            </div>
+
+            <div class="project-box">
+              <a
+                href="https://lofi-playlist.netlify.app"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="project-box__absolute-link"
+              >
+              </a>
+              <div class="project-box__link">
+                <a
+                  href="https://github.com/israelmitolu/react-music-player"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <ion-icon name="logo-github"></ion-icon>
+                </a>
+                <a
+                  href="https://lofi-playlist.netlify.app"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <ion-icon name="open-outline"></ion-icon>
+                </a>
+              </div>
+              <div class="project-box__content">
+                <h3> Lofi Music App </h3>
+                <h5>React.js &nbsp; SCSS</h5>
+              </div>
+            </div>
+
+            <div class="project-box">
+              <a
+                href="https://fisayofosudo.netlify.app"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="project-box__absolute-link"
+              >
+              </a>
+              <div class="project-box__link">
+                <a
+                  href="https://github.com/israelmitolu/fisayo-fosudo"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <ion-icon name="logo-github"></ion-icon>
+                </a>
+                <a
+                  href="https://fisayofosudo.netlify.app"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <ion-icon name="open-outline"></ion-icon>
+                </a>
+              </div>
+              <div class="project-box__content">
+                <h3> Fisayo Fosudo </h3>
+                <h5>HTML/SCSS &nbsp; JS &nbsp; GSAP</h5>
+              </div>
+            </div>
+
+            <div class="project-box">
+              <a
+                href="https://israelmitolu.netlify.app"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="project-box__absolute-link"
+              >
+              </a>
+              <div class="project-box__link">
+                <a
+                  href="https://github.com/israelmitolu/premier-portfolio"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <ion-icon name="logo-github"></ion-icon>
+                </a>
+                <a
+                  href="https://israelmitolu.netlify.app"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <ion-icon name="open-outline"></ion-icon>
+                </a>
+              </div>
+              <div class="project-box__content">
+                <h3> israelmitolu </h3>
+                <h5>HTML/SCSS &nbsp; JS &nbsp; GSAP</h5>
+              </div>
+            </div>
+
+            <div class="project-box">
+              <a
+                href="https://digitaly.netlify.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="project-box__absolute-link"
+              >
+              </a>
+              <div class="project-box__link">
+                <a
+                  href="https://github.com/israelmitolu/Digitaly"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <ion-icon name="logo-github"></ion-icon>
+                </a>
+                <a
+                  href="https://digitaly.netlify.app/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <ion-icon name="open-outline"></ion-icon>
+                </a>
+              </div>
+              <div class="project-box__content">
+                <h3>Digitaly</h3>
+                <h5>React.js &nbsp; Tailwind CSS &nbsp; Framer motion</h5>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!--Contacts-->
+        <section class="contact" id="contact">
+          <div class="contact-title">
+            <h5>— contact me</h5>
+            <h2>🚀Let's collaborate </h2>
+          </div>
+          <div class="container">
+            <div class="sub">
+              Got a question, proposal or project or want to work <br />
+              together on something? Feel free to reach out.
+            </div>
+            <form action="POST" data-netlify="true">
+              <div class="input-row">
+                <div class="side"
+                  ><label for="name">Your Name</label
+                  ><input
+                    placeholder="Enter Your name"
+                    name="name"
+                    id="name"
+                    type="text"
+                    required=""
+                    value=""
+                /></div>
+                <div class="side"
+                  ><label for="email">Your Email</label
+                  ><input
+                    placeholder="Enter Your email address"
+                    name="email"
+                    id="email"
+                    type="email"
+                    required=""
+                    value=""
+                /></div>
+              </div>
+              <div class="textarea">
+                <label for="message">Your Message</label
+                ><textarea
+                  name="message"
+                  id="message"
+                  placeholder="Hi, I think we need you to work on this particular product. Reach out as soon as you can"
+                  required=""
+                ></textarea>
+              </div>
+              <button type="submit">Send Message.</button>
+            </form>
+          </div>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <hr />
+        <div class="footer-head">
+          <h5>Say Hello</h5>
+          <div class="link-container">
+            <div class="footer-links">
+              <p
+                ><a
+                  data-text="wa.me/israelmitolu"
+                  href="https://wa.me/+2348148751013"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >wa.me/israelmitolu</a
+                ></p
+              >
+              <p
+                ><a
+                  data-text="israelmitolu@gmail.com"
+                  href="mailto:israelmitolu@gmail.com"
+                  >israelmitolu@gmail.com</a
+                ></p
+              >
+            </div>
+            <div class="footer-links">
+              <p><a href="https://twitter.com/israelmitolu">TW</a></p>
+              <p><a href="https://github.com/israelmitolu">GH</a></p>
+              <p><a href="https://linkedin.com/in/israeloyetunji">LN</a></p>
+              <p><a href="https://codepen.io/israelmitolu">CP</a></p>
+            </div>
+          </div>
+        </div>
+        <div class="footer-copy"> &copy; Israel Mitolu 2022</div>
+      </footer>
+    </div>
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
+    ></script>
+    <script src="./assets/js/app.js"></script>
+  </body>
 </html>
