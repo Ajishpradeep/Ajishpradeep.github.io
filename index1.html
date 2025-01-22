@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>vCard - Personal Portfolio</title>
+
+  <!--
+    - favicon
+  -->
+  <link rel="shortcut icon" href="./assets/images/logo.ico" type="image/x-icon">
+
+  <!--
+    - custom css link
+  -->
+  <link rel="stylesheet" href="./assets/css/style.css">
+
+  <!--
+    - google font link
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+  <!--
+    - #MAIN
+  -->
+
+  <main>
+
+    <!--
+      - #SIDEBAR
+    -->
+
+    <aside class="sidebar" data-sidebar>
+
+      <div class="sidebar-info">
+
+        <figure class="avatar-box">
+          <img src="./assets/images/my-avatar.png" alt="Richard hanrick" width="80">
+        </figure>
+
+        <div class="info-content">
+          <h1 class="name" title="Ajish Pradeep">Ajish Pradeep</h1>
+
+          <p class="title">AI Researcher & Engineer</p>
+        </div>
+
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Contacts</span>
+
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+
+      </div>
+
+      <div class="sidebar-info_more">
+
+        <div class="separator"></div>
+
+        <ul class="contacts-list">
+
+          <li class="contact-item">
+
+            <div class="icon-box">
+              <ion-icon name="mail-outline"></ion-icon>
+            </div>
+
+            <div class="contact-info">
+              <p class="contact-title">Email</p>
+
+              <a href="ajishpradeep@gmail.com" class="contact-link">ajishpradeep@gmail.com</a>
+            </div>
+
+          </li>
+
+          <li class="contact-item">
+
+            <div class="icon-box">
+              <ion-icon name="phone-portrait-outline"></ion-icon>
+            </div>
+
+            <div class="contact-info">
+              <p class="contact-title">Phone</p>
+
+              <a href="tel:+886905174662" class="contact-link">+886 905 174 662</a>
+            </div>
+
+          </li>
+
+          <li class="contact-item">
+
+            <div class="contact-info">
+              <p class="contact-title">Location</p>
+
+              <address>Taipei, Taiwan</address>
+            </div>
+
+          </li>
+
+        </ul>
+
+        <div class="separator"></div>
+
+        <ul class="social-list">
+
+          <li class="social-item">
+            <a href="#" class="social-link">
+              <ion-icon name="logo-facebook"></ion-icon>
+            </a>
+          </li>
+
+          <li class="social-item">
+            <a href="#" class="social-link">
+              <ion-icon name="logo-twitter"></ion-icon>
+            </a>
+          </li>
+
+          <li class="social-item">
+            <a href="#" class="social-link">
+              <ion-icon name="logo-instagram"></ion-icon>
+            </a>
+          </li>
+
+        </ul>
+
+      </div>
+
+    </aside>
+
+
+
+
+
+    <!--
+      - #main-content
+    -->
+
+    <div class="main-content">
+
+      <!--
+        - #NAVBAR
+      -->
+
+      <nav class="navbar">
+
+        <ul class="navbar-list">
+
+          <li class="navbar-item">
+            <button class="navbar-link  active" data-nav-link>About</button>
+          </li>
+
+          <li class="navbar-item">
+            <button class="navbar-link" data-nav-link>Resume</button>
+          </li>
+
+          <li class="navbar-item">
+            <button class="navbar-link" data-nav-link>Portfolio</button>
+          </li>
+
+          <li class="navbar-item">
+            <button class="navbar-link" data-nav-link>Blog</button>
+          </li>
+
+          <li class="navbar-item">
+            <button class="navbar-link" data-nav-link>Contact</button>
+          </li>
+
+        </ul>
+
+      </nav>
+
+
+
+
+
+      <!--
+        - #ABOUT
+      -->
+
+      <article class="about  active" data-page="about">
+
+        <header>
+          <h2 class="h2 article-title">About me</h2>
+        </header>
+
+        <section class="about-text">
+          <p>
+            I am an AI Consultant and Engineer specializing in innovative solutions that bridge cutting-edge AI research
+            and
+            practical deployment. My expertise lies in generative AI, efficient LLM optimization, and scalable AI for
+            real-world
+            applications.
+          </p>
+
+          <p>
+            My mission is to empower businesses to innovate with AI by delivering tailored, high-impact solutions.
+            Recognized
+            for my work at NVIDIA GTC 2025, I have successfully led AI deployments in top retail chains, such as
+            7-Eleven,
+            transforming operations with state-of-the-art models.
+          </p>
+        </section>
+
+        <!--
+        - service
+      -->
+
+        <section class="service">
+
+          <h3 class="h3 service-title">What I Offer</h3>
+
+          <ul class="service-list">
+
+            <li class="service-item">
+              <div class="service-icon-box">
+                <img src="./assets/images/icon-design.svg" alt="Generative AI icon" width="40">
+              </div>
+              <div class="service-content-box">
+                <h4 class="h4 service-item-title">Generative AI Solutions</h4>
+                <p class="service-item-text">
+                  Custom generative AI models, including content-aware and spatially optimized architectures for
+                  real-world
+                  challenges.
+                </p>
+              </div>
+            </li>
+
+            <li class="service-item">
+              <div class="service-icon-box">
+                <img src="./assets/images/icon-dev.svg" alt="Optimization icon" width="40">
+              </div>
+              <div class="service-content-box">
+                <h4 class="h4 service-item-title">LLM Optimization</h4>
+                <p class="service-item-text">
+                  Improving small LLM efficiency and reducing computational costs with advanced techniques like KAN
+                  networks.
+                </p>
+              </div>
+            </li>
+
+            <li class="service-item">
+              <div class="service-icon-box">
+                <img src="./assets/images/icon-app.svg" alt="Deployment icon" width="40">
+              </div>
+              <div class="service-content-box">
+                <h4 class="h4 service-item-title">End-to-End AI Deployment</h4>
+                <p class="service-item-text">
+                  Full-cycle AI pipeline development, from research to deployment, ensuring scalability and reliability
+                  in
+                  diverse environments.
+                </p>
+              </div>
+            </li>
+
+            <li class="service-item">
+              <div class="service-icon-box">
+                <img src="./assets/images/icon-photo.svg" alt="Consulting icon" width="40">
+              </div>
+              <div class="service-content-box">
+                <h4 class="h4 service-item-title">AI Consulting</h4>
+                <p class="service-item-text">
+                  Strategic guidance for startups and enterprises, helping them leverage AI to achieve transformative
+                  business
+                  outcomes.
+                </p>
+              </div>
+            </li>
+
+          </ul>
+
+        </section>
+
+        <section class="timeline">
+
+          <div class="title-wrapper">
+            <div class="icon-box">
+              <ion-icon name="book-outline"></ion-icon>
+            </div>
+            <h3 class="h3">Education</h3>
+          </div>
+
+          <ol class="timeline-list">
+
+            <li class="timeline-item">
+              <h4 class="h4 timeline-item-title">Master's in Electrical Engineering and Computer Science</h4>
+              <span>2021 — 2023</span>
+              <p class="timeline-text">
+                National Taipei University of Technology, Taiwan
+              </p>
+              <p class="timeline-text">
+                Advanced research in generative AI, culminating in a novel content and spatial-aware model for image
+                inpainting.
+                This work significantly addressed challenges in limited data environments and set a new standard for
+                efficiency
+                and accuracy in GAN-based systems.
+              </p>
+            </li>
+
+            <li class="timeline-item">
+              <h4 class="h4 timeline-item-title">Bachelor of Science in Information Technology</h4>
+              <span>2011 — 2014</span>
+              <p class="timeline-text">
+                Sri Ramakrishna Mission Vidyalaya College, India
+              </p>
+            </li>
+
+          </ol>
+
+        </section>
+
+        <section class="timeline">
+
+          <div class="title-wrapper">
+            <div class="icon-box">
+              <ion-icon name="briefcase-outline"></ion-icon>
+            </div>
+            <h3 class="h3">Experience</h3>
+          </div>
+
+          <ol class="timeline-list">
+
+            <li class="timeline-item">
+              <h4 class="h4 timeline-item-title">AI Engineer</h4>
+              <span>2023 — Present</span>
+              <p class="timeline-text">
+                President Information Corp, Taiwan
+              </p>
+              <ul class="timeline-details">
+                <p class="timeline-text">
+                  <li>
+                    <p class="timeline-text">
+                      Conceptualized and implemented a real-time planogram compliance system for 7-Eleven stores, which
+                      optimized
+                      operational efficiency and reduced error margins significantly. This innovative work was selected
+                      as
+                      a
+                      poster
+                      presentation at NVIDIA GTC 2025, underscoring its groundbreaking impact in retail AI. </p>
+                    Conceptualized and implemented a real-time planogram compliance system for 7-Eleven stores, which
+                    optimized
+                    operational efficiency and reduced error margins significantly. This innovative work was selected
+                    as
+                    a
+                    poster
+                    presentation at NVIDIA GTC 2025, underscoring its groundbreaking impact in retail AI.
+                  </li>
+                  <li>
+                    Collaborated with NVIDIA to leverage metropolis microservices, creating generative AI pipelines
+                    capable of
+                    seamless cloud and edge deployment, setting a new benchmark for integrated AI solutions.
+                  </li>
+                  <li>
+                    Developed a high-precision consumer behavior prediction model with 95% accuracy, utilizing advanced
+                    machine
+                    learning techniques and processing over 5 million data points to empower targeted marketing
+                    strategies.
+                  </li>
+                </p>
+              </ul>
+            </li>
+
+            <li class="timeline-item">
+              <h4 class="h4 timeline-item-title">Software Developer</h4>
+              <span>2017 — 2021</span>
+              <p class="timeline-text">
+                AIBS Software Solutions, India
+              </p>
+              <ul class="timeline-details">
+                <li>
+                  Spearheaded the development of tailored ERP solutions that optimized manufacturing workflows and
+                  enhanced
+                  system reliability, transforming corporate efficiency.
+                </li>
+                <li>
+                  Engineered a robust inventory management system, resolving 95% of software discrepancies and
+                  significantly
+                  streamlining operations for enterprise clients.
+                </li>
+              </ul>
+            </li>
+
+          </ol>
+
+        </section>
+
+        <section class="skill">
+
+          <h3 class="h3 skills-title">Core Expertise</h3>
+
+          <ul class="skills-list content-card">
+
+            <li class="skills-item">
+              Generative AI: Specialized in designing custom architectures for image inpainting and data-driven content
+              generation.
+            </li>
+            <li class="skills-item">
+              Large Language Model (LLM) Optimization: Expert in enhancing LLM efficiency using advanced techniques like
+              Kolmogorov-Arnold Networks (KAN), enabling resource-efficient deployment.
+            </li>
+            <li class="skills-item">
+              Vision AI: Proficient in creating scalable, real-time solutions for object detection and recognition,
+              particularly
+              in retail applications.
+            </li>
+            <li class="skills-item">
+              AI Deployment: Hands-on experience with NVIDIA TAO Toolkit, TensorRT, and GCP for seamless integration
+              across
+              cloud and edge environments.
+            </li>
+            <li class="skills-item">
+              End-to-End AI Development: Comprehensive expertise in building AI pipelines from concept to production,
+              ensuring
+              scalability, reliability, and impact.
+            </li>
+            <li class="skills-item">
+              Cross-Disciplinary Collaboration: Strong ability to bridge the gap between technical development and
+              business
+              strategy, ensuring solutions align with organizational goals.
+            </li>
+
+          </ul>
+
+        </section>
+
+        <section class="skill">
+
+          <h3 class="h3 skills-title">Core Expertise</h3>
+
+          <ul class="skills-list content-card">
+
+            <li class="skills-item">
+              <strong>Programming Languages:</strong> Python, JavaScript
+            </li>
+            <li class="skills-item">
+              <strong>Frameworks and Libraries:</strong> PyTorch, TensorFlow, Transformers, Diffusion Models
+            </li>
+            <li class="skills-item">
+              <strong>Cloud Platforms and Tools:</strong> Google Cloud Platform (GCP), Vertex AI, Deepstream
+            </li>
+            <li class="skills-item">
+              <strong>Model Development:</strong> Custom AI model training and fine-tuning, Vision AI, LLMs, Multi-modal
+              AI
+            </li>
+            <li class="skills-item">
+              <strong>Generative AI:</strong> Conditional image generation, spatial and content-aware models
+            </li>
+            <li class="skills-item">
+              <strong>Edge Deployment:</strong> TensorRT, NVIDIA TAO Toolkit, real-time applications for object
+              detection
+            </li>
+            <li class="skills-item">
+              <strong>Mathematical Foundations:</strong> Linear Algebra, Calculus, Attention Mechanisms
+            </li>
+            <li class="skills-item">
+              <strong>Specialized Techniques:</strong> Feature extraction, vector embedding, and advanced
+              transformer-based
+              architectures
+            </li>
+            <li class="skills-item">
+              <strong>Problem Domains:</strong> Object detection, recognition, and behavior prediction models
+            </li>
+
+          </ul>
+
+        </section>
+
+        <header>
+          <h2 class="h2 article-title">Portfolio</h2>
+        </header>
+
+        <section class="projects">
+
+          <ul class="filter-list">
+            <li class="filter-item">
+              <button class="active" data-filter-btn>All</button>
+            </li>
+            <li class="filter-item">
+              <button data-filter-btn>Generative AI</button>
+            </li>
+            <li class="filter-item">
+              <button data-filter-btn>Retail Solutions</button>
+            </li>
+            <li class="filter-item">
+              <button data-filter-btn>LLM Optimization</button>
+            </li>
+            <li class="filter-item">
+              <button data-filter-btn>Applications</button>
+            </li>
+          </ul>
+
+          <div class="filter-select-box">
+            <button class="filter-select" data-select>
+              <div class="select-value" data-selecct-value>Select category</div>
+              <div class="select-icon">
+                <ion-icon name="chevron-down"></ion-icon>
+              </div>
+            </button>
+            <ul class="select-list">
+              <li class="select-item">
+                <button data-select-item>All</button>
+              </li>
+              <li class="select-item">
+                <button data-select-item>Generative AI</button>
+              </li>
+              <li class="select-item">
+                <button data-select-item>Retail Solutions</button>
+              </li>
+              <li class="select-item">
+                <button data-select-item>LLM Optimization</button>
+              </li>
+              <li class="select-item">
+                <button data-select-item>Applications</button>
+              </li>
+            </ul>
+          </div>
+
+          <ul class="project-list">
+
+            <li class="project-item active" data-filter-item data-category="Retail Solutions">
+              <a href="#">
+                <h3 class="project-title">Scalable AI for Retail</h3>
+                <p class="project-category">Retail Solutions</p>
+                <p>Developed a real-time planogram compliance system for 7-Eleven, enhancing inventory tracking and
+                  operational efficiency. Presented at NVIDIA GTC 2025.</p>
+              </a>
+            </li>
+
+            <li class="project-item active" data-filter-item data-category="Generative AI">
+              <a href="#">
+                <h3 class="project-title">Innovative Generative AI Models</h3>
+                <p class="project-category">Generative AI</p>
+                <p>Developed a content and spatial-aware generative model for inpainting, overcoming challenges of
+                  limited
+                  data and improving contextual accuracy.</p>
+              </a>
+            </li>
+
+            <li class="project-item active" data-filter-item data-category="LLM Optimization">
+              <a href="#">
+                <h3 class="project-title">LLM Optimization with KAN Networks</h3>
+                <p class="project-category">LLM Optimization</p>
+                <p>Researched techniques to enhance small LLM efficiency, significantly reducing computational costs
+                  without
+                  compromising accuracy.</p>
+              </a>
+            </li>
+
+            <li class="project-item active" data-filter-item data-category="Applications">
+              <a href="#">
+                <h3 class="project-title">NER with Document AI</h3>
+                <p class="project-category">Applications</p>
+                <p>Implemented an NER system using GCP Document AI, automating text extraction and streamlining
+                  workflows for
+                  enterprise clients.</p>
+              </a>
+            </li>
+          </ul>
+      </article>
+
+    </div>
+
+  </main>
+
+
+
+  <!--
+    - custom js link
+  -->
+  <script src="./assets/js/script.js"></script>
+
+  <!--
+    - ionicon link
+  -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+
+</html>
