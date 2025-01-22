@@ -1,5 +1,15 @@
-# nayeemdev.github.io
-```
-My Personal Portfolio Design😍
-```
-![demo-screenshot](https://user-images.githubusercontent.com/40033062/116863765-98f82280-ac28-11eb-8fb0-adaa4e81126b.png)
+# premier-portfolio
+
+That's "First portfolio" in French ✨
+
+## Screenshot 📸
+
+![Israel Mitolu portfolio screenshot](./assets/img/seo-img.png)
+
+## Live Site 🚀
+
+[Preview the website here](https://israelmitolu.netlify.app).
+
+## Tools 🔨
+
+Built using HTML, CSS(SCSS), Javascript and GSAP
