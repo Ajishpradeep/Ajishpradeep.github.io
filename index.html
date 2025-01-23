@@ -237,75 +237,30 @@
         -->
 
         <section class="service">
-
-          <h3 class="h3 service-title">What I’m Doing</h3>
-
-          <ul class="service-list">
-
-            <!-- Service Item 1 -->
-            <li class="service-item content-card" data-service-item>
-              <div class="service-header">
-                <div class="service-icon-box">
-                  <img src="./assets/images/icon-design.svg" alt="Generative AI icon" width="24">
-                </div>
-                <div class="service-content-box">
-                  <h4 class="h4 service-item-title">Generative AI Solutions</h4>
-                  <p class="service-item-text">
-                    Designing generative AI models for real-world applications with advanced architectures.
-                  </p>
-                </div>
-                <button class="service-toggle-btn" aria-expanded="false" data-toggle-btn>
-                  <ion-icon name="chevron-down-outline"></ion-icon>
-                </button>
+          <div class="service-list">
+            <!-- Example of a service item -->
+            <div class="service-item" data-service-item>
+              <div class="service-icon-box">
+                <img src="path/to/icon.png" alt="Service Icon">
               </div>
-              <div class="service-details" data-service-details hidden>
-                <p>
-                  I specialize in creating spatially and content-aware models for tasks such as image inpainting,
-                  conditional image generation, and data augmentation. Using frameworks like PyTorch and TensorFlow,
-                  I’ve developed systems that overcome data scarcity challenges, enhance contextual understanding,
-                  and improve feature extraction.
-                </p>
-                <p>
-                  My notable work includes a GAN-based architecture showcased at NVIDIA GTC 2025, which significantly
-                  improved performance in data-limited environments while minimizing mode collapse.
-                </p>
+              <div class="service-content-box">
+                <h3 class="service-item-title">Service Title</h3>
+                <p class="service-item-text">Short description of the service.</p>
               </div>
-            </li>
+            </div>
+          </div>
 
-            <!-- Service Item 2 -->
-            <li class="service-item content-card" data-service-item>
-              <div class="service-header">
-                <div class="service-icon-box">
-                  <img src="./assets/images/icon-dev.svg" alt="AI Deployment icon" width="24">
-                </div>
-                <div class="service-content-box">
-                  <h4 class="h4 service-item-title">End-to-End AI Deployment</h4>
-                  <p class="service-item-text">
-                    Building scalable AI pipelines for cloud and edge environments with cutting-edge tools.
-                  </p>
-                </div>
-                <button class="service-toggle-btn" aria-expanded="false" data-toggle-btn>
-                  <ion-icon name="chevron-down-outline"></ion-icon>
-                </button>
-              </div>
-              <div class="service-details" data-service-details hidden>
-                <p>
-                  I design and deploy full-scale AI pipelines, including data preprocessing, model optimization,
-                  and production integration. My expertise spans cloud-native platforms like GCP and Vertex AI and
-                  edge deployments using NVIDIA TAO Toolkit and TensorRT.
-                </p>
-                <p>
-                  A key achievement includes developing a real-time planogram compliance system for retail, improving
-                  object detection accuracy by 25% and seamlessly integrating it into operational workflows.
-                </p>
-              </div>
-            </li>
-
-            <!-- Add More Service Items as Needed -->
-
-          </ul>
-
+          <!-- Modal for detailed view -->
+          <div class="modal-container" data-modal-container hidden>
+            <div class="overlay" data-overlay></div>
+            <div class="service-modal">
+              <button class="modal-close-btn" data-modal-close-btn>&times;</button>
+              <h3 class="modal-title" data-modal-title></h3>
+              <p class="modal-text" data-modal-text></p>
+            </div>
+          </div>
         </section>
+
 
 
 
@@ -328,7 +283,7 @@
                   <img src="./assets/images/avatar-1.png" alt="Daniel lewis" width="60" data-testimonials-avatar>
                 </figure>
 
-                <h4 class="h4 testimonials-item-title" data-testimonials-title>1 Daniel lewis</h4>
+                <h4 class="h4 testimonials-item-title" data-testimonials-title>2 Daniel lewis</h4>
 
                 <div class="testimonials-text" data-testimonials-text>
                   <p>
