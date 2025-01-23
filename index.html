@@ -242,107 +242,71 @@
 
           <ul class="service-list">
 
-            <li class="service-item">
-              <div class="service-icon-box">
-                <img src="./assets/images/icon-design.svg" alt="Generative AI icon" width="40">
+            <!-- Service Item 1 -->
+            <li class="service-item content-card" data-service-item>
+              <div class="service-header">
+                <div class="service-icon-box">
+                  <img src="./assets/images/icon-design.svg" alt="Generative AI icon" width="24">
+                </div>
+                <div class="service-content-box">
+                  <h4 class="h4 service-item-title">Generative AI Solutions</h4>
+                  <p class="service-item-text">
+                    Designing generative AI models for real-world applications with advanced architectures.
+                  </p>
+                </div>
+                <button class="service-toggle-btn" aria-expanded="false" data-toggle-btn>
+                  <ion-icon name="chevron-down-outline"></ion-icon>
+                </button>
               </div>
-              <div class="service-content-box">
-                <h4 class="h4 service-item-title">Generative AI Solutions</h4>
-                <p class="service-item-text">
-                  I design and implement advanced generative AI architectures tailored for real-world applications. My
-                  expertise
-                  includes creating spatially and content-aware models for tasks like image inpainting, conditional
-                  image
-                  generation, and data augmentation. Leveraging frameworks like PyTorch and TensorFlow, I have
-                  successfully
-                  developed and deployed generative AI systems that address data scarcity, improve contextual
-                  understanding, and
-                  enhance feature extraction in diverse domains.
+              <div class="service-details" data-service-details hidden>
+                <p>
+                  I specialize in creating spatially and content-aware models for tasks such as image inpainting,
+                  conditional image generation, and data augmentation. Using frameworks like PyTorch and TensorFlow,
+                  I’ve developed systems that overcome data scarcity challenges, enhance contextual understanding,
+                  and improve feature extraction.
                 </p>
-                <p class="service-item-text">
-                  Notable achievements include a content-aware GAN architecture presented at NVIDIA GTC 2025, which
-                  significantly improved performance in data-limited environments while minimizing mode collapse and
-                  overfitting.
-                </p>
-              </div>
-            </li>
-
-            <li class="service-item">
-              <div class="service-icon-box">
-                <img src="./assets/images/icon-dev.svg" alt="End-to-End AI Deployment icon" width="40">
-              </div>
-              <div class="service-content-box">
-                <h4 class="h4 service-item-title">End-to-End AI Deployment</h4>
-                <p class="service-item-text">
-                  I specialize in designing and deploying full-scale AI pipelines, covering data preprocessing, model
-                  development, optimization, and integration into production environments. My experience spans
-                  cloud-native
-                  solutions (Google Cloud Platform, Vertex AI) and edge deployments (NVIDIA TAO Toolkit, TensorRT),
-                  ensuring
-                  reliability, scalability, and performance optimization.
-                </p>
-                <p class="service-item-text">
-                  My work includes a real-time planogram compliance system for retail, improving object detection
-                  accuracy by
-                  25% and integrating seamlessly into existing workflows. This project showcased my ability to deliver
-                  solutions
-                  that balance cutting-edge technology with operational needs.
+                <p>
+                  My notable work includes a GAN-based architecture showcased at NVIDIA GTC 2025, which significantly
+                  improved performance in data-limited environments while minimizing mode collapse.
                 </p>
               </div>
             </li>
 
-            <li class="service-item">
-              <div class="service-icon-box">
-                <img src="./assets/images/icon-photo.svg" alt="LLM Optimization icon" width="40">
+            <!-- Service Item 2 -->
+            <li class="service-item content-card" data-service-item>
+              <div class="service-header">
+                <div class="service-icon-box">
+                  <img src="./assets/images/icon-dev.svg" alt="AI Deployment icon" width="24">
+                </div>
+                <div class="service-content-box">
+                  <h4 class="h4 service-item-title">End-to-End AI Deployment</h4>
+                  <p class="service-item-text">
+                    Building scalable AI pipelines for cloud and edge environments with cutting-edge tools.
+                  </p>
+                </div>
+                <button class="service-toggle-btn" aria-expanded="false" data-toggle-btn>
+                  <ion-icon name="chevron-down-outline"></ion-icon>
+                </button>
               </div>
-              <div class="service-content-box">
-                <h4 class="h4 service-item-title">LLM Optimization</h4>
-                <p class="service-item-text">
-                  My expertise in optimizing large language models (LLMs) focuses on improving computational efficiency
-                  while
-                  maintaining or enhancing model performance. I employ advanced techniques, such as Kolmogorov-Arnold
-                  Networks
-                  (KAN), pruning, quantization, and parameter-efficient fine-tuning, to reduce resource consumption and
-                  enable
-                  deployment in resource-constrained environments.
+              <div class="service-details" data-service-details hidden>
+                <p>
+                  I design and deploy full-scale AI pipelines, including data preprocessing, model optimization,
+                  and production integration. My expertise spans cloud-native platforms like GCP and Vertex AI and
+                  edge deployments using NVIDIA TAO Toolkit and TensorRT.
                 </p>
-                <p class="service-item-text">
-                  Recent work includes optimizing transformers for visual question answering and deploying lightweight
-                  LLMs for
-                  enterprise applications, achieving faster inference times without compromising accuracy.
+                <p>
+                  A key achievement includes developing a real-time planogram compliance system for retail, improving
+                  object detection accuracy by 25% and seamlessly integrating it into operational workflows.
                 </p>
               </div>
             </li>
 
-            <li class="service-item">
-              <div class="service-icon-box">
-                <img src="./assets/images/icon-consulting.svg" alt="AI Freelance Engineering icon" width="40">
-              </div>
-              <div class="service-content-box">
-                <h4 class="h4 service-item-title">AI Freelance Engineering & Consulting</h4>
-                <p class="service-item-text">
-                  As a freelance AI Engineer, I provide end-to-end support for AI projects, from ideation to deployment.
-                  My
-                  services include custom model development, feature extraction, model fine-tuning, and integration with
-                  existing systems. I bring a research-driven approach to each project, ensuring solutions are both
-                  innovative
-                  and practical.
-                </p>
-                <p class="service-item-text">
-                  My freelance collaborations have helped startups and enterprises optimize workflows, develop scalable
-                  AI
-                  solutions, and unlock new opportunities through AI-driven insights. Whether it’s creating a
-                  vision-based
-                  retail inventory management system or designing advanced feature embedding for search applications, I
-                  deliver
-                  impactful results tailored to specific business needs.
-                </p>
-              </div>
-            </li>
+            <!-- Add More Service Items as Needed -->
 
           </ul>
 
         </section>
+
 
 
 

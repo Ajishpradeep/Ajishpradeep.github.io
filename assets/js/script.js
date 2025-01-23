@@ -14,6 +14,24 @@ const sidebarBtn = document.querySelector("[data-sidebar-btn]");
 // sidebar toggle functionality for mobile
 sidebarBtn.addEventListener("click", function () { elementToggleFunc(sidebar); });
 
+document.querySelectorAll('[data-toggle-btn]').forEach(button => {
+  button.addEventListener('click', () => {
+    const serviceItem = button.closest('[data-service-item]');
+    const details = serviceItem.querySelector('[data-service-details]');
+    const isExpanded = button.getAttribute('aria-expanded') === 'true';
+
+    // Toggle aria-expanded attribute
+    button.setAttribute('aria-expanded', !isExpanded);
+
+    // Show/Hide service details
+    if (isExpanded) {
+      details.setAttribute('hidden', '');
+    } else {
+      details.removeAttribute('hidden');
+    }
+  });
+});
+
 
 
 // testimonials variables

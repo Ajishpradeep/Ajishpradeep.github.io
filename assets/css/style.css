@@ -1572,22 +1572,109 @@ textarea.form-input::-webkit-resizer {
   }
 
   /* service */
-
+  /* Service Items Styled as Content Cards */
   .service-item {
     display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    gap: 18px;
+    flex-direction: column;
+    gap: 15px;
     padding: 30px;
+    border: 1px solid #e0e0e0;
+    /* Borrowed from content-card */
+    border-radius: 10px;
+    background-color: #ffffff;
+    /* Clean background */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* Soft shadow for elevation */
+    transition: transform 0.2s, box-shadow 0.2s;
+    /* Smooth hover effect */
+  }
+
+  .service-item:hover {
+    transform: translateY(-5px);
+    /* Slight lift on hover */
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+    /* Deeper shadow on hover */
   }
 
   .service-icon-box {
     margin-bottom: 0;
     margin-top: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    background-color: #f3f4f6;
+    border-radius: 50%;
   }
 
   .service-content-box {
     text-align: left;
+  }
+
+  .service-item-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .service-item-text {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.5;
+    margin-bottom: 15px;
+  }
+
+  /* Toggle Button for Details */
+  .service-toggle-btn {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    font-size: 14px;
+    color: #007bff;
+    /* Accent color */
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+
+  .service-toggle-btn:hover {
+    color: #0056b3;
+  }
+
+  .service-toggle-btn ion-icon {
+    margin-left: 8px;
+    transition: transform 0.3s ease;
+  }
+
+  .service-toggle-btn[aria-expanded="true"] ion-icon {
+    transform: rotate(180deg);
+  }
+
+  /* Service Details (Initially Hidden) */
+  .service-details {
+    display: none;
+    font-size: 14px;
+    color: #444;
+    line-height: 1.5;
+    margin-top: 10px;
+  }
+
+  .service-details[hidden] {
+    display: none;
+  }
+
+  .service-details:not([hidden]) {
+    display: block;
+  }
+
+  /* General Consistency with Testimonials */
+  .testimonials-list,
+  .service-list {
+    gap: 30px;
+    margin: 0 -30px;
+    padding: 30px;
   }
 
   /* testimonials */
