@@ -35,11 +35,6 @@ const testimonialsModalFunc = function () {
 
 // Service modal functionality
 const serviceItems = document.querySelectorAll("[data-service-item]");
-const modalContainer = document.querySelector("[data-modal-container]");
-const modalCloseBtn = document.querySelector("[data-modal-close-btn]");
-const overlay = document.querySelector("[data-overlay]");
-const modalTitle = document.querySelector("[data-modal-title]");
-const modalText = document.querySelector("[data-modal-text]");
 
 // Define service details (title and content)
 const serviceDetails = [
