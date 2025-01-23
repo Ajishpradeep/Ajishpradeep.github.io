@@ -14,24 +14,36 @@ const sidebarBtn = document.querySelector("[data-sidebar-btn]");
 // sidebar toggle functionality for mobile
 sidebarBtn.addEventListener("click", function () { elementToggleFunc(sidebar); });
 
-document.querySelectorAll('[data-toggle-btn]').forEach(button => {
-  button.addEventListener('click', () => {
-    const serviceItem = button.closest('[data-service-item]');
-    const details = serviceItem.querySelector('[data-service-details]');
-    const isExpanded = button.getAttribute('aria-expanded') === 'true';
+// Define service data (full descriptions)
+const serviceDetails = [
+  {
+    title: 'Generative AI Solutions',
+    text: 'I specialize in creating spatially and content-aware models for tasks such as image inpainting, conditional image generation, and data augmentation. Using frameworks like PyTorch and TensorFlow, I’ve developed systems that overcome data scarcity challenges, enhance contextual understanding, and improve feature extraction. My notable work includes a GAN-based architecture showcased at NVIDIA GTC 2025, which significantly improved performance in data-limited environments while minimizing mode collapse.',
+  },
+  {
+    title: 'End-to-End AI Deployment',
+    text: 'I design and deploy full-scale AI pipelines, including data preprocessing, model optimization, and production integration. My expertise spans cloud-native platforms like GCP and Vertex AI and edge deployments using NVIDIA TAO Toolkit and TensorRT. A key achievement includes developing a real-time planogram compliance system for retail, improving object detection accuracy by 25% and seamlessly integrating it into operational workflows.',
+  },
+];
 
-    // Toggle aria-expanded attribute
-    button.setAttribute('aria-expanded', !isExpanded);
-
-    // Show/Hide service details
-    if (isExpanded) {
-      details.setAttribute('hidden', '');
-    } else {
-      details.removeAttribute('hidden');
-    }
+// Open modal
+serviceItems.forEach((item, index) => {
+  const popupBtn = item.querySelector('[data-popup-btn]');
+  popupBtn.addEventListener('click', () => {
+    modalTitle.textContent = serviceDetails[index].title;
+    modalText.textContent = serviceDetails[index].text;
+    modalContainer.removeAttribute('hidden');
   });
 });
 
+// Close modal
+modalCloseBtn.addEventListener('click', () => {
+  modalContainer.setAttribute('hidden', '');
+});
+
+modalOverlay.addEventListener('click', () => {
+  modalContainer.setAttribute('hidden', '');
+});
 
 
 // testimonials variables
