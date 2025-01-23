@@ -579,6 +579,7 @@ main {
   padding: 20px;
   border-radius: 14px;
   box-shadow: var(--shadow-2);
+
   z-index: 1;
 }
 
@@ -588,6 +589,7 @@ main {
   inset: 1px;
   background: var(--bg-gradient-jet);
   border-radius: inherit;
+  cursor: pointer;
   z-index: -1;
 }
 
@@ -601,6 +603,7 @@ main {
 
 .service-content-box {
   text-align: center;
+  cursor: pointer;
 }
 
 .service-item-title {
