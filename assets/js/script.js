@@ -55,24 +55,56 @@ const serviceItems = document.querySelectorAll("[data-service-item]");
 const serviceDetails = [
   {
     title: "Generative AI Solutions",
-    text: "Detailed description of the service including expertise in generative models.",
+    text: `
+      I design and implement advanced generative AI architectures tailored for real-world applications. My expertise includes creating spatially and content-aware models for tasks like image inpainting, conditional image generation, and data augmentation. Leveraging frameworks like PyTorch and TensorFlow, I have successfully developed and deployed generative AI systems that address data scarcity, improve contextual understanding, and enhance feature extraction in diverse domains.
+
+      Notable achievements include a content-aware GAN architecture presented at NVIDIA GTC 2025, which significantly improved performance in data-limited environments while minimizing mode collapse and overfitting.
+    `,
   },
   {
     title: "End-to-End AI Deployment",
-    text: "Details about your work in deploying scalable AI pipelines.",
+    text: `
+      I specialize in designing and deploying full-scale AI pipelines, covering data preprocessing, model development, optimization, and integration into production environments. My experience spans cloud-native solutions (Google Cloud Platform, Vertex AI) and edge deployments (NVIDIA TAO Toolkit, TensorRT), ensuring reliability, scalability, and performance optimization.
+
+      My work includes a real-time planogram compliance system for retail, improving object detection accuracy by 25% and integrating seamlessly into existing workflows.
+    `,
+  },
+  {
+    title: "LLM Optimization",
+    text: `
+      My expertise in optimizing large language models (LLMs) focuses on improving computational efficiency while maintaining or enhancing model performance. I employ advanced techniques, such as Kolmogorov-Arnold Networks (KAN), pruning, quantization, and parameter-efficient fine-tuning, to reduce resource consumption and enable deployment in resource-constrained environments.
+
+      Recent work includes optimizing transformers for visual question answering and deploying lightweight LLMs for enterprise applications, achieving faster inference times without compromising accuracy.
+    `,
+  },
+  {
+    title: "AI Freelance Engineering",
+    text: `
+      As a freelance AI Engineer, I provide end-to-end support for AI projects, from ideation to deployment. My services include custom model development, feature extraction, model fine-tuning, and integration with existing systems. I bring a research-driven approach to each project, ensuring solutions are both innovative and practical.
+
+      My freelance collaborations have helped startups and enterprises optimize workflows, develop scalable AI solutions, and unlock new opportunities through AI-driven insights.
+    `,
   },
 ];
 
-// Add click events to service items
+// Attach click events to service items
 serviceItems.forEach((item, index) => {
   item.addEventListener("click", () => {
-    modalTitle.textContent = serviceDetails[index].title;
-    modalText.textContent = serviceDetails[index].text;
+    const modalTitle = document.querySelector("[data-modal-title]");
+    const modalText = document.querySelector("[data-modal-text]");
 
+    modalTitle.textContent = serviceDetails[index].title;
+    modalText.innerHTML = serviceDetails[index].text; // Allows for multiline text
+    const modalContainer = document.querySelector("[data-modal-container]");
+    const overlay = document.querySelector("[data-overlay]");
     modalContainer.classList.add("active");
     overlay.classList.add("active");
   });
 });
+
+// Close modal functionality
+modalCloseBtn.addEventListener("click", closeModal);
+overlay.addEventListener("click", closeModal);
 
 // Custom select variables
 const select = document.querySelector("[data-select]");
