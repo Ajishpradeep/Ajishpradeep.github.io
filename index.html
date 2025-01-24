@@ -671,25 +671,65 @@
       <article class="portfolio" data-page="portfolio">
 
         <header>
-          <h2 class="h2 article-title">Portfolio</h2>
+          <h2 class="h2 article-title">Portfolio1</h2>
         </header>
 
         <section class="projects">
 
-          <!-- Research Section -->
-          <header>
-            <h3 class="h3 section-title">Research</h3>
-          </header>
+          <!-- Filter Buttons -->
+          <ul class="filter-list">
+            <li class="filter-item">
+              <button class="active" data-filter-btn>All</button>
+            </li>
+            <li class="filter-item">
+              <button data-filter-btn>Research</button>
+            </li>
+            <li class="filter-item">
+              <button data-filter-btn>Projects</button>
+            </li>
+            <li class="filter-item">
+              <button data-filter-btn>Case Studies</button>
+            </li>
+          </ul>
+
+          <!-- Filter Select Dropdown -->
+          <div class="filter-select-box">
+            <button class="filter-select" data-select>
+              <div class="select-value" data-selecct-value>Select category</div>
+              <div class="select-icon">
+                <ion-icon name="chevron-down"></ion-icon>
+              </div>
+            </button>
+            <ul class="select-list">
+              <li class="select-item">
+                <button data-select-item>All</button>
+              </li>
+              <li class="select-item">
+                <button data-select-item>Research</button>
+              </li>
+              <li class="select-item">
+                <button data-select-item>Projects</button>
+              </li>
+              <li class="select-item">
+                <button data-select-item>Case Studies</button>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Project List -->
           <ul class="project-list">
-            <li class="project-item">
+
+            <!-- Research Section -->
+            <li class="project-item active" data-filter-item data-category="research">
               <a href="#">
-                <figure class="project-img">
+                <!-- <figure class="project-img">
                   <div class="project-item-icon-box">
                     <ion-icon name="eye-outline"></ion-icon>
                   </div>
                   <img src="./assets/images/research-1.jpg" alt="Generative Model Research" loading="lazy">
-                </figure>
+                </figure> -->
                 <h3 class="project-title">Content and Spatial Aware Generative Model</h3>
+                <p class="project-category">Research</p>
                 <p>
                   Proposed a GAN architecture for inpainting under low-data constraints with contextual attention.
                   Published
@@ -698,16 +738,11 @@
               </a>
             </li>
 
-            <li class="project-item">
+            <li class="project-item active" data-filter-item data-category="research">
               <a href="https://www.nvidia.com/gtc/session-catalog/?search=Pradeep#/session/1727681108625001ctNM"
                 target="_blank">
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-                  <img src="./assets/images/gtc-poster.jpg" alt="NVIDIA GTC Poster" loading="lazy">
-                </figure>
                 <h3 class="project-title">NVIDIA GTC 2025 Poster</h3>
+                <p class="project-category">Research</p>
                 <p>
                   Presented a poster highlighting scalable AI pipelines for retail inventory management, emphasizing
                   planogram
@@ -715,38 +750,24 @@
                 </p>
               </a>
             </li>
-          </ul>
 
-          <!-- Projects Section -->
-          <header>
-            <h3 class="h3 section-title">Projects</h3>
-          </header>
-          <ul class="project-list">
-            <li class="project-item">
+            <!-- Projects Section -->
+            <li class="project-item active" data-filter-item data-category="projects">
               <a href="#">
                 <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-                  <img src="./assets/images/project-1.jpg" alt="Retail Inventory Management" loading="lazy">
-                </figure>
-                <h3 class="project-title">Retail Inventory Management</h3>
-                <p>
-                  Developed a vision-based system to identify discrepancies between planogram and realogram, enhancing
-                  operational efficiency for 7-Eleven stores.
-                </p>
+                  <h3 class="project-title">Retail Inventory Management</h3>
+                  <p class="project-category">Projects</p>
+                  <p>
+                    Developed a vision-based system to identify discrepancies between planogram and realogram, enhancing
+                    operational efficiency for 7-Eleven stores.
+                  </p>
               </a>
             </li>
 
-            <li class="project-item">
+            <li class="project-item active" data-filter-item data-category="projects">
               <a href="#">
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-                  <img src="./assets/images/project-2.png" alt="Object Detection Pipeline" loading="lazy">
-                </figure>
                 <h3 class="project-title">Handheld Object Detection</h3>
+                <p class="project-category">Projects</p>
                 <p>
                   Engineered a computer vision pipeline integrating object detection and vector embedding for partially
                   occluded objects, deployed in X8 unmanned stores.
@@ -754,29 +775,19 @@
               </a>
             </li>
 
-            <li class="project-item">
+            <li class="project-item active" data-filter-item data-category="projects">
               <a href="#">
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-                  <img src="./assets/images/project-3.jpg" alt="NER System" loading="lazy">
-                </figure>
                 <h3 class="project-title">NER on Label Extraction</h3>
+                <p class="project-category">Projects</p>
                 <p>
                   Developed an LLM-assisted NER system using GCP Document AI to automate text extraction and streamline
                   workflows.
                 </p>
               </a>
             </li>
-          </ul>
 
-          <!-- Case Studies Section -->
-          <header>
-            <h3 class="h3 section-title">Case Studies</h3>
-          </header>
-          <ul class="project-list">
-            <li class="project-item">
+            <!-- Case Study Section -->
+            <li class="project-item active" data-filter-item data-category="case studies">
               <a href="https://github.com/Ajishpradeep/Case_Study" target="_blank">
                 <figure class="project-img">
                   <div class="project-item-icon-box">
@@ -785,17 +796,25 @@
                   <img src="./assets/images/case-study.jpg" alt="Case Study" loading="lazy">
                 </figure>
                 <h3 class="project-title">Case Study: Transformers & Embedding</h3>
+                <p class="project-category">Case Studies</p>
                 <p>
                   Mathematical breakdown of Transformers and fine-tuning vector embedding models using triplet loss for
                   image-to-image search.
                 </p>
               </a>
             </li>
+
           </ul>
 
         </section>
 
       </article>
+
+
+
+
+
+
 
       <!--
         - #BLOG
