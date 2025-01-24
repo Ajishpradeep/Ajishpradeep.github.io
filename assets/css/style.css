@@ -1007,12 +1007,15 @@ main {
 }
 
 .skills-list {
-  padding: 20px;
+  padding: 40px;
 }
 
 
 .skills-item:not(:last-child) {
   margin-bottom: 15px;
+  color: var(--light-gray);
+  font-size: var(--fs-7);
+  font-weight: var(--fw-300);
 }
 
 .skill .title-wrapper {
