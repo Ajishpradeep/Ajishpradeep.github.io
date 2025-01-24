@@ -134,6 +134,33 @@ formInputs.forEach((input) => {
   });
 });
 
+// Filter functionality
+const filterButtons = document.querySelectorAll("[data-filter-btn]");
+
+filterButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    // Remove active class from all buttons
+    filterButtons.forEach((btn) => btn.classList.remove("active"));
+
+    // Add active class to the clicked button
+    button.classList.add("active");
+
+    const filterCategory = button.getAttribute("data-category");
+
+    // Show or hide projects based on the selected category
+    filterItems.forEach((item) => {
+      const itemCategory = item.getAttribute("data-category");
+
+      if (filterCategory === "all" || itemCategory === filterCategory) {
+        item.classList.add("active");
+      } else {
+        item.classList.remove("active");
+      }
+    });
+  });
+});
+
+
 // Page navigation
 const navigationLinks = document.querySelectorAll("[data-nav-link]");
 const pages = document.querySelectorAll("[data-page]");
