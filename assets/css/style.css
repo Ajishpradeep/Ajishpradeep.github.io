@@ -1131,6 +1131,10 @@ main {
   animation: scaleUp 0.25s ease forwards;
 }
 
+.icon-large {
+  font-size: 32px;
+}
+
 @keyframes scaleUp {
   0% {
     transform: scale(0.5);
