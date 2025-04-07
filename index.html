@@ -2,1148 +2,1018 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description"
-    content="(Ajish) Pradeep Rajasekar - AI Engineer & Consultant specializing in Vision AI, Generative AI, and scalable AI solutions.">
-  <meta name="author" content="Ajish Pradeep">
-  <meta name="keywords"
-    content="AI Engineer, Generative AI Consultant, Vision AI Expert, Machine Learning, Freelance AI Consultant">
-
-  <title>Ajish Pradeep - AI Engineer & Researcher</title>
-
-
-  <!--
-    - favicon
-  -->
-  <link rel="shortcut icon" href="./assets/images/favicon.ico" type="image/x-icon">
-
-  <!--
-    - custom css link
-  -->
-  <link rel="stylesheet" href="./assets/css/style.css">
-
-  <!--
-    - google font link
-  -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajish Pradeep - AI Engineer & Researcher</title>
+    <meta name="description"
+        content="Ajish Pradeep - AI Engineer & Consultant specializing in Vision AI, Generative AI, and scalable AI solutions.">
+    <meta name="author" content="Ajish Pradeep">
+    <meta name="keywords"
+        content="AI Engineer, Generative AI Consultant, Vision AI Expert, Machine Learning, Freelance AI Consultant">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Generative AI SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@google/generative-ai@0.1.3/dist/index.min.js"></script>
 </head>
 
-<body>
+<body class="text-gray-200 bg-black">
+    <!-- Subtle AI Background -->
+    <div class="ai-background fixed top-0 left-0 w-full h-full -z-10"></div>
 
-  <!--
-    - #MAIN
-  -->
+    <!-- Navigation Menu for Mobile -->
+    <nav class="fixed top-0 left-0 right-0 p-4 z-50 bg-gray-900 border-b border-cyan-800 md:hidden">
+        <div class="flex justify-between items-center">
+            <div class="flex items-center">
+                <div class="w-2 h-8 bg-gradient-to-b from-cyan-500 to-green-500 mr-2 pulse-element"></div>
+                <h1 class="text-lg font-bold title-text">AJISH PRADEEP</h1>
+            </div>
+            <button id="mobile-menu-toggle" class="text-cyan-400">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+        </div>
+        <div id="mobile-menu" class="hidden mt-4 transition-all duration-300">
+            <div class="flex flex-col space-y-2">
+                <a href="#about"
+                    class="w-full bg-gray-800 hover:bg-cyan-900 text-cyan-400 text-left text-sm py-2 px-3 rounded flex items-center transition-all">
+                    <i class="fas fa-user mr-2"></i> ABOUT ME
+                </a>
+                <a href="#skills"
+                    class="w-full bg-gray-800 hover:bg-green-900 text-green-400 text-left text-sm py-2 px-3 rounded flex items-center transition-all">
+                    <i class="fas fa-code mr-2"></i> SKILLS
+                </a>
+                <a href="#experience"
+                    class="w-full bg-gray-800 hover:bg-orange-900 text-orange-400 text-left text-sm py-2 px-3 rounded flex items-center transition-all">
+                    <i class="fas fa-briefcase mr-2"></i> EXPERIENCE
+                </a>
+                <a href="#education"
+                    class="w-full bg-gray-800 hover:bg-green-900 text-green-400 text-left text-sm py-2 px-3 rounded flex items-center transition-all">
+                    <i class="fas fa-graduation-cap mr-2"></i> EDUCATION
+                </a>
+                <a href="#portfolio"
+                    class="w-full bg-gray-800 hover:bg-yellow-900 text-yellow-400 text-left text-sm py-2 px-3 rounded flex items-center transition-all">
+                    <i class="fas fa-project-diagram mr-2"></i> PORTFOLIO
+                </a>
+                <a href="#contact"
+                    class="w-full bg-gray-800 hover:bg-red-900 text-red-400 text-left text-sm py-2 px-3 rounded flex items-center transition-all">
+                    <i class="fas fa-envelope mr-2"></i> CONTACT
+                </a>
+            </div>
+        </div>
+    </nav>
 
-  <main>
+    <div class="container mx-auto px-4 py-6 mt-16 md:mt-6">
+        <!-- Header -->
+        <header
+            class="flex flex-col md:flex-row justify-between items-center border-b border-cyan-600 pb-4 mb-8 slide-in-top">
+            <div class="flex items-center mb-4 md:mb-0">
+                <div class="w-4 h-12 bg-gradient-to-b from-cyan-500 via-green-500 to-yellow-500 mr-3 pulse-element">
+                </div>
+                <div>
+                    <h1 class="text-2xl font-bold title-text">AJISH PRADEEP</h1>
+                    <p class="text-xs text-gray-400">AI ENGINEER & RESEARCHER</p>
+                </div>
+            </div>
+            <div class="flex flex-wrap items-center justify-center md:justify-end gap-4 slide-in-right">
+                <div class="flex items-center">
+                    <div class="signal-strength mr-2">
+                        <div class="signal-bar" style="left: 0; height: 5px;"></div>
+                        <div class="signal-bar" style="left: 20px; height: 10px;"></div>
+                        <div class="signal-bar filled" style="left: 40px; height: 15px;"></div>
+                        <div class="signal-bar filled" style="left: 60px; height: 20px;"></div>
+                        <div class="signal-bar filled" style="left: 80px; height: 20px;"></div>
+                    </div>
+                    <span class="text-cyan-500 text-xs">PORTFOLIO: ACTIVE</span>
+                </div>
+                <span class="hidden md:inline text-gray-500">|</span>
+                <div class="text-xs">
+                    <span class="text-yellow-400">LOCATION: </span>
+                    <span class="text-cyan-400">TAIPEI, TAIWAN</span>
+                </div>
+                <span class="hidden md:inline text-gray-500">|</span>
+                <div class="text-xs">
+                    <span class="text-yellow-400">STATUS: </span>
+                    <span class="text-green-400">AVAILABLE</span>
+                </div>
+                <a href="#contact"
+                    class="bg-gradient-to-r from-cyan-900 to-green-900 hover:from-cyan-800 hover:to-green-800 text-xs px-3 py-1 rounded-md transition-all hover:scale-105">
+                    <i class="fas fa-paper-plane mr-1"></i> CONTACT
+                </a>
+            </div>
+        </header>
 
-    <!--
-      - #SIDEBAR
-    -->
+        <!-- Main Dashboard -->
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+            <!-- Left sidebar - Sticky -->
+            <div class="lg:col-span-1 space-y-6 hidden md:block">
+                <div class="sticky top-6">
+                    <!-- User Profile -->
+                    <div class="bg-gray-900 rounded-lg border border-gray-800 p-4 hover-glow slide-in-left mb-6">
+                        <div class="flex flex-col items-center">
+                            <div class="w-32 h-18 overflow-hidden mb-4 profile-pic-container p-1 rounded-lg">
+                                <img src="profile_pic.png" alt="Ajish Pradeep"
+                                    class="w-full h-full object-cover rounded-lg">
+                            </div>
+                            <h3 class="font-bold text-lg mb-1">Ajish Pradeep</h3>
+                            <p class="text-xs text-gray-400 mb-3">AI ENGINEER & RESEARCHER</p>
+                            <div class="flex items-center mb-3">
+                                <div class="w-2 h-2 rounded-full bg-green-500 mr-2"></div>
+                                <span class="text-xs text-green-400">AVAILABLE FOR WORK</span>
+                            </div>
+                            <div class="w-full h-px bg-gray-800 my-3"></div>
+                            <div class="text-xs text-gray-400 mb-3">
+                                <div class="flex items-center mb-2">
+                                    <i class="fas fa-map-marker-alt text-cyan-400 w-5"></i>
+                                    <span>Taipei, Taiwan</span>
+                                </div>
+                                <div class="flex items-center mb-2">
+                                    <i class="fas fa-envelope text-cyan-400 w-5"></i>
+                                    <a href="mailto:ajishpradeep@gmail.com"
+                                        class="hover:text-cyan-400">ajishpradeep@gmail.com</a>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-phone text-cyan-400 w-5"></i>
+                                    <a href="tel:+886905174662" class="hover:text-cyan-400">+886 905 174 662</a>
+                                </div>
+                            </div>
+                            <div class="w-full h-px bg-gray-800 my-3"></div>
+                            <div class="flex justify-center space-x-2 mb-3">
+                                <a href="https://www.linkedin.com/in/ajishpradeep/" target="_blank"
+                                    class="social-icon-sidebar linkedin">
+                                    <i class="fab fa-linkedin-in"></i>
+                                </a>
+                                <a href="https://github.com/Ajishpradeep/" target="_blank"
+                                    class="social-icon-sidebar github">
+                                    <i class="fab fa-github"></i>
+                                </a>
+                                <a href="https://line.me/ti/p/Ubq5KJIQTv" target="_blank"
+                                    class="social-icon-sidebar line">
+                                    <i class="fab fa-line"></i>
+                                </a>
+                                <a href="mailto:ajishpradeep@gmail.com" class="social-icon-sidebar email">
+                                    <i class="fas fa-envelope"></i>
+                                </a>
+                                <a href="tel:+886905174662" class="social-icon-sidebar phone">
+                                    <i class="fas fa-phone"></i>
+                                </a>
+                            </div>
+                            <a href="resume.pdf" download class="resume-download-btn w-full text-center">
+                                <i class="fas fa-download"></i> DOWNLOAD RESUME
+                            </a>
+                        </div>
+                    </div>
 
-    <aside class="sidebar" data-sidebar>
+                    <!-- Quick Actions -->
+                    <div class="bg-gray-900 rounded-lg border border-gray-800 p-4 hover-glow slide-in-left">
+                        <h3 class="font-bold text-cyan-400 mb-3 flex items-center">
+                            <i class="fas fa-bolt mr-2"></i> QUICK LINKS
+                        </h3>
+                        <div class="space-y-2">
+                            <a href="#about"
+                                class="flex items-center text-sm p-2 bg-gray-800 hover:bg-cyan-900 rounded transition-all">
+                                <i class="fas fa-user text-cyan-400 mr-2 w-5"></i> About Me
+                            </a>
+                            <a href="#skills"
+                                class="flex items-center text-sm p-2 bg-gray-800 hover:bg-green-900 rounded transition-all">
+                                <i class="fas fa-code text-green-400 mr-2 w-5"></i> Skills
+                            </a>
+                            <a href="#experience"
+                                class="flex items-center text-sm p-2 bg-gray-800 hover:bg-orange-900 rounded transition-all">
+                                <i class="fas fa-briefcase text-orange-400 mr-2 w-5"></i> Experience
+                            </a>
+                            <a href="#portfolio"
+                                class="flex items-center text-sm p-2 bg-gray-800 hover:bg-yellow-900 rounded transition-all">
+                                <i class="fas fa-project-diagram text-yellow-400 mr-2 w-5"></i> Portfolio
+                            </a>
+                            <a href="#contact"
+                                class="flex items-center text-sm p-2 bg-gray-800 hover:bg-red-900 rounded transition-all">
+                                <i class="fas fa-envelope text-red-400 mr-2 w-5"></i> Contact
+                            </a>
+                        </div>
 
-      <div class="sidebar-info">
+                        <div class="mt-4 pt-4 border-t border-gray-800">
+                            <h3 class="font-bold text-green-400 mb-3 flex items-center">
+                                <i class="fas fa-chart-line mr-2"></i> EXPERTISE
+                            </h3>
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-xs">Vision AI</span>
+                                    <div class="w-2/3 bg-gray-800 h-1.5 rounded-full overflow-hidden">
+                                        <div class="bg-cyan-500 h-full rounded-full" style="width: 95%"></div>
+                                    </div>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-xs">Generative AI</span>
+                                    <div class="w-2/3 bg-gray-800 h-1.5 rounded-full overflow-hidden">
+                                        <div class="bg-green-500 h-full rounded-full" style="width: 90%"></div>
+                                    </div>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-xs">LLM Optimization</span>
+                                    <div class="w-2/3 bg-gray-800 h-1.5 rounded-full overflow-hidden">
+                                        <div class="bg-orange-500 h-full rounded-full" style="width: 85%"></div>
+                                    </div>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-xs">Edge Deployment</span>
+                                    <div class="w-2/3 bg-gray-800 h-1.5 rounded-full overflow-hidden">
+                                        <div class="bg-yellow-500 h-full rounded-full" style="width: 80%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-        <figure class="avatar-box">
-          <img src="./assets/images/pic_1.png" alt="Ajish Pradeep" width="100">
+            <!-- Main Content -->
+            <div class="lg:col-span-3 space-y-6">
+                <!-- About Me Section -->
+                <div id="about"
+                    class="bg-gray-900 rounded-lg border border-gray-800 overflow-hidden hover-glow reveal-element from-left">
+                    <div class="border-b border-gray-800 p-4 bg-gray-950 flex justify-between items-center">
+                        <h2 class="font-bold text-cyan-400 flex items-center">
+                            <i class="fas fa-user mr-2"></i> ABOUT ME
+                        </h2>
+                        <div class="text-xs flex items-center">
+                            <div class="w-2 h-2 rounded-full bg-cyan-500 mr-1 pulsing-border"></div>
+                            <span class="text-cyan-400">AI ENGINEER & RESEARCHER</span>
+                        </div>
+                    </div>
+                    <div class="p-4 text-sm">
+                        <p class="mb-3 reveal-text">
+                            I'm Ajish (Pradeep Rajasekar), a professional AI engineer and researcher specializing in
+                            designing and
+                            deploying advanced AI solutions. My primary focus is to take a research-driven approach in
+                            solving the AI
+                            irregularities where the traditional methods fall short. This includes building scalable AI
+                            pipelines, the optimization of large
+                            language models (LLMs), and the development and manipulation of AI models through
+                            architectural and algorithmic
+                            modifications.
+                        </p>
+                        <p class="mb-3 reveal-text">
+                            A testament to my commitment to bridging research and real-world applications, I published
+                            and presented a
+                            scalable retail AI solution at the NVIDIA GTC 2025 conference in San Jose, a real-time
+                            planogram compliance system
+                            designed for 7-Eleven stores in Taiwan.
+                        </p>
+                        <p class="reveal-text">
+                            While my full-time role as an AI Engineer and Researcher remains my primary commitment, I
+                            also collaborate
+                            with startups and enterprises as a freelance research engineer. I'm open to opportunities at
+                            any time as long as they're
+                            fascinating and have scope to learn. Consider me interested in any project or opportunity in
+                            need of another brain to
+                            tackle a complex AI problem; ping me anytime.
+                        </p>
+                    </div>
+                </div>
 
-        </figure>
+                <!-- Skills Section (Full Width) -->
+                <div id="skills"
+                    class="bg-gray-900 rounded-lg border border-gray-800 overflow-hidden hover-glow reveal-element from-right">
+                    <div class="border-b border-gray-800 p-4 bg-gray-950 flex justify-between items-center">
+                        <h2 class="font-bold text-green-400 flex items-center">
+                            <i class="fas fa-code mr-2"></i> CORE SKILLS
+                        </h2>
+                        <span class="text-xs bg-green-900 text-green-300 px-2 py-1 rounded-full">EXPERT</span>
+                    </div>
 
-        <div class="info-content">
-          <h1 class="name" title="Ajish Pradeep">Ajish Pradeep</h1>
+                    <!-- Skills Categories -->
+                    <div class="p-4 border-b border-gray-800">
+                        <div class="flex flex-wrap gap-2 justify-center">
+                            <button class="skill-category-btn active" data-category="all">ALL</button>
+                            <button class="skill-category-btn" data-category="programming">PROGRAMMING</button>
+                            <button class="skill-category-btn" data-category="ai-frameworks">AI FRAMEWORKS</button>
+                            <button class="skill-category-btn" data-category="cloud-deployment">CLOUD &
+                                DEPLOYMENT</button>
+                            <button class="skill-category-btn" data-category="specializations">SPECIALIZATIONS</button>
+                            <button class="skill-category-btn" data-category="mathematics">MATHEMATICS</button>
+                        </div>
+                    </div>
 
-          <p class="title">AI Researcher & Engineer</p>
+                    <!-- Skills Tiles Container -->
+                    <div class="p-4">
+                        <div class="skills-container-fullwidth">
+                            <!-- Programming Skills -->
+                            <div class="skill-tile" data-category="programming">
+                                <i class="fas fa-code skill-icon"></i>
+                                <span>Python</span>
+                            </div>
+                            <div class="skill-tile" data-category="programming">
+                                <i class="fab fa-js skill-icon"></i>
+                                <span>JavaScript</span>
+                            </div>
+
+                            <!-- AI Frameworks -->
+                            <div class="skill-tile" data-category="ai-frameworks">
+                                <i class="fas fa-brain skill-icon"></i>
+                                <span>PyTorch</span>
+                            </div>
+                            <div class="skill-tile" data-category="ai-frameworks">
+                                <i class="fas fa-brain skill-icon"></i>
+                                <span>TensorFlow</span>
+                            </div>
+                            <div class="skill-tile" data-category="ai-frameworks">
+                                <i class="fas fa-robot skill-icon"></i>
+                                <span>Transformers</span>
+                            </div>
+                            <div class="skill-tile" data-category="ai-frameworks">
+                                <i class="fas fa-project-diagram skill-icon"></i>
+                                <span>Diffusion Models</span>
+                            </div>
+                            <div class="skill-tile" data-category="ai-frameworks">
+                                <i class="fas fa-stream skill-icon"></i>
+                                <span>Deepstream</span>
+                            </div>
+
+                            <!-- Cloud & Deployment -->
+                            <div class="skill-tile" data-category="cloud-deployment">
+                                <i class="fas fa-cloud skill-icon"></i>
+                                <span>Google Cloud (GCP)</span>
+                            </div>
+                            <div class="skill-tile" data-category="cloud-deployment">
+                                <i class="fas fa-server skill-icon"></i>
+                                <span>Vertex AI</span>
+                            </div>
+                            <div class="skill-tile" data-category="cloud-deployment">
+                                <i class="fas fa-microchip skill-icon"></i>
+                                <span>Edge Deployment</span>
+                            </div>
+                            <div class="skill-tile" data-category="cloud-deployment">
+                                <i class="fas fa-bolt skill-icon"></i>
+                                <span>TensorRT</span>
+                            </div>
+
+                            <!-- Specializations -->
+                            <div class="skill-tile" data-category="specializations">
+                                <i class="fas fa-eye skill-icon"></i>
+                                <span>Object Detection</span>
+                            </div>
+                            <div class="skill-tile" data-category="specializations">
+                                <i class="fas fa-image skill-icon"></i>
+                                <span>Conditional Image Generation</span>
+                            </div>
+                            <div class="skill-tile" data-category="specializations">
+                                <i class="fas fa-comments skill-icon"></i>
+                                <span>LLM Optimization</span>
+                            </div>
+                            <div class="skill-tile" data-category="specializations">
+                                <i class="fas fa-layer-group skill-icon"></i>
+                                <span>Multi-Modal AI</span>
+                            </div>
+                            <div class="skill-tile" data-category="specializations">
+                                <i class="fas fa-database skill-icon"></i>
+                                <span>Vector Embedding</span>
+                            </div>
+                            <div class="skill-tile" data-category="specializations">
+                                <i class="fas fa-cogs skill-icon"></i>
+                                <span>Custom AI Model Training</span>
+                            </div>
+                            <div class="skill-tile" data-category="specializations">
+                                <i class="fas fa-sliders-h skill-icon"></i>
+                                <span>Fine-tuning</span>
+                            </div>
+
+                            <!-- Mathematics -->
+                            <div class="skill-tile" data-category="mathematics">
+                                <i class="fas fa-square-root-alt skill-icon"></i>
+                                <span>Linear Algebra</span>
+                            </div>
+                            <div class="skill-tile" data-category="mathematics">
+                                <i class="fas fa-infinity skill-icon"></i>
+                                <span>Calculus</span>
+                            </div>
+                            <div class="skill-tile" data-category="mathematics">
+                                <i class="fas fa-lightbulb skill-icon"></i>
+                                <span>Attention Mechanism</span>
+                            </div>
+                            <div class="skill-tile" data-category="mathematics">
+                                <i class="fas fa-chart-line skill-icon"></i>
+                                <span>Feature Extraction</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- What I'm Doing -->
+                <div
+                    class="bg-gray-900 rounded-lg border border-gray-800 overflow-hidden hover-glow reveal-element from-left">
+                    <div class="border-b border-gray-800 p-4 bg-gray-950 flex justify-between items-center">
+                        <h2 class="font-bold text-orange-400 flex items-center">
+                            <i class="fas fa-laptop-code mr-2"></i> WHAT I'M DOING
+                        </h2>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 stagger-children">
+                        <!-- Service 1 -->
+                        <div class="bg-gray-950 p-4 rounded border border-gray-800 service-card service-cyan">
+                            <div class="flex items-center mb-3">
+                                <div
+                                    class="w-10 h-10 bg-cyan-900 rounded-full flex items-center justify-center mr-3 service-icon">
+                                    <i class="fas fa-brain text-cyan-400"></i>
+                                </div>
+                                <h3 class="font-bold">GENERATIVE AI SOLUTIONS</h3>
+                            </div>
+                            <p class="text-xs text-gray-400">
+                                Designing and implementing generative AI models for real-world applications.
+                            </p>
+                        </div>
+
+                        <!-- Service 2 -->
+                        <div class="bg-gray-950 p-4 rounded border border-gray-800 service-card service-orange">
+                            <div class="flex items-center mb-3">
+                                <div
+                                    class="w-10 h-10 bg-orange-900 rounded-full flex items-center justify-center mr-3 service-icon">
+                                    <i class="fas fa-project-diagram text-orange-400"></i>
+                                </div>
+                                <h3 class="font-bold">END-TO-END AI DEPLOYMENT</h3>
+                            </div>
+                            <p class="text-xs text-gray-400">
+                                Building full-scale AI pipelines from data preprocessing to production.
+                            </p>
+                        </div>
+
+                        <!-- Service 3 -->
+                        <div class="bg-gray-950 p-4 rounded border border-gray-800 service-card service-green">
+                            <div class="flex items-center mb-3">
+                                <div
+                                    class="w-10 h-10 bg-green-900 rounded-full flex items-center justify-center mr-3 service-icon">
+                                    <i class="fas fa-microchip text-green-400"></i>
+                                </div>
+                                <h3 class="font-bold">LLM OPTIMIZATION</h3>
+                            </div>
+                            <p class="text-xs text-gray-400">
+                                Optimizing large language models for computational efficiency.
+                            </p>
+                        </div>
+
+                        <!-- Service 4 -->
+                        <div class="bg-gray-950 p-4 rounded border border-gray-800 service-card service-yellow">
+                            <div class="flex items-center mb-3">
+                                <div
+                                    class="w-10 h-10 bg-yellow-900 rounded-full flex items-center justify-center mr-3 service-icon">
+                                    <i class="fas fa-handshake text-yellow-400"></i>
+                                </div>
+                                <h3 class="font-bold">AI FREELANCE ENGINEERING & CONSULTING</h3>
+                            </div>
+                            <p class="text-xs text-gray-400">
+                                Providing end-to-end AI solutions tailored to specific business needs.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Experience & Terminal -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div id="experience" class="lg:col-span-2">
+                        <div
+                            class="bg-gray-900 rounded-lg border border-gray-800 overflow-hidden h-full hover-glow reveal-element from-bottom">
+                            <div class="border-b border-gray-800 p-3 bg-gray-950 flex justify-between items-center">
+                                <h2 class="font-bold text-orange-400 flex items-center">
+                                    <i class="fas fa-briefcase mr-2"></i> EXPERIENCE
+                                </h2>
+                            </div>
+                            <div class="p-4 space-y-4">
+                                <!-- Experience 1 -->
+                                <div class="border-b border-gray-800 pb-4 experience-item">
+                                    <div class="flex justify-between mb-2">
+                                        <h3 class="font-bold text-orange-400">AI ENGINEER</h3>
+                                        <span class="text-xs bg-gray-800 text-gray-300 px-2 py-0.5 rounded-full">2023 —
+                                            PRESENT</span>
+                                    </div>
+                                    <p class="text-sm mb-2">President Information Corp, Taiwan</p>
+                                    <ul class="text-xs text-gray-400 list-disc pl-4 space-y-2">
+                                        <li>Research to deploy a real-time planogram compliance system for 7-Eleven
+                                            stores, which was presented as a poster at NVIDIA GTC 2025.</li>
+                                        <li>Developed and implemented an innovative custom AI model specifically to
+                                            tackle the problem of occulted, fast-moving object detection.</li>
+                                        <li>Collaborated with NVIDIA to leverage metropolis microservices, creating
+                                            generative AI pipelines capable of seamless cloud and edge deployment.</li>
+                                        <li>Developed a high-precision consumer behavior prediction model with 95%
+                                            accuracy, utilizing advanced machine learning techniques.</li>
+                                    </ul>
+                                </div>
+
+                                <!-- Experience 2 -->
+                                <div class="experience-item">
+                                    <div class="flex justify-between mb-2">
+                                        <h3 class="font-bold text-orange-400">SOFTWARE DEVELOPER</h3>
+                                        <span class="text-xs bg-gray-800 text-gray-300 px-2 py-0.5 rounded-full">2017 —
+                                            2021</span>
+                                    </div>
+                                    <p class="text-sm mb-2">AIBS Software Solutions, India</p>
+                                    <ul class="text-xs text-gray-400 list-disc pl-4 space-y-2">
+                                        <li>Spearheaded the development of tailored ERP solutions that optimized
+                                            manufacturing workflows and enhanced system reliability.</li>
+                                        <li>Engineered a robust inventory management system, resolving 95% of software
+                                            discrepancies and significantly streamlining operations.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div
+                            class="bg-gray-900 rounded-lg border border-gray-800 overflow-hidden h-full hover-glow reveal-element from-right">
+                            <div class="border-b border-gray-800 p-3 bg-gray-950 flex justify-between items-center">
+                                <h2 class="font-bold text-green-400 flex items-center">
+                                    <i class="fas fa-terminal mr-2"></i> AI TERMINAL
+                                </h2>
+                                <div class="flex space-x-2">
+                                    <button
+                                        class="text-xs bg-gray-800 hover:bg-green-900 text-green-400 px-2 py-1 rounded transition-all"
+                                        id="clear-terminal">
+                                        <i class="fas fa-trash mr-1"></i> CLEAR
+                                    </button>
+                                    <button
+                                        class="text-xs bg-gray-800 hover:bg-green-900 text-green-400 px-2 py-1 rounded transition-all"
+                                        id="refresh-terminal">
+                                        <i class="fas fa-redo mr-1"></i> REFRESH
+                                    </button>
+                                </div>
+                            </div>
+                            <div id="terminal-content"
+                                class="h-64 p-3 overflow-y-auto terminal-scroll bg-black text-green-400 text-xs font-mono">
+                                <div class="mb-1"><span class="text-yellow-400">ajish@portfolio:~#</span> ./skills
+                                    --list -t expertise</div>
+                                <div class="mb-1">[+] Initializing skill analysis...</div>
+                                <div class="mb-1">[+] Loading expertise profile... <span
+                                        class="text-green-400">SUCCESS</span></div>
+                                <div class="mb-1">[+] Analyzing core competencies...</div>
+                                <div class="mb-1">[!] EXPERTISE: Generative AI, Vision AI, LLM Optimization</div>
+                                <div class="mb-1">[!] FRAMEWORKS: PyTorch, TensorFlow, Transformers, Diffusion Models
+                                </div>
+                                <div class="mb-1">[!] PLATFORMS: Google Cloud Platform (GCP), Vertex AI, Deepstream
+                                </div>
+                                <div class="mb-1">[+] Scanning for specialized techniques...</div>
+                                <div class="mb-1">[!] FOUND: Feature extraction, vector embedding, transformer
+                                    architectures</div>
+                                <div class="mb-1">[+] Analyzing mathematical foundations...</div>
+                                <div class="mb-1">[!] STRONG: Linear Algebra, Calculus, Attention Mechanisms</div>
+                                <div class="mb-1">[+] AjishGPT initialized. Type 'ask' followed by your question or just
+                                    type your question directly.</div>
+                                <div class="mb-1">ajish@portfolio:~#<span class="code-input"> _</span></div>
+                            </div>
+                            <div class="p-2 border-t border-gray-800 bg-gray-950">
+                                <div class="flex">
+                                    <input type="text" id="terminal-input" placeholder="Ask AjishGPT something..."
+                                        class="w-full bg-black border border-gray-700 text-green-400 text-xs p-1 focus:outline-none focus:border-green-500">
+                                    <button id="terminal-submit"
+                                        class="bg-green-900 text-green-400 px-2 text-xs">ASK</button>
+                                </div>
+                                <div class="text-xs text-gray-500 mt-1">Try: help, skills, projects, collaborations,
+                                    contact or clear</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Education -->
+                <div id="education"
+                    class="bg-gray-900 rounded-lg border border-gray-800 overflow-hidden hover-glow reveal-element from-left">
+                    <div class="border-b border-gray-800 p-4 bg-gray-950 flex justify-between items-center">
+                        <h2 class="font-bold text-green-400 flex items-center">
+                            <i class="fas fa-graduation-cap mr-2"></i> EDUCATION
+                        </h2>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 stagger-children">
+                        <!-- Education 1 -->
+                        <div class="bg-gray-950 p-4 rounded border border-gray-800 education-card education-green">
+                            <div class="flex items-center mb-3">
+                                <div
+                                    class="w-10 h-10 bg-green-900 rounded-full flex items-center justify-center mr-3 education-icon">
+                                    <i class="fas fa-university text-green-400"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold">MASTER'S IN ELECTRICAL ENGINEERING AND COMPUTER SCIENCE</h3>
+                                    <p class="text-xs text-gray-500">National Taipei University of Technology, Taiwan
+                                    </p>
+                                </div>
+                            </div>
+                            <p class="text-xs text-gray-400">
+                                Advanced research in generative AI, culminating in a novel content and spatial-aware
+                                model for
+                                image inpainting. This work significantly addressed challenges in limited data
+                                environments and
+                                set a new standard for efficiency and accuracy in GAN-based systems.
+                            </p>
+                        </div>
+
+                        <!-- Education 2 -->
+                        <div class="bg-gray-950 p-4 rounded border border-gray-800 education-card education-cyan">
+                            <div class="flex items-center mb-3">
+                                <div
+                                    class="w-10 h-10 bg-cyan-900 rounded-full flex items-center justify-center mr-3 education-icon">
+                                    <i class="fas fa-university text-cyan-400"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold">BACHELOR OF SCIENCE IN INFORMATION TECHNOLOGY</h3>
+                                    <p class="text-xs text-gray-500">Sri Ramakrishna Mission Vidyalaya College, India
+                                    </p>
+                                </div>
+                            </div>
+                            <p class="text-xs text-gray-400">
+                                Learned to code and developed a passion for technology, laying the foundation for deeper
+                                understanding of datastructure and algorithms.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Portfolio -->
+                <div id="portfolio"
+                    class="bg-gray-900 rounded-lg border border-gray-800 overflow-hidden hover-glow reveal-element from-right">
+                    <div class="border-b border-gray-800 p-4 bg-gray-950 flex justify-between items-center">
+                        <h2 class="font-bold text-yellow-400 flex items-center">
+                            <i class="fas fa-project-diagram mr-2"></i> PORTFOLIO
+                        </h2>
+                        <div class="text-xs">
+                            <span class="text-orange-400">NOTE: </span>
+                            <span class="text-gray-400">SOME REPOSITORIES ARE PRIVATE DUE TO NDA</span>
+                        </div>
+                    </div>
+
+                    <!-- Portfolio Filter -->
+                    <div class="p-4 border-b border-gray-800">
+                        <div class="flex flex-wrap gap-2 justify-center">
+                            <button class="portfolio-filter active" data-filter="all">ALL</button>
+                            <button class="portfolio-filter" data-filter="research">RESEARCH</button>
+                            <button class="portfolio-filter" data-filter="projects">PROJECTS</button>
+                            <button class="portfolio-filter" data-filter="case-studies">CASE STUDIES</button>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 portfolio-container stagger-children">
+                        <!-- Project 1 -->
+                        <div class="bg-gray-950 p-3 rounded border border-gray-800 hover:border-cyan-700 transition-all cursor-pointer portfolio-item"
+                            data-category="research">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="font-bold text-cyan-400">CONTENT AND SPATIAL AWARE GENERATIVE MODEL</h3>
+                                <span class="text-xs bg-cyan-900 text-cyan-300 px-2 py-0.5 rounded-full">RESEARCH</span>
+                            </div>
+                            <p class="text-xs text-gray-400 mb-3">
+                                Proposed a GAN architecture for inpainting under low-data constraints with contextual
+                                attention.
+                                Published as a thesis at National Taipei University of Technology.
+                            </p>
+                            <div class="flex justify-between text-xs">
+                                <span class="text-cyan-400">THESIS</span>
+                                <a href="https://drive.google.com/file/d/1QxLWxU_ucbl_HUzGRsLXDLzjXRLakO3P/view?usp=sharing"
+                                    target="_blank" class="text-blue-400 hover:underline">VIEW PROJECT</a>
+                            </div>
+                        </div>
+
+                        <!-- Project 2 -->
+                        <div class="bg-gray-950 p-3 rounded border border-gray-800 hover:border-orange-700 transition-all cursor-pointer portfolio-item"
+                            data-category="research">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="font-bold text-orange-400">NVIDIA GTC 2025 POSTER</h3>
+                                <span
+                                    class="text-xs bg-orange-900 text-orange-300 px-2 py-0.5 rounded-full">RESEARCH</span>
+                            </div>
+                            <p class="text-xs text-gray-400 mb-3">
+                                Presented a poster highlighting scalable AI pipelines for retail inventory management,
+                                emphasizing
+                                planogram compliance and advanced vision models.
+                            </p>
+                            <div class="flex justify-between text-xs">
+                                <span class="text-orange-400">POSTER</span>
+                                <a href="https://www.nvidia.com/gtc/session-catalog/?search=Pradeep#/session/1727681108625001ctNM"
+                                    target="_blank" class="text-blue-400 hover:underline">VIEW PROJECT</a>
+                            </div>
+                        </div>
+
+                        <!-- Project 3 -->
+                        <div class="bg-gray-950 p-3 rounded border border-gray-800 hover:border-green-700 transition-all cursor-pointer portfolio-item"
+                            data-category="research">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="font-bold text-green-400">REDUCING LLM COMPUTATIONAL COSTS</h3>
+                                <span
+                                    class="text-xs bg-green-900 text-green-300 px-2 py-0.5 rounded-full">RESEARCH</span>
+                            </div>
+                            <p class="text-xs text-gray-400 mb-3">
+                                Ongoing research leveraging Kolmogorov-Arnold Networks (KAN) to optimize computational
+                                costs for
+                                large language models, making them suitable for resource-constrained environments.
+                            </p>
+                            <div class="flex justify-between text-xs">
+                                <span class="text-red-400">UNDER NDA</span>
+                                <span class="text-gray-400">CONTACT FOR DETAILS</span>
+                            </div>
+                        </div>
+
+                        <!-- Project 4 -->
+                        <div class="bg-gray-950 p-3 rounded border border-gray-800 hover:border-yellow-700 transition-all cursor-pointer portfolio-item"
+                            data-category="projects">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="font-bold text-yellow-400">HANDHELD OBJECT DETECTION</h3>
+                                <span
+                                    class="text-xs bg-yellow-900 text-yellow-300 px-2 py-0.5 rounded-full">PROJECT</span>
+                            </div>
+                            <p class="text-xs text-gray-400 mb-3">
+                                Engineered a computer vision pipeline integrating object detection and vector embedding
+                                for
+                                partially occluded objects, deployed in X8 unmanned stores.
+                            </p>
+                            <div class="flex justify-between text-xs">
+                                <span class="text-red-400">UNDER NDA</span>
+                                <span class="text-gray-400">CONTACT FOR DETAILS</span>
+                            </div>
+                        </div>
+
+                        <!-- Project 5 -->
+                        <div class="bg-gray-950 p-3 rounded border border-gray-800 hover:border-cyan-700 transition-all cursor-pointer portfolio-item"
+                            data-category="projects">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="font-bold text-cyan-400">RETAIL INVENTORY MANAGEMENT</h3>
+                                <span class="text-xs bg-cyan-900 text-cyan-300 px-2 py-0.5 rounded-full">PROJECT</span>
+                            </div>
+                            <p class="text-xs text-gray-400 mb-3">
+                                Developed a vision-based system to identify discrepancies between planogram and
+                                realogram,
+                                enhancing operational efficiency for 7-Eleven stores.
+                            </p>
+                            <div class="flex justify-between text-xs">
+                                <span class="text-cyan-400">CASE STUDY</span>
+                                <a href="https://drive.google.com/file/d/1CHZokDYdyX0GEruNErHCW4bFt6hBf8On/view?usp=sharing"
+                                    target="_blank" class="text-blue-400 hover:underline">VIEW PROJECT</a>
+                            </div>
+                        </div>
+
+                        <!-- Project 6 -->
+                        <div class="bg-gray-950 p-3 rounded border border-gray-800 hover:border-yellow-700 transition-all cursor-pointer portfolio-item"
+                            data-category="case-studies">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="font-bold text-yellow-400">CASE STUDY: TRANSFORMERS & EMBEDDING</h3>
+                                <span class="text-xs bg-yellow-900 text-yellow-300 px-2 py-0.5 rounded-full">CASE
+                                    STUDY</span>
+                            </div>
+                            <p class="text-xs text-gray-400 mb-3">
+                                Mathematical breakdown of Transformers and fine-tuning vector embedding models using
+                                triplet loss
+                                for image-to-image search.
+                            </p>
+                            <div class="flex justify-between text-xs">
+                                <span class="text-yellow-400">RESEARCH</span>
+                                <a href="https://github.com/Ajishpradeep/Case_Study" target="_blank"
+                                    class="text-blue-400 hover:underline">VIEW PROJECT</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Collaborations -->
+                <div id="collaborations"
+                    class="bg-gray-900 rounded-lg border border-gray-800 overflow-hidden hover-glow reveal-element from-left">
+                    <div class="border-b border-gray-800 p-4 bg-gray-950 flex justify-between items-center">
+                        <h2 class="font-bold text-cyan-400 flex items-center">
+                            <i class="fas fa-handshake mr-2"></i> COLLABORATIONS
+                        </h2>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 stagger-children">
+                        <!-- Collaboration 1 -->
+                        <div class="bg-gray-950 p-4 rounded border border-gray-800 collab-card collab-cyan">
+                            <div class="flex items-center mb-3">
+                                <div
+                                    class="w-10 h-10 bg-cyan-900 rounded-full flex items-center justify-center mr-3 collab-icon">
+                                    <i class="fas fa-building text-cyan-400"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold">FUTURE DATA SYSTEMS</h3>
+                                    <p class="text-xs text-gray-500">Taipei, Taiwan</p>
+                                </div>
+                            </div>
+                            <p class="text-xs text-gray-400 mb-2">
+                                <strong>About:</strong> A Taiwan Based Bespoke AI startup focus on introducing AI in
+                                Agriculture in Taiwan
+                            </p>
+                            <p class="text-xs text-gray-400 mb-2">
+                                <strong>My Contribution:</strong> Part of the pioneer team as an AI engineer with focus
+                                on research and POC planning for AI analysis with focus on crop yield prediction.
+                            </p>
+                            <a href="https://www.futuredatasystems.ai/" target="_blank"
+                                class="text-xs text-cyan-400 hover:underline">Visit Website</a>
+                        </div>
+
+                        <!-- Collaboration 2 -->
+                        <div class="bg-gray-950 p-4 rounded border border-gray-800 collab-card collab-orange">
+                            <div class="flex items-center mb-3">
+                                <div
+                                    class="w-10 h-10 bg-orange-900 rounded-full flex items-center justify-center mr-3 collab-icon">
+                                    <i class="fas fa-building text-orange-400"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold">MOBILITYZ</h3>
+                                    <p class="text-xs text-gray-500">Houston, United States of America</p>
+                                </div>
+                            </div>
+                            <p class="text-xs text-gray-400 mb-2">
+                                <strong>About:</strong> MobilityZ Health is a digital health company specializing in
+                                musculoskeletal (MSK) injury management.
+                            </p>
+                            <p class="text-xs text-gray-400 mb-2">
+                                <strong>My Contribution:</strong> Led the AI development for a key model within a
+                                multi-level cascade, overseeing the entire process from research to deployment.
+                            </p>
+                            <a href="https://mobilityzhealth.com/" target="_blank"
+                                class="text-xs text-orange-400 hover:underline">Visit Website</a>
+                        </div>
+
+                        <!-- Collaboration 3 -->
+                        <div class="bg-gray-950 p-4 rounded border border-gray-800 collab-card collab-green">
+                            <div class="flex items-center mb-3">
+                                <div
+                                    class="w-10 h-10 bg-green-900 rounded-full flex items-center justify-center mr-3 collab-icon">
+                                    <i class="fas fa-university text-green-400"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold">RESEARCH LAB (AI & MULTIMEDIA SYSTEMS)</h3>
+                                    <p class="text-xs text-gray-500">NTUT, Taipei, Taiwan</p>
+                                </div>
+                            </div>
+                            <p class="text-xs text-gray-400 mb-2">
+                                <strong>About:</strong> A research lab at National Taipei University of Technology
+                                focusing on multimedia encoding with AI intervention.
+                            </p>
+                            <p class="text-xs text-gray-400 mb-2">
+                                <strong>My Contribution:</strong> Part of the research team as a research assistant to
+                                professor and vice president of the university Dr.Shih-Hsuan Yang.
+                            </p>
+                            <a href="https://www-en.ntut.edu.tw/p/404-1006-116494.php?Lang=en" target="_blank"
+                                class="text-xs text-green-400 hover:underline">Visit Website</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div id="contact"
+                    class="bg-gray-900 rounded-lg border border-gray-800 overflow-hidden hover-glow reveal-element from-bottom">
+                    <div class="border-b border-gray-800 p-4 bg-gray-950 flex justify-between items-center">
+                        <h2 class="font-bold text-red-400 flex items-center">
+                            <i class="fas fa-envelope mr-2"></i> CONTACT
+                        </h2>
+                        <div class="text-xs flex items-center">
+                            <div class="w-2 h-2 rounded-full bg-red-500 mr-1 pulsing-border"></div>
+                            <span class="text-red-400">SECURE TRANSMISSION</span>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 p-4">
+                        <!-- Contact Info -->
+                        <div>
+                            <h3 class="font-bold text-red-400 mb-4">CONTACT INFORMATION</h3>
+                            <div class="space-y-4">
+                                <div class="flex items-start">
+                                    <div
+                                        class="w-8 h-8 bg-red-900 rounded-full flex items-center justify-center mr-3 contact-icon">
+                                        <i class="fas fa-envelope text-red-400"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-bold">Email</p>
+                                        <table class="text-xs text-gray-400">
+                                            <tr>
+                                                <td class="pr-2">Personal:</td>
+                                                <td><a href="mailto:ajishpradeep@gmail.com"
+                                                        class="hover:text-red-400 contact-link">ajishpradeep@gmail.com</a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="pr-2">Business:</td>
+                                                <td><a href="mailto:ajish@quintet-ai.com"
+                                                        class="hover:text-red-400 contact-link">ajish@quintet-ai.com</a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="pr-2">Freelance:</td>
+                                                <td><a href="mailto:ajish@futuredatasystems.ai"
+                                                        class="hover:text-red-400 contact-link">ajish@futuredatasystems.ai</a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="pr-2">Work:</td>
+                                                <td><a href="mailto:ajish@pic.net.tw"
+                                                        class="hover:text-red-400 contact-link">ajish@pic.net.tw</a>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-start">
+                                    <div
+                                        class="w-8 h-8 bg-yellow-900 rounded-full flex items-center justify-center mr-3 contact-icon">
+                                        <i class="fas fa-phone text-yellow-400"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-bold">Phone</p>
+                                        <p class="text-xs text-gray-400">
+                                            <a href="tel:+886905174662" class="hover:text-yellow-400 contact-link">+886
+                                                905 174 662</a>
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-start">
+                                    <div
+                                        class="w-8 h-8 bg-cyan-900 rounded-full flex items-center justify-center mr-3 contact-icon">
+                                        <i class="fas fa-map-marker-alt text-cyan-400"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-bold">Location</p>
+                                        <p class="text-xs text-gray-400">Taipei City, Taiwan</p>
+                                    </div>
+                                </div>
+
+                                <div class="pt-4">
+                                    <p class="text-sm font-bold text-cyan-400 mb-3">SOCIAL LINKS</p>
+                                    <div class="flex space-x-4">
+                                        <a href="https://www.linkedin.com/in/ajishpradeep/" target="_blank"
+                                            class="w-8 h-8 bg-gray-800 hover:bg-cyan-900 rounded-full flex items-center justify-center transition-all hover:scale-110 social-icon">
+                                            <i class="fab fa-linkedin-in text-cyan-400"></i>
+                                        </a>
+                                        <a href="https://github.com/Ajishpradeep/" target="_blank"
+                                            class="w-8 h-8 bg-gray-800 hover:bg-orange-900 rounded-full flex items-center justify-center transition-all hover:scale-110 social-icon">
+                                            <i class="fab fa-github text-orange-400"></i>
+                                        </a>
+                                        <a href="https://line.me/ti/p/Ubq5KJIQTv" target="_blank"
+                                            class="w-8 h-8 bg-gray-800 hover:bg-green-900 rounded-full flex items-center justify-center transition-all hover:scale-110 social-icon">
+                                            <i class="fab fa-line text-green-400"></i>
+                                        </a>
+                                        <a href="https://instagram.com/ajishpradeep" target="_blank"
+                                            class="w-8 h-8 bg-gray-800 hover:bg-yellow-900 rounded-full flex items-center justify-center transition-all hover:scale-110 social-icon">
+                                            <i class="fab fa-instagram text-yellow-400"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Contact Form -->
+                        <div>
+                            <h3 class="font-bold text-red-400 mb-4">SEND MESSAGE</h3>
+                            <form name="contact" method="POST" enctype="multipart/form-data" data-netlify="true"
+                                class="space-y-4 contact-form">
+                                <div>
+                                    <input type="text" name="fullname" placeholder="* FULL NAME" required
+                                        class="w-full bg-gray-800 border border-gray-700 rounded p-2 text-sm text-gray-300 focus:outline-none focus:border-red-500 transition-all form-input">
+                                </div>
+
+                                <div>
+                                    <input type="email" name="email" placeholder="* EMAIL ADDRESS" required
+                                        class="w-full bg-gray-800 border border-gray-700 rounded p-2 text-sm text-gray-300 focus:outline-none focus:border-red-500 transition-all form-input">
+                                </div>
+
+                                <div>
+                                    <textarea name="message" placeholder="* YOUR MESSAGE" required
+                                        class="w-full bg-gray-800 border border-gray-700 rounded p-2 text-sm text-gray-300 focus:outline-none focus:border-red-500 transition-all h-32 form-input"></textarea>
+                                </div>
+
+                                <div>
+                                    <input type="file" name="file"
+                                        class="w-full bg-gray-800 border border-gray-700 rounded p-2 text-sm text-gray-300 focus:outline-none focus:border-red-500 transition-all form-input">
+                                </div>
+
+                                <div>
+                                    <button type="submit"
+                                        class="bg-gradient-to-r from-red-900 to-orange-800 hover:from-red-800 hover:to-orange-700 text-red-400 py-2 px-4 rounded flex items-center transition-all hover:scale-105 form-submit">
+                                        <i class="fas fa-paper-plane mr-2"></i> SEND MESSAGE
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <button class="info_more-btn" data-sidebar-btn>
-          <span>Show Contacts</span>
-
-          <ion-icon name="chevron-down"></ion-icon>
-        </button>
-
-      </div>
-
-      <div class="sidebar-info_more">
-
-        <div class="separator"></div>
-
-        <ul class="contacts-list">
-
-          <li class="contact-item">
-
-            <div class="icon-box">
-              <ion-icon name="mail-outline"></ion-icon>
+        <!-- Footer -->
+        <footer
+            class="mt-8 border-t border-gray-800 pt-4 text-xs text-gray-600 flex flex-col md:flex-row justify-between items-center reveal-element">
+            <div class="mb-4 md:mb-0 text-center md:text-left">
+                <span>AJISH PRADEEP PORTFOLIO v1.0</span>
+                <span class="mx-2">|</span>
+                <span>AI ENGINEER & RESEARCHER</span>
+                <span class="mx-2">|</span>
+                <span>LAST UPDATE: <span class="text-cyan-400">APRIL 2025</span></span>
             </div>
-
-            <div class="contact-info">
-              <p class="contact-title">Email</p>
-
-              <a href="mailto:ajishpradeep@gmail.com" class="contact-link">ajishpradeep@gmail.com</a>
-              <a href="#contact" class="navbar-link">More....</a>
+            <div class="flex items-center">
+                <div class="w-2 h-2 rounded-full bg-green-500 mr-2 pulse-element"></div>
+                <span>ONLINE</span>
+                <span class="mx-2">|</span>
+                <span id="status-message" class="blink text-yellow-400">READY FOR OPPORTUNITIES</span>
             </div>
-
-          </li>
-
-          <li class="contact-item">
-
-            <div class="icon-box">
-              <ion-icon name="phone-portrait-outline"></ion-icon>
-            </div>
-
-            <div class="contact-info">
-              <p class="contact-title">Phone</p>
-
-              <a href="tel:+886905174662" class="contact-link">+886 905 174 662</a>
-            </div>
-
-          </li>
-
-          <li class="contact-item">
-
-            <div class="icon-box">
-              <ion-icon name="location-outline"></ion-icon>
-            </div>
-
-            <div class="contact-info">
-              <p class="contact-title">Location</p>
-
-              <address>Taipei City,Taiwan </address>
-            </div>
-
-          </li>
-
-        </ul>
-
-        <div class="separator"></div>
-
-        <ul class="social-list">
-
-          <!-- LinkedIn -->
-          <li class="social-item">
-            <a href="https://www.linkedin.com/in/ajishpradeep/" target="_blank" class="social-link">
-              <ion-icon name="logo-linkedin" class="icon-large"></ion-icon>
-            </a>
-          </li>
-
-          <!-- GitHub -->
-          <li class="social-item">
-            <a href="https://github.com/Ajishpradeep/" target="_blank" class="social-link">
-              <ion-icon name="logo-github" class="icon-large"></ion-icon>
-            </a>
-          </li>
-
-          <!-- Line -->
-          <li class="social-item">
-            <a href="https://line.me/ti/p/Ubq5KJIQTv" target="_blank" class="social-link">
-              <img src="./assets/images/line.svg" alt="Line" width="32" height="32">
-            </a>
-          </li>
-
-
-          <!-- Instagram -->
-          <li class="social-item">
-            <a href="https://instagram.com/ajishpradeep" target="_blank" class="social-link">
-              <ion-icon name="logo-instagram" class="icon-large"></ion-icon>
-            </a>
-          </li>
-        </ul>
-      </div>
-
-    </aside>
-
-
-    <!--
-      - #main-content
-    -->
-
-    <div class="main-content">
-
-      <!--
-        - #NAVBAR
-      -->
-
-      <nav class="navbar">
-        <ul class="navbar-list">
-          <li class="navbar-item">
-            <a href="#about" class="navbar-link active">About</a>
-          </li>
-          <li class="navbar-item">
-            <a href="#info" class="navbar-link">Background</a>
-          </li>
-          <li class="navbar-item">
-            <a href="#portfolio" class="navbar-link">Portfolio</a>
-          </li>
-          <li class="navbar-item">
-            <a href="#collab" class="navbar-link">Collabrations</a>
-          </li>
-          <li class="navbar-item">
-            <a href="#contact" class="navbar-link">Contact</a>
-          </li>
-        </ul>
-      </nav>
-
-
-      <!--
-        - #ABOUT
-      -->
-
-      <article class="about  active" data-page="about">
-        <section id="about">
-          <header>
-            <h2 class="h2 article-title">Hey..!!!</h2>
-          </header>
-
-          <section class="about-text">
-            <p>
-              I'm Ajish (Pradeep Rajasekar), a professional AI engineer and researcher specializing in designing and
-              deploying
-              advanced AI solutions. My primary focus is to take a research-driven approach in solving the AI
-              irregularities where the
-              traditional methods fall short. This includes building scalable AI pipelines, the optimization of large
-              language models
-              (LLMs), and the development and manipulation of AI models through architectural and algorithmic
-              modifications.
-            </p>
-            <p>
-              A testament to my commitment to bridging research and real-world applications, I published and presented a
-              scalable
-              retail AI solution at the NVIDIA GTC 2025 conference in San Jose, a real-time planogram compliance system
-              designed for
-              7-Eleven stores in Taiwan.
-            </p>
-            <p>
-              While my full-time role as an AI Engineer and Researcher remains my primary commitment, I also collaborate
-              with startups
-              and enterprises as a freelance research engineer. I'm open to opportunities at any time as long as they're
-              fascinating
-              and have scope to learn. Consider me interested in any project or opportunity in need of another brain to
-              tackle a
-              complex AI problem ; ping me anytime.
-            </p>
-          </section>
-
-
-          <!--
-          - service
-        -->
-
-          <section class="service">
-
-            <h3 class="h3 service-title">What I’m Doing</h3>
-
-            <div class="service-list">
-
-              <!-- Service Item 1 -->
-              <div class="service-item" data-service-item>
-                <div class="service-icon-box">
-                  <img src="./assets/images/icon-photo.svg" alt="Generative AI icon" width="40">
-                </div>
-                <div class="service-content-box">
-                  <h4 class="service-item-title">Generative AI Solutions</h4>
-                  <p class="service-item-text">Designing and implementing generative AI models for real-world
-                    applications.</p>
-                </div>
-              </div>
-
-              <!-- Service Item 2 -->
-              <div class="service-item" data-service-item>
-                <div class="service-icon-box">
-                  <img src="./assets/images/icon-dev.svg" alt="End-to-End AI Deployment icon" width="40">
-                </div>
-                <div class="service-content-box">
-                  <h4 class="service-item-title">End-to-End AI Deployment</h4>
-                  <p class="service-item-text">Building full-scale AI pipelines from data preprocessing to production.
-                  </p>
-                </div>
-              </div>
-
-              <!-- Service Item 3 -->
-              <div class="service-item" data-service-item>
-                <div class="service-icon-box">
-                  <img src="./assets/images/icon-design.svg" alt="LLM Optimization icon" width="40">
-                </div>
-                <div class="service-content-box">
-                  <h4 class="service-item-title">LLM Optimization</h4>
-                  <p class="service-item-text">Optimizing large language models for computational efficiency.</p>
-                </div>
-              </div>
-
-              <!-- Service Item 4 -->
-              <div class="service-item" data-service-item>
-                <div class="service-icon-box">
-                  <img src="./assets/images/icon-dev.svg" alt="AI Freelance Engineering icon" width="40">
-                </div>
-                <div class="service-content-box">
-                  <h4 class="service-item-title">AI Freelance Engineering & Consulting</h4>
-                  <p class="service-item-text">Providing end-to-end AI solutions tailored to specific business needs.
-                  </p>
-                </div>
-              </div>
-
-            </div>
-
-            <!-- Modal for detailed view -->
-            <div class="modal-container" data-modal-container hidden>
-              <div class="overlay" data-overlay></div>
-              <div class="service-modal">
-                <button class="modal-close-btn" data-modal-close-btn>&times;</button>
-                <h3 class="modal-title" data-modal-title></h3>
-                <p class="modal-text" data-modal-text></p>
-              </div>
-            </div>
-
-          </section>
-          <!--
-          - testimonials
-        -->
-
-          <section class="testimonials">
-
-            <h3 class="h3 testimonials-title">Field Expertise</h3>
-
-            <ul class="testimonials-list has-scrollbar">
-
-              <li class="testimonials-item">
-                <div class="content-card" data-testimonials-item>
-
-                  <figure class="testimonials-avatar-box">
-                    <img src="./assets/images/gen-ai.png" alt="Gen AI" width="40" data-testimonials-avatar>
-                  </figure>
-
-                  <h4 class="h4 testimonials-item-title" data-testimonials-title>Generative AI</h4>
-
-                  <div class="testimonials-text" data-testimonials-text>
-                    <p>
-                      Specialized in designing custom architectures for image inpainting and data-driven content
-                      generation.
-                    </p>
-                  </div>
-
-                </div>
-              </li>
-
-              <li class="testimonials-item">
-                <div class="content-card" data-testimonials-item>
-
-                  <figure class="testimonials-avatar-box">
-                    <img src="./assets/images/llm.png" alt="LLM" width="40" data-testimonials-avatar>
-                  </figure>
-
-                  <h4 class="h4 testimonials-item-title" data-testimonials-title>LLM Optimization
-                  </h4>
-
-                  <div class="testimonials-text" data-testimonials-text>
-                    <p>
-                      Expert in enhancing LLM efficiency using advanced techniques like Kolmogorov-Arnold Networks
-                      (KAN), enabling resource-efficient deployment.
-                    </p>
-                  </div>
-
-                </div>
-              </li>
-
-              <li class="testimonials-item">
-                <div class="content-card" data-testimonials-item>
-
-                  <figure class="testimonials-avatar-box">
-                    <img src="./assets/images/vision-ai.png" alt="Vision AI" width="40" data-testimonials-avatar>
-                  </figure>
-
-                  <h4 class="h4 testimonials-item-title" data-testimonials-title>Vision AI:</h4>
-
-                  <div class="testimonials-text" data-testimonials-text>
-                    <p>
-                      Proficient in creating scalable, real-time solutions for object detection and recognition,
-                      particularly in retail applications.
-                    </p>
-                  </div>
-
-                </div>
-              </li>
-
-              <li class="testimonials-item">
-                <div class="content-card" data-testimonials-item>
-
-                  <figure class="testimonials-avatar-box">
-                    <img src="./assets/images/ai-deploy.png" alt="AI Deploy" width="40" data-testimonials-avatar>
-                  </figure>
-
-                  <h4 class="h4 testimonials-item-title" data-testimonials-title>AI Deployment:</h4>
-
-                  <div class="testimonials-text" data-testimonials-text>
-                    <p>
-                      Hands-on experience with NVIDIA TAO Toolkit, TensorRT, and GCP for seamless integration across
-                      cloud and edge environments.
-                    </p>
-                  </div>
-
-                </div>
-              </li>
-
-              <li class="testimonials-item">
-                <div class="content-card" data-testimonials-item>
-
-                  <figure class="testimonials-avatar-box">
-                    <img src="./assets/images/ai-pipe-deploy.png" alt="AI Pipeline Deployment" width="40"
-                      data-testimonials-avatar>
-                  </figure>
-
-                  <h4 class="h4 testimonials-item-title" data-testimonials-title>End-to-End AI Development:</h4>
-
-                  <div class="testimonials-text" data-testimonials-text>
-                    <p>
-                      Comprehensive expertise in building AI pipelines from concept to production, ensuring scalability,
-                      reliability, and impact.
-                    </p>
-                  </div>
-
-                </div>
-              </li>
-
-              <li class="testimonials-item">
-                <div class="content-card" data-testimonials-item>
-
-                  <figure class="testimonials-avatar-box">
-                    <img src="./assets/images/collab.png" alt="Cross-Disciplinary Collaboration" width="40"
-                      data-testimonials-avatar>
-                  </figure>
-
-                  <h4 class="h4 testimonials-item-title" data-testimonials-title>Cross-Disciplinary Collaboration:</h4>
-
-                  <div class="testimonials-text" data-testimonials-text>
-                    <p>
-                      Strong ability to bridge the gap between technical development and business strategy, ensuring
-                      solutions align with organizational goals.
-                    </p>
-                  </div>
-
-                </div>
-              </li>
-
-            </ul>
-
-          </section>
-        </section>
-
-        <!-- </article> -->
-
-
-        <!--
-        - #info
-      -->
-
-        <!-- <article class="info  active" data-page="info"> -->
-        <section id="info">
-
-          <header>
-            <h2 class="h2 article-title">info</h2>
-          </header>
-
-          <section class="timeline">
-
-            <div class="title-wrapper">
-              <div class="icon-box">
-                <ion-icon name="book-outline"></ion-icon>
-              </div>
-
-              <h3 class="h3">Experience</h3>
-            </div>
-
-            <ol class="timeline-list">
-
-              <li class="timeline-item">
-
-                <h4 class="h4 timeline-item-title">AI Engineer</h4>
-                <span>2023 — Present</span>
-                <p class="h4 timeline-item-title">
-                  President Information Corp, Taiwan
-                </p>
-
-                <ul class="timeline-text">
-                  <li> <br>
-                    Research to deploy a real-time planogram compliance system for 7-Eleven
-                    stores, which was
-                    presented
-                    as a poster at NVIDIA GTC 2025, leveraging advanced vision AI models and cloud-based deployment.
-                  </li>
-                  <li> <br>
-                    Developed and implemented an innovative custom AI model specifically to tackle
-                    the problem of
-                    occulted, fast-moving
-                    object detection, using a custom model training approach from research to deployment, resulting in
-                    enhanced operational
-                    efficiency.
-                  <li> <br>
-                    Collaborated with NVIDIA to leverage metropolis microservices, creating
-                    generative AI pipelines
-                    capable of seamless
-                    cloud and edge deployment, setting a new benchmark for integrated AI solutions.
-                  </li>
-                  <li> <br>
-                    Developed a high-precision consumer behavior prediction model with 95%
-                    accuracy, utilizing
-                    advanced
-                    machine learning
-                    techniques and processing over 5 million data points to empower targeted marketing strategies.
-                  </li>
-                </ul>
-              </li>
-
-              <li class="timeline-item">
-
-                <h4 class="h4 timeline-item-title">Software Developer</h4>
-
-                <span>2017 — 2021</span>
-                <p class="h4 timeline-item-title">
-                  AIBS Software Solutions, India
-                </p>
-
-                <ul class="timeline-text">
-                  <li> <br>
-                    Spearheaded the development of tailored ERP solutions that optimized
-                    manufacturing workflows and
-                    enhanced system reliability, transforming corporate efficiency.
-                  </li>
-                  <li> <br>
-                    Engineered a robust inventory management system, resolving 95% of software
-                    discrepancies and
-                    significantly streamlining operations for enterprise clients.
-                  </li>
-                </ul>
-
-              </li>
-
-            </ol>
-
-          </section>
-
-          <section class="testimonials">
-
-            <h3 class="h3 testimonials-title">Education</h3>
-
-            <ul class="testimonials-list has-scrollbar">
-
-              <li class="testimonials-item">
-                <div class="content-card" data-testimonials-item>
-
-                  <figure class="testimonials-avatar-box">
-                    <img src="./assets/images/ai-degree.png" alt="AI degree" width="40" data-testimonials-avatar>
-                  </figure>
-
-                  <h4 class="h4 testimonials-item-title" data-testimonials-title>Master's in Electrical Engineering
-                    and Computer Science</h4>
-                  <span>
-                    <p class="timeline-text">
-                      National Taipei University of Technology, Taiwan
-                    </p>
-                  </span>
-
-
-                  <div class="testimonials-text" data-testimonials-text>
-                    <p>
-                      Advanced research in generative AI, culminating in a novel content and spatial-aware model for
-                      image inpainting. This work significantly addressed challenges in limited data environments and
-                      set a new standard for efficiency and accuracy in GAN-based systems.
-                    </p>
-                  </div>
-
-                </div>
-              </li>
-
-              <li class="testimonials-item">
-                <div class="content-card" data-testimonials-item>
-
-                  <figure class="testimonials-avatar-box">
-                    <img src="./assets/images/cs-degree.png" alt="CS degree" width="40" data-testimonials-avatar>
-                  </figure>
-
-                  <h4 class="h4 testimonials-item-title" data-testimonials-title>Bachelor of Science in Information
-                    Technology</h4>
-                  <span>
-                    <p class="timeline-text">
-                      Sri Ramakrishna Mission Vidyalaya College, India
-                    </p>
-                  </span>
-
-                  <div class="testimonials-text" data-testimonials-text>
-                    <p>
-                      Learned to code and developed a passion for technology, laying the foundation for deeper
-                      understanding of datastructure aand algorithms.
-                    </p>
-                  </div>
-
-                </div>
-              </li>
-
-            </ul>
-          </section>
-
-          <!--- testimonials modal    -->
-
-          <div class="modal-container" data-modal-container>
-
-            <div class="overlay" data-overlay></div>
-
-            <section class="testimonials-modal">
-
-              <button class="modal-close-btn" data-modal-close-btn>
-                <ion-icon name="close-outline"></ion-icon>
-              </button>
-
-              <div class="modal-img-wrapper">
-                <figure class="modal-avatar-box">
-                  <img src="./assets/images/avatar-1.png" alt="Daniel lewis" width="80" data-modal-img>
-                </figure>
-
-                <img src="./assets/images/icon-quote.svg" alt="quote icon">
-              </div>
-
-              <div class="modal-content">
-
-                <h4 class="h3 modal-title" data-modal-title>Master's in AI</h4>
-
-                <time datetime="2021 — 2023">2021 — 2023</time>
-                <p class="timeline-text">
-                  National Taipei University of Technology, Taiwan
-                </p>
-
-                <div data-modal-text>
-                  <p>
-                    Advanced research in generative AI, culminating in a novel content and spatial-aware model for image
-                    inpainting. This work significantly addressed challenges in limited data environments and set a new
-                    standard for efficiency and accuracy in GAN-based systems.
-                  </p>
-                </div>
-
-              </div>
-
-            </section>
-
-          </div>
-
-
-          <section class="skill">
-
-            <h3 class="h3 skills-title">Core Expertise</h3>
-
-            <ul class="skills-list content-card">
-
-              <li class="skills-item">
-                <strong>Programming Languages:</strong> Python, JavaScript
-              </li>
-              <li class="skills-item">
-                <strong>Frameworks and Libraries:</strong> PyTorch, TensorFlow, Transformers, Diffusion Models
-              </li>
-              <li class="skills-item">
-                <strong>Cloud Platforms and Tools:</strong> Google Cloud Platform (GCP), Vertex AI, Deepstream
-              </li>
-              <li class="skills-item">
-                <strong>Model Development:</strong> Custom AI model training and fine-tuning, Vision AI, LLMs,
-                Multi-modal
-                AI
-              </li>
-              <li class="skills-item">
-                <strong>Generative AI:</strong> Conditional image generation, spatial and content-aware models
-              </li>
-              <li class="skills-item">
-                <strong>Edge Deployment:</strong> TensorRT, NVIDIA TAO Toolkit, real-time applications for object
-                detection
-              </li>
-              <li class="skills-item">
-                <strong>Mathematical Foundations:</strong> Linear Algebra, Calculus, Attention Mechanisms
-              </li>
-              <li class="skills-item">
-                <strong>Specialized Techniques:</strong> Feature extraction, vector embedding, and advanced
-                transformer-based architectures
-              </li>
-              <li class="skills-item">
-                <strong>Problem Domains:</strong> Object detection, recognition, and behavior prediction models
-              </li>
-              <li class="skills-item">
-                -
-              </li>
-
-            </ul>
-
-          </section>
-
-        </section>
-
-
-        <!--
-        - #PORTFOLIO
-      -->
-
-        <section id="portfolio">
-
-          <header>
-            <h2 class="h2 article-title">Portfolio</h2>
-            <p class="timeline-text">
-              Some repositories are privated due to NDA. Please contact for more details...
-              And most new projects which are in progress due to constant experimentations are not updated here...
-            </p>
-          </header>
-
-          <section class="projects">
-
-            <!-- Filter Buttons -->
-            <!-- <ul class="filter-list">
-              <li class="filter-item">
-                <button class="active" data-filter-btn>All</button>
-              </li>
-              <li class="filter-item">
-                <button data-filter-btn>Research</button>
-              </li>
-              <li class="filter-item">
-                <button data-filter-btn>Projects</button>
-              </li>
-              <li class="filter-item">
-                <button data-filter-btn>Case Studies</button>
-              </li>
-            </ul> -->
-
-            <!-- Filter Select Dropdown -->
-            <div class="filter-select-box">
-              <button class="filter-select" data-select>
-                <div class="select-value" data-selecct-value>Select category</div>
-                <div class="select-icon">
-                  <ion-icon name="chevron-down"></ion-icon>
-                </div>
-              </button>
-              <ul class="select-list">
-                <li class="select-item">
-                  <button data-select-item>All</button>
-                </li>
-                <li class="select-item">
-                  <button data-select-item>Research</button>
-                </li>
-                <li class="select-item">
-                  <button data-select-item>Projects</button>
-                </li>
-                <li class="select-item">
-                  <button data-select-item>Case Studies</button>
-                </li>
-              </ul>
-            </div>
-
-            <!-- Project List -->
-            <ul class="project-list">
-
-              <!-- Research Section -->
-              <li class="project-item active" data-filter-item data-category="research">
-                <a href="https://drive.google.com/file/d/1QxLWxU_ucbl_HUzGRsLXDLzjXRLakO3P/view?usp=sharing"
-                  target="_blank">
-                  <img src="assets/images/project_genai.jpg" alt="Project Preview" class="project-img">
-                  <h3 class="project-title">Content and Spatial Aware Generative Model</h3>
-                  <p class="project-category">Research</p>
-                  <p class="skills-item">
-                    Proposed a GAN architecture for inpainting under low-data constraints with contextual attention.
-                    Published as a thesis at National Taipei University of Technology.
-                  </p>
-                </a>
-              </li>
-
-              <li class="project-item active" data-filter-item data-category="research">
-                <a href="https://www.nvidia.com/gtc/session-catalog/?search=Pradeep#/session/1727681108625001ctNM"
-                  target="_blank">
-                  <img src="assets/images/project_GTC.png" alt="Project Preview" class="project-img">
-                  <h3 class="project-title">NVIDIA GTC 2025 Poster</h3>
-                  <p class="project-category">Research</p>
-                  <p class="skills-item">
-                    Presented a poster highlighting scalable AI pipelines for retail inventory management, emphasizing
-                    planogram compliance and advanced vision models.
-                  </p>
-                </a>
-              </li>
-
-              <li class="project-item active" data-filter-item data-category="research">
-                <a href="#">
-                  <img src="assets/images/project_LLM.png" alt="Project Preview" class="project-img">
-                  <h3 class="project-title">Reducing LLM Computational Costs</h3>
-                  <p class="project-category">Research</p>
-                  <p class="skills-item">
-                    Ongoing research leveraging Kolmogorov-Arnold Networks (KAN) to optimize computational costs for
-                    large language models, making them suitable for resource-constrained environments.
-                  </p>
-                  <h2 class="project-title">(Under NDA, Contact for more details)</h2>
-                </a>
-              </li>
-
-              <!-- Projects Section -->
-              <li class="project-item active" data-filter-item data-category="projects">
-                <a href="#">
-                  <img src="assets/images/project_handheld_object.png" alt="Project Preview" class="project-img">
-                  <h3 class="project-title">Handheld Object Detection</h3>
-                  <p class="project-category">Projects</p>
-                  <p class="skills-item">
-                    Engineered a computer vision pipeline integrating object detection and vector embedding for
-                    partially occluded objects, deployed in X8 unmanned stores.
-                  </p>
-                  <h2 class="project-title">(Under NDA, Contact for more details)</h2>
-                </a>
-              </li>
-
-              <li class="project-item active" data-filter-item data-category="projects">
-                <a href="https://drive.google.com/file/d/1CHZokDYdyX0GEruNErHCW4bFt6hBf8On/view?usp=sharing"
-                  target="_blank">
-                  <img src="assets/images/project_retailnventory.jpg" alt="Project Preview" class="project-img">
-                  <h3 class="project-title">Retail Inventory Management</h3>
-                  <p class="project-category">Projects</p>
-                  <p class="skills-item">
-                    Developed a vision-based system to identify discrepancies between planogram and realogram,
-                    enhancing operational efficiency for 7-Eleven stores.
-                  </p>
-                </a>
-              </li>
-
-              <li class="project-item active" data-filter-item data-category="projects">
-                <a href="#">
-                  <img src="assets/images/project_ner.png" alt="Project Preview" class="project-img">
-                  <h3 class="project-title">Named Entity Recognition based Text Extraction (Under NDA)</h3>
-                  <p class="project-category">Projects</p>
-                  <p class="skills-item">
-                    Developed an LLM-assisted NER system using GCP Document AI to automate text extraction and
-                    streamline workflows.
-                  </p>
-                  <h2 class="project-title">(Under NDA, Contact for more details)</h2>
-                </a>
-              </li>
-
-              <li class="project-item active" data-filter-item data-category="projects">
-                <a href="#">
-                  <img src="assets/images/project_depth.png" alt="Project Preview" class="project-img">
-                  <h3 class="project-title">Vision Transformer-Based Depth Estimation</h3>
-                  <p class="project-category">Projects</p>
-                  <p class="skills-item">
-                    Researched and developed a vision transformer for enhanced 3D scene understanding and depth
-                    estimation, improving performance in robotics and AR applications.
-                  </p>
-                </a>
-              </li>
-
-              <li class="project-item active" data-filter-item data-category="projects">
-                <a href="#">
-                  <img src="assets/images/project_qa.png" alt="Project Preview" class="project-img">
-                  <h3 class="project-title">MultiModal Q&A Experiment </h3>
-                  <p class="project-category">Projects</p>
-                  <p class="skills-item">
-                    Leveraged HuggingFace models and Transformer libraries to develop an advanced visual question
-                    answering system with contextual embeddings.
-                  </p>
-                </a>
-              </li>
-
-              <!-- Case Study Section -->
-              <li class="project-item active" data-filter-item data-category="case studies">
-                <a href="https://github.com/Ajishpradeep/Case_Study" target="_blank">
-                  <img src="assets/images/project_retailnventory.jpg" alt="Project Preview" class="project-img">
-                  <h3 class="project-title">Case Study: Transformers & Embedding</h3>
-                  <p class="project-category">Case Studies</p>
-                  <p class="skills-item">
-                    Mathematical breakdown of Transformers and fine-tuning vector embedding models using triplet loss
-                    for image-to-image search.
-                  </p>
-                </a>
-              </li>
-
-            </ul>
-
-          </section>
-
-          <section class="testimonials" id="collab">
-
-            <h3 class=" h3 testimonials-title">Collaborations</h3>
-
-            <ul class="testimonials-list has-scrollbar">
-
-              <li class="testimonials-item">
-                <div class="content-card" data-testimonials-item>
-
-                  <figure class="testimonials-avatar-box">
-                    <img src="./assets/images/collab_futuredatasystems.png" alt="Future Data systems" width="40"
-                      data-testimonials-avatar>
-                  </figure>
-
-                  <h4 class="h4 testimonials-item-title" data-testimonials-title>Future Data Systems</h4>
-                  <h2 class="h4 testimonials-item-title" data-testimonials-title>Taipei, Taiwan</h2>
-
-                  <div class="testimonials-text" data-testimonials-text>
-                    <p>
-                      <strong>About:</strong> A Taiwan Based Bespoke AI startup focus on introducting AI in Agriculature
-                      in Taiwan
-                      <br>
-                      <strong>My Contribution:</strong> Part of the poineer team as an AI engineer with focus on
-                      research and POC planning for AI analysis with focus on crop yield prediction.
-                      <strong> Responsibilities include: </strong>
-                      1. Build a custom trained LLM model on Agriculture data specific to Taiwan
-                      2. Retrival model to understand the text corpus to provide reliable info based on realtime metric
-                      from sesnors.
-                      3. Use the real time data from sensors as RAG input and build a pipeline to provide instruction
-                      and report in maintaining the crops.
-                      <br>
-                      <strong>Reference:</strong> <a href="https://www.linkedin.com/in/brock-b-0091b0272/">
-                        Brock B (CEO, Future Data Systems)</a>
-                      <br>
-                      <strong>Website:</strong> <a href="https://www.futuredatasystems.ai/" target="_blank">Visit
-                        Future
-                        Data Syatems</a>
-                    </p>
-                  </div>
-
-                </div>
-              </li>
-
-              <li class="testimonials-item">
-                <div class="content-card" data-testimonials-item>
-
-                  <figure class="testimonials-avatar-box">
-                    <img src="./assets/images/collab_mobilityz.jpeg" alt="MobilityZ" width="40"
-                      data-testimonials-avatar>
-                  </figure>
-
-                  <h4 class="h4 testimonials-item-title" data-testimonials-title>MobilityZ</h4>
-                  <h2 class="h4 testimonials-item-title" data-testimonials-title>Huston, United States of America</h2>
-
-                  <div class="testimonials-text" data-testimonials-text>
-                    <p>
-                      <strong>About:</strong> MobilityZ Health is a digital health company specializing in
-                      musculoskeletal (MSK) injury management. Their platform enables orthopedic specialists and primary
-                      care physicians to remotely screen, diagnose, and monitor patients with MSK injuries through
-                      proprietary software that incorporates telehealth technologies and automated screening tests.
-                      <br>
-                      <strong>My Contribution:</strong> Led the AI development for a key model within a multi-level
-                      cascade, overseeing the entire process from research to deployment.
-                      <strong> Responsibilities include: </strong>
-                      1. Developed and optimized AI models for injury detection and segmentation with reliability.
-                      2. Integrated AI solutions into the platform to enhance remote screening and monitoring
-                      capabilities.
-                      3. Custom model development for specific injury types and patient profiles.
-                      <br>
-                      <strong>Reference:</strong> <a href="https://www.linkedin.com/in/sucheshnapatil/">Sucheshna
-                        Patil
-                        (CEO, MobilityZ Health)</a>
-                      <br>
-                      <strong>Website:</strong> <a href="https://mobilityzhealth.com/" target="_blank">Visit
-                        MobilityZ</a>
-                    </p>
-                  </div>
-
-                </div>
-              </li>
-
-              <li class="testimonials-item">
-                <div class="content-card" data-testimonials-item>
-
-                  <figure class="testimonials-avatar-box">
-                    <img src="./assets/images/collab_ntut.png" alt="Future Data systems" width="40"
-                      data-testimonials-avatar>
-                  </figure>
-
-                  <h4 class="h4 testimonials-item-title" data-testimonials-title>Research Lab (AI & Multimedia Systems)
-                  </h4>
-                  <h2 class="h4 testimonials-item-title" data-testimonials-title>NTUT, Taipei, Taiwan</h2>
-
-                  <div class="testimonials-text" data-testimonials-text>
-                    <p>
-                      <strong>About:</strong> A research lab at National Taipei University of Technology focusing on
-                      mutlimedia encoding with AI intervention. And primary focus on research in Feature engineering and
-                      algorithm optimization.
-                      <br>
-                      <strong>My Contribution:</strong> Part of the research team as a research assistant to professor
-                      and vice president of the university Dr.Shih-Hsuan Yang.
-
-                      <strong> Research contributions are included: </strong>
-                      1. GAN based image inpainting with focus on content and spatial awareness.
-                      2. Vision transformer based depth estimation for 3D scene understanding by 2D images.
-                      3. LLM optimization with focus on KAN networks (On going research)
-                      <br>
-                      <strong>Reference:</strong> <a href="https://www-en.ntut.edu.tw/p/404-1006-116494.php?Lang=en">
-                        Prof. Shih-Hsuan Yang (Vice President, National Taipei University of Technology)</a>
-                      <br>
-                      <strong>Website:</strong> <a href="https://www-en.ntut.edu.tw/p/404-1006-116494.php?Lang=en"
-                        target="_blank"> Vice President S.H. Yang </a>
-                    </p>
-                  </div>
-
-                </div>
-              </li>
-
-            </ul>
-
-          </section>
-
-        </section>
-
-        <!--
-        - #CONTACT
-      -->
-
-        <section id="contact">
-
-          <header>
-            <h2 class="h2 article-title">Contact</h2>
-          </header>
-          <section class="contact-info">
-
-            <ul class="contacts-list">
-
-              <li class="contact-item">
-
-                <div class="icon-box">
-                  <ion-icon name="mail-outline"></ion-icon>
-                </div>
-
-                <!-- <div class="contact-info">
-                  <p class="contact-title">Email</p>
-                  <a href="mailto:ajishpradeep@gmail.com" class="contact-link">ajishpradeep@gmail.com</a>
-                  <a href="mailto:ajish@quintet-ai.com" class="contact-link">ajish@quintet-ai.com</a>
-                  <a href="ajish@futuredatasystems.ai" class="contact-link">ajish@futuredatasystems.ai</a>
-                  <a href="ajish@pic.net.tw" class="contact-link">ajish@pic.net.tw</a>
-                </div> -->
-
-                <div class="contact-info">
-                  <p class="contact-title">Email</p>
-                  <table class="email-table">
-                    <tr>
-                      <td>Personal:</td>
-                      <td><a href="mailto:ajishpradeep@gmail.com" class="contact-link">ajishpradeep@gmail.com</a></td>
-                    </tr>
-                    <tr>
-                      <td>Buisness:</td>
-                      <td><a href="mailto:cto@quintet-ai.com" class="contact-link">cto@quintet-ai.com</a></td>
-                    </tr>
-                    <tr>
-                      <td>Freelance:</td>
-                      <td><a href="mailto:ajish@quintet-ai.com" class="contact-link">ajish@quintet-ai.com</a></td>
-                    </tr>
-                    <tr>
-                      <td>Work:</td>
-                      <td><a href="mailto:ajish@pic.net.tw" class="contact-link">ajish@pic.net.tw</a></td>
-                    </tr>
-
-                  </table>
-                </div>
-
-              </li>
-              <div class="separator"></div>
-
-              <li class="contact-item">
-
-                <div class="icon-box">
-                  <ion-icon name="phone-portrait-outline"></ion-icon>
-                </div>
-
-                <div class="contact-info">
-                  <p class="contact-title">Phone</p>
-
-                  <a href="tel:+886905174662" class="contact-link">+886 905 174 662</a>
-                </div>
-
-              </li>
-
-              <li class="contact-item">
-
-                <div class="icon-box">
-                  <ion-icon name="location-outline"></ion-icon>
-                </div>
-
-                <div class="contact-info">
-                  <p class="contact-title">Location</p>
-
-                  <address>Taipei City,Taiwan </address>
-                </div>
-
-              </li>
-
-            </ul>
-
-            <div class="separator"></div>
-
-            <ul class="social-list">
-
-              <!-- LinkedIn -->
-              <li class="social-item">
-                <a href="https://www.linkedin.com/in/ajishpradeep/" target="_blank" class="social-link">
-                  <ion-icon name="logo-linkedin" class="icon-large"></ion-icon>
-                </a>
-              </li>
-
-              <!-- GitHub -->
-              <li class="social-item">
-                <a href="https://github.com/Ajishpradeep/" target="_blank" class="social-link">
-                  <ion-icon name="logo-github" class="icon-large"></ion-icon>
-                </a>
-              </li>
-
-              <!-- Line -->
-              <li class="social-item">
-                <a href="https://line.me/ti/p/Ubq5KJIQTv" target="_blank" class="social-link">
-                  <img src="./assets/images/line.svg" alt="Line" width="40" height="40">
-                </a>
-              </li>
-
-              <!-- Instagram -->
-              <li class="social-item">
-                <a href="https://instagram.com/ajishpradeep" target="_blank" class="social-link">
-                  <ion-icon name="logo-instagram" class="icon-large"></ion-icon>
-                </a>
-              </li>
-
-            </ul>
-          </section>
-          <section class="contact-form">
-
-            <h3 class="h3 form-title">Contact Form</h3>
-
-            <form name="contact" method="POST" enctype="multipart/form-data" data-netlify="true">
-              <!-- <form name="fileForm" data-netlify="true"></form> -->
-              <div class="input-wrapper">
-                <input type="text" name="fullname" class="form-input" placeholder="* Full name" required
-                  data-form-input>
-
-                <input type="email" name="email" class="form-input" placeholder="* Email address" required
-                  data-form-input>
-              </div>
-
-              <textarea name="message" class="form-input" placeholder="* Your Message" required
-                data-form-input></textarea>
-
-              <input type="file" name="file" class="form-input">
-              <div class="separator"></div>
-              <button class="form-btn" type="submit" data-form-btn>
-                <ion-icon name="paper-plane"></ion-icon>
-                <span>Send Message</span>
-              </button>
-            </form>
-
-          </section>
-
-        </section>
-
+        </footer>
     </div>
 
-  </main>
+    <!-- Back to top button -->
+    <button id="back-to-top"
+        class="fixed bottom-8 right-8 bg-gradient-to-r from-cyan-900 to-green-900 text-white w-10 h-10 rounded-full flex items-center justify-center opacity-0 transition-all hover:from-cyan-800 hover:to-green-800">
+        <i class="fas fa-arrow-up"></i>
+    </button>
 
-
-
-
-
-
-  <!--
-    - custom js link
-  -->
-  <script src="./assets/js/script.js"></script>
-
-  <!--
-    - ionicon link
-  -->
-  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
 </body>
 
 </html>
