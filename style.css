@@ -21,6 +21,7 @@ body {
   0% {
     background-position: 0 0;
   }
+
   100% {
     background-position: 500px 500px;
   }
@@ -78,9 +79,11 @@ body {
   0% {
     box-shadow: 0 0 0 0 rgba(6, 182, 212, 0.7);
   }
+
   70% {
     box-shadow: 0 0 0 10px rgba(6, 182, 212, 0);
   }
+
   100% {
     box-shadow: 0 0 0 0 rgba(6, 182, 212, 0);
   }
@@ -302,27 +305,38 @@ body {
 
 .social-icon-sidebar.linkedin {
   color: white;
-  background-color: #0077b5; /* LinkedIn brand color */
+  background-color: #0077b5;
+  /* LinkedIn brand color */
 }
 
 .social-icon-sidebar.github {
   color: white;
-  background-color: #333; /* GitHub brand color */
+  background-color: #333;
+  /* GitHub brand color */
 }
 
 .social-icon-sidebar.line {
   color: white;
-  background-color: #00c300; /* LINE brand color */
+  background-color: #00c300;
+  /* LINE brand color */
 }
 
 .social-icon-sidebar.email {
   color: white;
-  background-color: #ea4335; /* Gmail brand color */
+  background-color: #ea4335;
+  /* Gmail brand color */
 }
 
 .social-icon-sidebar.phone {
   color: white;
-  background-color: #4285f4; /* Google blue color */
+  background-color: #4285f4;
+  /* Google blue color */
+}
+
+.social-icon-sidebar.instagram {
+  color: white;
+  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  /* Instagram brand gradient */
 }
 
 /* Resume Download Button */
@@ -358,10 +372,12 @@ body {
     transform: scale(1);
     opacity: 1;
   }
+
   50% {
     transform: scale(1.1);
     opacity: 0.8;
   }
+
   100% {
     transform: scale(1);
     opacity: 1;
@@ -610,16 +626,19 @@ body {
   from {
     width: 0;
   }
+
   to {
     width: 100%;
   }
 }
 
 @keyframes blink-cursor {
+
   from,
   to {
     opacity: 0;
   }
+
   50% {
     opacity: 1;
   }
@@ -686,38 +705,43 @@ body {
 }
 
 /* Staggered animations for children */
-.stagger-children > * {
+.stagger-children>* {
   opacity: 0;
   transform: translateY(20px);
   transition: all 0.5s ease;
 }
 
-.stagger-children.active > *:nth-child(1) {
+.stagger-children.active>*:nth-child(1) {
   transition-delay: 0.1s;
 }
-.stagger-children.active > *:nth-child(2) {
+
+.stagger-children.active>*:nth-child(2) {
   transition-delay: 0.2s;
 }
-.stagger-children.active > *:nth-child(3) {
+
+.stagger-children.active>*:nth-child(3) {
   transition-delay: 0.3s;
 }
-.stagger-children.active > *:nth-child(4) {
+
+.stagger-children.active>*:nth-child(4) {
   transition-delay: 0.4s;
 }
-.stagger-children.active > *:nth-child(5) {
+
+.stagger-children.active>*:nth-child(5) {
   transition-delay: 0.5s;
 }
-.stagger-children.active > *:nth-child(6) {
+
+.stagger-children.active>*:nth-child(6) {
   transition-delay: 0.6s;
 }
 
-.stagger-children.active > * {
+.stagger-children.active>* {
   opacity: 1;
   transform: translateY(0);
 }
 
 /* Add spacing between sidebar elements */
-.sticky > div:not(:last-child) {
+.sticky>div:not(:last-child) {
   margin-bottom: 20px;
 }
 
@@ -863,6 +887,7 @@ html {
   0% {
     width: 0;
   }
+
   100% {
     width: 100%;
   }
@@ -932,4 +957,59 @@ html {
     color: #000 !important;
     text-decoration: none;
   }
+}
+
+/* Expertise Tiles */
+.expertise-tile {
+  transition: all 0.3s ease;
+  border: 1px solid transparent;
+}
+
+.expertise-tile:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.expertise-tile:nth-child(1):hover {
+  border-color: #06b6d4;
+}
+
+.expertise-tile:nth-child(2):hover {
+  border-color: #10b981;
+}
+
+.expertise-tile:nth-child(3):hover {
+  border-color: #f97316;
+}
+
+.expertise-tile:nth-child(4):hover {
+  border-color: #f59e0b;
+}
+
+/* Scrollable Sidebar */
+.sidebar-container {
+  max-height: calc(100vh - 3rem);
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #06b6d4 #1a1a1a;
+  padding-right: 5px;
+}
+
+.sidebar-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar-container::-webkit-scrollbar-track {
+  background: #1a1a1a;
+  border-radius: 10px;
+}
+
+.sidebar-container::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #06b6d4, #10b981);
+  border-radius: 10px;
+}
+
+/* Add spacing between sidebar elements */
+.sticky>div:not(:last-child) {
+  margin-bottom: 20px;
 }

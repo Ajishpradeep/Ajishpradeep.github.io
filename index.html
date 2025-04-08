@@ -106,7 +106,7 @@
         <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
             <!-- Left sidebar - Sticky -->
             <div class="lg:col-span-1 space-y-6 hidden md:block">
-                <div class="sticky top-6">
+                <div class="sticky top-6 sidebar-container">
                     <!-- User Profile -->
                     <div class="bg-gray-900 rounded-lg border border-gray-800 p-4 hover-glow slide-in-left mb-6">
                         <div class="flex flex-col items-center">
@@ -195,30 +195,22 @@
                             <h3 class="font-bold text-green-400 mb-3 flex items-center">
                                 <i class="fas fa-chart-line mr-2"></i> EXPERTISE
                             </h3>
-                            <div class="space-y-2">
-                                <div class="flex justify-between items-center">
+                            <div class="grid grid-cols-2 gap-2">
+                                <div class="expertise-tile bg-gray-800 p-2 rounded flex items-center">
+                                    <i class="fas fa-eye text-cyan-400 mr-2"></i>
                                     <span class="text-xs">Vision AI</span>
-                                    <div class="w-2/3 bg-gray-800 h-1.5 rounded-full overflow-hidden">
-                                        <div class="bg-cyan-500 h-full rounded-full" style="width: 95%"></div>
-                                    </div>
                                 </div>
-                                <div class="flex justify-between items-center">
+                                <div class="expertise-tile bg-gray-800 p-2 rounded flex items-center">
+                                    <i class="fas fa-brain text-green-400 mr-2"></i>
                                     <span class="text-xs">Generative AI</span>
-                                    <div class="w-2/3 bg-gray-800 h-1.5 rounded-full overflow-hidden">
-                                        <div class="bg-green-500 h-full rounded-full" style="width: 90%"></div>
-                                    </div>
                                 </div>
-                                <div class="flex justify-between items-center">
+                                <div class="expertise-tile bg-gray-800 p-2 rounded flex items-center">
+                                    <i class="fas fa-microchip text-orange-400 mr-2"></i>
                                     <span class="text-xs">LLM Optimization</span>
-                                    <div class="w-2/3 bg-gray-800 h-1.5 rounded-full overflow-hidden">
-                                        <div class="bg-orange-500 h-full rounded-full" style="width: 85%"></div>
-                                    </div>
                                 </div>
-                                <div class="flex justify-between items-center">
+                                <div class="expertise-tile bg-gray-800 p-2 rounded flex items-center">
+                                    <i class="fas fa-server text-yellow-400 mr-2"></i>
                                     <span class="text-xs">Edge Deployment</span>
-                                    <div class="w-2/3 bg-gray-800 h-1.5 rounded-full overflow-hidden">
-                                        <div class="bg-yellow-500 h-full rounded-full" style="width: 80%"></div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -242,24 +234,19 @@
                     </div>
                     <div class="p-4 text-sm">
                         <p class="mb-3 reveal-text">
-                            I'm Ajish (Pradeep Rajasekar), a professional AI engineer and researcher specializing in
-                            designing and
-                            deploying advanced AI solutions. My primary focus is to take a research-driven approach in
-                            solving the AI
-                            irregularities where the traditional methods fall short. This includes building scalable AI
-                            pipelines, the optimization of large
-                            language models (LLMs), and the development and manipulation of AI models through
-                            architectural and algorithmic
-                            modifications.
+                            I'm Ajish Pradeep, an AI Engineer and Researcher specializing in scalable AI
+                            systems, LLM optimization, and
+                            custom model training and finetuning. I focus on solving real-world challenges through
+                            research-driven approaches where traditional
+                            methods fall short.
                         </p>
                         <p class="mb-3 reveal-text">
-                            A testament to my commitment to bridging research and real-world applications, I published
-                            and presented a
-                            scalable retail AI solution at the NVIDIA GTC 2025 conference in San Jose, a real-time
-                            planogram compliance system
-                            designed for 7-Eleven stores in Taiwan.
+                            While my full-time role as an AI Engineer and Researcher remains my primary commitment, I
+                            actively collaborate with startups and
+                            enterprises as a freelance research engineer, always open to impactful and intellectually
+                            challenging AI projects.
                         </p>
-                        <p class="reveal-text">
+                        <!-- <p class="reveal-text">
                             While my full-time role as an AI Engineer and Researcher remains my primary commitment, I
                             also collaborate
                             with startups and enterprises as a freelance research engineer. I'm open to opportunities at
@@ -267,7 +254,7 @@
                             fascinating and have scope to learn. Consider me interested in any project or opportunity in
                             need of another brain to
                             tackle a complex AI problem; ping me anytime.
-                        </p>
+                        </p> -->
                     </div>
                 </div>
 
@@ -552,18 +539,19 @@
                                     architectures</div>
                                 <div class="mb-1">[+] Analyzing mathematical foundations...</div>
                                 <div class="mb-1">[!] STRONG: Linear Algebra, Calculus, Attention Mechanisms</div>
-                                <div class="mb-1">[+] AjishGPT initialized. Type 'ask' followed by your question or just
+                                <div class="mb-1">[+] Jarvis initialized. Type 'ask' followed by your question or just
                                     type your question directly.</div>
                                 <div class="mb-1">ajish@portfolio:~#<span class="code-input"> _</span></div>
                             </div>
                             <div class="p-2 border-t border-gray-800 bg-gray-950">
                                 <div class="flex">
-                                    <input type="text" id="terminal-input" placeholder="Ask AjishGPT something..."
+                                    <input type="text" id="terminal-input" placeholder="Entern Command..."
                                         class="w-full bg-black border border-gray-700 text-green-400 text-xs p-1 focus:outline-none focus:border-green-500">
                                     <button id="terminal-submit"
                                         class="bg-green-900 text-green-400 px-2 text-xs">ASK</button>
                                 </div>
-                                <div class="text-xs text-gray-500 mt-1">Try: help, skills, projects, collaborations,
+                                <div class="text-xs text-gray-500 mt-1">Try commands: help, skills, projects,
+                                    collaborations,
                                     contact or clear</div>
                             </div>
                         </div>
@@ -929,20 +917,20 @@
                                     <p class="text-sm font-bold text-cyan-400 mb-3">SOCIAL LINKS</p>
                                     <div class="flex space-x-4">
                                         <a href="https://www.linkedin.com/in/ajishpradeep/" target="_blank"
-                                            class="w-8 h-8 bg-gray-800 hover:bg-cyan-900 rounded-full flex items-center justify-center transition-all hover:scale-110 social-icon">
-                                            <i class="fab fa-linkedin-in text-cyan-400"></i>
+                                            class="social-icon-sidebar linkedin">
+                                            <i class="fab fa-linkedin-in"></i>
                                         </a>
                                         <a href="https://github.com/Ajishpradeep/" target="_blank"
-                                            class="w-8 h-8 bg-gray-800 hover:bg-orange-900 rounded-full flex items-center justify-center transition-all hover:scale-110 social-icon">
-                                            <i class="fab fa-github text-orange-400"></i>
+                                            class="social-icon-sidebar github">
+                                            <i class="fab fa-github"></i>
                                         </a>
                                         <a href="https://line.me/ti/p/Ubq5KJIQTv" target="_blank"
-                                            class="w-8 h-8 bg-gray-800 hover:bg-green-900 rounded-full flex items-center justify-center transition-all hover:scale-110 social-icon">
-                                            <i class="fab fa-line text-green-400"></i>
+                                            class="social-icon-sidebar line">
+                                            <i class="fab fa-line"></i>
                                         </a>
                                         <a href="https://instagram.com/ajishpradeep" target="_blank"
-                                            class="w-8 h-8 bg-gray-800 hover:bg-yellow-900 rounded-full flex items-center justify-center transition-all hover:scale-110 social-icon">
-                                            <i class="fab fa-instagram text-yellow-400"></i>
+                                            class="social-icon-sidebar instagram">
+                                            <i class="fab fa-instagram"></i>
                                         </a>
                                     </div>
                                 </div>

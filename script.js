@@ -272,7 +272,7 @@ document.addEventListener("DOMContentLoaded", () => {
           parts: [
             {
               text: `
-              You are Ajish's AI assistant embedded in his portfolio website. Your name is AjishGPT.
+              You are Ajish's AI assistant embedded in his portfolio website. Your name is Jarvis.
               You should be helpful, friendly, and professional but with a playful character.
               You should answer questions about Ajish's portfolio, skills, experience, and background.
               
@@ -648,16 +648,16 @@ document.addEventListener("DOMContentLoaded", () => {
   // Add dark mode toggle button if needed
 
   // Add print functionality for resume
-  const printButton = document.querySelector(".resume-download-btn")
-  if (printButton) {
-    const printResume = document.createElement("button")
-    printResume.className = "resume-download-btn w-full text-center mt-2"
-    printResume.innerHTML = '<i class="fas fa-print"></i> PRINT RESUME'
-    printResume.addEventListener("click", () => {
-      window.print()
-    })
-    printButton.parentNode.appendChild(printResume)
-  }
+  // const printButton = document.querySelector(".resume-download-btn")
+  // if (printButton) {
+  //   const printResume = document.createElement("button")
+  //   printResume.className = "resume-download-btn w-full text-center mt-2"
+  //   printResume.innerHTML = '<i class="fas fa-print"></i> PRINT RESUME'
+  //   printResume.addEventListener("click", () => {
+  //     window.print()
+  //   })
+  //   printButton.parentNode.appendChild(printResume)
+  // }
 
   // Add keyboard navigation support
   document.addEventListener("keydown", (e) => {
