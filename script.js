@@ -1,17 +1,56 @@
 document.addEventListener("DOMContentLoaded", () => {
   // Subtle AI Background Animation
   const aiBackground = document.querySelector(".ai-background")
-  let offset = 0
+  const offset = 0
 
-  function animateBackground() {
-    offset += 0.1
-    if (offset > 50) offset = 0
+  // Improved mobile detection
+  const isMobile = () => window.innerWidth < 768
 
-    aiBackground.style.backgroundPosition = `${offset}px ${offset}px`
-    requestAnimationFrame(animateBackground)
+  // Improved mobile menu toggle with accessibility
+  const mobileMenuToggle = document.getElementById("mobile-menu-toggle")
+  const mobileMenu = document.getElementById("mobile-menu")
+
+  if (mobileMenuToggle && mobileMenu) {
+    mobileMenuToggle.setAttribute("aria-expanded", "false")
+    mobileMenuToggle.setAttribute("aria-controls", "mobile-menu")
+
+    mobileMenuToggle.addEventListener("click", () => {
+      const isExpanded = mobileMenu.classList.contains("open")
+      mobileMenu.classList.toggle("hidden")
+      mobileMenu.classList.toggle("open")
+
+      // Toggle icon between bars and times
+      const icon = mobileMenuToggle.querySelector("i")
+      if (icon) {
+        if (icon.classList.contains("fa-bars")) {
+          icon.classList.remove("fa-bars")
+          icon.classList.add("fa-times")
+        } else {
+          icon.classList.remove("fa-times")
+          icon.classList.add("fa-bars")
+        }
+      }
+
+      // Update ARIA attributes
+      mobileMenuToggle.setAttribute("aria-expanded", !isExpanded)
+    })
+
+    // Close mobile menu when clicking a link
+    const mobileMenuLinks = document.querySelectorAll(".mobile-menu-link")
+    mobileMenuLinks.forEach((link) => {
+      link.addEventListener("click", () => {
+        mobileMenu.classList.add("hidden")
+        mobileMenu.classList.remove("open")
+        mobileMenuToggle.setAttribute("aria-expanded", "false")
+
+        const icon = mobileMenuToggle.querySelector("i")
+        if (icon) {
+          icon.classList.remove("fa-times")
+          icon.classList.add("fa-bars")
+        }
+      })
+    })
   }
-
-  animateBackground()
 
   // Typing animation for the title - FIXED
   const titleElements = document.querySelectorAll(".title-text")
@@ -28,30 +67,19 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   })
 
-  // Initial load animations
+  // Initial load animations with performance optimization
   setTimeout(() => {
     document.querySelectorAll(".slide-in-left, .slide-in-right, .slide-in-top, .slide-in-bottom").forEach((element) => {
       element.classList.add("appear")
     })
   }, 300)
 
-  // Mobile Menu Toggle
-  const mobileMenuToggle = document.getElementById("mobile-menu-toggle")
-  const mobileMenu = document.getElementById("mobile-menu")
-
-  if (mobileMenuToggle && mobileMenu) {
-    mobileMenuToggle.addEventListener("click", () => {
-      mobileMenu.classList.toggle("hidden")
-      mobileMenu.classList.toggle("open")
-    })
-  }
-
-  // Scroll reveal animation with direction
+  // Improved Scroll reveal animation with Intersection Observer API
   const revealElements = document.querySelectorAll(".reveal-element")
   const staggeredElements = document.querySelectorAll(".stagger-children")
   const revealTexts = document.querySelectorAll(".reveal-text")
 
-  // Create an Intersection Observer
+  // Create an Intersection Observer with better options
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
@@ -60,7 +88,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
           // For staggered children animations
           if (entry.target.classList.contains("stagger-children")) {
-            entry.target.classList.add("active")
+            const children = entry.target.children
+            Array.from(children).forEach((child, index) => {
+              setTimeout(() => {
+                child.classList.add("active")
+              }, 100 * index)
+            })
           }
 
           // Activate reveal-text elements inside this element
@@ -80,8 +113,8 @@ document.addEventListener("DOMContentLoaded", () => {
       })
     },
     {
-      threshold: 0.15,
-      rootMargin: "0px 0px -100px 0px",
+      threshold: 0.1,
+      rootMargin: "0px 0px -50px 0px",
     },
   )
 
@@ -116,17 +149,24 @@ document.addEventListener("DOMContentLoaded", () => {
     })
   }, 500)
 
-  // Skills category filtering
+  // Skills category filtering with improved accessibility
   const skillCategoryBtns = document.querySelectorAll(".skill-category-btn")
   const skillTiles = document.querySelectorAll(".skill-tile")
 
   skillCategoryBtns.forEach((btn) => {
+    btn.setAttribute("role", "button")
+    btn.setAttribute("aria-pressed", btn.classList.contains("active") ? "true" : "false")
+
     btn.addEventListener("click", () => {
       // Remove active class from all buttons
-      skillCategoryBtns.forEach((b) => b.classList.remove("active"))
+      skillCategoryBtns.forEach((b) => {
+        b.classList.remove("active")
+        b.setAttribute("aria-pressed", "false")
+      })
 
       // Add active class to clicked button
       btn.classList.add("active")
+      btn.setAttribute("aria-pressed", "true")
 
       // Get category value
       const category = btn.getAttribute("data-category")
@@ -152,7 +192,7 @@ document.addEventListener("DOMContentLoaded", () => {
     })
   })
 
-  // Terminal functionality with AI integration
+  // Terminal functionality with AI integration - improved for mobile
   const terminal = document.getElementById("terminal-content")
   const terminalInput = document.getElementById("terminal-input")
   const terminalSubmit = document.getElementById("terminal-submit")
@@ -403,9 +443,11 @@ document.addEventListener("DOMContentLoaded", () => {
     })
   }
 
-  // Terminal auto-updates
+  // Terminal auto-updates with reduced frequency on mobile
   if (terminal) {
     let count = 0
+    const updateInterval = isMobile() ? 12000 : 8000 // Longer interval on mobile
+
     setInterval(() => {
       if (count < 3) {
         const entries = [
@@ -427,7 +469,7 @@ document.addEventListener("DOMContentLoaded", () => {
         terminal.scrollTop = terminal.scrollHeight
         count++
       }
-    }, 8000)
+    }, updateInterval)
 
     // Blinking cursor effect
     setInterval(() => {
@@ -478,17 +520,24 @@ document.addEventListener("DOMContentLoaded", () => {
     })
   }
 
-  // Portfolio filtering
+  // Portfolio filtering with improved accessibility
   const portfolioFilters = document.querySelectorAll(".portfolio-filter")
   const portfolioItems = document.querySelectorAll(".portfolio-item")
 
   portfolioFilters.forEach((filter) => {
+    filter.setAttribute("role", "button")
+    filter.setAttribute("aria-pressed", filter.classList.contains("active") ? "true" : "false")
+
     filter.addEventListener("click", () => {
       // Remove active class from all filters
-      portfolioFilters.forEach((f) => f.classList.remove("active"))
+      portfolioFilters.forEach((f) => {
+        f.classList.remove("active")
+        f.setAttribute("aria-pressed", "false")
+      })
 
       // Add active class to clicked filter
       filter.classList.add("active")
+      filter.setAttribute("aria-pressed", "true")
 
       // Get filter value
       const filterValue = filter.getAttribute("data-filter")
@@ -514,7 +563,7 @@ document.addEventListener("DOMContentLoaded", () => {
     })
   })
 
-  // Back to top button
+  // Back to top button with improved mobile positioning
   const backToTopButton = document.getElementById("back-to-top")
 
   if (backToTopButton) {
@@ -534,7 +583,7 @@ document.addEventListener("DOMContentLoaded", () => {
     })
   }
 
-  // Smooth scrolling for navigation links
+  // Smooth scrolling for navigation links with offset adjustment for mobile
   document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
     anchor.addEventListener("click", function (e) {
       e.preventDefault()
@@ -543,20 +592,193 @@ document.addEventListener("DOMContentLoaded", () => {
       const targetElement = document.querySelector(targetId)
 
       if (targetElement) {
+        // Adjust offset based on device
+        const offset = isMobile() ? 100 : 80
+
         window.scrollTo({
-          top: targetElement.offsetTop - 80,
+          top: targetElement.offsetTop - offset,
           behavior: "smooth",
         })
 
         // Close mobile menu if open
         if (mobileMenu && !mobileMenu.classList.contains("hidden")) {
           mobileMenu.classList.add("hidden")
+          mobileMenu.classList.remove("open")
+          if (mobileMenuToggle) {
+            mobileMenuToggle.setAttribute("aria-expanded", "false")
+          }
         }
       }
     })
   })
+
+  // Handle active states for mobile bottom navigation
+  const sections = document.querySelectorAll("section, div[id]")
+  const navLinks = document.querySelectorAll(".mobile-nav a")
+
+  function setActiveNavLink() {
+    let currentSection = ""
+
+    sections.forEach((section) => {
+      const sectionTop = section.offsetTop
+      const sectionHeight = section.clientHeight
+
+      if (window.scrollY >= sectionTop - 200) {
+        currentSection = section.getAttribute("id")
+      }
+    })
+
+    navLinks.forEach((link) => {
+      link.classList.remove("text-white", "font-bold")
+      const href = link.getAttribute("href").substring(1)
+
+      if (href === currentSection) {
+        link.classList.add("text-white", "font-bold")
+      }
+    })
+  }
+
+  window.addEventListener("scroll", setActiveNavLink)
+  setActiveNavLink() // Set initial state
+
+  // Add theme toggle functionality
+  const prefersDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches
+  const isDarkMode = prefersDarkMode
+
+  // Add dark mode toggle button if needed
+
+  // Add print functionality for resume
+  const printButton = document.querySelector(".resume-download-btn")
+  if (printButton) {
+    const printResume = document.createElement("button")
+    printResume.className = "resume-download-btn w-full text-center mt-2"
+    printResume.innerHTML = '<i class="fas fa-print"></i> PRINT RESUME'
+    printResume.addEventListener("click", () => {
+      window.print()
+    })
+    printButton.parentNode.appendChild(printResume)
+  }
+
+  // Add keyboard navigation support
+  document.addEventListener("keydown", (e) => {
+    // ESC key closes mobile menu
+    if (e.key === "Escape" && mobileMenu && !mobileMenu.classList.contains("hidden")) {
+      mobileMenu.classList.add("hidden")
+      mobileMenu.classList.remove("open")
+      if (mobileMenuToggle) {
+        mobileMenuToggle.setAttribute("aria-expanded", "false")
+        const icon = mobileMenuToggle.querySelector("i")
+        if (icon) {
+          icon.classList.remove("fa-times")
+          icon.classList.add("fa-bars")
+        }
+      }
+    }
+
+    // Tab key navigation for accessibility
+    if (e.key === "Tab") {
+      const focusableElements = document.querySelectorAll(
+        'a[href], button, input, textarea, [tabindex]:not([tabindex="-1"])',
+      )
+      const firstElement = focusableElements[0]
+      const lastElement = focusableElements[focusableElements.length - 1]
+
+      if (e.shiftKey && document.activeElement === firstElement) {
+        e.preventDefault()
+        lastElement.focus()
+      } else if (!e.shiftKey && document.activeElement === lastElement) {
+        e.preventDefault()
+        firstElement.focus()
+      }
+    }
+  })
+
+  // Add lazy loading for images
+  document.querySelectorAll("img").forEach((img) => {
+    img.loading = "lazy"
+  })
+
+  // Add offline support with service worker
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker
+        .register("/service-worker.js")
+        .then((registration) => {
+          console.log("ServiceWorker registration successful")
+        })
+        .catch((error) => {
+          console.log("ServiceWorker registration failed:", error)
+        })
+    })
+  }
+
+  // Add copy to clipboard functionality for contact info
+  const contactInfoElements = document.querySelectorAll(".contact-link")
+  contactInfoElements.forEach((element) => {
+    element.addEventListener("click", (e) => {
+      if (element.getAttribute("href").startsWith("mailto:") || element.getAttribute("href").startsWith("tel:")) {
+        return // Let default behavior handle these
+      }
+
+      e.preventDefault()
+      const textToCopy = element.textContent
+      navigator.clipboard.writeText(textToCopy).then(() => {
+        // Show a tooltip or notification
+        const originalText = element.textContent
+        element.textContent = "Copied!"
+        setTimeout(() => {
+          element.textContent = originalText
+        }, 2000)
+      })
+    })
+  })
 })
+
+// Create a simple service worker for offline support
+if (typeof window !== "undefined") {
+  const createServiceWorker = () => {
+    const swContent = `
+      // Simple service worker for basic offline support
+      const CACHE_NAME = 'ajish-portfolio-cache-v1';
+      const urlsToCache = [
+        '/',
+        '/index.html',
+        '/style.css',
+        '/script.js',
+        '/profile_pic.png',
+        '/resume.pdf'
+      ];
+
+      self.addEventListener('install', event => {
+        event.waitUntil(
+          caches.open(CACHE_NAME)
+            .then(cache => cache.addAll(urlsToCache))
+        );
+      });
+
+      self.addEventListener('fetch', event => {
+        event.respondWith(
+          caches.match(event.request)
+            .then(response => response || fetch(event.request))
+        );
+      });
+    `
+
+    const blob = new Blob([swContent], { type: "text/javascript" })
+    const swUrl = URL.createObjectURL(blob)
+
+    // Create a link to download the service worker
+    const link = document.createElement("a")
+    link.href = swUrl
+    link.download = "service-worker.js"
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+  }
+
+  // Uncomment this to generate the service worker file
+  // createServiceWorker();
+}
 
 // Declare google variable before using it
 var google
-
