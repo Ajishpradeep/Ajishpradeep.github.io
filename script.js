@@ -340,7 +340,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Function to fetch the resume PDF and convert to base64
   async function fetchResumeData() {
     try {
-      const response = await fetch("resume.pdf")
+      const response = await fetch("Resume.pdf")
       const arrayBuffer = await response.arrayBuffer()
       return btoa(new Uint8Array(arrayBuffer).reduce((data, byte) => data + String.fromCharCode(byte), ""))
     } catch (error) {
@@ -1085,7 +1085,7 @@ if (typeof window !== "undefined") {
         '/style.css',
         '/script.js',
         '/profile_pic.png',
-        '/resume.pdf'
+        '/Resume.pdf'
       ];
 
       self.addEventListener('install', event => {

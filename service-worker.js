@@ -6,7 +6,7 @@ const urlsToCache = [
   "/style.css",
   "/script.js",
   "/profile_pic.png",
-  "/resume.pdf",
+  "/Resume.pdf",
   "/manifest.json",
 ]
 
