@@ -3,8 +3,65 @@ document.addEventListener("DOMContentLoaded", () => {
   const aiBackground = document.querySelector(".ai-background")
   const offset = 0
 
-  // Improved mobile detection
-  const isMobile = () => window.innerWidth < 768
+  // Performance optimizations
+  const debounce = (func, wait) => {
+    let timeout;
+    return function executedFunction(...args) {
+      const later = () => {
+        clearTimeout(timeout);
+        func(...args);
+      };
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+    };
+  };
+
+  const throttle = (func, limit) => {
+    let inThrottle;
+    return function executedFunction(...args) {
+      if (!inThrottle) {
+        func(...args);
+        inThrottle = true;
+        setTimeout(() => inThrottle = false, limit);
+      }
+    };
+  };
+
+  // Mobile detection with feature detection
+  const isMobile = () => {
+    return window.matchMedia('(max-width: 768px)').matches ||
+      'ontouchstart' in window ||
+      navigator.maxTouchPoints > 0;
+  };
+
+  // Enhanced scroll smoothness with ScrollReveal effect
+  const enhancedSmoothScroll = (targetSelector, duration = 1000, offset = 0) => {
+    const target = document.querySelector(targetSelector);
+    if (!target) return;
+
+    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset;
+    const startPosition = window.pageYOffset;
+    const distance = targetPosition - startPosition - offset;
+    let startTime = null;
+
+    const animation = (currentTime) => {
+      if (startTime === null) startTime = currentTime;
+      const timeElapsed = currentTime - startTime;
+      const run = easeInOutQuad(timeElapsed, startPosition, distance, duration);
+      window.scrollTo(0, run);
+      if (timeElapsed < duration) requestAnimationFrame(animation);
+    };
+
+    // Easing function for smooth animation
+    const easeInOutQuad = (t, b, c, d) => {
+      t /= d / 2;
+      if (t < 1) return c / 2 * t * t + b;
+      t--;
+      return -c / 2 * (t * (t - 2) - 1) + b;
+    };
+
+    requestAnimationFrame(animation);
+  };
 
   // Improved mobile menu toggle with accessibility
   const mobileMenuToggle = document.getElementById("mobile-menu-toggle")
@@ -78,6 +135,20 @@ document.addEventListener("DOMContentLoaded", () => {
   const revealElements = document.querySelectorAll(".reveal-element")
   const staggeredElements = document.querySelectorAll(".stagger-children")
   const revealTexts = document.querySelectorAll(".reveal-text")
+  const expertiseTiles = document.querySelectorAll(".expertise-tile")
+
+  // Add hover effect to expertise tiles
+  expertiseTiles.forEach((tile) => {
+    tile.addEventListener("mouseenter", () => {
+      tile.style.transform = "translateY(-5px)";
+      tile.style.boxShadow = "0 8px 15px rgba(0, 0, 0, 0.2)";
+    });
+
+    tile.addEventListener("mouseleave", () => {
+      tile.style.transform = "";
+      tile.style.boxShadow = "";
+    });
+  });
 
   // Create an Intersection Observer with better options
   const observer = new IntersectionObserver(
@@ -92,6 +163,8 @@ document.addEventListener("DOMContentLoaded", () => {
             Array.from(children).forEach((child, index) => {
               setTimeout(() => {
                 child.classList.add("active")
+                child.style.opacity = "1"
+                child.style.transform = "translateY(0)"
               }, 100 * index)
             })
           }
@@ -107,13 +180,21 @@ document.addEventListener("DOMContentLoaded", () => {
             )
           })
 
+          // Add a subtle pulse effect when elements appear
+          setTimeout(() => {
+            entry.target.classList.add("pulse-once");
+            setTimeout(() => {
+              entry.target.classList.remove("pulse-once");
+            }, 600);
+          }, 300);
+
           // Unobserve after animation is triggered
           observer.unobserve(entry.target)
         }
       })
     },
     {
-      threshold: 0.1,
+      threshold: 0.15,
       rootMargin: "0px 0px -50px 0px",
     },
   )
@@ -148,6 +229,63 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     })
   }, 500)
+
+  // Smooth scrolling for navigation links with enhanced physics
+  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+    anchor.addEventListener("click", function (e) {
+      e.preventDefault()
+
+      const targetId = this.getAttribute("href")
+      const targetElement = document.querySelector(targetId)
+
+      if (targetElement) {
+        // Adjust offset based on device
+        const offset = isMobile() ? 100 : 80
+
+        // Use enhanced smooth scrolling
+        enhancedSmoothScroll(targetId, 800, offset);
+
+        // Add a subtle highlight effect to the target section
+        setTimeout(() => {
+          targetElement.classList.add("highlight-section");
+          setTimeout(() => {
+            targetElement.classList.remove("highlight-section");
+          }, 1000);
+        }, 800);
+
+        // Close mobile menu if open
+        if (mobileMenu && !mobileMenu.classList.contains("hidden")) {
+          mobileMenu.classList.add("hidden")
+          mobileMenu.classList.remove("open")
+          if (mobileMenuToggle) {
+            mobileMenuToggle.setAttribute("aria-expanded", "false")
+          }
+        }
+      }
+    })
+  })
+
+  // Add CSS for highlight effect
+  const styleElement = document.createElement('style');
+  styleElement.textContent = `
+    .highlight-section {
+      animation: highlightSection 1s ease;
+    }
+    @keyframes highlightSection {
+      0% { box-shadow: 0 0 0 rgba(6, 182, 212, 0); }
+      50% { box-shadow: 0 0 20px rgba(6, 182, 212, 0.3); }
+      100% { box-shadow: 0 0 0 rgba(6, 182, 212, 0); }
+    }
+    .pulse-once {
+      animation: pulseOnce 0.6s ease;
+    }
+    @keyframes pulseOnce {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.02); }
+      100% { transform: scale(1); }
+    }
+  `;
+  document.head.appendChild(styleElement);
 
   // Skills category filtering with improved accessibility
   const skillCategoryBtns = document.querySelectorAll(".skill-category-btn")
@@ -583,35 +721,6 @@ document.addEventListener("DOMContentLoaded", () => {
     })
   }
 
-  // Smooth scrolling for navigation links with offset adjustment for mobile
-  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-    anchor.addEventListener("click", function (e) {
-      e.preventDefault()
-
-      const targetId = this.getAttribute("href")
-      const targetElement = document.querySelector(targetId)
-
-      if (targetElement) {
-        // Adjust offset based on device
-        const offset = isMobile() ? 100 : 80
-
-        window.scrollTo({
-          top: targetElement.offsetTop - offset,
-          behavior: "smooth",
-        })
-
-        // Close mobile menu if open
-        if (mobileMenu && !mobileMenu.classList.contains("hidden")) {
-          mobileMenu.classList.add("hidden")
-          mobileMenu.classList.remove("open")
-          if (mobileMenuToggle) {
-            mobileMenuToggle.setAttribute("aria-expanded", "false")
-          }
-        }
-      }
-    })
-  })
-
   // Handle active states for mobile bottom navigation
   const sections = document.querySelectorAll("section, div[id]")
   const navLinks = document.querySelectorAll(".mobile-nav a")
@@ -732,6 +841,236 @@ document.addEventListener("DOMContentLoaded", () => {
       })
     })
   })
+
+  // Optimize scroll handling
+  const handleScroll = throttle(() => {
+    const scrollPosition = window.scrollY;
+    const windowHeight = window.innerHeight;
+    const documentHeight = document.documentElement.scrollHeight;
+
+    // Back to top button visibility
+    const backToTop = document.getElementById('back-to-top');
+    if (backToTop) {
+      if (scrollPosition > windowHeight * 0.5) {
+        backToTop.classList.add('visible');
+      } else {
+        backToTop.classList.remove('visible');
+      }
+    }
+
+    // Reveal animations
+    const revealElements = document.querySelectorAll('.reveal-element');
+    revealElements.forEach(element => {
+      const elementTop = element.getBoundingClientRect().top;
+      const elementVisible = 150;
+
+      if (elementTop < windowHeight - elementVisible) {
+        element.classList.add('active');
+      }
+    });
+
+    // Staggered children animations
+    const staggerParents = document.querySelectorAll('.stagger-children');
+    staggerParents.forEach((parent, parentIndex) => {
+      const children = parent.children;
+      Array.from(children).forEach((child, childIndex) => {
+        const delay = childIndex * 100;
+        child.style.transitionDelay = `${delay}ms`;
+
+        const childTop = child.getBoundingClientRect().top;
+        const childVisible = 150;
+
+        if (childTop < windowHeight - childVisible) {
+          child.style.opacity = '1';
+          child.style.transform = 'translateY(0)';
+        }
+      });
+    });
+  }, 100);
+
+  // Optimize mobile menu
+  const toggleMobileMenu = () => {
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuButton = document.querySelector('.mobile-menu-button');
+
+    if (mobileMenu && menuButton) {
+      mobileMenu.classList.toggle('open');
+      menuButton.classList.toggle('active');
+
+      // Prevent body scroll when menu is open
+      document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+    }
+  };
+
+  // Optimize typing animation
+  const typeWriter = (element, text, speed = 100) => {
+    let i = 0;
+    element.innerHTML = '';
+
+    const type = () => {
+      if (i < text.length) {
+        element.innerHTML += text.charAt(i);
+        i++;
+        setTimeout(type, speed);
+      }
+    };
+
+    type();
+  };
+
+  // Optimize smooth scroll
+  const smoothScroll = (target, duration = 800) => {
+    const targetElement = document.querySelector(target);
+    if (!targetElement) return;
+
+    const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+    const startPosition = window.pageYOffset;
+    const distance = targetPosition - startPosition;
+    let startTime = null;
+
+    const animation = currentTime => {
+      if (startTime === null) startTime = currentTime;
+      const timeElapsed = currentTime - startTime;
+      const run = ease(timeElapsed, startPosition, distance, duration);
+      window.scrollTo(0, run);
+
+      if (timeElapsed < duration) {
+        requestAnimationFrame(animation);
+      }
+    };
+
+    // Easing function
+    const ease = (t, b, c, d) => {
+      t /= d / 2;
+      if (t < 1) return c / 2 * t * t + b;
+      t--;
+      return -c / 2 * (t * (t - 2) - 1) + b;
+    };
+
+    requestAnimationFrame(animation);
+  };
+
+  // Optimize form handling
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+
+    const form = event.target;
+    const submitButton = form.querySelector('button[type="submit"]');
+    const originalButtonText = submitButton.innerHTML;
+
+    try {
+      submitButton.disabled = true;
+      submitButton.innerHTML = 'Sending...';
+
+      const formData = new FormData(form);
+      const response = await fetch(form.action, {
+        method: 'POST',
+        body: formData
+      });
+
+      if (response.ok) {
+        form.reset();
+        submitButton.innerHTML = 'Sent!';
+        setTimeout(() => {
+          submitButton.innerHTML = originalButtonText;
+          submitButton.disabled = false;
+        }, 3000);
+      } else {
+        throw new Error('Form submission failed');
+      }
+    } catch (error) {
+      console.error('Form submission error:', error);
+      submitButton.innerHTML = 'Error!';
+      setTimeout(() => {
+        submitButton.innerHTML = originalButtonText;
+        submitButton.disabled = false;
+      }, 3000);
+    }
+  };
+
+  // Optimize image loading
+  const lazyLoadImages = () => {
+    const images = document.querySelectorAll('img[data-src]');
+
+    const imageObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const img = entry.target;
+          img.src = img.dataset.src;
+          img.removeAttribute('data-src');
+          observer.unobserve(img);
+        }
+      });
+    });
+
+    images.forEach(img => imageObserver.observe(img));
+  };
+
+  // Initialize optimizations
+  document.addEventListener('DOMContentLoaded', () => {
+    // Add event listeners
+    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('resize', debounce(handleScroll, 250));
+
+    // Mobile menu
+    const menuButton = document.querySelector('.mobile-menu-button');
+    if (menuButton) {
+      menuButton.addEventListener('click', toggleMobileMenu);
+    }
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', (e) => {
+        e.preventDefault();
+        const target = anchor.getAttribute('href');
+        smoothScroll(target);
+
+        // Close mobile menu if open
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (mobileMenu && mobileMenu.classList.contains('open')) {
+          toggleMobileMenu();
+        }
+      });
+    });
+
+    // Form handling
+    const contactForm = document.querySelector('.contact-form');
+    if (contactForm) {
+      contactForm.addEventListener('submit', handleFormSubmit);
+    }
+
+    // Initialize lazy loading
+    lazyLoadImages();
+
+    // Initial scroll check
+    handleScroll();
+
+    // Typing animation for hero section
+    const heroText = document.querySelector('.hero-text');
+    if (heroText) {
+      const text = heroText.textContent;
+      typeWriter(heroText, text);
+    }
+
+    // Add touch feedback for mobile
+    if (isMobile()) {
+      document.querySelectorAll('.skill-tile, .expertise-tile, .service-card, .education-card, .collab-card, .portfolio-item').forEach(element => {
+        element.addEventListener('touchstart', () => {
+          element.style.transform = 'scale(0.98)';
+        });
+
+        element.addEventListener('touchend', () => {
+          element.style.transform = '';
+        });
+      });
+    }
+  });
+
+  // Cleanup on page unload
+  window.addEventListener('beforeunload', () => {
+    window.removeEventListener('scroll', handleScroll);
+    window.removeEventListener('resize', debounce(handleScroll, 250));
+  });
 })
 
 // Create a simple service worker for offline support
