@@ -237,57 +237,79 @@
                 <div
                     class="md:hidden bg-gray-900 rounded-lg border border-gray-800 overflow-hidden hover-glow reveal-element from-left mb-4">
                     <div class="p-4">
-                        <!-- Added status information before social icons -->
-                        <div class="flex flex-col items-center justify-center mb-3">
-                            <div class="flex justify-center mb-2">
+                        <!-- Profile Header with Picture and Info -->
+                        <div class="flex items-start space-x-4 mb-4">
+                            <!-- Profile Picture -->
+                            <div class="w-16 h-16 overflow-hidden rounded-lg profile-pic-container-mobile">
+                                <img src="profile_pic.png" alt="Ajish Pradeep" class="w-full h-full object-cover">
+                            </div>
+
+                            <!-- Name and Title -->
+                            <div class="flex-1">
+                                <h1 class="text-lg font-bold text-cyan-400 typing-animation-mobile">AJISH PRADEEP</h1>
+                                <p class="text-xs text-gray-400 mb-1">AI ENGINEER & RESEARCHER</p>
                                 <div class="flex items-center">
                                     <div class="w-2 h-2 rounded-full bg-green-500 mr-2 pulse-element"></div>
-                                    <span class="text-xs text-green-400">AVAILABLE</span>
+                                    <span class="text-xs text-green-400">AVAILABLE FOR WORK</span>
                                 </div>
-                                <span class="text-gray-500 mx-3">|</span>
-                                <div class="flex items-center">
-                                    <i class="fas fa-map-marker-alt text-cyan-400 mr-1"></i>
-                                    <span class="text-xs text-cyan-400">TAIPEI, TAIWAN</span>
-                                </div>
-                            </div>
-                            <div class="flex items-center">
-                                <div class="signal-strength mr-2 scale-75">
-                                    <div class="signal-bar" style="left: 0; height: 5px;"></div>
-                                    <div class="signal-bar" style="left: 20px; height: 10px;"></div>
-                                    <div class="signal-bar filled" style="left: 40px; height: 15px;"></div>
-                                    <div class="signal-bar filled" style="left: 60px; height: 20px;"></div>
-                                    <div class="signal-bar filled" style="left: 80px; height: 20px;"></div>
-                                </div>
-                                <span class="text-cyan-500 text-xs">PORTFOLIO: ACTIVE</span>
                             </div>
                         </div>
 
-                        <!-- Social Icons -->
-                        <div class="flex justify-center space-x-5 py-3">
+                        <!-- Status and Location -->
+                        <div class="grid grid-cols-2 gap-2 mb-4">
+                            <div class="bg-gray-800 rounded p-2">
+                                <div class="flex items-center mb-1">
+                                    <i class="fas fa-map-marker-alt text-cyan-400 mr-2"></i>
+                                    <span class="text-xs text-cyan-400">LOCATION</span>
+                                </div>
+                                <span class="text-xs text-gray-300">TAIPEI, TAIWAN</span>
+                            </div>
+                            <div class="bg-gray-800 rounded p-2">
+                                <div class="flex items-center mb-1">
+                                    <i class="fas fa-signal text-green-400 mr-2"></i>
+                                    <span class="text-xs text-green-400">STATUS</span>
+                                </div>
+                                <span class="text-xs text-gray-300">PORTFOLIO: ACTIVE</span>
+                            </div>
+                        </div>
+
+                        <!-- Social Icons and Download CV in Table Layout -->
+                        <div class="grid grid-cols-3 gap-2">
+                            <!-- LinkedIn -->
                             <a href="https://www.linkedin.com/in/ajishpradeep/" target="_blank"
-                                class="mobile-social-icon linkedin">
-                                <i class="fab fa-linkedin-in text-xl"></i>
+                                class="mobile-social-link flex items-center bg-gray-800 rounded p-2 hover:bg-gray-700">
+                                <i class="fab fa-linkedin-in text-cyan-400 mr-2"></i>
+                                <span class="text-xs text-gray-300">LinkedIn</span>
                             </a>
+                            <!-- GitHub -->
                             <a href="https://github.com/Ajishpradeep/" target="_blank"
-                                class="mobile-social-icon github">
-                                <i class="fab fa-github text-xl"></i>
+                                class="mobile-social-link flex items-center bg-gray-800 rounded p-2 hover:bg-gray-700">
+                                <i class="fab fa-github text-green-400 mr-2"></i>
+                                <span class="text-xs text-gray-300">GitHub</span>
                             </a>
-                            <a href="https://line.me/ti/p/Ubq5KJIQTv" target="_blank" class="mobile-social-icon line">
-                                <i class="fab fa-line text-xl"></i>
+                            <!-- Line -->
+                            <a href="https://line.me/ti/p/Ubq5KJIQTv" target="_blank"
+                                class="mobile-social-link flex items-center bg-gray-800 rounded p-2 hover:bg-gray-700">
+                                <i class="fab fa-line text-yellow-400 mr-2"></i>
+                                <span class="text-xs text-gray-300">Line</span>
                             </a>
-                            <a href="mailto:ajishpradeep@gmail.com" class="mobile-social-icon email">
-                                <i class="fas fa-envelope text-xl"></i>
+                            <!-- Email -->
+                            <a href="mailto:ajishpradeep@gmail.com"
+                                class="mobile-social-link flex items-center bg-gray-800 rounded p-2 hover:bg-gray-700">
+                                <i class="fas fa-envelope text-orange-400 mr-2"></i>
+                                <span class="text-xs text-gray-300">Email</span>
                             </a>
-                            <a href="tel:+886905174662" class="mobile-social-icon phone">
-                                <i class="fas fa-phone text-xl"></i>
+                            <!-- Phone -->
+                            <a href="tel:+886905174662"
+                                class="mobile-social-link flex items-center bg-gray-800 rounded p-2 hover:bg-gray-700">
+                                <i class="fas fa-phone text-red-400 mr-2"></i>
+                                <span class="text-xs text-gray-300">Phone</span>
                             </a>
-                        </div>
-
-                        <!-- Contact button for mobile -->
-                        <div class="flex justify-center mt-3">
-                            <a href="#contact"
-                                class="bg-gradient-to-r from-cyan-900 to-green-900 hover:from-cyan-800 hover:to-green-800 text-xs px-5 py-2 rounded-md transition-all hover:scale-105 flex items-center">
-                                <i class="fas fa-paper-plane mr-2"></i> CONTACT ME
+                            <!-- Download CV -->
+                            <a href="Resume.pdf" download
+                                class="mobile-social-link flex items-center bg-gray-800 rounded p-2 hover:bg-gray-700">
+                                <i class="fas fa-download text-purple-400 mr-2"></i>
+                                <span class="text-xs text-gray-300">CV</span>
                             </a>
                         </div>
                     </div>
