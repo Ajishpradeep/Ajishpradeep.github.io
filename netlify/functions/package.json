@@ -1,0 +1,8 @@
+{
+    "name": "netlify-functions",
+    "version": "1.0.0",
+    "description": "Netlify functions for Ajish's portfolio website",
+    "dependencies": {
+        "@google/generative-ai": "^0.2.1"
+    }
+}

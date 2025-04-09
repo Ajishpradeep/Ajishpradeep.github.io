@@ -1,0 +1,11 @@
+[build]
+  publish = "."
+  functions = "netlify/functions"
+
+[dev]
+  publish = "."
+  functions = "netlify/functions"
+  
+[build.environment]
+  # Set this in Netlify dashboard, not here
+  # GEMINI_API_KEY = "your-api-key" 
