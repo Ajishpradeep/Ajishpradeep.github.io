@@ -57,14 +57,21 @@ git push
 2. Sign up for Netlify (if you haven't already) and connect your GitHub repository.
 
 3. Configure build settings in Netlify:
-   - Build command: Leave empty (no build step needed)
+   - Build command: `cd netlify/functions && npm install` (this is already set in netlify.toml)
    - Publish directory: `.` (root directory)
 
 4. Add environment variable in Netlify dashboard:
    - Key: `GEMINI_API_KEY`
    - Value: Your Google Gemini API key
 
-5. Deploy the site!
+5. Troubleshooting deployment issues:
+   - If you encounter build failures related to missing dependencies, the repository includes:
+     - A root-level package.json with a build script
+     - The Netlify plugin `@netlify/plugin-functions-install-core` in netlify.toml
+     - A build command in netlify.toml that installs function dependencies
+   - These measures should automatically resolve dependency installation issues
+
+6. Deploy the site!
 
 ## Obtaining a Gemini API Key
 
@@ -80,6 +87,7 @@ git push
 - `style.css` - Custom CSS styles
 - `script.js` - Frontend JavaScript
 - `netlify/functions/gemini-chat.js` - Serverless function for Gemini API
+- `netlify/functions/package.json` - Dependencies for the serverless function
 - `service-worker.js` - Service worker for PWA support
 - `profile_pic.png` - Profile picture
 - `Resume.pdf` - Resume file

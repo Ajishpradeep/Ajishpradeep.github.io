@@ -1,6 +1,7 @@
 [build]
   publish = "."
   functions = "netlify/functions"
+  command = "cd netlify/functions && npm install"
 
 [dev]
   publish = "."
@@ -8,4 +9,8 @@
   
 [build.environment]
   # Set this in Netlify dashboard, not here
-  # GEMINI_API_KEY = "your-api-key" 
+  # GEMINI_API_KEY = "AIzaSyC18Of3Op1pYFkvbs0hybRMhJmYiDJSV2A"
+
+# Add plugin to install function dependencies automatically
+[[plugins]]
+package = "@netlify/plugin-functions-install-core" 

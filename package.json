@@ -1,0 +1,13 @@
+{
+    "name": "ajish-portfolio",
+    "version": "1.0.0",
+    "description": "Portfolio website for Ajish Pradeep with AI terminal functionality",
+    "scripts": {
+        "build": "cd netlify/functions && npm install"
+    },
+    "dependencies": {
+        "@google/generative-ai": "^0.2.1"
+    },
+    "author": "Ajish Pradeep",
+    "license": "MIT"
+}
