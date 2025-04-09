@@ -130,9 +130,10 @@ document.addEventListener("DOMContentLoaded", () => {
       })
     })
 
-    // Add touch feedback animations for mobile social icons
+    // Add touch feedback animations for mobile social icons and improve touch interactions
     const mobileSocialIcons = document.querySelectorAll(".mobile-social-icon");
     mobileSocialIcons.forEach(icon => {
+      // For touch devices
       icon.addEventListener("touchstart", () => {
         icon.style.transform = "scale(0.95) translateY(-2px)";
       });
@@ -146,6 +147,26 @@ document.addEventListener("DOMContentLoaded", () => {
           icon.classList.remove("pulse-once");
         }, 600);
       });
+
+      // For mouse devices
+      icon.addEventListener("mouseenter", () => {
+        icon.style.transform = "scale(1.05) translateY(-3px)";
+        icon.style.boxShadow = "0 8px 15px rgba(0, 0, 0, 0.3)";
+      });
+
+      icon.addEventListener("mouseleave", () => {
+        icon.style.transform = "";
+        icon.style.boxShadow = "";
+      });
+    });
+
+    // Fix for any potential layout shifts on mobile
+    window.addEventListener('resize', () => {
+      if (window.innerWidth <= 768) {
+        if (!mobileMenu.classList.contains('hidden') && !mobileMenu.classList.contains('open')) {
+          mobileMenu.classList.add('hidden');
+        }
+      }
     });
   }
 

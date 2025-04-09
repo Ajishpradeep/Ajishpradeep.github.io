@@ -4,6 +4,9 @@ body {
   font-family: "JetBrains Mono", monospace;
   background-color: #000000;
   scroll-behavior: smooth;
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
 }
 
 /* AI Background - Enhanced neural network pattern */
@@ -2356,43 +2359,87 @@ html {
 @media (max-width: 768px) {
   .mobile-menu-link i {
     transform: translateX(0);
-    transition: transform 0.3s ease;
+    transition: transform 0.2s ease;
   }
 
+  .mobile-menu-link:hover i,
   .mobile-menu-link:active i {
-    transform: translateX(4px);
+    transform: translateX(3px);
   }
 
-  /* Improved mobile page spacing */
+  /* Fix width issues on mobile */
   .container {
-    padding-left: 16px;
-    padding-right: 16px;
-  }
-
-  .lg\:col-span-3 {
-    margin-top: 10px;
-  }
-
-  .mobile-nav a {
-    position: relative;
-    overflow: hidden;
-  }
-
-  .mobile-nav a::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
     width: 100%;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, currentColor, transparent);
-    transform: translateX(-100%);
-    opacity: 0;
+    padding-left: 12px;
+    padding-right: 12px;
+    box-sizing: border-box;
   }
 
-  .mobile-nav a.active::before {
-    transform: translateX(0);
-    opacity: 1;
-    transition: transform 0.3s ease, opacity 0.3s ease;
+  nav.fixed {
+    width: 100vw;
+    max-width: 100%;
+    overflow-x: hidden;
   }
+
+  #mobile-menu .container {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .mobile-nav {
+    width: 100vw;
+    max-width: 100%;
+  }
+
+  /* Improve mobile profile section styling */
+  .md\:hidden.bg-gray-900 {
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+  }
+
+  /* Make sure responsive containers don't overflow */
+  .reveal-element,
+  .hover-glow,
+  .bg-gray-900 {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  /* Add slight padding to mobile content */
+  .space-y-6>div {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  /* Ensure the mobile status info fits properly */
+  .md\:hidden .flex.flex-col.items-center.justify-center .flex.justify-center {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  /* Adjust scale for small devices */
+  @media (max-width: 360px) {
+    .md\:hidden .flex.flex-col.items-center.justify-center {
+      transform: scale(0.9);
+    }
+  }
+}
+
+/* Make all fixed elements respect viewport width */
+body {
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
+}
+
+/* Fix any horizontal overflow issues */
+.container,
+.fixed,
+nav,
+.mobile-nav,
+#mobile-menu {
+  max-width: 100vw;
+  overflow-x: hidden;
 }
