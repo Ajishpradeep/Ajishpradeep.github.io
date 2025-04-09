@@ -74,9 +74,21 @@ document.addEventListener("DOMContentLoaded", () => {
     mobileMenuToggle.addEventListener("click", () => {
       const isExpanded = mobileMenu.classList.contains("open")
       mobileMenu.classList.toggle("hidden")
-      mobileMenu.classList.toggle("open")
 
-      // Toggle icon between bars and times
+      // Add a slight delay before adding the open class for smooth animation
+      if (mobileMenu.classList.contains("hidden")) {
+        mobileMenu.classList.remove("open")
+        // Add animation to the toggle button
+        mobileMenuToggle.classList.remove("active")
+      } else {
+        setTimeout(() => {
+          mobileMenu.classList.add("open")
+          // Add animation to the toggle button
+          mobileMenuToggle.classList.add("active")
+        }, 10)
+      }
+
+      // Toggle icon between bars and times with smooth transition
       const icon = mobileMenuToggle.querySelector("i")
       if (icon) {
         if (icon.classList.contains("fa-bars")) {
@@ -99,14 +111,42 @@ document.addEventListener("DOMContentLoaded", () => {
         mobileMenu.classList.add("hidden")
         mobileMenu.classList.remove("open")
         mobileMenuToggle.setAttribute("aria-expanded", "false")
+        mobileMenuToggle.classList.remove("active")
 
         const icon = mobileMenuToggle.querySelector("i")
         if (icon) {
           icon.classList.remove("fa-times")
           icon.classList.add("fa-bars")
         }
+
+        // Add a subtle ripple effect on click
+        const ripple = document.createElement("span");
+        ripple.classList.add("menu-link-ripple");
+        link.appendChild(ripple);
+
+        setTimeout(() => {
+          link.removeChild(ripple);
+        }, 600);
       })
     })
+
+    // Add touch feedback animations for mobile social icons
+    const mobileSocialIcons = document.querySelectorAll(".mobile-social-icon");
+    mobileSocialIcons.forEach(icon => {
+      icon.addEventListener("touchstart", () => {
+        icon.style.transform = "scale(0.95) translateY(-2px)";
+      });
+
+      icon.addEventListener("touchend", () => {
+        icon.style.transform = "";
+
+        // Add pulse effect on touch
+        icon.classList.add("pulse-once");
+        setTimeout(() => {
+          icon.classList.remove("pulse-once");
+        }, 600);
+      });
+    });
   }
 
   // Typing animation for the title - FIXED
@@ -379,7 +419,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Show AI thinking messages
     const thinkingMessages = [
-      "[+] AjishGPT is processing your query...",
+      "[+] Jarvis is processing your query...",
       "[+] Analyzing your question...",
       "[+] Accessing resume data...",
       "[+] Formulating response...",

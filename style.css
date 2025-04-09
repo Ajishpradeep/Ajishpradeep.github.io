@@ -2106,3 +2106,293 @@ html {
   white-space: nowrap;
   border-width: 0;
 }
+
+/* Mobile specific styles */
+.profile-pic-glow {
+  position: relative;
+  border: 2px solid transparent;
+  background: linear-gradient(45deg, #06b6d4, #0891b2, #14b8a6);
+  background-size: 200% 200%;
+  animation: gradient-shift 3s ease infinite;
+  box-shadow: 0 0 10px rgba(8, 145, 178, 0.4);
+}
+
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.pulse-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  display: inline-block;
+  animation: pulse-animation 2s infinite;
+}
+
+@keyframes pulse-animation {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.7;
+  }
+
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(0.8);
+    opacity: 0.7;
+  }
+}
+
+.mobile-menu-btn {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, rgba(8, 145, 178, 0.2), rgba(6, 182, 212, 0.1));
+  border: 1px solid rgba(8, 145, 178, 0.5);
+  color: #06b6d4;
+  box-shadow: 0 0 8px rgba(6, 182, 212, 0.3);
+  transition: all 0.3s ease;
+}
+
+.mobile-menu-btn:active {
+  transform: scale(0.95);
+  box-shadow: 0 0 12px rgba(6, 182, 212, 0.5);
+}
+
+.shadow-glow {
+  box-shadow: 0 4px 20px rgba(8, 145, 178, 0.3);
+}
+
+.mobile-social-icon {
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  transform: translateY(0);
+}
+
+.mobile-social-icon:active {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+}
+
+.mobile-social-icon.linkedin {
+  background: linear-gradient(135deg, #0077b5, #0e76a8);
+  color: white;
+}
+
+.mobile-social-icon.github {
+  background: linear-gradient(135deg, #333, #24292e);
+  color: white;
+}
+
+.mobile-social-icon.line {
+  background: linear-gradient(135deg, #00c300, #00b300);
+  color: white;
+}
+
+.mobile-social-icon.email {
+  background: linear-gradient(135deg, #d44638, #ea4335);
+  color: white;
+}
+
+.mobile-social-icon.phone {
+  background: linear-gradient(135deg, #4285f4, #34a853);
+  color: white;
+}
+
+.mobile-download-btn {
+  background: linear-gradient(90deg, #06b6d4, #0891b2);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.75rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(6, 182, 212, 0.3);
+}
+
+.mobile-download-btn:active {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(6, 182, 212, 0.4);
+}
+
+/* Enhanced mobile menu link styling */
+.mobile-menu-link {
+  transition: all 0.2s ease;
+  border-radius: 6px;
+  overflow: hidden;
+  position: relative;
+}
+
+.mobile-menu-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #06b6d4, #0891b2);
+  transition: width 0.3s ease;
+}
+
+.mobile-menu-link:hover::after {
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  #mobile-menu {
+    transform: translateY(-10px);
+    opacity: 0;
+    transition: all 0.3s ease;
+  }
+
+  #mobile-menu.open {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Improvements to existing mobile styling */
+@media (max-width: 768px) {
+  .terminal-scroll {
+    max-height: 200px;
+  }
+
+  .social-icon-sidebar {
+    width: 36px;
+    height: 36px;
+    margin: 0 3px;
+  }
+
+  .expertise-tile {
+    padding: 10px;
+  }
+
+  .hover-glow {
+    box-shadow: 0 5px 15px rgba(8, 145, 178, 0.15);
+  }
+
+  .mobile-nav {
+    box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.2);
+  }
+}
+
+/* Mobile ripple effect */
+.menu-link-ripple {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: radial-gradient(circle, rgba(6, 182, 212, 0.2) 0%, rgba(6, 182, 212, 0) 70%);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: ripple-effect 0.6s ease-out;
+  pointer-events: none;
+  z-index: 1;
+}
+
+@keyframes ripple-effect {
+  0% {
+    width: 0;
+    height: 0;
+    opacity: 0.5;
+  }
+
+  100% {
+    width: 200px;
+    height: 200px;
+    opacity: 0;
+  }
+}
+
+/* Animation for active toggle button */
+.mobile-menu-btn.active {
+  background: linear-gradient(135deg, rgba(6, 182, 212, 0.3), rgba(8, 145, 178, 0.2));
+  box-shadow: 0 0 12px rgba(6, 182, 212, 0.4);
+}
+
+/* Pulse animation for social icons */
+.pulse-once {
+  animation: pulse-once 0.6s ease;
+}
+
+@keyframes pulse-once {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  50% {
+    transform: scale(1.1);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+  }
+
+  100% {
+    transform: scale(1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+}
+
+/* Enhanced mobile layout */
+@media (max-width: 768px) {
+  .mobile-menu-link i {
+    transform: translateX(0);
+    transition: transform 0.3s ease;
+  }
+
+  .mobile-menu-link:active i {
+    transform: translateX(4px);
+  }
+
+  /* Improved mobile page spacing */
+  .container {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .lg\:col-span-3 {
+    margin-top: 10px;
+  }
+
+  .mobile-nav a {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .mobile-nav a::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, currentColor, transparent);
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+
+  .mobile-nav a.active::before {
+    transform: translateX(0);
+    opacity: 1;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+}
