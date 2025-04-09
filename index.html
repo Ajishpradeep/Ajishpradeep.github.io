@@ -26,41 +26,62 @@
     <div class="ai-background fixed top-0 left-0 w-full h-full -z-10"></div>
 
     <!-- Navigation Menu for Mobile -->
-    <nav class="fixed top-0 left-0 right-0 p-4 z-50 bg-gray-900 border-b border-cyan-800 md:hidden">
-        <div class="flex justify-between items-center">
-            <div class="flex items-center">
-                <div class="w-2 h-8 bg-gradient-to-b from-cyan-500 to-green-500 mr-2 pulse-element"></div>
-                <h1 class="text-lg font-bold title-text">AJISH PRADEEP</h1>
-            </div>
-            <button id="mobile-menu-toggle" class="text-cyan-400">
-                <i class="fas fa-bars text-xl"></i>
-            </button>
-        </div>
-        <div id="mobile-menu" class="hidden mt-4 transition-all duration-300">
-            <div class="flex flex-col space-y-2">
-                <a href="#about" class="mobile-menu-link">
-                    <i class="fas fa-user mr-2 text-cyan-400"></i> ABOUT ME
-                </a>
-                <a href="#skills" class="mobile-menu-link">
-                    <i class="fas fa-code mr-2 text-green-400"></i> SKILLS
-                </a>
-                <a href="#experience" class="mobile-menu-link">
-                    <i class="fas fa-briefcase mr-2 text-orange-400"></i> EXPERIENCE
-                </a>
-                <a href="#education" class="mobile-menu-link">
-                    <i class="fas fa-graduation-cap mr-2 text-green-400"></i> EDUCATION
-                </a>
-                <a href="#portfolio" class="mobile-menu-link">
-                    <i class="fas fa-project-diagram mr-2 text-yellow-400"></i> PORTFOLIO
-                </a>
-                <a href="#contact" class="mobile-menu-link">
-                    <i class="fas fa-envelope mr-2 text-red-400"></i> CONTACT
-                </a>
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-gray-900 border-b border-cyan-800 md:hidden">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 overflow-hidden rounded-lg border border-cyan-800">
+                        <img src="profile_pic.png" alt="Ajish Pradeep" class="w-full h-full object-cover">
+                    </div>
+                    <div>
+                        <h1 class="text-sm font-bold title-text">AJISH PRADEEP</h1>
+                        <div class="flex items-center">
+                            <div class="w-1.5 h-1.5 rounded-full bg-green-500 mr-1"></div>
+                            <span class="text-[10px] text-gray-400">AVAILABLE NOW</span>
+                        </div>
+                    </div>
+                </div>
+                <button id="mobile-menu-toggle"
+                    class="text-cyan-400 w-8 h-8 flex items-center justify-center rounded-lg border border-cyan-800">
+                    <i class="fas fa-bars text-lg"></i>
+                </button>
             </div>
         </div>
     </nav>
 
-    <div class="container mx-auto px-4 py-6 mt-16 md:mt-6">
+    <!-- Mobile Menu Dropdown -->
+    <div id="mobile-menu" class="hidden fixed top-16 left-0 right-0 z-40 md:hidden">
+        <div class="container mx-auto px-4">
+            <div class="bg-gray-800 rounded-lg border border-cyan-800 p-2 space-y-1 shadow-lg">
+                <a href="#about" class="mobile-menu-link flex items-center p-2 rounded hover:bg-gray-700">
+                    <i class="fas fa-user w-5 text-cyan-400"></i>
+                    <span class="text-sm">About Me</span>
+                </a>
+                <a href="#skills" class="mobile-menu-link flex items-center p-2 rounded hover:bg-gray-700">
+                    <i class="fas fa-code w-5 text-green-400"></i>
+                    <span class="text-sm">Skills</span>
+                </a>
+                <a href="#experience" class="mobile-menu-link flex items-center p-2 rounded hover:bg-gray-700">
+                    <i class="fas fa-briefcase w-5 text-orange-400"></i>
+                    <span class="text-sm">Experience</span>
+                </a>
+                <a href="#education" class="mobile-menu-link flex items-center p-2 rounded hover:bg-gray-700">
+                    <i class="fas fa-graduation-cap w-5 text-green-400"></i>
+                    <span class="text-sm">Education</span>
+                </a>
+                <a href="#portfolio" class="mobile-menu-link flex items-center p-2 rounded hover:bg-gray-700">
+                    <i class="fas fa-project-diagram w-5 text-yellow-400"></i>
+                    <span class="text-sm">Portfolio</span>
+                </a>
+                <a href="#contact" class="mobile-menu-link flex items-center p-2 rounded hover:bg-gray-700">
+                    <i class="fas fa-envelope w-5 text-red-400"></i>
+                    <span class="text-sm">Contact</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mx-auto px-4 py-6 mt-20 md:mt-6">
         <!-- Header -->
         <header
             class="flex flex-col md:flex-row justify-between items-center border-b border-cyan-600 pb-4 mb-8 slide-in-top">
@@ -219,33 +240,55 @@
 
             <!-- Main Content -->
             <div class="lg:col-span-3 space-y-6">
-                <!-- Mobile Expertise Section (Only visible on mobile) -->
+                <!-- Mobile Profile Section (Only visible on mobile) -->
                 <div
-                    class="md:hidden bg-gray-900 rounded-lg border border-gray-800 overflow-hidden hover-glow reveal-element from-left">
-                    <div class="border-b border-gray-800 p-4 bg-gray-950 flex justify-between items-center">
-                        <h2 class="font-bold text-green-400 flex items-center">
-                            <i class="fas fa-chart-line mr-2"></i> EXPERTISE
-                        </h2>
-                        <span class="text-xs bg-green-900 text-green-300 px-2 py-1 rounded-full">KEY SKILLS</span>
-                    </div>
+                    class="md:hidden bg-gray-900 rounded-lg border border-gray-800 overflow-hidden hover-glow reveal-element from-left mb-4">
                     <div class="p-4">
-                        <div class="grid grid-cols-2 gap-3">
-                            <div class="expertise-tile bg-gray-800 p-3 rounded flex items-center">
-                                <i class="fas fa-eye text-cyan-400 mr-2"></i>
-                                <span class="text-xs">Vision AI</span>
+                        <div class="flex items-center mb-4">
+                            <div class="w-20 h-20 overflow-hidden rounded-lg mr-4 border border-cyan-800">
+                                <img src="profile_pic.png" alt="Ajish Pradeep" class="w-full h-full object-cover">
                             </div>
-                            <div class="expertise-tile bg-gray-800 p-3 rounded flex items-center">
-                                <i class="fas fa-brain text-green-400 mr-2"></i>
-                                <span class="text-xs">Generative AI</span>
+                            <div>
+                                <h3 class="font-bold text-lg mb-1">Ajish Pradeep</h3>
+                                <p class="text-xs text-gray-400 mb-1">AI ENGINEER & RESEARCHER</p>
+                                <p class="text-xs text-gray-400 flex items-center">
+                                    <i class="fas fa-map-marker-alt text-cyan-400 mr-1"></i> Taipei, Taiwan
+                                </p>
+                                <div class="flex items-center mt-1">
+                                    <div class="w-1.5 h-1.5 rounded-full bg-green-500 mr-1"></div>
+                                    <span class="text-xs text-green-400">Available for Projects</span>
+                                </div>
                             </div>
-                            <div class="expertise-tile bg-gray-800 p-3 rounded flex items-center">
-                                <i class="fas fa-microchip text-orange-400 mr-2"></i>
-                                <span class="text-xs">LLM Optimization</span>
-                            </div>
-                            <div class="expertise-tile bg-gray-800 p-3 rounded flex items-center">
-                                <i class="fas fa-server text-yellow-400 mr-2"></i>
-                                <span class="text-xs">Edge Deployment</span>
-                            </div>
+                        </div>
+                        <div class="flex justify-center space-x-4 py-3 border-t border-gray-800">
+                            <a href="https://www.linkedin.com/in/ajishpradeep/" target="_blank"
+                                class="w-8 h-8 flex items-center justify-center rounded-lg bg-gray-800 hover:bg-blue-900 transition-all">
+                                <i class="fab fa-linkedin-in text-blue-400"></i>
+                            </a>
+                            <a href="https://github.com/Ajishpradeep/" target="_blank"
+                                class="w-8 h-8 flex items-center justify-center rounded-lg bg-gray-800 hover:bg-gray-700 transition-all">
+                                <i class="fab fa-github text-white"></i>
+                            </a>
+                            <a href="https://line.me/ti/p/Ubq5KJIQTv" target="_blank"
+                                class="w-8 h-8 flex items-center justify-center rounded-lg bg-gray-800 hover:bg-green-900 transition-all">
+                                <i class="fab fa-line text-green-400"></i>
+                            </a>
+                            <a href="mailto:ajishpradeep@gmail.com"
+                                class="w-8 h-8 flex items-center justify-center rounded-lg bg-gray-800 hover:bg-red-900 transition-all">
+                                <i class="fas fa-envelope text-red-400"></i>
+                            </a>
+                            <a href="tel:+886905174662"
+                                class="w-8 h-8 flex items-center justify-center rounded-lg bg-gray-800 hover:bg-cyan-900 transition-all">
+                                <i class="fas fa-phone text-cyan-400"></i>
+                            </a>
+                        </div>
+                        <div class="flex justify-center mt-3">
+                            <a href="Resume.pdf" download
+                                class="bg-gradient-to-r from-cyan-900 to-green-900 hover:from-cyan-800 hover:to-green-800 
+                                      text-xs px-4 py-2 rounded-lg flex items-center space-x-2 transition-all hover:scale-105">
+                                <i class="fas fa-download"></i>
+                                <span>DOWNLOAD CV</span>
+                            </a>
                         </div>
                     </div>
                 </div>
