@@ -1,0 +1,97 @@
+<!-- Experience & Terminal -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <div id="experience" class="lg:col-span-2">
+        <div
+            class="bg-gray-900 rounded-lg border border-gray-800 overflow-hidden h-full hover-glow reveal-element from-bottom">
+            <div class="border-b border-gray-800 p-3 bg-gray-950 flex justify-between items-center">
+                <h2 class="font-bold text-orange-400 flex items-center">
+                    <i class="fas fa-briefcase mr-2"></i> EXPERIENCE
+                </h2>
+            </div>
+            <div class="p-4 space-y-4">
+                <!-- Experience 1 -->
+                <div class="border-b border-gray-800 pb-4 experience-item">
+                    <div class="flex justify-between mb-2">
+                        <h3 class="font-bold text-orange-400">AI ENGINEER</h3>
+                        <span class="text-xs bg-gray-800 text-gray-300 px-2 py-0.5 rounded-full">2023 — PRESENT</span>
+                    </div>
+                    <p class="text-sm mb-2">President Information Corp, Taiwan</p>
+                    <ul class="text-xs text-gray-400 list-disc pl-4 space-y-2">
+                        <li>Research to deploy a real-time planogram compliance system for 7-Eleven stores, which was
+                            presented as a poster at NVIDIA GTC 2025.</li>
+                        <li>Developed and implemented an innovative custom AI model specifically to tackle the problem
+                            of occulted, fast-moving object detection.</li>
+                        <li>Collaborated with NVIDIA to leverage metropolis microservices, creating generative AI
+                            pipelines capable of seamless cloud and edge deployment.</li>
+                        <li>Developed a high-precision consumer behavior prediction model with 95% accuracy, utilizing
+                            advanced machine learning techniques.</li>
+                    </ul>
+                </div>
+
+                <!-- Experience 2 -->
+                <div class="experience-item">
+                    <div class="flex justify-between mb-2">
+                        <h3 class="font-bold text-orange-400">SOFTWARE DEVELOPER</h3>
+                        <span class="text-xs bg-gray-800 text-gray-300 px-2 py-0.5 rounded-full">2017 — 2021</span>
+                    </div>
+                    <p class="text-sm mb-2">AIBS Software Solutions, India</p>
+                    <ul class="text-xs text-gray-400 list-disc pl-4 space-y-2">
+                        <li>Spearheaded the development of tailored ERP solutions that optimized manufacturing workflows
+                            and enhanced system reliability.</li>
+                        <li>Engineered a robust inventory management system, resolving 95% of software discrepancies and
+                            significantly streamlining operations.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div
+            class="bg-gray-900 rounded-lg border border-gray-800 overflow-hidden h-full hover-glow reveal-element from-right">
+            <div class="border-b border-gray-800 p-3 bg-gray-950 flex justify-between items-center">
+                <h2 class="font-bold text-green-400 flex items-center">
+                    <i class="fas fa-terminal mr-2"></i> AI TERMINAL
+                </h2>
+                <div class="flex space-x-2">
+                    <button
+                        class="text-xs bg-gray-800 hover:bg-green-900 text-green-400 px-2 py-1 rounded transition-all"
+                        id="clear-terminal">
+                        <i class="fas fa-trash mr-1"></i> CLEAR
+                    </button>
+                    <button
+                        class="text-xs bg-gray-800 hover:bg-green-900 text-green-400 px-2 py-1 rounded transition-all"
+                        id="refresh-terminal">
+                        <i class="fas fa-redo mr-1"></i> REFRESH
+                    </button>
+                </div>
+            </div>
+            <div id="terminal-content"
+                class="h-64 p-3 overflow-y-auto terminal-scroll bg-black text-green-400 text-xs font-mono">
+                <div class="mb-1"><span class="text-yellow-400">ajish@portfolio:~#</span> ./skills --list -t expertise
+                </div>
+                <div class="mb-1">[+] Initializing skill analysis...</div>
+                <div class="mb-1">[+] Loading expertise profile... <span class="text-green-400">SUCCESS</span></div>
+                <div class="mb-1">[+] Analyzing core competencies...</div>
+                <div class="mb-1">[!] EXPERTISE: Generative AI, Vision AI, LLM Optimization</div>
+                <div class="mb-1">[!] FRAMEWORKS: PyTorch, TensorFlow, Transformers, Diffusion Models</div>
+                <div class="mb-1">[!] PLATFORMS: Google Cloud Platform (GCP), Vertex AI, Deepstream</div>
+                <div class="mb-1">[+] Scanning for specialized techniques...</div>
+                <div class="mb-1">[!] FOUND: Feature extraction, vector embedding, transformer architectures</div>
+                <div class="mb-1">[+] Analyzing mathematical foundations...</div>
+                <div class="mb-1">[!] STRONG: Linear Algebra, Calculus, Attention Mechanisms</div>
+                <div class="mb-1">[+] Jarvis initialized. Type 'ask' followed by your question or just type your
+                    question directly.</div>
+                <div class="mb-1">ajish@portfolio:~#<span class="code-input"> _</span></div>
+            </div>
+            <div class="p-2 border-t border-gray-800 bg-gray-950">
+                <div class="flex">
+                    <input type="text" id="terminal-input" placeholder="Enter Command..."
+                        class="w-full bg-black border border-gray-700 text-green-400 text-xs p-1 focus:outline-none focus:border-green-500">
+                    <button id="terminal-submit" class="bg-green-900 text-green-400 px-2 text-xs">ASK</button>
+                </div>
+                <div class="text-xs text-gray-500 mt-1">Try commands: help, skills, projects, collaborations, contact or
+                    clear</div>
+            </div>
+        </div>
+    </div>
+</div>

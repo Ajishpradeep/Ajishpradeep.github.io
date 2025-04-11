@@ -1,105 +1,78 @@
-# Ajish Pradeep Portfolio
+# Ajish Pradeep Portfolio Website
 
-A modern portfolio website for AI Engineer & Researcher Ajish Pradeep, featuring an interactive AI-powered terminal using Google's Gemini API via Netlify Functions.
+This is the source code for Ajish Pradeep's personal portfolio website, showcasing his work as an AI Engineer & Researcher.
+
+## Overview
+
+This portfolio site is built using HTML, CSS, and vanilla JavaScript, featuring a modern component-based architecture. The site is fully responsive and optimized for all devices.
 
 ## Features
 
-- Modern, responsive design with Tailwind CSS
-- Interactive AI-powered terminal (using Google Gemini API)
-- Portfolio showcasing AI projects and research
-- Contact form with Netlify Forms integration
-- PWA support for offline access
-- Optimized animations and transitions
+- **Component-Based Architecture**: The site is built using a component-based approach, with each section organized into separate HTML files.
+- **Modular JavaScript**: JavaScript functionality is organized into modules for better maintainability.
+- **Responsive Design**: Fully responsive layout that works on mobile, tablet, and desktop devices.
+- **Animated UI**: Smooth animations and transitions throughout the site.
+- **Interactive Terminal**: A simulated terminal interface where visitors can interact and learn more about Ajish's skills and experience.
+- **Progressive Web App**: Configured as a PWA for offline access and installation on devices.
+- **Netlify Integration**: Includes Netlify serverless functions for the contact form.
 
-## Setup Instructions
+## Technology Stack
 
-### Local Development
+- HTML5
+- CSS3 (with TailwindCSS)
+- Vanilla JavaScript (ES6+)
+- SVG Animations
+- Netlify Serverless Functions
+- Service Workers for PWA functionality
+
+## File Structure
+
+```
+├── assets/                # Static assets like images and SVGs
+├── components/            # HTML components for different sections
+├── css/                   # CSS files
+│   ├── main.css           # Main stylesheet
+├── js/                    # JavaScript files
+│   ├── main.js            # Main JavaScript file
+│   ├── modules/           # JavaScript modules
+│       ├── animations.js  # Animations functionality
+│       ├── filters.js     # Filter functionality
+│       ├── mobileMenu.js  # Mobile menu functionality
+│       ├── terminal.js    # Terminal functionality
+├── netlify/               # Netlify configuration
+│   ├── functions/         # Serverless functions
+├── index.html             # Main HTML file
+├── service-worker.js      # Service worker for PWA functionality
+└── manifest.json          # PWA manifest file
+```
+
+## Setup and Development
 
 1. Clone the repository:
-```bash
-git clone https://github.com/Ajishpradeep/Ajishpradeep.github.io.git
-cd Ajishpradeep.github.io
-```
+   ```
+   git clone https://github.com/Ajishpradeep/Ajishpradeep.github.io.git
+   ```
 
-2. Install Netlify CLI globally:
-```bash
-npm install -g netlify-cli
-```
+2. Navigate to the project directory:
+   ```
+   cd Ajishpradeep.github.io
+   ```
 
-3. Install dependencies for the Netlify Functions:
-```bash
-cd netlify/functions
-npm install
-cd ../..
-```
+3. Open `index.html` in your browser or use a local server:
+   ```
+   python -m http.server
+   ```
 
-4. Create a `.env` file in the root directory with your Gemini API key:
-```
-GEMINI_API_KEY=your-api-key-here
-```
+4. Visit `http://localhost:8000` in your browser.
 
-5. Start the Netlify development server:
-```bash
-netlify dev
-```
+## Deployment
 
-6. The site should now be running at `http://localhost:8888`
-
-### Deployment on Netlify
-
-1. Push your code to GitHub:
-```bash
-git add .
-git commit -m "Setup Netlify Functions for Gemini AI"
-git push
-```
-
-2. Sign up for Netlify (if you haven't already) and connect your GitHub repository.
-
-3. Configure build settings in Netlify:
-   - Build command: `cd netlify/functions && npm install` (this is already set in netlify.toml)
-   - Publish directory: `.` (root directory)
-
-4. Add environment variable in Netlify dashboard:
-   - Key: `GEMINI_API_KEY`
-   - Value: Your Google Gemini API key
-
-5. Troubleshooting deployment issues:
-   - If you encounter build failures related to missing dependencies, the repository includes:
-     - A root-level package.json with a build script
-     - The Netlify plugin `@netlify/plugin-functions-install-core` in netlify.toml
-     - A build command in netlify.toml that installs function dependencies
-   - These measures should automatically resolve dependency installation issues
-
-6. Deploy the site!
-
-## Obtaining a Gemini API Key
-
-1. Go to the [Google AI Studio](https://ai.google.dev/)
-2. Sign in with your Google account
-3. Navigate to "API Keys" in the left sidebar
-4. Click "Create API Key" and follow the instructions
-5. Use this key for the `GEMINI_API_KEY` environment variable
-
-## Structure
-
-- `index.html` - Main HTML file
-- `style.css` - Custom CSS styles
-- `script.js` - Frontend JavaScript
-- `netlify/functions/gemini-chat.js` - Serverless function for Gemini API
-- `netlify/functions/package.json` - Dependencies for the serverless function
-- `service-worker.js` - Service worker for PWA support
-- `profile_pic.png` - Profile picture
-- `Resume.pdf` - Resume file
-
-## Customizing the AI Chat
-
-The AI assistant's behavior is defined in the `netlify/functions/gemini-chat.js` file. You can modify the system prompt to change how the AI responds to user queries.
+The website is deployed using GitHub Pages and is available at [ajishpradeep.github.io](https://ajishpradeep.github.io/).
 
 ## License
 
-MIT
+Copyright (c) 2023 Ajish Pradeep. All rights reserved.
 
 ## Contact
 
-Ajish Pradeep - ajishpradeep@gmail.com 
+For questions or feedback, please contact Ajish Pradeep at [ajishpradeep@gmail.com](mailto:ajishpradeep@gmail.com). 

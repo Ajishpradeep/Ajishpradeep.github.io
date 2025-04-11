@@ -1,0 +1,131 @@
+<!-- Portfolio -->
+<div id="portfolio"
+    class="bg-gray-900 rounded-lg border border-gray-800 overflow-hidden hover-glow reveal-element from-right">
+    <div class="border-b border-gray-800 p-4 bg-gray-950 flex justify-between items-center">
+        <h2 class="font-bold text-yellow-400 flex items-center">
+            <i class="fas fa-project-diagram mr-2"></i> PORTFOLIO
+        </h2>
+        <div class="text-xs">
+            <span class="text-orange-400">NOTE: </span>
+            <span class="text-gray-400">SOME REPOSITORIES ARE PRIVATE DUE TO NDA</span>
+        </div>
+    </div>
+
+    <!-- Portfolio Filter -->
+    <div class="p-4 border-b border-gray-800">
+        <div class="flex flex-wrap gap-2 justify-center">
+            <button class="portfolio-filter active" data-filter="all">ALL</button>
+            <button class="portfolio-filter" data-filter="research">RESEARCH</button>
+            <button class="portfolio-filter" data-filter="projects">PROJECTS</button>
+            <button class="portfolio-filter" data-filter="case-studies">CASE STUDIES</button>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 portfolio-container stagger-children">
+        <!-- Project 1 -->
+        <div class="bg-gray-950 p-3 rounded border border-gray-800 hover:border-cyan-700 transition-all cursor-pointer portfolio-item"
+            data-category="research">
+            <div class="flex justify-between items-start mb-2">
+                <h3 class="font-bold text-cyan-400">CONTENT AND SPATIAL AWARE GENERATIVE MODEL</h3>
+                <span class="text-xs bg-cyan-900 text-cyan-300 px-2 py-0.5 rounded-full">RESEARCH</span>
+            </div>
+            <p class="text-xs text-gray-400 mb-3">
+                Proposed a GAN architecture for inpainting under low-data constraints with contextual attention.
+                Published as a thesis at National Taipei University of Technology.
+            </p>
+            <div class="flex justify-between text-xs">
+                <span class="text-cyan-400">THESIS</span>
+                <a href="https://drive.google.com/file/d/1QxLWxU_ucbl_HUzGRsLXDLzjXRLakO3P/view?usp=sharing"
+                    target="_blank" class="text-blue-400 hover:underline">VIEW PROJECT</a>
+            </div>
+        </div>
+
+        <!-- Project 2 -->
+        <div class="bg-gray-950 p-3 rounded border border-gray-800 hover:border-orange-700 transition-all cursor-pointer portfolio-item"
+            data-category="research">
+            <div class="flex justify-between items-start mb-2">
+                <h3 class="font-bold text-orange-400">NVIDIA GTC 2025 POSTER</h3>
+                <span class="text-xs bg-orange-900 text-orange-300 px-2 py-0.5 rounded-full">RESEARCH</span>
+            </div>
+            <p class="text-xs text-gray-400 mb-3">
+                Presented a poster highlighting scalable AI pipelines for retail inventory management, emphasizing
+                planogram compliance and advanced vision models.
+            </p>
+            <div class="flex justify-between text-xs">
+                <span class="text-orange-400">POSTER</span>
+                <a href="https://www.nvidia.com/gtc/session-catalog/?search=Pradeep#/session/1727681108625001ctNM"
+                    target="_blank" class="text-blue-400 hover:underline">VIEW PROJECT</a>
+            </div>
+        </div>
+
+        <!-- Project 3 -->
+        <div class="bg-gray-950 p-3 rounded border border-gray-800 hover:border-green-700 transition-all cursor-pointer portfolio-item"
+            data-category="research">
+            <div class="flex justify-between items-start mb-2">
+                <h3 class="font-bold text-green-400">REDUCING LLM COMPUTATIONAL COSTS</h3>
+                <span class="text-xs bg-green-900 text-green-300 px-2 py-0.5 rounded-full">RESEARCH</span>
+            </div>
+            <p class="text-xs text-gray-400 mb-3">
+                Ongoing research leveraging Kolmogorov-Arnold Networks (KAN) to optimize computational costs for
+                large language models, making them suitable for resource-constrained environments.
+            </p>
+            <div class="flex justify-between text-xs">
+                <span class="text-red-400">UNDER NDA</span>
+                <span class="text-gray-400">CONTACT FOR DETAILS</span>
+            </div>
+        </div>
+
+        <!-- Project 4 -->
+        <div class="bg-gray-950 p-3 rounded border border-gray-800 hover:border-yellow-700 transition-all cursor-pointer portfolio-item"
+            data-category="projects">
+            <div class="flex justify-between items-start mb-2">
+                <h3 class="font-bold text-yellow-400">HANDHELD OBJECT DETECTION</h3>
+                <span class="text-xs bg-yellow-900 text-yellow-300 px-2 py-0.5 rounded-full">PROJECT</span>
+            </div>
+            <p class="text-xs text-gray-400 mb-3">
+                Engineered a computer vision pipeline integrating object detection and vector embedding for
+                partially occluded objects, deployed in X8 unmanned stores.
+            </p>
+            <div class="flex justify-between text-xs">
+                <span class="text-red-400">UNDER NDA</span>
+                <span class="text-gray-400">CONTACT FOR DETAILS</span>
+            </div>
+        </div>
+
+        <!-- Project 5 -->
+        <div class="bg-gray-950 p-3 rounded border border-gray-800 hover:border-cyan-700 transition-all cursor-pointer portfolio-item"
+            data-category="projects">
+            <div class="flex justify-between items-start mb-2">
+                <h3 class="font-bold text-cyan-400">RETAIL INVENTORY MANAGEMENT</h3>
+                <span class="text-xs bg-cyan-900 text-cyan-300 px-2 py-0.5 rounded-full">PROJECT</span>
+            </div>
+            <p class="text-xs text-gray-400 mb-3">
+                Developed a vision-based system to identify discrepancies between planogram and realogram,
+                enhancing operational efficiency for 7-Eleven stores.
+            </p>
+            <div class="flex justify-between text-xs">
+                <span class="text-cyan-400">CASE STUDY</span>
+                <a href="https://drive.google.com/file/d/1CHZokDYdyX0GEruNErHCW4bFt6hBf8On/view?usp=sharing"
+                    target="_blank" class="text-blue-400 hover:underline">VIEW PROJECT</a>
+            </div>
+        </div>
+
+        <!-- Project 6 -->
+        <div class="bg-gray-950 p-3 rounded border border-gray-800 hover:border-yellow-700 transition-all cursor-pointer portfolio-item"
+            data-category="case-studies">
+            <div class="flex justify-between items-start mb-2">
+                <h3 class="font-bold text-yellow-400">CASE STUDY: TRANSFORMERS & EMBEDDING</h3>
+                <span class="text-xs bg-yellow-900 text-yellow-300 px-2 py-0.5 rounded-full">CASE STUDY</span>
+            </div>
+            <p class="text-xs text-gray-400 mb-3">
+                Mathematical breakdown of Transformers and fine-tuning vector embedding models using triplet loss
+                for image-to-image search.
+            </p>
+            <div class="flex justify-between text-xs">
+                <span class="text-yellow-400">RESEARCH</span>
+                <a href="https://github.com/Ajishpradeep/Case_Study" target="_blank"
+                    class="text-blue-400 hover:underline">VIEW PROJECT</a>
+            </div>
+        </div>
+    </div>
+</div>

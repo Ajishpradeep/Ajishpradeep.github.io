@@ -1,0 +1,127 @@
+<!-- Contact Form -->
+<div id="contact"
+    class="bg-gray-900 rounded-lg border border-gray-800 overflow-hidden hover-glow reveal-element from-bottom">
+    <div class="border-b border-gray-800 p-4 bg-gray-950 flex justify-between items-center">
+        <h2 class="font-bold text-red-400 flex items-center">
+            <i class="fas fa-envelope mr-2"></i> CONTACT
+        </h2>
+        <div class="text-xs flex items-center">
+            <div class="w-2 h-2 rounded-full bg-red-500 mr-1 pulsing-border"></div>
+            <span class="text-red-400">SECURE TRANSMISSION</span>
+        </div>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 p-4">
+        <!-- Contact Info -->
+        <div>
+            <h3 class="font-bold text-red-400 mb-4">CONTACT INFORMATION</h3>
+            <div class="space-y-4">
+                <div class="flex items-start">
+                    <div class="w-8 h-8 bg-red-900 rounded-full flex items-center justify-center mr-3 contact-icon">
+                        <i class="fas fa-envelope text-red-400"></i>
+                    </div>
+                    <div>
+                        <p class="text-sm font-bold">Email</p>
+                        <table class="text-xs text-gray-400">
+                            <tr>
+                                <td class="pr-2">Personal:</td>
+                                <td><a href="mailto:ajishpradeep@gmail.com"
+                                        class="hover:text-red-400 contact-link">ajishpradeep@gmail.com</a></td>
+                            </tr>
+                            <tr>
+                                <td class="pr-2">Business:</td>
+                                <td><a href="mailto:ajish@quintet-ai.com"
+                                        class="hover:text-red-400 contact-link">ajish@quintet-ai.com</a></td>
+                            </tr>
+                            <tr>
+                                <td class="pr-2">Freelance:</td>
+                                <td><a href="mailto:ajish@futuredatasystems.ai"
+                                        class="hover:text-red-400 contact-link">ajish@futuredatasystems.ai</a></td>
+                            </tr>
+                            <tr>
+                                <td class="pr-2">Work:</td>
+                                <td><a href="mailto:ajish@pic.net.tw"
+                                        class="hover:text-red-400 contact-link">ajish@pic.net.tw</a></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="flex items-start">
+                    <div class="w-8 h-8 bg-yellow-900 rounded-full flex items-center justify-center mr-3 contact-icon">
+                        <i class="fas fa-phone text-yellow-400"></i>
+                    </div>
+                    <div>
+                        <p class="text-sm font-bold">Phone</p>
+                        <p class="text-xs text-gray-400">
+                            <a href="tel:+886905174662" class="hover:text-yellow-400 contact-link">+886 905 174 662</a>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="flex items-start">
+                    <div class="w-8 h-8 bg-cyan-900 rounded-full flex items-center justify-center mr-3 contact-icon">
+                        <i class="fas fa-map-marker-alt text-cyan-400"></i>
+                    </div>
+                    <div>
+                        <p class="text-sm font-bold">Location</p>
+                        <p class="text-xs text-gray-400">Taipei City, Taiwan</p>
+                    </div>
+                </div>
+
+                <div class="pt-4">
+                    <p class="text-sm font-bold text-cyan-400 mb-3">SOCIAL LINKS</p>
+                    <div class="flex space-x-4">
+                        <a href="https://www.linkedin.com/in/ajishpradeep/" target="_blank"
+                            class="social-icon-sidebar linkedin">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://github.com/Ajishpradeep/" target="_blank" class="social-icon-sidebar github">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="https://line.me/ti/p/Ubq5KJIQTv" target="_blank" class="social-icon-sidebar line">
+                            <i class="fab fa-line"></i>
+                        </a>
+                        <a href="https://instagram.com/ajishpradeep" target="_blank"
+                            class="social-icon-sidebar instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Form -->
+        <div>
+            <h3 class="font-bold text-red-400 mb-4">SEND MESSAGE</h3>
+            <form name="contact" method="POST" enctype="multipart/form-data" data-netlify="true"
+                class="space-y-4 contact-form">
+                <div>
+                    <input type="text" name="fullname" placeholder="* FULL NAME" required
+                        class="w-full bg-gray-800 border border-gray-700 rounded p-2 text-sm text-gray-300 focus:outline-none focus:border-red-500 transition-all form-input">
+                </div>
+
+                <div>
+                    <input type="email" name="email" placeholder="* EMAIL ADDRESS" required
+                        class="w-full bg-gray-800 border border-gray-700 rounded p-2 text-sm text-gray-300 focus:outline-none focus:border-red-500 transition-all form-input">
+                </div>
+
+                <div>
+                    <textarea name="message" placeholder="* YOUR MESSAGE" required
+                        class="w-full bg-gray-800 border border-gray-700 rounded p-2 text-sm text-gray-300 focus:outline-none focus:border-red-500 transition-all h-32 form-input"></textarea>
+                </div>
+
+                <div>
+                    <input type="file" name="file"
+                        class="w-full bg-gray-800 border border-gray-700 rounded p-2 text-sm text-gray-300 focus:outline-none focus:border-red-500 transition-all form-input">
+                </div>
+
+                <div>
+                    <button type="submit"
+                        class="bg-gradient-to-r from-red-900 to-orange-800 hover:from-red-800 hover:to-orange-700 text-red-400 py-2 px-4 rounded flex items-center transition-all hover:scale-105 form-submit">
+                        <i class="fas fa-paper-plane mr-2"></i> SEND MESSAGE
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

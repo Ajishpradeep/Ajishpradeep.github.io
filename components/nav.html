@@ -1,0 +1,113 @@
+<!-- Mobile Navigation -->
+<nav class="fixed top-0 left-0 right-0 z-50 bg-gray-900 border-b border-cyan-800 md:hidden">
+    <div class="container mx-auto px-3 py-2">
+        <div class="flex justify-between items-center">
+            <h1 class="text-base font-bold text-cyan-400">AJISH PRADEEP</h1>
+            <button id="mobile-menu-toggle" class="mobile-menu-btn flex items-center justify-center rounded-lg"
+                aria-expanded="false" aria-controls="mobile-menu">
+                <i class="fas fa-bars text-lg"></i>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<!-- Mobile Menu Dropdown -->
+<div id="mobile-menu" class="hidden fixed top-14 left-0 right-0 z-50 md:hidden">
+    <div class="container mx-auto px-3">
+        <div class="bg-gray-800 rounded-lg border border-cyan-800 p-3 shadow-glow">
+            <a href="#about" class="mobile-menu-link flex items-center p-2 rounded hover:bg-gray-700">
+                <i class="fas fa-user w-6 text-cyan-400"></i>
+                <span class="text-sm">About Me</span>
+            </a>
+            <a href="#skills" class="mobile-menu-link flex items-center p-2 rounded hover:bg-gray-700">
+                <i class="fas fa-code w-6 text-green-400"></i>
+                <span class="text-sm">Skills</span>
+            </a>
+            <a href="#experience" class="mobile-menu-link flex items-center p-2 rounded hover:bg-gray-700">
+                <i class="fas fa-briefcase w-6 text-orange-400"></i>
+                <span class="text-sm">Experience</span>
+            </a>
+            <a href="#education" class="mobile-menu-link flex items-center p-2 rounded hover:bg-gray-700">
+                <i class="fas fa-graduation-cap w-6 text-green-400"></i>
+                <span class="text-sm">Education</span>
+            </a>
+            <a href="#portfolio" class="mobile-menu-link flex items-center p-2 rounded hover:bg-gray-700">
+                <i class="fas fa-project-diagram w-6 text-yellow-400"></i>
+                <span class="text-sm">Portfolio</span>
+            </a>
+            <a href="#contact" class="mobile-menu-link flex items-center p-2 rounded hover:bg-gray-700">
+                <i class="fas fa-envelope w-6 text-red-400"></i>
+                <span class="text-sm">Contact</span>
+            </a>
+            <div class="mt-3 pt-3 border-t border-gray-700 flex justify-center">
+                <a href="assets/Resume.pdf" download class="mobile-download-btn">
+                    <i class="fas fa-download mr-2"></i> DOWNLOAD CV
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Desktop Header -->
+<header
+    class="hidden md:flex flex-col md:flex-row justify-between items-center border-b border-cyan-600 pb-4 mb-8 slide-in-top">
+    <div class="flex items-center mb-4 md:mb-0">
+        <div class="w-4 h-12 bg-gradient-to-b from-cyan-500 via-green-500 to-yellow-500 mr-3 pulse-element"></div>
+        <div>
+            <h1 class="text-2xl font-bold title-text">AJISH PRADEEP</h1>
+            <p class="text-xs text-gray-400">AI ENGINEER & RESEARCHER</p>
+        </div>
+    </div>
+    <div class="flex flex-wrap items-center justify-center md:justify-end gap-4 slide-in-right">
+        <div class="flex items-center">
+            <div class="signal-strength mr-2">
+                <div class="signal-bar" style="left: 0; height: 5px;"></div>
+                <div class="signal-bar" style="left: 20px; height: 10px;"></div>
+                <div class="signal-bar filled" style="left: 40px; height: 15px;"></div>
+                <div class="signal-bar filled" style="left: 60px; height: 20px;"></div>
+                <div class="signal-bar filled" style="left: 80px; height: 20px;"></div>
+            </div>
+            <span class="text-cyan-500 text-xs">PORTFOLIO: ACTIVE</span>
+        </div>
+        <span class="text-gray-500">|</span>
+        <div class="text-xs">
+            <span class="text-yellow-400">LOCATION: </span>
+            <span class="text-cyan-400">TAIPEI, TAIWAN</span>
+        </div>
+        <span class="text-gray-500">|</span>
+        <div class="text-xs">
+            <span class="text-yellow-400">STATUS: </span>
+            <span class="text-green-400">AVAILABLE</span>
+        </div>
+        <a href="#contact"
+            class="bg-gradient-to-r from-cyan-900 to-green-900 hover:from-cyan-800 hover:to-green-800 text-xs px-3 py-1 rounded-md transition-all hover:scale-105">
+            <i class="fas fa-paper-plane mr-1"></i> CONTACT
+        </a>
+    </div>
+</header>
+
+<!-- Mobile Bottom Navigation -->
+<div class="fixed bottom-0 left-0 right-0 bg-gray-900 border-t border-gray-800 p-2 z-50 md:hidden mobile-nav">
+    <div class="flex justify-around">
+        <a href="#about" class="flex flex-col items-center text-xs p-1">
+            <i class="fas fa-user text-cyan-400"></i>
+            <span>About</span>
+        </a>
+        <a href="#skills" class="flex flex-col items-center text-xs p-1">
+            <i class="fas fa-code text-green-400"></i>
+            <span>Skills</span>
+        </a>
+        <a href="#experience" class="flex flex-col items-center text-xs p-1">
+            <i class="fas fa-briefcase text-orange-400"></i>
+            <span>Work</span>
+        </a>
+        <a href="#portfolio" class="flex flex-col items-center text-xs p-1">
+            <i class="fas fa-project-diagram text-yellow-400"></i>
+            <span>Projects</span>
+        </a>
+        <a href="#contact" class="flex flex-col items-center text-xs p-1">
+            <i class="fas fa-envelope text-red-400"></i>
+            <span>Contact</span>
+        </a>
+    </div>
+</div>
