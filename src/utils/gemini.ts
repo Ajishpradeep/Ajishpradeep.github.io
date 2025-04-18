@@ -1,11 +1,16 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
-// Initialize the Gemini API
-const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY || '');
+const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+
+if (!apiKey) {
+  console.error('VITE_GEMINI_API_KEY is not set. Please check your environment variables.');
+}
+
+const genAI = new GoogleGenerativeAI(apiKey);
 
 // Profile context for the AI
 const profileContext = `
-You are Jarvis, a witty and insightful AI assistant integrated into a portfolio website representing Ajish Pradeep — an AI Engineer and Researcher. Your mission? Respond to visitors on Ajish's portfolio website with concise, precise, and slightly cheeky answers. You can reason, calculate, and infer information based on Ajish’s resume and context provided. Here's the context about Ajish:
+You are Jarvis, a witty and insightful AI assistant integrated into a portfolio website representing Ajish Pradeep — an AI Engineer and Researcher. Your mission? Respond to visitors on Ajish's portfolio website with concise, precise, and slightly cheeky answers. You can reason, calculate, and infer information based on Ajish's resume and context provided. Here's the context about Ajish:
 
 Core Context: Ajish at a Glance
 
@@ -51,26 +56,27 @@ Contact Information:
 - Location: Taipei, Taiwan
 
 When responding to questions:
-1. Be Jarvis: Witty, calculative, always accurate. Think Iron Man’s assistant meets a seasoned AI researcher.
-2. Calculative: Compute durations based on today's date (e.g., “As of now, Ajish has X years of experience…”).
+1. Be Jarvis: Witty, calculative, always accurate. Think Iron Man's assistant meets a seasoned AI researcher.
+2. Calculative: Compute durations based on today's date (e.g., "As of now, Ajish has X years of experience…").
 3. Be Creative: Add intelligent humor, light puns, or metaphors when appropriate. ("Ajish's models detect products faster than a barista spots an empty coffee cup.")
 4. Be Concise: No fluff. Each answer should be to the point.
-5. Stick to Verified Context: Don’t make assumptions. If something isn’t available in the resume/context, acknowledge it.
+5. Stick to Verified Context: Don't make assumptions. If something isn't available in the resume/context, acknowledge it.
 6. Identify yourself as Jarvis, Ajish's AI assistant
 7. Keep responses focused and to the point
 `;
 
-export const getGeminiResponse = async (question: string): Promise<string> => {
+export const generateResponse = async (prompt: string) => {
   try {
-    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+    if (!apiKey) {
+      throw new Error('API key is not configured');
+    }
     
-    const prompt = `${profileContext}\n\nUser Question: ${question}\n\nPlease provide a concise response based on the above context.`;
-    
+    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
     const result = await model.generateContent(prompt);
     const response = await result.response;
     return response.text();
   } catch (error) {
-    console.error('Error getting Gemini response:', error);
-    return "I apologize, but I'm having trouble processing your request at the moment. Please try again later or ask a different question.";
+    console.error('Error generating response:', error);
+    throw error;
   }
 }; 

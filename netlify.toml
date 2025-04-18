@@ -8,8 +8,7 @@
   functions = "netlify/functions"
   
 [build.environment]
-  # Set this in Netlify dashboard, not here
-  # GEMINI_API_KEY = "AIzaSyC18Of3Op1pYFkvbs0hybRMhJmYiDJSV2A"
+  VITE_GEMINI_API_KEY = "AIzaSyC18Of3Op1pYFkvbs0hybRMhJmYiDJSV2A"
   NODE_VERSION = "22"
   NPM_VERSION = "10"
   PYTHON_VERSION = "3.11"
