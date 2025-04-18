@@ -23,9 +23,9 @@ function App() {
   }, []);
 
   return (
-    <div className="text-gray-200 bg-black">
+    <div className="min-h-screen text-gray-100 bg-black">
       {/* Subtle AI Background */}
-      <div className="ai-background fixed top-0 left-0 w-full h-full -z-10"></div>
+      <div className="ai-background fixed top-0 left-0 w-full h-full -z-10 opacity-50"></div>
       
       {/* Mobile Navigation Menu */}
       <MobileMenu />
