@@ -1,5 +1,5 @@
 [build]
-  command = "npm run build"
+  command = "pip install --upgrade pip && pip install setuptools wheel && npm run build"
   publish = "dist"
   functions = "netlify/functions"
 
@@ -10,8 +10,9 @@
 [build.environment]
   # Set this in Netlify dashboard, not here
   # GEMINI_API_KEY = "AIzaSyC18Of3Op1pYFkvbs0hybRMhJmYiDJSV2A"
-  NODE_VERSION = "18"
-  NPM_VERSION = "9"
+  NODE_VERSION = "22"
+  NPM_VERSION = "10"
+  PYTHON_VERSION = "3.11"
 
 # Add plugins
 [[plugins]]
