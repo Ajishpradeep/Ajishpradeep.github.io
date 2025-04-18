@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { splitVendorChunkPlugin } from 'vite';
+import terser from '@rollup/plugin-terser';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -12,6 +13,12 @@ export default defineConfig({
     emptyOutDir: true,
     sourcemap: false,
     minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true
+      }
+    },
     rollupOptions: {
       output: {
         manualChunks: {
@@ -19,6 +26,7 @@ export default defineConfig({
           'gemini-ai': ['@google/generative-ai'],
         },
       },
+      plugins: [terser()]
     },
   },
   resolve: {
