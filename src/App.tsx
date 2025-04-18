@@ -37,7 +37,7 @@ function App() {
           <Header />
           
           {/* Main Dashboard */}
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-7 gap-6">
             {/* Left sidebar - Sticky */}
             <Sidebar />
             

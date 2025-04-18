@@ -2,7 +2,7 @@ import React from 'react';
 
 const Sidebar: React.FC = () => {
   return (
-    <div className="lg:col-span-1 space-y-6 hidden md:block">
+    <div className="lg:col-span-2 space-y-6 hidden md:block">
       <div className="sticky top-6 sidebar-container">
         {/* User Profile */}
         <div className="bg-gray-900 rounded-lg border border-gray-800 p-4 hover-glow slide-in-left mb-6">

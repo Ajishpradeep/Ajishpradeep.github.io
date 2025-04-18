@@ -8,7 +8,7 @@ const MainContent: React.FC = () => {
   }, []);
 
   return (
-    <div className="lg:col-span-3 space-y-6">
+    <div className="lg:col-span-5 space-y-6">
       {/* Mobile Profile Section (Only visible on mobile) */}
       <div className="md:hidden bg-gray-900 rounded-lg border border-gray-800 overflow-hidden hover-glow reveal-element from-left mb-4">
         <div className="p-4">
