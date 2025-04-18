@@ -1,7 +1,7 @@
 [build]
-  publish = "."
+  command = "npm run build"
+  publish = "dist"
   functions = "netlify/functions"
-  command = "cd netlify/functions && npm install"
 
 [dev]
   publish = "."
@@ -10,7 +10,29 @@
 [build.environment]
   # Set this in Netlify dashboard, not here
   # GEMINI_API_KEY = "AIzaSyC18Of3Op1pYFkvbs0hybRMhJmYiDJSV2A"
+  NODE_VERSION = "18"
+  NPM_VERSION = "9"
 
 # Add plugin to install function dependencies automatically
 [[plugins]]
-package = "@netlify/plugin-functions-install-core" 
+package = "@netlify/plugin-functions-install-core"
+package = "@netlify/plugin-nextjs"
+
+[functions]
+  included_files = ["src/**/*.ts", "src/**/*.tsx"]
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[headers]
+  # Security headers
+  [[headers.values]]
+    for = "/*"
+    [headers.values.headers]
+      X-Frame-Options = "DENY"
+      X-XSS-Protection = "1; mode=block"
+      X-Content-Type-Options = "nosniff"
+      Referrer-Policy = "strict-origin-when-cross-origin"
+      Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data: https:;" 
