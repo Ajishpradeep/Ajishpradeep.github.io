@@ -71,8 +71,8 @@ export const generateResponse = async (prompt: string) => {
       throw new Error('API key is not configured');
     }
     
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
-    const result = await model.generateContent(prompt);
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
+    const result = await model.generateContent([profileContext, prompt]);
     const response = await result.response;
     return response.text();
   } catch (error) {

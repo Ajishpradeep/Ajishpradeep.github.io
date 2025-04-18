@@ -8,6 +8,7 @@
   functions = "netlify/functions"
   
 [build.environment]
+  GEMINI_API_KEY = "AIzaSyC18Of3Op1pYFkvbs0hybRMhJmYiDJSV2A"
   VITE_GEMINI_API_KEY = "AIzaSyC18Of3Op1pYFkvbs0hybRMhJmYiDJSV2A"
   NODE_VERSION = "22"
   NPM_VERSION = "10"
@@ -32,4 +33,4 @@
     X-XSS-Protection = "1; mode=block"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
-    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; img-src 'self' data: https:; font-src 'self' data: https://cdnjs.cloudflare.com; connect-src 'self' https://cdnjs.cloudflare.com https://kit.fontawesome.com;" 
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; img-src 'self' data: https:; font-src 'self' data: https://cdnjs.cloudflare.com; connect-src 'self' https://cdnjs.cloudflare.com https://kit.fontawesome.com https://generativelanguage.googleapis.com;" 
