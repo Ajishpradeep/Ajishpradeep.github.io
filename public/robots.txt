@@ -1,0 +1,10 @@
+# Allow all crawlers
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://ajish.online/sitemap.xml
+
+# Disallow admin and private areas
+Disallow: /admin/
+Disallow: /private/ 
