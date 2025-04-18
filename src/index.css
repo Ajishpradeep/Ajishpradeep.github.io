@@ -1,3 +1,51 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  html {
+    @apply scroll-smooth;
+  }
+  
+  body {
+    @apply text-base text-gray-100 bg-black;
+  }
+
+  h1 {
+    @apply text-2xl font-bold text-white;
+  }
+
+  h2 {
+    @apply text-xl font-bold text-white;
+  }
+
+  h3 {
+    @apply text-lg font-bold text-white;
+  }
+
+  p {
+    @apply text-base leading-relaxed text-gray-300;
+  }
+
+  a {
+    @apply text-blue-400 hover:text-blue-300 transition-colors duration-200;
+  }
+
+  code {
+    @apply text-sm bg-gray-800 px-2 py-1 rounded text-gray-200;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply px-4 py-2 rounded-lg font-medium transition-all duration-200;
+  }
+
+  .btn-primary {
+    @apply bg-blue-600 text-white hover:bg-blue-700;
+  }
+
+  .btn-secondary {
+    @apply bg-gray-700 text-gray-200 hover:bg-gray-600;
+  }
+}
