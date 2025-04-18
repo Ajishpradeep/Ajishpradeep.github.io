@@ -1,4 +1,4 @@
-import { getGeminiResponse } from './gemini';
+import { generateResponse } from './gemini';
 
 // Process terminal commands
 export const processCommand = async (input: string): Promise<string> => {
@@ -59,7 +59,7 @@ export const processCommand = async (input: string): Promise<string> => {
     const question = command.startsWith('ask ') ? command.substring(4).trim() : command;
     if (question) {
       try {
-        const response = await getGeminiResponse(question);
+        const response = await generateResponse(question);
         if (!response) {
           throw new Error('No response from Gemini API');
         }
