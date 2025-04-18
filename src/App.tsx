@@ -1,58 +1,38 @@
-import React, { useEffect } from 'react';
-import Header from './components/Header';
-import MobileMenu from './components/MobileMenu';
-import Sidebar from './components/Sidebar';
-import MainContent from './components/MainContent';
-import MobileNav from './components/MobileNav';
-import BackToTop from './components/BackToTop';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { useState } from 'react';
+import Navbar from './components/Navbar';
+import Home from './components/Home';
+import Projects from './components/Projects';
+import Contact from './components/Contact';
 import Footer from './components/Footer';
-import { initScrollAnimations, initLoadAnimations, initBackToTop, initMobileMenu, initSkillFiltering, initPortfolioFiltering, initSmoothScrolling } from './utils/animations';
 import './App.css';
-import './index.css';
 
 function App() {
-  useEffect(() => {
-    // Initialize all animations
-    initScrollAnimations();
-    initLoadAnimations();
-    initBackToTop();
-    initMobileMenu();
-    initSkillFiltering();
-    initPortfolioFiltering();
-    initSmoothScrolling();
-  }, []);
+  const [isDarkMode, setIsDarkMode] = useState(true);
 
   return (
-    <div className="min-h-screen text-gray-100 bg-black">
-      {/* Subtle AI Background */}
-      <div className="ai-background fixed top-0 left-0 w-full h-full -z-10 opacity-50"></div>
-      
-      {/* Mobile Navigation Menu */}
-      <MobileMenu />
-      
-      <div className="container mx-auto px-3 md:px-4 py-6 mt-16 md:mt-6 max-w-full md:max-w-screen-xl">
-        {/* Header - Hidden on mobile */}
-        <Header />
+    <Router>
+      <div className="flex h-screen bg-gray-100 dark:bg-gray-900 overflow-hidden">
+        {/* Side Panel */}
+        <aside className="w-64 bg-gray-900 flex-shrink-0">
+          <Navbar isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
+        </aside>
         
-        {/* Main Dashboard */}
-        <div className="grid grid-cols-1 lg:grid-cols-7 gap-6">
-          {/* Left sidebar - Sticky */}
-          <Sidebar />
-          
-          {/* Main Content */}
-          <MainContent />
-        </div>
-        
-        {/* Footer */}
-        <Footer />
+        {/* Main Content */}
+        <main className="flex-1 relative">
+          <div className="absolute inset-0 overflow-y-auto">
+            <div className="min-h-full">
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/projects" element={<Projects />} />
+                <Route path="/contact" element={<Contact />} />
+              </Routes>
+              <Footer />
+            </div>
+          </div>
+        </main>
       </div>
-      
-      {/* Mobile Bottom Navigation */}
-      <MobileNav />
-      
-      {/* Back to top button */}
-      <BackToTop />
-    </div>
+    </Router>
   );
 }
 
