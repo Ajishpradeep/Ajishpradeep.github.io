@@ -13,10 +13,12 @@
   NODE_VERSION = "18"
   NPM_VERSION = "9"
 
-# Add plugin to install function dependencies automatically
+# Add plugins
 [[plugins]]
-package = "@netlify/plugin-functions-install-core"
-package = "@netlify/plugin-nextjs"
+  package = "@netlify/plugin-functions-install-core"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
 
 [functions]
   included_files = ["src/**/*.ts", "src/**/*.tsx"]
