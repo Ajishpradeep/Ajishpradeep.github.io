@@ -16,7 +16,7 @@ const MainContent: React.FC = () => {
           <div className="flex items-start space-x-4 mb-4">
             {/* Profile Picture */}
             <div className="w-16 h-16 overflow-hidden rounded-lg profile-pic-container-mobile">
-              <img src="https://images.pexels.com/photos/2379005/pexels-photo-2379005.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Ajish Pradeep" className="w-full h-full object-cover" />
+              <img src="/profile_pic.png" alt="Ajish Pradeep" className="w-full h-full object-cover" />
             </div>
 
             {/* Name and Title */}
@@ -76,7 +76,7 @@ const MainContent: React.FC = () => {
               <span className="text-xs text-gray-300">Phone</span>
             </a>
             {/* Download CV */}
-            <a href="Resume.pdf" download className="mobile-social-link flex items-center bg-gray-800 rounded p-2 hover:bg-gray-700">
+            <a href="/Resume.pdf" download className="mobile-social-link flex items-center bg-gray-800 rounded p-2 hover:bg-gray-700">
               <i className="fas fa-download text-purple-400 mr-2"></i>
               <span className="text-xs text-gray-300">CV</span>
             </a>

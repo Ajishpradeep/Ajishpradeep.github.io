@@ -8,7 +8,7 @@ const Sidebar: React.FC = () => {
         <div className="bg-gray-900 rounded-lg border border-gray-800 p-4 hover-glow slide-in-left mb-6">
           <div className="flex flex-col items-center">
             <div className="w-32 h-18 overflow-hidden mb-4 profile-pic-container p-1 rounded-lg">
-              <img src="https://images.pexels.com/photos/2379005/pexels-photo-2379005.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Ajish Pradeep" className="w-full h-full object-cover rounded-lg" />
+              <img src="/profile_pic.png" alt="Ajish Pradeep" className="w-full h-full object-cover rounded-lg" />
             </div>
             <h3 className="font-bold text-lg mb-1">Ajish Pradeep</h3>
             <p className="text-xs text-gray-400 mb-3">AI ENGINEER & RESEARCHER</p>
