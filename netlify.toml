@@ -18,9 +18,6 @@
 [[plugins]]
   package = "@netlify/plugin-functions-install-core"
 
-[[plugins]]
-  package = "@netlify/plugin-nextjs"
-
 [functions]
   included_files = ["src/**/*.ts", "src/**/*.tsx"]
 
