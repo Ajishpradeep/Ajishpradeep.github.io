@@ -1,59 +1,37 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Header from './components/Header';
 import MobileMenu from './components/MobileMenu';
-import Sidebar from './components/Sidebar';
-import MainContent from './components/MainContent';
-import MobileNav from './components/MobileNav';
-import BackToTop from './components/BackToTop';
-import Footer from './components/Footer';
-import { initScrollAnimations, initLoadAnimations, initBackToTop, initMobileMenu, initSkillFiltering, initPortfolioFiltering, initSmoothScrolling } from './utils/animations';
-import './App.css';
+import Navbar from './components/Navbar';
 import './index.css';
 
-function App() {
-  useEffect(() => {
-    // Initialize all animations
-    initScrollAnimations();
-    initLoadAnimations();
-    initBackToTop();
-    initMobileMenu();
-    initSkillFiltering();
-    initPortfolioFiltering();
-    initSmoothScrolling();
-  }, []);
-
+const App: React.FC = () => {
   return (
-    <div className="min-h-screen text-gray-100 bg-black">
-      {/* Subtle AI Background */}
-      <div className="ai-background fixed top-0 left-0 w-full h-full -z-10 opacity-50"></div>
-      
-      {/* Mobile Navigation Menu */}
-      <MobileMenu />
-      
-      <div className="container mx-auto px-3 md:px-4 py-6 mt-16 md:mt-6 max-w-full md:max-w-screen-xl">
-        {/* Header - Hidden on mobile */}
+    <div className="min-h-screen bg-gray-900 text-white">
+      <Navbar />
+      <div className="pt-16">
         <Header />
-        
-        {/* Main Dashboard */}
-        <div className="grid grid-cols-1 lg:grid-cols-7 gap-6">
-          {/* Left sidebar - Sticky */}
-          <Sidebar />
-          
-          {/* Main Content */}
-          <MainContent />
-        </div>
-        
-        {/* Footer */}
-        <Footer />
+        <MobileMenu />
+        <main className="container mx-auto px-4 py-8">
+          {/* Your main content sections here */}
+          <section id="about" className="min-h-screen py-20">
+            {/* About section content */}
+          </section>
+          <section id="skills" className="min-h-screen py-20">
+            {/* Skills section content */}
+          </section>
+          <section id="experience" className="min-h-screen py-20">
+            {/* Experience section content */}
+          </section>
+          <section id="portfolio" className="min-h-screen py-20">
+            {/* Portfolio section content */}
+          </section>
+          <section id="contact" className="min-h-screen py-20">
+            {/* Contact section content */}
+          </section>
+        </main>
       </div>
-      
-      {/* Mobile Bottom Navigation */}
-      <MobileNav />
-      
-      {/* Back to top button */}
-      <BackToTop />
     </div>
   );
-}
+};
 
 export default App;
