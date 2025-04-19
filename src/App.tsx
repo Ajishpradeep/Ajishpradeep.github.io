@@ -1,35 +1,46 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Header from './components/Header';
-import MobileMenu from './components/MobileMenu';
 import Navbar from './components/Navbar';
+import MobileMenu from './components/MobileMenu';
+import Sidebar from './components/Sidebar';
+import MainContent from './components/MainContent';
+import MobileNav from './components/MobileNav';
+import BackToTop from './components/BackToTop';
+import Footer from './components/Footer';
+import { initScrollAnimations, initLoadAnimations, initBackToTop, initMobileMenu, initSkillFiltering, initPortfolioFiltering, initSmoothScrolling } from './utils/animations';
+import './App.css';
 import './index.css';
 
 const App: React.FC = () => {
+  useEffect(() => {
+    // Initialize all animations
+    initScrollAnimations();
+    initLoadAnimations();
+    initBackToTop();
+    initMobileMenu();
+    initSkillFiltering();
+    initPortfolioFiltering();
+    initSmoothScrolling();
+  }, []);
+
   return (
     <div className="min-h-screen bg-gray-900 text-white">
+      <Header />
       <Navbar />
-      <div className="pt-16">
-        <Header />
-        <MobileMenu />
-        <main className="container mx-auto px-4 py-8">
-          {/* Your main content sections here */}
-          <section id="about" className="min-h-screen py-20">
-            {/* About section content */}
-          </section>
-          <section id="skills" className="min-h-screen py-20">
-            {/* Skills section content */}
-          </section>
-          <section id="experience" className="min-h-screen py-20">
-            {/* Experience section content */}
-          </section>
-          <section id="portfolio" className="min-h-screen py-20">
-            {/* Portfolio section content */}
-          </section>
-          <section id="contact" className="min-h-screen py-20">
-            {/* Contact section content */}
-          </section>
-        </main>
+      <div className="container mx-auto px-4 py-8">
+        <div className="flex flex-col md:flex-row gap-8">
+          <div className="w-full md:w-1/4">
+            <Sidebar />
+          </div>
+          <div className="w-full md:w-3/4">
+            <MainContent />
+          </div>
+        </div>
       </div>
+      <Footer />
+      <MobileMenu />
+      <MobileNav />
+      <BackToTop />
     </div>
   );
 };
