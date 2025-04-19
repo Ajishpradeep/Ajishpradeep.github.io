@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import Header from './components/Header';
-import Navbar from './components/Navbar';
 import MobileMenu from './components/MobileMenu';
 import Sidebar from './components/Sidebar';
 import MainContent from './components/MainContent';
@@ -11,7 +10,7 @@ import { initScrollAnimations, initLoadAnimations, initBackToTop, initMobileMenu
 import './App.css';
 import './index.css';
 
-const App: React.FC = () => {
+function App() {
   useEffect(() => {
     // Initialize all animations
     initScrollAnimations();
@@ -24,25 +23,37 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white">
-      <Header />
-      <Navbar />
-      <div className="container mx-auto px-4 py-8">
-        <div className="flex flex-col md:flex-row gap-8">
-          <div className="w-full md:w-1/4">
-            <Sidebar />
-          </div>
-          <div className="w-full md:w-3/4">
-            <MainContent />
-          </div>
-        </div>
-      </div>
-      <Footer />
+    <div className="min-h-screen text-gray-100 bg-black">
+      {/* Subtle AI Background */}
+      <div className="ai-background fixed top-0 left-0 w-full h-full -z-10 opacity-50"></div>
+      
+      {/* Mobile Navigation Menu */}
       <MobileMenu />
+      
+      <div className="container mx-auto px-3 md:px-4 py-6 mt-16 md:mt-6 max-w-full md:max-w-screen-xl">
+        {/* Header - Hidden on mobile */}
+        <Header />
+        
+        {/* Main Dashboard */}
+        <div className="grid grid-cols-1 lg:grid-cols-7 gap-6">
+          {/* Left sidebar - Sticky */}
+          <Sidebar />
+          
+          {/* Main Content */}
+          <MainContent />
+        </div>
+        
+        {/* Footer */}
+        <Footer />
+      </div>
+      
+      {/* Mobile Bottom Navigation */}
       <MobileNav />
+      
+      {/* Back to top button */}
       <BackToTop />
     </div>
   );
-};
+}
 
 export default App;
