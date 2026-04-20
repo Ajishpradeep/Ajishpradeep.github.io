@@ -346,26 +346,22 @@ const MainContent: React.FC = () => {
               </div>
             </div>
             <div id="terminal-content" className="h-64 p-3 overflow-y-auto terminal-scroll bg-black text-green-400 text-xs font-mono">
-              <div className="mb-1"><span className="text-yellow-400">ajish@portfolio:~#</span> ./skills --list -t expertise</div>
-              <div className="mb-1">[+] Initializing skill analysis...</div>
-              <div className="mb-1">[+] Loading expertise profile... <span className="text-green-400">SUCCESS</span></div>
-              <div className="mb-1">[+] Analyzing core competencies...</div>
-              <div className="mb-1">[!] EXPERTISE: Generative AI, Vision AI, LLM Optimization</div>
-              <div className="mb-1">[!] FRAMEWORKS: PyTorch, TensorFlow, Transformers, Diffusion Models</div>
-              <div className="mb-1">[!] PLATFORMS: Google Cloud Platform (GCP), Vertex AI, Deepstream</div>
-              <div className="mb-1">[+] Scanning for specialized techniques...</div>
-              <div className="mb-1">[!] FOUND: Feature extraction, vector embedding, transformer architectures</div>
-              <div className="mb-1">[+] Analyzing mathematical foundations...</div>
-              <div className="mb-1">[!] STRONG: Linear Algebra, Calculus, Attention Mechanisms</div>
-              <div className="mb-1">[+] Jarvis initialized. Type 'help' to see available commands.</div>
-              <div className="mb-1"><span className="text-yellow-400">ajish@portfolio:~#</span><span className="code-input"> _</span></div>
+              <div className="mb-1 text-gray-500">$ help</div>
+              <div className="mb-1">help - Show available commands</div>
+              <div className="mb-1">skills - List technical skills</div>
+              <div className="mb-1">projects - Show portfolio projects</div>
+              <div className="mb-1">collaborations - List collaborations</div>
+              <div className="mb-1">contact - Contact information</div>
+              <div className="mb-1">clear - Clear terminal</div>
+              <div className="mb-1">ask [question] - Ask AI about Ajish</div>
+              <div className="mb-2"><span className="text-yellow-400">$</span><span className="code-input"> _</span></div>
             </div>
             <div className="p-2 border-t border-gray-800 bg-gray-950">
               <div className="flex">
                 <input type="text" id="terminal-input" placeholder="Enter Command..." className="w-full bg-black border border-gray-700 text-green-400 text-xs p-1 focus:outline-none focus:border-green-500" />
                 <button id="terminal-submit" className="bg-green-900 text-green-400 px-2 text-xs">ASK</button>
               </div>
-              <div className="text-xs text-gray-500 mt-1">Try commands: help, skills, projects, collaborations, contact or clear</div>
+              <div className="text-xs text-gray-600 mt-1">Type 'help' or 'ask' [question]</div>
             </div>
           </div>
         </div>
