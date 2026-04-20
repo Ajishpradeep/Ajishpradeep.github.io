@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { initTerminal } from '../utils/terminal';
+import BlogSection from './BlogSection';
 
 const MainContent: React.FC = () => {
   useEffect(() => {
@@ -16,13 +17,13 @@ const MainContent: React.FC = () => {
           <div className="flex items-start space-x-4 mb-4">
             {/* Profile Picture */}
             <div className="w-16 h-16 overflow-hidden rounded-lg profile-pic-container-mobile">
-              <img src="/profile_pic.png" alt="Ajish Pradeep" className="w-full h-full object-cover" />
+              <img src="/profile_pic.png" alt="Pradeep Rajasekar" className="w-full h-full object-cover" />
             </div>
 
             {/* Name and Title */}
             <div className="flex-1">
-              <h1 className="text-lg font-bold text-cyan-400 typing-animation-mobile">AJISH PRADEEP</h1>
-              <p className="text-xs text-gray-400 mb-1">AI ENGINEER & RESEARCHER</p>
+              <h1 className="text-lg font-bold text-cyan-400 typing-animation-mobile">PRADEEP RAJASEKAR</h1>
+              <p className="text-xs text-gray-400 mb-1">AI RESEARCH ENGINEER</p>
               <div className="flex items-center">
                 <div className="w-2 h-2 rounded-full bg-green-500 mr-2 pulse-element"></div>
                 <span className="text-xs text-green-400">AVAILABLE FOR WORK</span>
@@ -37,7 +38,7 @@ const MainContent: React.FC = () => {
                 <i className="fas fa-map-marker-alt text-cyan-400 mr-2"></i>
                 <span className="text-xs text-cyan-400">LOCATION</span>
               </div>
-              <span className="text-xs text-gray-300">TAIPEI, TAIWAN</span>
+              <span className="text-xs text-gray-300">NEW TAIPEI CITY, TAIWAN</span>
             </div>
             <div className="bg-gray-800 rounded p-2">
               <div className="flex items-center mb-1">
@@ -87,28 +88,41 @@ const MainContent: React.FC = () => {
       {/* Terminal Component */}
       {/* <Terminal /> */}
 
-      {/* About Me Section */}
+      {/* Research Focus Section */}
       <div id="about" className="bg-gray-900 rounded-lg border border-gray-800 overflow-hidden hover-glow reveal-element from-left">
-        <div className="border-b border-gray-800 p-4 bg-gray-950 flex justify-between items-center">
-          <h2 className="font-bold text-cyan-400 flex items-center">
-            <i className="fas fa-user mr-2"></i> ABOUT ME
+        <div className="border-b border-gray-800 p-4 bg-gray-950">
+          <h2 className="font-bold text-purple-400 flex items-center">
+            <i className="fas fa-compass mr-2"></i> RESEARCH FOCUS & EXPERTISE
           </h2>
-          <div className="text-xs flex items-center">
-            <div className="w-2 h-2 rounded-full bg-cyan-500 mr-1 pulsing-border"></div>
-            <span className="text-cyan-400">AI ENGINEER & RESEARCHER</span>
-          </div>
         </div>
-        <div className="p-4 text-sm">
-          <p className="mb-3 reveal-text">
-            I'm Ajish Pradeep, an AI Engineer and Researcher specializing in scalable AI
-            systems, LLM optimization, and custom model training and finetuning. I focus on solving real-world challenges through
-            research-driven approaches where traditional methods fall short.
-          </p>
-          <p className="mb-3 reveal-text">
-            While my full-time role as an AI Engineer and Researcher remains my primary commitment, I
-            actively collaborate with startups and enterprises as a freelance research engineer, always open to impactful and intellectually
-            challenging AI projects.
-          </p>
+        <div className="p-4 text-sm space-y-3">
+          <div className="border-l-2 border-cyan-500 pl-3">
+            <p className="text-cyan-400 font-bold text-xs mb-1">MATHEMATICAL FOUNDATIONS</p>
+            <p className="text-gray-300 text-xs">
+              4+ years grounded in linear algebra, calculus, probabilistic modeling, and optimization. These mathematical cores transcend domains—enabling rapid transfer from vision to language to agents to any new frontier.
+            </p>
+          </div>
+
+          <div className="border-l-2 border-green-500 pl-3">
+            <p className="text-green-400 font-bold text-xs mb-1">MULTI-DOMAIN AI EXPERTISE</p>
+            <p className="text-gray-300 text-xs">
+              Specialized in biomechanical motion analysis (60% error reduction), fine-tuned agentic LLM systems, and edge AI on Apple ARM. Each domain grounded in the same mathematical understanding—not just applying frameworks.
+            </p>
+          </div>
+
+          <div className="border-l-2 border-orange-500 pl-3">
+            <p className="text-orange-400 font-bold text-xs mb-1">RESEARCH LEADERSHIP</p>
+            <p className="text-gray-300 text-xs">
+              NVIDIA GTC 2025 presenter, TAITRA award-winning proposal author, Taiwan Expo Europe representative. Drives cross-functional R&D, establishes organizational AI standards, and mentors teams from concept through production deployment.
+            </p>
+          </div>
+
+          <div className="border-l-2 border-yellow-500 pl-3">
+            <p className="text-yellow-400 font-bold text-xs mb-1">CURRENT INITIATIVES</p>
+            <p className="text-gray-300 text-xs">
+              Building agentic LLM coaches grounded in biomechanical facts • Experimenting with API LLM integrations • Architecting organizational AI tooling & team standards • Leading cross-domain R&D at IdeasLab Formosa.
+            </p>
+          </div>
         </div>
       </div>
 
@@ -312,28 +326,43 @@ const MainContent: React.FC = () => {
               {/* Experience 1 */}
               <div className="border-b border-gray-800 pb-4 experience-item">
                 <div className="flex justify-between mb-2">
-                  <h3 className="font-bold text-orange-400">AI ENGINEER</h3>
-                  <span className="text-xs bg-gray-800 text-gray-300 px-2 py-0.5 rounded-full">2023 — PRESENT</span>
+                  <h3 className="font-bold text-orange-400">AI RESEARCH ENGINEER</h3>
+                  <span className="text-xs bg-gray-800 text-gray-300 px-2 py-0.5 rounded-full">MAY 2025 — PRESENT</span>
                 </div>
-                <p className="text-sm mb-2">President Information Corp, Taiwan</p>
+                <p className="text-sm mb-2">IdeasLab Formosa, Taipei, Taiwan</p>
                 <ul className="text-xs text-gray-400 list-disc pl-4 space-y-2">
-                  <li>Research to deploy a real-time planogram compliance system for 7-Eleven stores, which was presented as a poster at NVIDIA GTC 2025.</li>
-                  <li>Developed and implemented an innovative custom AI model specifically to tackle the problem of occulted, fast-moving object detection.</li>
-                  <li>Collaborated with NVIDIA to leverage metropolis microservices, creating generative AI pipelines capable of seamless cloud and edge deployment.</li>
-                  <li>Developed a high-precision consumer behavior prediction model with 95% accuracy, utilizing advanced machine learning techniques.</li>
+                  <li>Led R&D of high-precision 2D-to-3D human pose lifting for XView AI platform, achieving 60% accuracy improvement (8cm to 3cm mean per-joint error) through temporal consistency modeling and spatial refinement.</li>
+                  <li>Reconstructed state-of-the-art research architectures into modular production components, yielding 30% improvement in motion understanding stack.</li>
+                  <li>Architecting agentic LLM-based AI coaching system with domain-specific fine-tuning grounded in biomechanical facts and custom rule sets.</li>
+                  <li>Deployed AI models optimized for Apple CoreML, enabling 240fps on-device markerless motion tracking without cloud dependency for PGA professionals.</li>
                 </ul>
               </div>
 
               {/* Experience 2 */}
+              <div className="border-b border-gray-800 pb-4 experience-item">
+                <div className="flex justify-between mb-2">
+                  <h3 className="font-bold text-orange-400">AI ENGINEER</h3>
+                  <span className="text-xs bg-gray-800 text-gray-300 px-2 py-0.5 rounded-full">NOV 2023 — FEB 2025</span>
+                </div>
+                <p className="text-sm mb-2">President Information Corp (統一資訊), Taipei, Taiwan</p>
+                <ul className="text-xs text-gray-400 list-disc pl-4 space-y-2">
+                  <li>Led development of scalable real-time planogram compliance system, presented as poster at NVIDIA GTC 2025, combining YOLO detection with fine-tuned vector embeddings for training-free product catalog updates.</li>
+                  <li>Engineered computer vision pipeline for partially occluded handheld object recognition, achieving 30% performance gain, deployed to Taiwan's 8th unmanned 7-Eleven store (X8) in Keelung.</li>
+                  <li>Collaborated with NVIDIA to implement Metropolis microservices with generative AI, leveraging TAO Toolkit, DeepStream SDK, and TensorRT for hardware-accelerated real-time inference.</li>
+                  <li>Built LLM-assisted Named Entity Recognition (NER) pipeline on GCP Document AI, and developed predictive analytics model processing 5M+ data points with 95% confidence intervals.</li>
+                </ul>
+              </div>
+
+              {/* Experience 3 */}
               <div className="experience-item">
                 <div className="flex justify-between mb-2">
                   <h3 className="font-bold text-orange-400">SOFTWARE DEVELOPER</h3>
-                  <span className="text-xs bg-gray-800 text-gray-300 px-2 py-0.5 rounded-full">2017 — 2021</span>
+                  <span className="text-xs bg-gray-800 text-gray-300 px-2 py-0.5 rounded-full">MAY 2017 — AUG 2021</span>
                 </div>
-                <p className="text-sm mb-2">AIBS Software Solutions, India</p>
+                <p className="text-sm mb-2">AIBS Software Solutions, Coimbatore, India</p>
                 <ul className="text-xs text-gray-400 list-disc pl-4 space-y-2">
-                  <li>Spearheaded the development of tailored ERP solutions that optimized manufacturing workflows and enhanced system reliability.</li>
-                  <li>Engineered a robust inventory management system, resolving 95% of software discrepancies and significantly streamlining operations.</li>
+                  <li>Developed custom ERP software solutions with Tally, optimizing manufacturing workflows tailored to enterprise requirements.</li>
+                  <li>Engineered inventory management and tax tracking system that resolved 95% of software discrepancies and improved end-user satisfaction through full-stack development.</li>
                 </ul>
               </div>
             </div>
@@ -395,14 +424,12 @@ const MainContent: React.FC = () => {
                 <i className="fas fa-university text-green-400"></i>
               </div>
               <div>
-                <h3 className="font-bold">MASTER'S IN ELECTRICAL ENGINEERING AND COMPUTER SCIENCE</h3>
-                <p className="text-xs text-gray-500">National Taipei University of Technology, Taiwan</p>
+                <h3 className="font-bold">MASTER OF SCIENCE IN ELECTRICAL ENGINEERING AND COMPUTER SCIENCE</h3>
+                <p className="text-xs text-gray-500">National Taipei University of Technology, Taiwan (2021–2023) | GPA: 3.8/4.0</p>
               </div>
             </div>
             <p className="text-xs text-gray-400">
-              Advanced research in generative AI, culminating in a novel content and spatial-aware model for
-              image inpainting. This work significantly addressed challenges in limited data environments and
-              set a new standard for efficiency and accuracy in GAN-based systems.
+              Master's thesis: "Content and Spatial Aware Generative Model for Inpainting" — Proposed GAN-based architecture with contextual and spatial attention, addressing mode collapse, memorization, and underfitting in low-data regimes while extending receptive-field capacity for improved spatial consistency.
             </p>
           </div>
 
@@ -414,16 +441,18 @@ const MainContent: React.FC = () => {
               </div>
               <div>
                 <h3 className="font-bold">BACHELOR OF SCIENCE IN INFORMATION TECHNOLOGY</h3>
-                <p className="text-xs text-gray-500">Sri Ramakrishna Mission Vidyalaya College, India</p>
+                <p className="text-xs text-gray-500">Sri Ramakrishna Mission Vidyalaya College, Coimbatore, India (2011–2014) | GPA: 7.9/10</p>
               </div>
             </div>
             <p className="text-xs text-gray-400">
-              Learned to code and developed a passion for technology, laying the foundation for deeper
-              understanding of datastructure and algorithms.
+              Strong foundation in computer science, data structures, algorithms, and programming fundamentals that enabled rapid skill development and domain mastery across multiple specialized areas.
             </p>
           </div>
         </div>
       </div>
+
+      {/* Research Blog & Case Studies */}
+      <BlogSection />
 
       {/* Portfolio */}
       <div id="portfolio" className="bg-gray-900 rounded-lg border border-gray-800 overflow-hidden hover-glow reveal-element from-right">
@@ -451,47 +480,44 @@ const MainContent: React.FC = () => {
           {/* Project 1 */}
           <div className="bg-gray-950 p-3 rounded border border-gray-800 hover:border-cyan-700 transition-all cursor-pointer portfolio-item" data-category="research">
             <div className="flex justify-between items-start mb-2">
-              <h3 className="font-bold text-cyan-400">CONTENT AND SPATIAL AWARE GENERATIVE MODEL</h3>
+              <h3 className="font-bold text-cyan-400">POSE LIFTING & MOTION ANALYSIS FOR GOLF SWING</h3>
               <span className="text-xs bg-cyan-900 text-cyan-300 px-2 py-0.5 rounded-full">RESEARCH</span>
             </div>
             <p className="text-xs text-gray-400 mb-3">
-              Proposed a GAN architecture for inpainting under low-data constraints with contextual attention.
-              Published as a thesis at National Taipei University of Technology.
+              Led R&D of high-precision 2D-to-3D human pose lifting system achieving 60% accuracy improvement (8cm→3cm mean per-joint error). Integrated temporal consistency modeling, motion-aligned lifting, and spatial refinement. Reconstructed state-of-the-art research architectures for XView AI platform production deployment.
             </p>
             <div className="flex justify-between text-xs">
-              <span className="text-cyan-400">THESIS</span>
-              <a href="https://drive.google.com/file/d/1QxLWxU_ucbl_HUzGRsLXDLzjXRLakO3P/view?usp=sharing" target="_blank" className="text-blue-400 hover:underline">VIEW PROJECT</a>
+              <span className="text-cyan-400">CURRENT PROJECT</span>
+              <span className="text-gray-400">CONTACT FOR DETAILS</span>
             </div>
           </div>
 
           {/* Project 2 */}
           <div className="bg-gray-950 p-3 rounded border border-gray-800 hover:border-orange-700 transition-all cursor-pointer portfolio-item" data-category="research">
             <div className="flex justify-between items-start mb-2">
-              <h3 className="font-bold text-orange-400">NVIDIA GTC 2025 POSTER</h3>
-              <span className="text-xs bg-orange-900 text-orange-300 px-2 py-0.5 rounded-full">RESEARCH</span>
+              <h3 className="font-bold text-orange-400">SCALABLE VISION AI FOR PLANOGRAM COMPLIANCE</h3>
+              <span className="text-xs bg-orange-900 text-orange-300 px-2 py-0.5 rounded-full">NVIDIA GTC 2025</span>
             </div>
             <p className="text-xs text-gray-400 mb-3">
-              Presented a poster highlighting scalable AI pipelines for retail inventory management, emphasizing
-              planogram compliance and advanced vision models.
+              Led development of scalable real-time planogram compliance system combining dense object detection (YOLO) with fine-tuned vector embeddings enabling training-free product catalog updates at scale. Presented as technical poster at NVIDIA GTC 2025.
             </p>
             <div className="flex justify-between text-xs">
-              <span className="text-orange-400">POSTER</span>
-              <a href="https://www.nvidia.com/gtc/session-catalog/?search=Pradeep#/session/1727681108625001ctNM" target="_blank" className="text-blue-400 hover:underline">VIEW PROJECT</a>
+              <span className="text-orange-400">CONFERENCE PRESENTATION</span>
+              <a href="https://www.nvidia.com/gtc/session-catalog/?search=Pradeep#/session/1727681108625001ctNM" target="_blank" className="text-blue-400 hover:underline">VIEW DETAILS</a>
             </div>
           </div>
 
           {/* Project 3 */}
           <div className="bg-gray-950 p-3 rounded border border-gray-800 hover:border-green-700 transition-all cursor-pointer portfolio-item" data-category="research">
             <div className="flex justify-between items-start mb-2">
-              <h3 className="font-bold text-green-400">REDUCING LLM COMPUTATIONAL COSTS</h3>
+              <h3 className="font-bold text-green-400">EFFICIENT LLM INFERENCE VIA KAN</h3>
               <span className="text-xs bg-green-900 text-green-300 px-2 py-0.5 rounded-full">RESEARCH</span>
             </div>
             <p className="text-xs text-gray-400 mb-3">
-              Ongoing research leveraging Kolmogorov-Arnold Networks (KAN) to optimize computational costs for
-              large language models, making them suitable for resource-constrained environments.
+              Investigating substitution of dense MLP blocks with Kolmogorov-Arnold Networks (KAN) layers to reduce LLM computational cost while preserving representational capacity, bridging mathematical function approximation theory with practical inference optimization.
             </p>
             <div className="flex justify-between text-xs">
-              <span className="text-red-400">UNDER NDA</span>
+              <span className="text-green-400">IN PROGRESS</span>
               <span className="text-gray-400">CONTACT FOR DETAILS</span>
             </div>
           </div>
@@ -499,49 +525,104 @@ const MainContent: React.FC = () => {
           {/* Project 4 */}
           <div className="bg-gray-950 p-3 rounded border border-gray-800 hover:border-yellow-700 transition-all cursor-pointer portfolio-item" data-category="projects">
             <div className="flex justify-between items-start mb-2">
-              <h3 className="font-bold text-yellow-400">HANDHELD OBJECT DETECTION</h3>
-              <span className="text-xs bg-yellow-900 text-yellow-300 px-2 py-0.5 rounded-full">PROJECT</span>
+              <h3 className="font-bold text-yellow-400">AUTONOMOUS RETAIL VISION AI</h3>
+              <span className="text-xs bg-yellow-900 text-yellow-300 px-2 py-0.5 rounded-full">PRODUCTION</span>
             </div>
             <p className="text-xs text-gray-400 mb-3">
-              Engineered a computer vision pipeline integrating object detection and vector embedding for
-              partially occluded objects, deployed in X8 unmanned stores.
+              Engineered computer vision pipeline for partially occluded handheld object recognition integrating custom detection with vector-embedding search, achieving 30% performance gain. Deployed to production at Taiwan's 8th unmanned 7-Eleven store (X8) in Keelung.
             </p>
             <div className="flex justify-between text-xs">
-              <span className="text-red-400">UNDER NDA</span>
-              <span className="text-gray-400">CONTACT FOR DETAILS</span>
+              <span className="text-yellow-400">DEPLOYED</span>
+              <span className="text-gray-400">CASE STUDY</span>
             </div>
           </div>
 
           {/* Project 5 */}
-          <div className="bg-gray-950 p-3 rounded border border-gray-800 hover:border-cyan-700 transition-all cursor-pointer portfolio-item" data-category="projects">
+          <div className="bg-gray-950 p-3 rounded border border-gray-800 hover:border-cyan-700 transition-all cursor-pointer portfolio-item" data-category="case-studies">
             <div className="flex justify-between items-start mb-2">
-              <h3 className="font-bold text-cyan-400">RETAIL INVENTORY MANAGEMENT</h3>
-              <span className="text-xs bg-cyan-900 text-cyan-300 px-2 py-0.5 rounded-full">PROJECT</span>
+              <h3 className="font-bold text-cyan-400">PLANOGRAM COMPLIANCE VISION SYSTEM</h3>
+              <span className="text-xs bg-cyan-900 text-cyan-300 px-2 py-0.5 rounded-full">CASE STUDY</span>
             </div>
             <p className="text-xs text-gray-400 mb-3">
-              Developed a vision-based system to identify discrepancies between planogram and realogram,
-              enhancing operational efficiency for 7-Eleven stores.
+              Developed vision-based system identifying discrepancies between planogram and realogram for retail shelf optimization. Enhanced operational efficiency for 7-Eleven stores through real-time compliance monitoring and automated reporting.
             </p>
             <div className="flex justify-between text-xs">
               <span className="text-cyan-400">CASE STUDY</span>
-              <a href="https://drive.google.com/file/d/1CHZokDYdyX0GEruNErHCW4bFt6hBf8On/view?usp=sharing" target="_blank" className="text-blue-400 hover:underline">VIEW PROJECT</a>
+              <a href="https://drive.google.com/file/d/1CHZokDYdyX0GEruNErHCW4bFt6hBf8On/view?usp=sharing" target="_blank" className="text-blue-400 hover:underline">VIEW DETAILS</a>
             </div>
           </div>
 
           {/* Project 6 */}
           <div className="bg-gray-950 p-3 rounded border border-gray-800 hover:border-yellow-700 transition-all cursor-pointer portfolio-item" data-category="case-studies">
             <div className="flex justify-between items-start mb-2">
-              <h3 className="font-bold text-yellow-400">CASE STUDY: TRANSFORMERS & EMBEDDING</h3>
-              <span className="text-xs bg-yellow-900 text-yellow-300 px-2 py-0.5 rounded-full">CASE STUDY</span>
+              <h3 className="font-bold text-yellow-400">MASTER'S THESIS: CONTENT & SPATIAL AWARE INPAINTING</h3>
+              <span className="text-xs bg-yellow-900 text-yellow-300 px-2 py-0.5 rounded-full">RESEARCH CASE STUDY</span>
             </div>
             <p className="text-xs text-gray-400 mb-3">
-              Mathematical breakdown of Transformers and fine-tuning vector embedding models using triplet loss
-              for image-to-image search.
+              GAN-based inpainting architecture integrating contextual attention in generator and content-spatial attention in discriminator. Overcame mode collapse, memorization, underfitting in low-data regimes while extending receptive-field for spatial consistency.
             </p>
             <div className="flex justify-between text-xs">
-              <span className="text-yellow-400">RESEARCH</span>
-              <a href="https://github.com/Ajishpradeep/Case_Study" target="_blank" className="text-blue-400 hover:underline">VIEW PROJECT</a>
+              <span className="text-yellow-400">THESIS PROJECT</span>
+              <a href="https://github.com/Ajishpradeep/Case_Study" target="_blank" className="text-blue-400 hover:underline">VIEW RELATED WORK</a>
             </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Recognition & Awards */}
+      <div id="recognition" className="bg-gray-900 rounded-lg border border-gray-800 overflow-hidden hover-glow reveal-element from-bottom">
+        <div className="border-b border-gray-800 p-4 bg-gray-950 flex justify-between items-center">
+          <h2 className="font-bold text-yellow-400 flex items-center">
+            <i className="fas fa-trophy mr-2"></i> RECOGNITION & AWARDS
+          </h2>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4 stagger-children">
+          {/* Award 1 */}
+          <div className="bg-gray-950 p-4 rounded border border-gray-800 award-card award-nvidia">
+            <div className="flex items-start mb-3">
+              <div className="w-10 h-10 bg-yellow-900 rounded-full flex items-center justify-center mr-3 award-icon">
+                <i className="fas fa-award text-yellow-400"></i>
+              </div>
+              <div className="flex-1">
+                <h3 className="font-bold text-yellow-400">NVIDIA GTC 2025</h3>
+                <p className="text-xs text-gray-500">Technical Poster Presenter</p>
+              </div>
+            </div>
+            <p className="text-xs text-gray-400">
+              Led scalable vision AI research for planogram compliance system. Presented technical poster: "Scalable Vision AI for Planogram Compliance."
+            </p>
+          </div>
+
+          {/* Award 2 */}
+          <div className="bg-gray-950 p-4 rounded border border-gray-800 award-card award-taitra">
+            <div className="flex items-start mb-3">
+              <div className="w-10 h-10 bg-red-900 rounded-full flex items-center justify-center mr-3 award-icon">
+                <i className="fas fa-star text-red-400"></i>
+              </div>
+              <div className="flex-1">
+                <h3 className="font-bold text-red-400">TAITRA Award 2025</h3>
+                <p className="text-xs text-gray-500">"Go Healthy Taiwan"</p>
+              </div>
+            </div>
+            <p className="text-xs text-gray-400">
+              Technical lead engineer behind award-winning proposal. Selected from 638 international submissions across 55 countries. Highlighted AI innovation in sports analytics and biomechanics.
+            </p>
+          </div>
+
+          {/* Award 3 */}
+          <div className="bg-gray-950 p-4 rounded border border-gray-800 award-card award-expo">
+            <div className="flex items-start mb-3">
+              <div className="w-10 h-10 bg-green-900 rounded-full flex items-center justify-center mr-3 award-icon">
+                <i className="fas fa-globe text-green-400"></i>
+              </div>
+              <div className="flex-1">
+                <h3 className="font-bold text-green-400">Taiwan Expo Europe</h3>
+                <p className="text-xs text-gray-500">Lead Engineering Representative</p>
+              </div>
+            </div>
+            <p className="text-xs text-gray-400">
+              Selected as lead engineering representative to showcase AI capabilities at Taiwan Expo Europe, Poland (June 2026). Representing Taiwan's AI innovation globally.
+            </p>
           </div>
         </div>
       </div>
