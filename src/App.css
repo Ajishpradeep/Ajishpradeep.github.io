@@ -1270,8 +1270,6 @@ html {
   scrollbar-width: thin;
   scrollbar-color: #06b6d4 #1a1a1a;
   padding-right: 5px;
-  position: sticky;
-  top: 6px;
   transition: all 0.3s ease;
 }
 
