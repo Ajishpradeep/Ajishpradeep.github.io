@@ -24,12 +24,15 @@ export const nav = [
   { label: 'About', href: '/about' },
 ] as const;
 
-/** Headline numbers. Each one is traceable to a shipped system. */
+/**
+ * Headline numbers. The last two are externally corroborated — see the impact
+ * dossier for their sources.
+ */
 export const marquee = [
   { value: '3cm', label: 'mean per-joint 3D error, down from 8cm' },
   { value: '240fps', label: 'on-device markerless tracking, no cloud' },
   { value: '29', label: 'keypoint pose model, body provably unbiased' },
-  { value: '5M+', label: 'data points in production predictive models' },
-  { value: 'GTC 2025', label: 'NVIDIA technical poster presenter' },
-  { value: '638 → 1', label: 'TAITRA award, 55 countries' },
+  { value: '7,000+', label: 'stores running the retail vision system' },
+  { value: '1 of 3', label: 'winners from 638 proposals, 55 countries' },
+  { value: 'Warsaw', label: 'Taiwan Expo Europe 2026, listed exhibitor' },
 ] as const;
