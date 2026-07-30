@@ -6,10 +6,13 @@ export const site = {
   resume: '/Resume.pdf',
   portrait: '/profile_pic.png',
   tagline:
-    'I build AI systems where the mathematics has to survive contact with production.',
-  /** Kept deliberately short — the hero carries icons and numbers, not paragraphs. */
+    'Computer vision built on explicit mathematics, with physical law enforced inside the model.',
+  /**
+   * Positioned around the expertise, not around any employer's product.
+   * Kept short — the hero carries icons and an interactive demo, not paragraphs.
+   */
   intro:
-    'Four years turning research architectures into systems people actually depend on. The through-line is not a domain — it is the mathematics.',
+    'I work on 3D computer vision where the mathematics is explicit and the physics is enforced — multi-view geometry, constrained optimisation and anatomical priors compiled into the network itself, so its output is physically possible by construction rather than merely plausible.',
   links: [
     { label: 'Email', href: 'mailto:ajishpradeep@gmail.com', handle: 'ajishpradeep@gmail.com' },
     { label: 'GitHub', href: 'https://github.com/Ajishpradeep', handle: '@Ajishpradeep' },

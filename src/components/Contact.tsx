@@ -2,7 +2,6 @@ import { Mail, Github, Linkedin, Globe, Download, ArrowUpRight, MapPin } from 'l
 import { site } from '../data/site';
 import { about } from '../data/about';
 import HudCanvas from './HudCanvas';
-import { useSpotlight } from '../hooks/useSpotlight';
 
 const linkIcon: Record<string, typeof Mail> = {
   Email: Mail,
@@ -12,7 +11,6 @@ const linkIcon: Record<string, typeof Mail> = {
 };
 
 export default function Contact() {
-  const spot = useSpotlight();
 
   return (
     <section id="contact" className="relative scroll-mt-16 overflow-hidden py-24">
@@ -89,8 +87,7 @@ export default function Contact() {
                       href={l.href}
                       target={l.href.startsWith('mailto') ? undefined : '_blank'}
                       rel="noreferrer"
-                      className="card spot lift group flex items-center gap-4 p-4"
-                      onMouseMove={spot}
+                      className="card trace lift group flex items-center gap-4 p-4"
                     >
                       <span className="plate transition-colors duration-500 group-hover:border-amber/60">
                         <Icon size={19} strokeWidth={1.8} />

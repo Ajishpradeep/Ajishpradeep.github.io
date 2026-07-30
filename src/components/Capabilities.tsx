@@ -1,12 +1,10 @@
 import { Sigma, ScanEye, Brain, Cpu, Users, Smartphone, Store, Plane } from 'lucide-react';
 import { capabilities } from '../data/research';
 import { RouteMap } from './Vectors';
-import { useSpotlight } from '../hooks/useSpotlight';
 
 const icons = [Sigma, ScanEye, Brain, Cpu, Users];
 
 export default function Capabilities() {
-  const spot = useSpotlight();
 
   return (
     <section
@@ -34,8 +32,7 @@ export default function Capabilities() {
               return (
                 <li
                   key={c.area}
-                  className="card spot lift group flex gap-4 p-5"
-                  onMouseMove={spot}
+                  className="card trace lift group flex gap-4 p-5"
                   data-reveal
                   style={{ '--reveal-delay': `${i * 50}ms` } as React.CSSProperties}
                 >

@@ -11,12 +11,10 @@ import {
 } from 'lucide-react';
 import { work } from '../data/work';
 import CaseVisual from './CaseVisual';
-import { useSpotlight } from '../hooks/useSpotlight';
 
 /** Rail index on the left, case-file readout on the right, stepped with back / next. */
 export default function WorkConsole() {
   const [i, setI] = useState(0);
-  const spot = useSpotlight();
   const study = work[i];
 
   const go = (d: number) => setI((v) => (v + d + work.length) % work.length);
@@ -83,7 +81,7 @@ export default function WorkConsole() {
 
           {/* READOUT */}
           <div className="lg:col-span-9">
-            <div className="card spot p-6 sm:p-8" onMouseMove={spot}>
+            <div className="card trace p-6 sm:p-8">
               <div className="pointer-events-none absolute inset-x-0 top-0 h-px overflow-hidden">
                 <div className="sweep h-px w-1/3 bg-gradient-to-r from-transparent via-amber to-transparent" />
               </div>

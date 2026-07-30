@@ -137,24 +137,40 @@
   }
 
   /*
-   * Cursor spotlight. The pointer position is written to --mx/--my by
-   * useSpotlight; the glow is painted behind content and costs no layout.
+   * Corner brackets that draw themselves in on hover — an instrument framing
+   * its reading, rather than a generic glow following the cursor.
    */
-  .spot::before {
+  .trace::before,
+  .trace::after {
     content: '';
     position: absolute;
-    inset: 0;
+    width: 15px;
+    height: 15px;
     pointer-events: none;
     opacity: 0;
-    transition: opacity 0.45s ease;
-    background: radial-gradient(
-      22rem circle at var(--mx, 50%) var(--my, 50%),
-      rgb(var(--amber) / 0.13),
-      transparent 62%
-    );
+    transition:
+      opacity 0.4s ease,
+      transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    border-color: rgb(var(--amber));
   }
-  .spot:hover::before {
+  .trace::before {
+    top: 6px;
+    left: 6px;
+    border-top: 1px solid;
+    border-left: 1px solid;
+    transform: translate(6px, 6px);
+  }
+  .trace::after {
+    right: 6px;
+    bottom: 6px;
+    border-bottom: 1px solid;
+    border-right: 1px solid;
+    transform: translate(-6px, -6px);
+  }
+  .trace:hover::before,
+  .trace:hover::after {
     opacity: 1;
+    transform: none;
   }
 
   /* Lifts slightly on hover — enough to feel responsive, not enough to jump. */

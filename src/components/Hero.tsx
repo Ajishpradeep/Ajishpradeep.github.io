@@ -1,8 +1,8 @@
 import {
-  ScanEye,
+  Axis3d,
+  Atom,
   Brain,
   Gauge,
-  Sigma,
   ArrowRight,
   FileText,
   MapPin,
@@ -16,15 +16,14 @@ import {
 import { marquee, site } from '../data/site';
 import { domains } from '../data/domains';
 import HudCanvas from './HudCanvas';
-import PipelineViz from './PipelineViz';
-import { useSpotlight } from '../hooks/useSpotlight';
+import ConstraintLab from './ConstraintLab';
 import { useInView, useCountUp } from '../hooks/useInView';
 
 const domainIcon = {
-  vision: ScanEye,
+  geometry: Axis3d,
+  physics: Atom,
   llm: Brain,
   edge: Gauge,
-  maths: Sigma,
 } as const;
 
 /** One icon per headline figure, in the order they appear in the data. */
@@ -64,7 +63,6 @@ function StatTile({
 }
 
 export default function Hero() {
-  const spot = useSpotlight();
 
   return (
     <section className="relative overflow-hidden pt-24">
@@ -94,11 +92,11 @@ export default function Hero() {
               data-reveal
               style={{ '--reveal-delay': '60ms' } as React.CSSProperties}
             >
-              Research
+              Computer vision
               <br />
-              <span className="text-amber glow-amber">that survives</span>
+              <span className="text-amber glow-amber">with physics</span>
               <br />
-              production
+              in the model
             </h1>
 
             <p
@@ -120,8 +118,7 @@ export default function Hero() {
                 return (
                   <li
                     key={d.key}
-                    onMouseMove={spot}
-                    className="card spot lift group p-4"
+                    className="card trace lift group p-4"
                   >
                     <span className="plate transition-all duration-500 group-hover:border-amber/60 group-hover:bg-amber group-hover:text-void">
                       <Icon size={20} strokeWidth={1.7} />
@@ -151,13 +148,13 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* RIGHT — the pipeline, walkable */}
+          {/* RIGHT — a constraint solver the visitor can break */}
           <div
             className="lg:col-span-5"
             data-reveal
             style={{ '--reveal-delay': '200ms' } as React.CSSProperties}
           >
-            <PipelineViz />
+            <ConstraintLab />
           </div>
         </div>
       </div>
