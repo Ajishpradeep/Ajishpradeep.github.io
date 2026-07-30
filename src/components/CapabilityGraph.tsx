@@ -1,85 +1,220 @@
-import { useEffect, useState } from 'react';
-import { Axis3d, Atom, Brain, Gauge } from 'lucide-react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { Axis3d, Atom, Brain, Gauge, Hand } from 'lucide-react';
 
-type Node = {
+type Domain = {
   key: string;
   label: string;
   short: string;
-  x: number;
-  y: number;
   icon: typeof Axis3d;
   blurb: string;
   skills: string[];
 };
 
-/**
- * The expertise as a graph: a mathematical core, and the four domains it feeds.
- * Selecting a domain lights the edge back to the core and lists what sits under it.
- */
-const CORE = { x: 170, y: 128 };
-
-const nodes: Node[] = [
+const domains: Domain[] = [
   {
     key: 'geometry',
     label: 'Multi-view geometry',
     short: 'Geometry',
-    x: 56,
-    y: 52,
     icon: Axis3d,
     blurb:
       'Recovering metric 3D from uncalibrated cameras — and knowing when the result is only correct up to an unknown scale.',
-    skills: ['Camera calibration', 'Triangulation', '2D→3D lifting', 'Scale anchoring'],
+    skills: ['Calibration', 'Triangulation', '2D→3D lifting', 'Scale anchoring'],
   },
   {
     key: 'physics',
     label: 'Physics-infused models',
-    short: 'Physics priors',
-    x: 284,
-    y: 52,
+    short: 'Physics',
     icon: Atom,
     blurb:
-      'Anatomical and physical law compiled into the network and the solver, so impossible outputs are unrepresentable rather than merely penalised.',
-    skills: ['Bone-length constraints', 'Range-of-motion priors', 'IK solvers', 'Temporal continuity'],
+      'Physical law compiled into the network and the solver, so impossible outputs are unrepresentable rather than merely penalised.',
+    skills: ['Bone-length', 'ROM priors', 'IK solvers', 'Temporal continuity'],
   },
   {
     key: 'llm',
     label: 'Agentic LLM systems',
     short: 'Agentic LLMs',
-    x: 56,
-    y: 204,
     icon: Brain,
     blurb:
-      'Domain grounding where a confident wrong number causes real harm — deterministic computation, generated narration, and an evaluation design that can tell them apart.',
-    skills: ['Structured grounding', 'Tool use', 'Fine-tuning', 'Evaluation design'],
+      'Domain grounding where a confident wrong number causes real harm — deterministic computation, generated narration, and evaluation that tells them apart.',
+    skills: ['Grounding', 'Tool use', 'Fine-tuning', 'Evaluation'],
   },
   {
     key: 'edge',
     label: 'Edge inference',
-    short: 'Edge inference',
-    x: 284,
-    y: 204,
+    short: 'Edge',
     icon: Gauge,
     blurb:
       'Making capable models cheap enough to run where they have to run — on the device, in real time, with no network.',
-    skills: ['CoreML', 'TensorRT', 'Quantisation', 'ARM deployment'],
+    skills: ['CoreML', 'TensorRT', 'Quantisation', 'ARM'],
   },
 ];
+
+const W = 340;
+const H = 264;
+const CORE = { x: W / 2, y: H / 2 };
+const ORBIT = 92;
+/** Keeps nodes and their satellite labels inside the frame. */
+const PAD = 44;
+
+const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v));
+
+type Body = {
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  ang: number;
+};
 
 export default function CapabilityGraph() {
   const [active, setActive] = useState(0);
   const [held, setHeld] = useState(false);
+  const [dragIdx, setDragIdx] = useState<number | null>(null);
+  const [, tick] = useState(0);
 
+  const svgRef = useRef<SVGSVGElement>(null);
+  const pointer = useRef<{ x: number; y: number } | null>(null);
+  const pulses = useRef<number[]>([]);
+  const spin = useRef(0);
+  const satSpin = useRef(0);
+
+  const bodies = useRef<Body[]>(
+    domains.map((_, i) => {
+      const a = (i / domains.length) * Math.PI * 2 - Math.PI / 2;
+      return {
+        x: CORE.x + Math.cos(a) * ORBIT,
+        y: CORE.y + Math.sin(a) * ORBIT,
+        vx: 0,
+        vy: 0,
+        ang: a,
+      };
+    }),
+  );
+
+  const reduced = useMemo(
+    () =>
+      typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+    [],
+  );
+
+  const toLocal = useCallback((cx: number, cy: number) => {
+    const svg = svgRef.current;
+    if (!svg) return null;
+    const r = svg.getBoundingClientRect();
+    return { x: ((cx - r.left) / r.width) * W, y: ((cy - r.top) / r.height) * H };
+  }, []);
+
+  // cycle the selection while nobody is interacting
   useEffect(() => {
-    if (held) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const id = window.setInterval(() => setActive((i) => (i + 1) % nodes.length), 3200);
+    if (held || reduced) return;
+    const id = window.setInterval(() => setActive((i) => (i + 1) % domains.length), 3600);
     return () => window.clearInterval(id);
-  }, [held]);
+  }, [held, reduced]);
 
-  const current = nodes[active];
+  // the simulation
+  useEffect(() => {
+    if (reduced) return;
+    let raf = 0;
+    let last = performance.now();
+
+    const step = (now: number) => {
+      const dt = Math.min((now - last) / 16.67, 2.5);
+      last = now;
+
+      spin.current += 0.0016 * dt * (held ? 0.25 : 1);
+      satSpin.current += 0.012 * dt;
+
+      bodies.current.forEach((b, i) => {
+        if (i === dragIdx && pointer.current) {
+          b.x = clamp(pointer.current.x, PAD, W - PAD);
+          b.y = clamp(pointer.current.y, PAD, H - PAD);
+          b.vx = 0;
+          b.vy = 0;
+          return;
+        }
+
+        // orbital anchor, with the active node pulled out a little further
+        const a = b.ang + spin.current;
+        const radius = ORBIT + (i === active ? 12 : 0);
+        const ax = CORE.x + Math.cos(a) * radius;
+        const ay = CORE.y + Math.sin(a) * radius;
+
+        // spring toward the anchor
+        b.vx += (ax - b.x) * 0.014 * dt;
+        b.vy += (ay - b.y) * 0.014 * dt;
+
+        // the cursor pushes nodes aside
+        if (pointer.current && dragIdx === null) {
+          const dx = b.x - pointer.current.x;
+          const dy = b.y - pointer.current.y;
+          const d = Math.hypot(dx, dy);
+          if (d < 58 && d > 0.01) {
+            const f = ((58 - d) / 58) * 1.5 * dt;
+            b.vx += (dx / d) * f;
+            b.vy += (dy / d) * f;
+          }
+        }
+
+        // keep nodes off each other
+        bodies.current.forEach((o, j) => {
+          if (i === j) return;
+          const dx = b.x - o.x;
+          const dy = b.y - o.y;
+          const d = Math.hypot(dx, dy);
+          if (d < 56 && d > 0.01) {
+            const f = ((56 - d) / 56) * 0.5 * dt;
+            b.vx += (dx / d) * f;
+            b.vy += (dy / d) * f;
+          }
+        });
+
+        b.vx *= 0.9;
+        b.vy *= 0.9;
+        b.x = clamp(b.x + b.vx * dt, PAD, W - PAD);
+        b.y = clamp(b.y + b.vy * dt, PAD, H - PAD);
+      });
+
+      // energy travelling core → active node
+      pulses.current = pulses.current.map((t) => t + 0.012 * dt).filter((t) => t <= 1);
+      if (Math.random() < 0.045 * dt) pulses.current.push(0);
+
+      tick((n) => (n + 1) % 100000);
+      raf = requestAnimationFrame(step);
+    };
+
+    raf = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(raf);
+  }, [active, dragIdx, held, reduced]);
+
+  // dragging continues outside the svg
+  useEffect(() => {
+    if (dragIdx === null) return;
+    const move = (e: PointerEvent) => {
+      const p = toLocal(e.clientX, e.clientY);
+      if (p) pointer.current = p;
+    };
+    const up = () => setDragIdx(null);
+    window.addEventListener('pointermove', move);
+    window.addEventListener('pointerup', up);
+    return () => {
+      window.removeEventListener('pointermove', move);
+      window.removeEventListener('pointerup', up);
+    };
+  }, [dragIdx, toLocal]);
+
+  const current = domains[active];
+  const B = bodies.current;
+  const act = B[active];
 
   return (
-    <div className="card p-5 sm:p-6" onMouseLeave={() => setHeld(false)}>
+    <div
+      className="card p-5 sm:p-6"
+      onMouseLeave={() => {
+        setHeld(false);
+        pointer.current = null;
+      }}
+    >
       <div className="flex items-center justify-between">
         <div>
           <p className="tag-sm text-amber">Expertise graph</p>
@@ -89,95 +224,203 @@ export default function CapabilityGraph() {
         </div>
         <span className="flex items-center gap-1.5">
           <span className="h-1.5 w-1.5 rounded-full bg-amber blink" />
-          <span className="font-mono text-[0.625rem] text-dim">{held ? 'held' : 'cycling'}</span>
+          <span className="font-mono text-[0.625rem] text-dim">
+            {dragIdx !== null ? 'dragging' : held ? 'held' : 'orbiting'}
+          </span>
         </span>
       </div>
 
-      <div className="relative mt-4 aspect-[340/256] rounded-sm border border-cyan/15 bg-void/50">
-        <svg viewBox="0 0 340 256" className="absolute inset-0 h-full w-full" aria-hidden>
-          {/* edges */}
-          {nodes.map((n, i) => {
+      <div className="relative mt-4 aspect-[340/264] overflow-hidden rounded-sm border border-cyan/15 bg-void/50">
+        <svg
+          ref={svgRef}
+          viewBox={`0 0 ${W} ${H}`}
+          className="absolute inset-0 h-full w-full touch-none select-none"
+          onPointerMove={(e) => {
+            const p = toLocal(e.clientX, e.clientY);
+            if (p) pointer.current = p;
+          }}
+          onPointerLeave={() => {
+            pointer.current = null;
+          }}
+        >
+          <defs>
+            <radialGradient id="coreGlow">
+              <stop offset="0%" stopColor="rgb(var(--amber))" stopOpacity="0.35" />
+              <stop offset="100%" stopColor="rgb(var(--amber))" stopOpacity="0" />
+            </radialGradient>
+          </defs>
+
+          {/* orbit ring */}
+          <circle
+            cx={CORE.x}
+            cy={CORE.y}
+            r={ORBIT}
+            fill="none"
+            stroke="rgb(var(--cyan))"
+            strokeOpacity="0.08"
+            strokeDasharray="2 6"
+          />
+
+          {/* edges — bowed by how far each node has been displaced */}
+          {B.map((b, i) => {
             const on = i === active;
+            const mx = (CORE.x + b.x) / 2;
+            const my = (CORE.y + b.y) / 2;
+            const nx = -(b.y - CORE.y);
+            const ny = b.x - CORE.x;
+            const len = Math.hypot(nx, ny) || 1;
+            const bow = Math.hypot(b.vx, b.vy) * 2.2;
             return (
-              <line
-                key={n.key}
-                x1={CORE.x}
-                y1={CORE.y}
-                x2={n.x}
-                y2={n.y}
+              <path
+                key={domains[i].key}
+                d={`M ${CORE.x} ${CORE.y} Q ${mx + (nx / len) * bow} ${my + (ny / len) * bow} ${b.x} ${b.y}`}
+                fill="none"
                 stroke={on ? 'rgb(var(--amber))' : 'rgb(var(--cyan))'}
-                strokeOpacity={on ? 0.95 : 0.2}
-                strokeWidth={on ? 2 : 1}
-                strokeDasharray="5 4"
-                className={on ? 'drift' : undefined}
+                strokeOpacity={on ? 0.9 : 0.18}
+                strokeWidth={on ? 1.8 : 1}
+                strokeDasharray={on ? undefined : '4 5'}
               />
             );
           })}
 
+          {/* energy pulses along the active edge */}
+          {act &&
+            pulses.current.map((t, k) => {
+              const px = CORE.x + (act.x - CORE.x) * t;
+              const py = CORE.y + (act.y - CORE.y) * t;
+              return (
+                <circle
+                  key={k}
+                  cx={px}
+                  cy={py}
+                  r={2.6}
+                  fill="rgb(var(--amber))"
+                  opacity={1 - t * 0.7}
+                />
+              );
+            })}
+
+          {/* satellites: the skills under the active domain */}
+          {act &&
+            current.skills.map((s, k) => {
+              const a = satSpin.current + (k / current.skills.length) * Math.PI * 2;
+              const sx = act.x + Math.cos(a) * 40;
+              const sy = act.y + Math.sin(a) * 40;
+              return (
+                <g key={s}>
+                  <line
+                    x1={act.x}
+                    y1={act.y}
+                    x2={sx}
+                    y2={sy}
+                    stroke="rgb(var(--amber))"
+                    strokeOpacity="0.22"
+                  />
+                  <circle cx={sx} cy={sy} r="2.4" fill="rgb(var(--amber))" opacity="0.85" />
+                  <text
+                    x={sx}
+                    y={sy - 6}
+                    textAnchor="middle"
+                    fill="rgb(var(--amber))"
+                    fillOpacity="0.8"
+                    fontSize="7"
+                    fontFamily="JetBrains Mono, monospace"
+                  >
+                    {s}
+                  </text>
+                </g>
+              );
+            })}
+
           {/* core */}
-          <circle cx={CORE.x} cy={CORE.y} r="34" fill="rgb(var(--panel))" stroke="rgb(var(--amber))" strokeWidth="1.4" />
-          <circle cx={CORE.x} cy={CORE.y} r="34" fill="none" stroke="rgb(var(--amber))" strokeOpacity="0.4" strokeWidth="1" className="pulse-ring" style={{ transformOrigin: `${CORE.x}px ${CORE.y}px` }} />
-          <text x={CORE.x} y={CORE.y - 3} textAnchor="middle" fill="rgb(var(--amber))" fontSize="12" fontFamily="Funnel Display, sans-serif" fontWeight="700">
+          <circle cx={CORE.x} cy={CORE.y} r="52" fill="url(#coreGlow)" />
+          <circle
+            cx={CORE.x}
+            cy={CORE.y}
+            r="30"
+            fill="rgb(var(--panel))"
+            stroke="rgb(var(--amber))"
+            strokeWidth="1.4"
+          />
+          <text
+            x={CORE.x}
+            y={CORE.y - 2}
+            textAnchor="middle"
+            fill="rgb(var(--amber))"
+            fontSize="12"
+            fontFamily="Funnel Display, sans-serif"
+            fontWeight="700"
+          >
             Maths
           </text>
-          <text x={CORE.x} y={CORE.y + 12} textAnchor="middle" fill="rgb(var(--dim))" fontSize="8" fontFamily="JetBrains Mono, monospace">
+          <text
+            x={CORE.x}
+            y={CORE.y + 11}
+            textAnchor="middle"
+            fill="rgb(var(--dim))"
+            fontSize="7.5"
+            fontFamily="JetBrains Mono, monospace"
+          >
             core
           </text>
 
           {/* domain nodes */}
-          {nodes.map((n, i) => {
+          {B.map((b, i) => {
             const on = i === active;
             return (
               <g
-                key={n.key}
-                className="cursor-pointer"
-                onMouseEnter={() => {
+                key={domains[i].key}
+                className="cursor-grab"
+                onPointerDown={(e) => {
+                  e.preventDefault();
+                  const p = toLocal(e.clientX, e.clientY);
+                  if (p) pointer.current = p;
                   setActive(i);
                   setHeld(true);
+                  setDragIdx(i);
                 }}
-                onClick={() => {
+                onMouseEnter={() => {
                   setActive(i);
                   setHeld(true);
                 }}
               >
                 <circle
-                  cx={n.x}
-                  cy={n.y}
-                  r="26"
+                  cx={b.x}
+                  cy={b.y}
+                  r={on ? 25 : 20}
                   fill={on ? 'rgb(var(--amber))' : 'rgb(var(--deep))'}
                   stroke={on ? 'rgb(var(--amber))' : 'rgb(var(--cyan))'}
-                  strokeOpacity={on ? 1 : 0.35}
+                  strokeOpacity={on ? 1 : 0.4}
                   strokeWidth="1.4"
-                  className="transition-all duration-500"
                 />
                 <text
-                  x={n.x}
-                  y={n.y + (n.y < 128 ? -34 : 42)}
+                  x={b.x}
+                  y={b.y + (on ? 40 : 34)}
                   textAnchor="middle"
                   fill={on ? 'rgb(var(--amber))' : 'rgb(var(--dim))'}
-                  fontSize="9"
+                  fontSize="8.5"
                   fontFamily="JetBrains Mono, monospace"
                 >
-                  {n.short}
+                  {domains[i].short}
                 </text>
               </g>
             );
           })}
         </svg>
 
-        {/* icons overlay the svg; the shared aspect ratio keeps them pinned to their nodes */}
+        {/* icons ride on top so the lucide strokes stay crisp */}
         <div className="pointer-events-none absolute inset-0">
-          {nodes.map((n, i) => {
-            const Icon = n.icon;
+          {B.map((b, i) => {
+            const Icon = domains[i].icon;
             const on = i === active;
             return (
               <span
-                key={n.key}
-                className="absolute flex -translate-x-1/2 -translate-y-1/2 items-center justify-center"
-                style={{ left: `${(n.x / 340) * 100}%`, top: `${(n.y / 256) * 100}%` }}
+                key={domains[i].key}
+                className="absolute -translate-x-1/2 -translate-y-1/2"
+                style={{ left: `${(b.x / W) * 100}%`, top: `${(b.y / H) * 100}%` }}
               >
                 <Icon
-                  size={22}
+                  size={on ? 22 : 18}
                   strokeWidth={1.8}
                   className={on ? 'text-void' : 'text-cyan/70'}
                 />
@@ -185,30 +428,26 @@ export default function CapabilityGraph() {
             );
           })}
         </div>
+
       </div>
+
+      <p className="mt-2.5 flex items-center gap-1.5 font-mono text-[0.625rem] text-dim">
+        <Hand size={11} strokeWidth={2} />
+        hover to hold · drag a node · it springs back
+      </p>
 
       {/* readout */}
       <div key={current.key} className="mt-4 animate-[fadeUp_0.5s_ease-out]">
         <p className="font-display text-[1.0625rem] font-bold text-amber">{current.label}</p>
         <p className="mt-2 copy-sm">{current.blurb}</p>
-        <div className="mt-3 flex flex-wrap gap-1.5">
-          {current.skills.map((s) => (
-            <span
-              key={s}
-              className="rounded-sm bg-panel/60 px-2 py-1 font-mono text-[0.625rem] text-cyan/75"
-            >
-              {s}
-            </span>
-          ))}
-        </div>
       </div>
 
       <div className="mt-4 flex gap-1.5">
-        {nodes.map((n, i) => (
+        {domains.map((d, i) => (
           <button
-            key={n.key}
+            key={d.key}
             type="button"
-            aria-label={n.label}
+            aria-label={d.label}
             onClick={() => {
               setActive(i);
               setHeld(true);

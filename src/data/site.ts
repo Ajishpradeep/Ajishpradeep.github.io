@@ -17,7 +17,7 @@ export const site = {
     { label: 'Email', href: 'mailto:ajishpradeep@gmail.com', handle: 'ajishpradeep@gmail.com' },
     { label: 'GitHub', href: 'https://github.com/Ajishpradeep', handle: '@Ajishpradeep' },
     { label: 'LinkedIn', href: 'https://linkedin.com/in/ajishpradeep', handle: 'in/ajishpradeep' },
-    { label: 'Site', href: 'https://ajish.online', handle: 'ajish.online' },
+    { label: 'Site', href: 'https://ajishpradeep.github.io', handle: 'ajishpradeep.github.io' },
   ],
 } as const;
 

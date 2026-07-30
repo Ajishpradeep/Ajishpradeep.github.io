@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Sitemap location
-Sitemap: https://ajish.online/sitemap.xml
+Sitemap: https://ajishpradeep.github.io/sitemap.xml
 
 # Disallow admin and private areas
 Disallow: /admin/
