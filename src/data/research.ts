@@ -41,12 +41,12 @@ export const research: Entry[] = [
       'Ongoing research in temporal consistency modelling, multi-view geometric constraints and on-device inference optimisation for markerless motion capture.',
   },
   {
-    title: 'Transformer Architecture — a mathematical deconstruction',
-    venue: 'Public technical writing · Case Study repository',
+    title: 'The Transformer Architecture — a mathematical walkthrough',
+    venue: 'Public technical writing',
     year: '2024',
     status: 'published',
     summary:
-      'A step-by-step mathematical walkthrough of the transformer, alongside experiments in triplet-loss embedding retrieval, VQA and vision-transformer depth estimation.',
+      'A step-by-step mathematical treatment of the transformer, carrying one worked example from tokenisation and positional encoding through multi-head self-attention to the decoder’s masked attention and final softmax.',
     href: 'https://github.com/Ajishpradeep/Case_Study',
   },
 ];
