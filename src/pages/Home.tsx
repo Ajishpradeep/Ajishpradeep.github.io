@@ -1,5 +1,5 @@
 import Hero from '../components/Hero';
-import WorkIndex from '../components/WorkIndex';
+import WorkConsole from '../components/WorkConsole';
 import Approach from '../components/Approach';
 import Capabilities from '../components/Capabilities';
 import Research from '../components/Research';
@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <WorkIndex />
+      <WorkConsole />
       <Approach />
       <Capabilities />
       <Research />

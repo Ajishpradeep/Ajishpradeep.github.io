@@ -1,61 +1,67 @@
 import { recognition, research } from '../data/research';
-import SectionHead from './SectionHead';
 
 const statusLabel: Record<string, string> = {
-  published: 'Published',
-  presented: 'Presented',
-  'in-progress': 'In progress',
+  published: 'published',
+  presented: 'presented',
+  'in-progress': 'in progress',
 };
 
 export default function Research() {
   return (
-    <section id="research" className="scroll-mt-24 border-t py-28 sm:py-36">
-      <div className="shell">
-        <SectionHead
-          index="04"
-          label="Research & recognition"
-          title={<>Work that left the building.</>}
-          lede="Conference submissions, a thesis, independent research still in progress, and the public technical writing that keeps the foundations sharp."
-        />
+    <section id="research" className="relative scroll-mt-16 overflow-hidden border-b border-cyan/15 py-20">
+      <div className="grid-veil absolute inset-0 opacity-50" />
 
-        <div className="mt-16 grid gap-16 sm:mt-20 lg:grid-cols-12 lg:gap-8">
-          <ul className="border-t lg:col-span-8">
-            {research.map((r) => {
-              const Row = (
+      <div className="shell relative">
+        <div className="flex items-end justify-between gap-6 border-b border-cyan/15 pb-5">
+          <h2 className="font-display text-headline font-extrabold uppercase track-mid text-cyan" data-reveal>
+            <span className="text-amber">[·</span>RESEARCH LOG<span className="text-amber">·]</span>
+          </h2>
+          <p className="hidden font-mono text-[0.625rem] uppercase tracking-[0.2em] text-dim sm:block">
+            work that left the building
+          </p>
+        </div>
+
+        <div className="mt-8 grid gap-10 lg:grid-cols-12 lg:gap-10">
+          <ul className="lg:col-span-8">
+            {research.map((r, i) => {
+              const body = (
                 <>
-                  <div className="flex items-baseline justify-between gap-6">
-                    <h3 className="text-[1.0625rem] font-medium leading-snug tracking-tight text-balance">
+                  <div className="flex flex-wrap items-baseline justify-between gap-3">
+                    <h3 className="max-w-[52ch] font-display text-[1.0625rem] font-bold leading-snug text-cyan text-balance">
+                      <span className="mr-3 font-mono text-[0.625rem] text-amber">
+                        ·{String(i + 1).padStart(2, '0')}·
+                      </span>
                       {r.title}
                     </h3>
-                    <span className="shrink-0 font-mono text-micro uppercase text-faint">
+                    <span className="font-mono text-[0.625rem] uppercase tracking-[0.2em] text-amber">
                       {r.year}
                     </span>
                   </div>
-                  <p className="mt-2 font-mono text-micro uppercase text-faint">
+                  <p className="mt-2.5 font-mono text-[0.625rem] uppercase tracking-[0.18em] text-dim">
                     {r.venue} · {statusLabel[r.status]}
                   </p>
-                  <p className="mt-3.5 max-w-[62ch] text-[0.9375rem] leading-relaxed text-muted text-pretty">
+                  <p className="mt-3.5 max-w-[68ch] text-[0.875rem] leading-relaxed text-cyan/60 text-pretty">
                     {r.summary}
                   </p>
                 </>
               );
 
               return (
-                <li key={r.title} className="border-b" data-reveal>
+                <li key={r.title} className="border-b border-cyan/10" data-reveal>
                   {r.href ? (
                     <a
                       href={r.href}
                       target="_blank"
                       rel="noreferrer"
-                      className="group block py-7 transition-opacity duration-300 hover:opacity-70"
+                      className="block py-7 transition-opacity duration-300 hover:opacity-70"
                     >
-                      {Row}
-                      <span className="mt-4 inline-block font-mono text-micro uppercase text-accent">
-                        View repository ↗
+                      {body}
+                      <span className="tag mt-4 inline-block text-amber">
+                        <span className="bracket">open repository ↗</span>
                       </span>
                     </a>
                   ) : (
-                    <div className="py-7">{Row}</div>
+                    <div className="py-7">{body}</div>
                   )}
                 </li>
               );
@@ -63,20 +69,26 @@ export default function Research() {
           </ul>
 
           <div className="lg:col-span-4" data-reveal>
-            <p className="eyebrow">Recognition</p>
-            <ul className="mt-6 border-t">
-              {recognition.map((r) => (
-                <li key={r.title} className="border-b py-6">
-                  <div className="flex items-baseline justify-between gap-4">
-                    <h3 className="text-[0.9375rem] font-medium tracking-tight">{r.title}</h3>
-                    <span className="shrink-0 font-mono text-micro text-faint">{r.year}</span>
-                  </div>
-                  <p className="mt-2 text-[0.875rem] leading-relaxed text-muted text-pretty">
-                    {r.detail}
-                  </p>
-                </li>
-              ))}
-            </ul>
+            <div className="hud bg-panel/25 p-6">
+              <p className="tag text-amber">
+                <span className="bracket">recognition</span>
+              </p>
+              <ul className="mt-6 space-y-6">
+                {recognition.map((r) => (
+                  <li key={r.title} className="border-b border-cyan/10 pb-5 last:border-b-0 last:pb-0">
+                    <div className="flex items-baseline justify-between gap-3">
+                      <h3 className="font-display text-[0.9375rem] font-bold text-cyan">
+                        {r.title}
+                      </h3>
+                      <span className="font-mono text-[0.625rem] text-amber">{r.year}</span>
+                    </div>
+                    <p className="mt-2 text-[0.8125rem] leading-relaxed text-cyan/55 text-pretty">
+                      {r.detail}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
       </div>

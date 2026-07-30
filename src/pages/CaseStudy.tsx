@@ -1,5 +1,6 @@
 import { Link, useParams } from 'react-router-dom';
 import { byslug, work } from '../data/work';
+import HudCanvas from '../components/HudCanvas';
 import NotFound from './NotFound';
 
 export default function CaseStudy() {
@@ -8,80 +9,85 @@ export default function CaseStudy() {
 
   if (!study) return <NotFound />;
 
-  const position = work.findIndex((w) => w.slug === study.slug);
-  const next = work[(position + 1) % work.length];
+  const pos = work.findIndex((w) => w.slug === study.slug);
+  const prev = work[(pos - 1 + work.length) % work.length];
+  const next = work[(pos + 1) % work.length];
 
   return (
     <article>
-      {/* Masthead */}
-      <header className="pt-32 sm:pt-40 lg:pt-44">
-        <div className="shell">
-          <Link
-            to="/#work"
-            className="link-underline font-mono text-micro uppercase text-muted transition-colors hover:text-ink"
-            data-reveal
-          >
-            ← All work
+      {/* MASTHEAD */}
+      <header className="relative overflow-hidden border-b border-cyan/15 pt-24">
+        <div className="grid-veil absolute inset-0" />
+        <HudCanvas />
+
+        <div className="shell relative py-14">
+          <Link to="/#work" className="tag text-amber transition-opacity hover:opacity-70">
+            <span className="bracket">← index</span>
           </Link>
 
-          <div className="mt-12 flex items-baseline gap-4" data-reveal>
-            <span className="font-mono text-micro text-faint">{study.index}</span>
-            <span className="eyebrow">{study.domain}</span>
+          <div className="mt-10 flex flex-wrap items-baseline justify-between gap-4">
+            <p className="tag text-dim">
+              <span className="bracket">{study.domain}</span>
+            </p>
+            <p className="font-mono text-[0.625rem] uppercase tracking-[0.2em] text-amber">
+              case {study.index} / {String(work.length).padStart(2, '0')} · {study.slug}
+            </p>
           </div>
 
           <h1
-            className="mt-6 max-w-[17ch] text-headline font-medium text-balance"
+            className="mt-6 max-w-[18ch] font-display text-mega font-extrabold uppercase leading-[1.02] text-cyan glow-cyan text-balance"
             data-reveal
-            style={{ '--reveal-delay': '60ms' } as React.CSSProperties}
           >
             {study.title}
           </h1>
 
           <p
-            className="mt-8 max-w-[58ch] text-lede text-muted text-pretty"
+            className="mt-8 max-w-[68ch] text-lede text-cyan/70 text-pretty"
             data-reveal
-            style={{ '--reveal-delay': '120ms' } as React.CSSProperties}
+            style={{ '--reveal-delay': '80ms' } as React.CSSProperties}
           >
             {study.subtitle}
           </p>
         </div>
       </header>
 
-      {/* Facts */}
-      <div className="mt-16 border-y sm:mt-20" data-reveal>
-        <div className="shell grid gap-y-8 py-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
-          <div>
-            <p className="eyebrow">Organisation</p>
-            <p className="mt-3 text-[0.9375rem]">{study.org}</p>
-          </div>
-          <div>
-            <p className="eyebrow">Period</p>
-            <p className="mt-3 text-[0.9375rem]">{study.period}</p>
-          </div>
-          <div>
-            <p className="eyebrow">Role</p>
-            <p className="mt-3 text-[0.9375rem] text-pretty">{study.role}</p>
-          </div>
-          <div>
-            <p className="eyebrow">Stack</p>
-            <p className="mt-3 text-[0.9375rem] text-pretty">{study.stack.join(' · ')}</p>
-          </div>
+      {/* SPEC STRIP */}
+      <div className="border-b border-cyan/15 bg-deep/50">
+        <div className="shell grid gap-y-6 py-7 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
+          {[
+            ['organisation', study.org],
+            ['period', study.period],
+            ['role', study.role],
+            ['stack', study.stack.join(' · ')],
+          ].map(([k, v]) => (
+            <div key={k}>
+              <p className="tag text-amber/80">
+                <span className="bracket">{k}</span>
+              </p>
+              <p className="mt-3 max-w-[34ch] text-[0.8125rem] leading-relaxed text-cyan/75 text-pretty">
+                {v}
+              </p>
+            </div>
+          ))}
         </div>
       </div>
 
-      {/* Metrics */}
-      <div className="border-b" data-reveal>
+      {/* TELEMETRY */}
+      <div className="border-b border-cyan/15">
         <div className="shell">
           <ul className="grid sm:grid-cols-2 lg:grid-cols-4">
-            {study.metrics.map((m) => (
+            {study.metrics.map((m, i) => (
               <li
                 key={m.label}
-                className="border-b py-8 pr-6 last:border-b-0 sm:border-r sm:py-10 sm:[&:nth-child(2n)]:border-r-0 lg:[&:nth-child(2n)]:border-r lg:last:border-r-0 sm:[&:nth-last-child(-n+2)]:border-b-0 lg:border-b-0"
+                className="border-b border-r border-cyan/10 py-7 pr-5 last:border-r-0 lg:border-b-0"
               >
-                <p className="font-mono text-[1.5rem] tracking-tight sm:text-[1.75rem]">
+                <p className="font-mono text-[0.5625rem] uppercase tracking-[0.24em] text-dim">
+                  ·{String(i + 1).padStart(2, '0')}·
+                </p>
+                <p className="mt-2.5 font-display text-[1.75rem] font-bold track-mid text-amber glow-amber">
                   {m.value}
                 </p>
-                <p className="mt-2.5 max-w-[24ch] text-[0.8125rem] leading-snug text-faint">
+                <p className="mt-2 max-w-[26ch] font-mono text-[0.625rem] leading-snug text-dim">
                   {m.label}
                 </p>
               </li>
@@ -90,14 +96,14 @@ export default function CaseStudy() {
         </div>
       </div>
 
-      {/* The constraint */}
-      <section className="py-20 sm:py-28">
-        <div className="shell grid gap-6 lg:grid-cols-12 lg:gap-8">
-          <p className="eyebrow lg:col-span-3" data-reveal>
-            The constraint
+      {/* CONSTRAINT */}
+      <section className="border-b border-cyan/15 bg-panel/20 py-16">
+        <div className="shell grid gap-6 lg:grid-cols-12 lg:gap-10">
+          <p className="tag text-amber lg:col-span-3" data-reveal>
+            <span className="bracket">the constraint</span>
           </p>
           <p
-            className="max-w-[54ch] font-serif text-[clamp(1.375rem,2.6vw,2rem)] leading-[1.35] tracking-[-0.015em] text-ink text-pretty lg:col-span-9"
+            className="max-w-[62ch] font-display text-[clamp(1.125rem,2.1vw,1.6rem)] font-medium leading-[1.5] text-cyan text-pretty lg:col-span-9"
             data-reveal
           >
             {study.problem}
@@ -105,70 +111,68 @@ export default function CaseStudy() {
         </div>
       </section>
 
-      {/* Body */}
-      <div className="border-t">
-        {study.sections.map((s, i) => (
-          <section key={s.heading} className="border-b py-16 sm:py-20">
-            <div className="shell grid gap-6 lg:grid-cols-12 lg:gap-8">
-              <div className="lg:col-span-3" data-reveal>
-                <span className="font-mono text-micro text-faint">
-                  {String(i + 1).padStart(2, '0')}
-                </span>
-                <h2 className="mt-4 max-w-[24ch] text-[1.125rem] font-medium leading-snug tracking-tight text-balance lg:sticky lg:top-28">
-                  {s.heading}
-                </h2>
-              </div>
-              <div className="prose-body max-w-prose lg:col-span-8 lg:col-start-5" data-reveal>
-                {s.body.map((p, j) => (
-                  <p key={j}>{p}</p>
-                ))}
-              </div>
+      {/* LOG ENTRIES */}
+      {study.sections.map((s, i) => (
+        <section key={s.heading} className="border-b border-cyan/10 py-14">
+          <div className="shell grid gap-6 lg:grid-cols-12 lg:gap-10">
+            <div className="lg:col-span-3" data-reveal>
+              <span className="font-mono text-[0.625rem] text-amber">
+                ·{String(i + 1).padStart(2, '0')}·
+              </span>
+              <h2 className="mt-3 max-w-[26ch] font-display text-[1.0625rem] font-bold leading-snug text-cyan lg:sticky lg:top-24 text-balance">
+                {s.heading}
+              </h2>
             </div>
-          </section>
-        ))}
-      </div>
+            <div className="max-w-[68ch] lg:col-span-8 lg:col-start-5" data-reveal>
+              {s.body.map((p, j) => (
+                <p
+                  key={j}
+                  className="text-[0.9375rem] leading-[1.85] text-cyan/65 text-pretty [&+&]:mt-5"
+                >
+                  {p}
+                </p>
+              ))}
+            </div>
+          </div>
+        </section>
+      ))}
 
-      {/* Outcome */}
-      <section className="py-20 sm:py-28">
-        <div className="shell grid gap-6 lg:grid-cols-12 lg:gap-8">
-          <p className="eyebrow lg:col-span-3" data-reveal>
-            Outcome
+      {/* OUTCOME */}
+      <section className="border-b border-cyan/15 py-16">
+        <div className="shell grid gap-6 lg:grid-cols-12 lg:gap-10">
+          <p className="tag text-amber lg:col-span-3" data-reveal>
+            <span className="bracket">outcome</span>
           </p>
           <ul className="lg:col-span-8 lg:col-start-5">
             {study.outcome.map((o, i) => (
               <li
                 key={i}
-                className="flex gap-5 border-b py-5 first:border-t"
+                className="flex gap-4 border-b border-cyan/10 py-4"
                 data-reveal
                 style={{ '--reveal-delay': `${i * 60}ms` } as React.CSSProperties}
               >
-                <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
-                <span className="text-[1rem] leading-relaxed text-ink text-pretty">{o}</span>
+                <span className="mt-2 h-1.5 w-1.5 shrink-0 bg-amber" />
+                <span className="text-[0.9375rem] leading-relaxed text-cyan/80 text-pretty">
+                  {o}
+                </span>
               </li>
             ))}
           </ul>
         </div>
       </section>
 
-      {/* Next */}
-      <Link to={`/work/${next.slug}`} className="group block border-t transition-colors duration-500 hover:bg-surface">
-        <div className="shell grid gap-4 py-14 lg:grid-cols-12 lg:items-baseline lg:gap-8">
-          <p className="eyebrow lg:col-span-3">Next case study</p>
-          <div className="lg:col-span-9">
-            <div className="flex items-baseline justify-between gap-6">
-              <h2 className="max-w-[20ch] text-title font-medium tracking-tight text-balance">
-                {next.title}
-              </h2>
-              <span
-                aria-hidden
-                className="shrink-0 text-xl text-faint transition-transform duration-500 ease-out group-hover:translate-x-2 group-hover:text-ink"
-              >
-                →
-              </span>
-            </div>
-          </div>
-        </div>
-      </Link>
+      {/* STEPPER */}
+      <nav className="shell flex flex-col gap-4 py-12 sm:flex-row sm:items-center sm:justify-between">
+        <Link to={`/work/${prev.slug}`} className="btn-ghost">
+          <span aria-hidden>←</span> {prev.index} · back
+        </Link>
+        <Link to="/#work" className="tag text-dim transition-colors hover:text-amber">
+          <span className="bracket">index</span>
+        </Link>
+        <Link to={`/work/${next.slug}`} className="btn-amber">
+          {next.index} · next <span aria-hidden>→</span>
+        </Link>
+      </nav>
     </article>
   );
 }

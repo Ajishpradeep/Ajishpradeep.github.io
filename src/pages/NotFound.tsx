@@ -2,20 +2,22 @@ import { Link } from 'react-router-dom';
 
 export default function NotFound() {
   return (
-    <section className="flex min-h-[70vh] items-center pt-32">
-      <div className="shell">
-        <p className="eyebrow">404</p>
-        <h1 className="mt-6 max-w-[16ch] text-headline font-medium text-balance">
-          That page does not exist.
-        </h1>
-        <p className="mt-6 max-w-prose text-lede text-muted">
-          The link may be out of date, or the case study may have moved.
+    <section className="relative flex min-h-[80svh] items-center overflow-hidden pt-24">
+      <div className="grid-veil absolute inset-0" />
+      <div className="shell relative">
+        <p className="tag text-signal flicker">
+          <span className="bracket">signal lost · 404</span>
         </p>
-        <Link
-          to="/"
-          className="link-underline mt-10 inline-block font-mono text-micro uppercase text-ink"
-        >
-          ← Back to the start
+        <h1 className="mt-7 max-w-[18ch] font-display text-mega font-extrabold uppercase leading-[1.02] text-cyan glow-cyan">
+          No route
+          <br />
+          <span className="text-amber">to that page</span>
+        </h1>
+        <p className="mt-7 max-w-[52ch] text-lede text-cyan/60">
+          The link may be stale, or the case file may have been re-indexed.
+        </p>
+        <Link to="/" className="btn-amber mt-10">
+          <span aria-hidden>←</span> return to base
         </Link>
       </div>
     </section>

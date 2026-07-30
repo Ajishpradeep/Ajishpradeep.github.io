@@ -1,33 +1,47 @@
 import { capabilities } from '../data/research';
-import SectionHead from './SectionHead';
 
 export default function Capabilities() {
   return (
-    <section id="capabilities" className="scroll-mt-24 border-t py-28 sm:py-36">
-      <div className="shell">
-        <SectionHead
-          index="03"
-          label="Capabilities"
-          title={<>The mathematics is the constant. Domains are where you point it.</>}
-          lede="Linear algebra, probability and geometry do not care whether the input is an image, a sentence or a skeleton. That is what has let me move between vision, language and 3D without starting over each time."
-        />
+    <section
+      id="capabilities"
+      className="relative scroll-mt-16 overflow-hidden border-b border-cyan/15 bg-deep/40 py-20"
+    >
+      <div className="grid-veil absolute inset-0 opacity-50" />
 
-        <dl className="mt-16 border-t sm:mt-20">
-          {capabilities.map((c) => (
+      <div className="shell relative">
+        <div className="flex items-end justify-between gap-6 border-b border-cyan/15 pb-5">
+          <h2 className="font-display text-headline font-extrabold uppercase track-mid text-cyan" data-reveal>
+            <span className="text-amber">[·</span>CAPABILITIES<span className="text-amber">·]</span>
+          </h2>
+          <p className="hidden font-mono text-[0.625rem] uppercase tracking-[0.2em] text-dim sm:block">
+            maths constant · domain variable
+          </p>
+        </div>
+
+        <dl className="mt-8">
+          {capabilities.map((c, i) => (
             <div
               key={c.area}
-              className="grid gap-4 border-b py-8 lg:grid-cols-12 lg:gap-8 lg:py-10"
+              className="grid gap-4 border-b border-cyan/10 py-7 lg:grid-cols-12 lg:gap-8"
               data-reveal
             >
-              <dt className="text-[1.0625rem] font-medium tracking-tight lg:col-span-3">
-                {c.area}
+              <dt className="flex items-baseline gap-3 lg:col-span-3">
+                <span className="font-mono text-[0.625rem] text-amber">
+                  ·{String(i + 1).padStart(2, '0')}·
+                </span>
+                <span className="font-display text-[1.0625rem] font-bold track-mid text-cyan">
+                  {c.area}
+                </span>
               </dt>
-              <dd className="text-[0.9375rem] leading-relaxed text-muted text-pretty lg:col-span-6">
+              <dd className="text-[0.875rem] leading-relaxed text-cyan/60 text-pretty lg:col-span-6">
                 {c.detail}
               </dd>
-              <dd className="flex flex-wrap gap-x-4 gap-y-2 lg:col-span-3 lg:justify-end">
+              <dd className="flex flex-wrap gap-2 lg:col-span-3 lg:justify-end">
                 {c.items.map((item) => (
-                  <span key={item} className="font-mono text-micro uppercase text-faint">
+                  <span
+                    key={item}
+                    className="border border-cyan/20 px-2 py-0.5 font-mono text-[0.5625rem] uppercase tracking-[0.14em] text-dim"
+                  >
                     {item}
                   </span>
                 ))}

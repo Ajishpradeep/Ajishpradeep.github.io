@@ -4,51 +4,54 @@
 
 @layer base {
   :root {
-    --bg: 246 244 240;
-    --surface: 240 237 232;
-    --ink: 22 21 26;
-    --muted: 107 104 98;
-    --faint: 154 150 143;
-    --rule: 22 21 26;
-    --accent: 43 76 240;
-    --rule-alpha: 0.13;
-    color-scheme: light;
-  }
-
-  :root[data-theme='dark'] {
-    --bg: 14 14 16;
-    --surface: 22 22 25;
-    --ink: 239 237 232;
-    --muted: 142 139 133;
-    --faint: 104 101 96;
-    --rule: 239 237 232;
-    --accent: 133 152 255;
-    --rule-alpha: 0.16;
+    /* Deep terminal teal-black, cyan phosphor text, amber signal. */
+    --void: 3 12 14;
+    --deep: 6 26 27;
+    --panel: 10 46 46;
+    --panel-hi: 17 74 72;
+    --cyan: 122 255 232;
+    --cyan-hot: 0 255 231;
+    --amber: 245 176 35;
+    --amber-hot: 255 190 60;
+    --signal: 255 74 28;
+    --dim: 92 150 148;
     color-scheme: dark;
-  }
-
-  * {
-    border-color: rgb(var(--rule) / var(--rule-alpha));
   }
 
   html {
     -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
     scroll-behavior: smooth;
   }
 
   body {
-    @apply bg-bg text-ink font-sans;
+    @apply bg-void font-display text-cyan;
+    overflow-x: hidden;
   }
 
   ::selection {
-    background: rgb(var(--accent) / 0.22);
+    background: rgb(var(--amber) / 0.85);
+    color: rgb(var(--void));
   }
 
   :focus-visible {
-    outline: 2px solid rgb(var(--accent));
+    outline: 1px solid rgb(var(--amber));
     outline-offset: 3px;
-    border-radius: 2px;
+  }
+
+  /* Thin terminal scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: rgb(var(--void));
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgb(var(--panel-hi));
+    border: 2px solid rgb(var(--void));
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgb(var(--amber) / 0.7);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -59,6 +62,7 @@
     *::before,
     *::after {
       animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
       transition-duration: 0.001ms !important;
     }
   }
@@ -66,36 +70,89 @@
 
 @layer components {
   .shell {
-    @apply mx-auto w-full max-w-shell px-5 sm:px-8 lg:px-12;
+    @apply mx-auto w-full max-w-[100rem] px-5 sm:px-8 lg:px-12;
   }
 
-  /* Small uppercase mono label that indexes and names every section. */
-  .eyebrow {
-    @apply font-mono text-micro uppercase text-faint;
+  /* Bracketed, letter-spaced label — the interface's basic unit of text. */
+  .tag {
+    @apply font-mono text-[0.6875rem] uppercase tracking-[0.28em];
   }
 
-  .hairline {
-    border-top: 1px solid rgb(var(--rule) / var(--rule-alpha));
+  .bracket::before {
+    content: '[\00b7';
+    @apply mr-[0.15em] opacity-70;
+  }
+  .bracket::after {
+    content: '\00b7]';
+    @apply ml-[0.15em] opacity-70;
   }
 
-  /* Link that draws its own underline on hover, left to right. */
-  .link-underline {
-    @apply relative inline-block;
+  /* HUD panel: corner brackets drawn with gradients, no extra markup. */
+  .hud {
+    position: relative;
+    background:
+      linear-gradient(to right, rgb(var(--cyan) / 0.5) 1px, transparent 1px) 0 0 / 14px 1px no-repeat,
+      linear-gradient(to bottom, rgb(var(--cyan) / 0.5) 1px, transparent 1px) 0 0 / 1px 14px no-repeat,
+      linear-gradient(to left, rgb(var(--cyan) / 0.5) 1px, transparent 1px) 100% 0 / 14px 1px no-repeat,
+      linear-gradient(to bottom, rgb(var(--cyan) / 0.5) 1px, transparent 1px) 100% 0 / 1px 14px no-repeat,
+      linear-gradient(to right, rgb(var(--cyan) / 0.5) 1px, transparent 1px) 0 100% / 14px 1px no-repeat,
+      linear-gradient(to top, rgb(var(--cyan) / 0.5) 1px, transparent 1px) 0 100% / 1px 14px no-repeat,
+      linear-gradient(to left, rgb(var(--cyan) / 0.5) 1px, transparent 1px) 100% 100% / 14px 1px no-repeat,
+      linear-gradient(to top, rgb(var(--cyan) / 0.5) 1px, transparent 1px) 100% 100% / 1px 14px no-repeat;
   }
-  .link-underline::after {
+
+  .hud-amber {
+    background-image:
+      linear-gradient(to right, rgb(var(--amber) / 0.9) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(var(--amber) / 0.9) 1px, transparent 1px),
+      linear-gradient(to left, rgb(var(--amber) / 0.9) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(var(--amber) / 0.9) 1px, transparent 1px),
+      linear-gradient(to right, rgb(var(--amber) / 0.9) 1px, transparent 1px),
+      linear-gradient(to top, rgb(var(--amber) / 0.9) 1px, transparent 1px),
+      linear-gradient(to left, rgb(var(--amber) / 0.9) 1px, transparent 1px),
+      linear-gradient(to top, rgb(var(--amber) / 0.9) 1px, transparent 1px);
+  }
+
+  /* Dashed instruction frame */
+  .frame-dashed {
+    border: 1px dashed rgb(var(--cyan) / 0.35);
+  }
+
+  /* CRT scanline veil laid over the whole document */
+  .scanlines::after {
     content: '';
-    @apply absolute left-0 -bottom-0.5 h-px w-full origin-right scale-x-0 bg-current transition-transform duration-500 ease-out;
-  }
-  .link-underline:hover::after,
-  .link-underline:focus-visible::after {
-    @apply origin-left scale-x-100;
+    position: fixed;
+    inset: 0;
+    z-index: 40;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+      to bottom,
+      transparent 0 2px,
+      rgb(var(--void) / 0.35) 2px 3px
+    );
+    mix-blend-mode: multiply;
   }
 
-  .prose-body p {
-    @apply text-lede text-muted text-pretty;
+  /* Faint engineering grid */
+  .grid-veil {
+    background-image:
+      linear-gradient(to right, rgb(var(--cyan) / 0.055) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(var(--cyan) / 0.055) 1px, transparent 1px);
+    background-size: 46px 46px;
   }
-  .prose-body p + p {
-    @apply mt-5;
+
+  .btn {
+    @apply tag inline-flex items-center gap-3 px-6 py-3 transition-colors duration-300;
+  }
+  .btn-amber {
+    @apply btn bg-amber text-void hover:bg-amber-hot;
+  }
+  .btn-ghost {
+    @apply btn border border-cyan/40 text-cyan hover:border-amber hover:text-amber;
+  }
+
+  .rail-link {
+    @apply block w-full text-left transition-all duration-300;
   }
 }
 
@@ -107,18 +164,59 @@
     text-wrap: pretty;
   }
 
-  /* Scroll reveal — opt in with data-reveal, driven by IntersectionObserver. */
+  /* Wide-tracked display lettering, as used for the wordmark and section titles. */
+  .track-wide {
+    letter-spacing: 0.22em;
+  }
+  .track-mid {
+    letter-spacing: 0.1em;
+  }
+
+  .glow-cyan {
+    text-shadow: 0 0 18px rgb(var(--cyan-hot) / 0.5);
+  }
+  .glow-amber {
+    text-shadow: 0 0 22px rgb(var(--amber) / 0.55);
+  }
+
   [data-reveal] {
     opacity: 0;
-    transform: translateY(18px);
+    transform: translateY(16px);
     transition:
-      opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
-      transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+      opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
     transition-delay: var(--reveal-delay, 0ms);
   }
   [data-reveal='in'] {
     opacity: 1;
     transform: none;
+  }
+
+  @keyframes flicker {
+    0%, 100% { opacity: 1; }
+    92% { opacity: 1; }
+    94% { opacity: 0.4; }
+    96% { opacity: 1; }
+    97% { opacity: 0.7; }
+  }
+  .flicker {
+    animation: flicker 6s infinite steps(1);
+  }
+
+  @keyframes sweep {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(100%); }
+  }
+  .sweep {
+    animation: sweep 3.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  }
+
+  @keyframes blink {
+    0%, 49% { opacity: 1; }
+    50%, 100% { opacity: 0; }
+  }
+  .blink {
+    animation: blink 1.1s infinite steps(1);
   }
 
   @media (prefers-reduced-motion: reduce) {
