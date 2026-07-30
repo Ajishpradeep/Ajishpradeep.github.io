@@ -1,10 +1,12 @@
 import { Leaf, Music4, FileStack, CreditCard, Waypoints, Radio, Github, ArrowUpRight } from 'lucide-react';
 import { lab } from '../data/lab';
 import { site } from '../data/site';
+import { useSpotlight } from '../hooks/useSpotlight';
 
 const icons = [Leaf, Music4, FileStack, CreditCard, Waypoints, Radio];
 
 export default function Lab() {
+  const spot = useSpotlight();
   if (!lab.length) return null;
   const ghost = site.links.find((l) => l.label === 'GitHub')?.href;
 
@@ -38,7 +40,8 @@ export default function Lab() {
                   href={p.url}
                   target="_blank"
                   rel="noreferrer"
-                  className="card group flex h-full flex-col p-6"
+                  className="card spot lift group flex h-full flex-col p-6"
+                  onMouseMove={spot}
                 >
                   <div className="flex items-start justify-between">
                     <span className="plate transition-colors duration-500 group-hover:border-amber/60">

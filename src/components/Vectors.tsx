@@ -3,90 +3,6 @@
  * rather than acting as decoration.
  */
 
-/** 24-keypoint skeleton with club, i.e. the actual subject of the pose research. */
-export function PoseFigure({ className = '' }: { className?: string }) {
-  // Normalised joint positions, roughly a golf address posture.
-  const j: Record<string, [number, number]> = {
-    head: [50, 12],
-    neck: [50, 22],
-    lsh: [40, 26],
-    rsh: [60, 26],
-    lel: [34, 40],
-    rel: [66, 40],
-    lwr: [43, 52],
-    rwr: [57, 52],
-    spine: [50, 42],
-    lhip: [43, 56],
-    rhip: [57, 56],
-    lkn: [40, 74],
-    rkn: [60, 74],
-    lank: [38, 92],
-    rank: [62, 92],
-    grip: [50, 54],
-    club: [78, 88],
-  };
-
-  const bones: [string, string][] = [
-    ['head', 'neck'],
-    ['neck', 'lsh'],
-    ['neck', 'rsh'],
-    ['lsh', 'lel'],
-    ['rsh', 'rel'],
-    ['lel', 'lwr'],
-    ['rel', 'rwr'],
-    ['neck', 'spine'],
-    ['spine', 'lhip'],
-    ['spine', 'rhip'],
-    ['lhip', 'rhip'],
-    ['lsh', 'rsh'],
-    ['lhip', 'lkn'],
-    ['rhip', 'rkn'],
-    ['lkn', 'lank'],
-    ['rkn', 'rank'],
-  ];
-
-  return (
-    <svg viewBox="0 0 100 100" className={className} aria-hidden fill="none">
-      {/* club shaft, highlighted — the hard part of the problem */}
-      <line
-        x1={j.grip[0]}
-        y1={j.grip[1]}
-        x2={j.club[0]}
-        y2={j.club[1]}
-        stroke="rgb(var(--amber))"
-        strokeWidth="1.2"
-        strokeLinecap="round"
-      />
-      <circle cx={j.club[0]} cy={j.club[1]} r="2.4" fill="rgb(var(--amber))" />
-
-      {bones.map(([a, b]) => (
-        <line
-          key={`${a}-${b}`}
-          x1={j[a][0]}
-          y1={j[a][1]}
-          x2={j[b][0]}
-          y2={j[b][1]}
-          stroke="rgb(var(--cyan))"
-          strokeOpacity="0.55"
-          strokeWidth="1"
-          strokeLinecap="round"
-        />
-      ))}
-
-      {Object.entries(j).map(([k, [x, y]]) => (
-        <circle
-          key={k}
-          cx={x}
-          cy={y}
-          r={k === 'club' ? 0 : 1.6}
-          fill="rgb(var(--cyan-hot))"
-          fillOpacity="0.9"
-        />
-      ))}
-    </svg>
-  );
-}
-
 /** Schematic globe with great-circle arcs between the places the work has travelled. */
 export function RouteMap({ className = '' }: { className?: string }) {
   const nodes = [
@@ -174,25 +90,6 @@ export function RouteMap({ className = '' }: { className?: string }) {
           </text>
         </g>
       ))}
-    </svg>
-  );
-}
-
-/** Small accuracy bar — before vs after, drawn to scale. */
-export function DeltaBar({
-  from,
-  to,
-  className = '',
-}: {
-  from: number;
-  to: number;
-  className?: string;
-}) {
-  const max = Math.max(from, to);
-  return (
-    <svg viewBox="0 0 100 26" className={className} aria-hidden>
-      <rect x="0" y="3" width={(from / max) * 100} height="7" fill="rgb(var(--cyan))" fillOpacity="0.28" />
-      <rect x="0" y="15" width={(to / max) * 100} height="7" fill="rgb(var(--amber))" />
     </svg>
   );
 }

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Trophy, Globe2, Smartphone, Store, Plus, ExternalLink, UserCheck, ScrollText } from 'lucide-react';
 import { impact } from '../data/impact';
+import { useSpotlight } from '../hooks/useSpotlight';
 
 const icons = [Trophy, Globe2, Smartphone, Store];
 
@@ -9,6 +10,7 @@ const icons = [Trophy, Globe2, Smartphone, Store];
  * Every card carries its own sources — nothing here is self-reported only.
  */
 export default function Impact() {
+  const spot = useSpotlight();
   const [open, setOpen] = useState<string | null>(impact[0]?.id ?? null);
 
   if (!impact.length) return null;
@@ -40,7 +42,8 @@ export default function Impact() {
             return (
               <li
                 key={m.id}
-                className="card"
+                className="card spot"
+                onMouseMove={spot}
                 data-reveal
                 style={{ '--reveal-delay': `${i * 50}ms` } as React.CSSProperties}
               >

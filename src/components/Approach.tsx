@@ -1,9 +1,12 @@
 import { EyeOff, Lock, Waves, AlertTriangle, Calculator, FileWarning } from 'lucide-react';
 import { principles } from '../data/research';
+import { useSpotlight } from '../hooks/useSpotlight';
 
 const icons = [EyeOff, Lock, Waves, AlertTriangle, Calculator, FileWarning];
 
 export default function Approach() {
+  const spot = useSpotlight();
+
   return (
     <section
       id="method"
@@ -28,7 +31,8 @@ export default function Approach() {
             return (
               <li
                 key={p.n}
-                className="card group p-6"
+                className="card spot lift group p-6"
+                onMouseMove={spot}
                 data-reveal
                 style={{ '--reveal-delay': `${i * 50}ms` } as React.CSSProperties}
               >

@@ -1,3 +1,5 @@
+import type { VisualKind } from '../components/CaseVisual';
+
 export type Metric = { value: string; label: string };
 
 export type Section = { heading: string; body: string[] };
@@ -19,6 +21,8 @@ export type CaseStudy = {
   problem: string;
   sections: Section[];
   outcome: string[];
+  /** Which animated diagram accompanies this study. */
+  visual: VisualKind;
   featured: boolean;
 };
 
@@ -95,6 +99,7 @@ export const work: CaseStudy[] = [
       'A club-tracking model that beats prior generations on club accuracy while being the only one with a provably unbiased body model.',
       'An internal benchmarking suite for evaluating robustness across long-tailed action distributions — every claim above is a measured number, not an impression.',
     ],
+    visual: 'pose',
     featured: true,
   },
   {
@@ -156,6 +161,7 @@ export const work: CaseStudy[] = [
       'Full localisation across 8 languages, including prompt-level translation rather than post-hoc output translation.',
       'Consumed in production as a library by the wider product platform through a deliberately narrow public API.',
     ],
+    visual: 'llm',
     featured: true,
   },
   {
@@ -217,6 +223,7 @@ export const work: CaseStudy[] = [
       'Reconstruction anchored to real-world scale and validated against published anthropometric data across all sessions and all bones.',
       'Remaining limitations documented explicitly — open calibration variance, triangulation conditioning, synchronisation edge cases — because undocumented known-unknowns are how they get rediscovered expensively.',
     ],
+    visual: 'geometry',
     featured: true,
   },
   {
@@ -269,6 +276,7 @@ export const work: CaseStudy[] = [
       'Production deployment in an unmanned retail store, running on edge hardware under real customer traffic.',
       'A catalogue-scaling architecture that removed retraining from the operational loop entirely.',
     ],
+    visual: 'retail',
     featured: false,
   },
   {
@@ -310,6 +318,7 @@ export const work: CaseStudy[] = [
       'Published as an MSc thesis at National Taipei University of Technology.',
       'The foundation for a working understanding of attention that transfers directly to transformer-based systems.',
     ],
+    visual: 'generative',
     featured: false,
   },
 ];

@@ -16,7 +16,9 @@ import {
 import { marquee, site } from '../data/site';
 import { domains } from '../data/domains';
 import HudCanvas from './HudCanvas';
-import { PoseFigure } from './Vectors';
+import PipelineViz from './PipelineViz';
+import { useSpotlight } from '../hooks/useSpotlight';
+import { useInView, useCountUp } from '../hooks/useInView';
 
 const domainIcon = {
   vision: ScanEye,
@@ -28,7 +30,42 @@ const domainIcon = {
 /** One icon per headline figure, in the order they appear in the data. */
 const statIcon = [Ruler, Activity, Boxes, Store, Trophy, Globe2];
 
+/** Telemetry tile whose figure counts up the first time it is seen. */
+function StatTile({
+  value,
+  label,
+  Icon,
+}: {
+  value: string;
+  label: string;
+  Icon: typeof Ruler;
+}) {
+  const { ref, seen } = useInView<HTMLLIElement>();
+  const shown = useCountUp(value, seen);
+
+  return (
+    <li
+      ref={ref}
+      className="group flex items-start gap-3 border-b border-r border-cyan/10 px-3 py-5 transition-colors duration-500 last:border-r-0 hover:bg-panel/30 md:border-b-0"
+    >
+      <Icon
+        size={17}
+        strokeWidth={1.7}
+        className="mt-1 shrink-0 text-amber/80 transition-transform duration-500 group-hover:scale-110"
+      />
+      <div className="min-w-0">
+        <p className="font-display text-[1.35rem] font-bold leading-none text-cyan tabular-nums">
+          {shown}
+        </p>
+        <p className="mt-2 text-[0.75rem] leading-snug text-dim">{label}</p>
+      </div>
+    </li>
+  );
+}
+
 export default function Hero() {
+  const spot = useSpotlight();
+
   return (
     <section className="relative overflow-hidden pt-24">
       <div className="grid-veil absolute inset-0" />
@@ -81,12 +118,14 @@ export default function Hero() {
               {domains.map((d) => {
                 const Icon = domainIcon[d.key];
                 return (
-                  <li key={d.key} className="card group p-4">
-                    <Icon
-                      size={22}
-                      strokeWidth={1.6}
-                      className="text-amber transition-transform duration-500 group-hover:scale-110"
-                    />
+                  <li
+                    key={d.key}
+                    onMouseMove={spot}
+                    className="card spot lift group p-4"
+                  >
+                    <span className="plate transition-all duration-500 group-hover:border-amber/60 group-hover:bg-amber group-hover:text-void">
+                      <Icon size={20} strokeWidth={1.7} />
+                    </span>
                     <p className="mt-3 font-display text-[0.9375rem] font-bold leading-tight text-cyan">
                       {d.label}
                     </p>
@@ -112,35 +151,13 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* RIGHT — the subject, drawn */}
-          <div className="lg:col-span-5" data-reveal style={{ '--reveal-delay': '200ms' } as React.CSSProperties}>
-            <div className="hud relative bg-deep/50 p-8">
-              <div className="pointer-events-none absolute inset-x-0 top-0 h-px overflow-hidden">
-                <div className="sweep h-px w-1/3 bg-gradient-to-r from-transparent via-amber to-transparent" />
-              </div>
-
-              <div className="flex items-center justify-between">
-                <span className="tag-sm text-dim">Pose · 24 body + 5 club</span>
-                <span className="tag-sm text-amber">live</span>
-              </div>
-
-              <PoseFigure className="mx-auto mt-4 h-64 w-full" />
-
-              <div className="mt-4 grid grid-cols-3 gap-px border-t border-cyan/15 pt-4">
-                {[
-                  ['MPJPE', '3.0cm'],
-                  ['Rate', '240fps'],
-                  ['Cloud', 'none'],
-                ].map(([k, v]) => (
-                  <div key={k}>
-                    <p className="font-mono text-[0.625rem] uppercase tracking-[0.08em] text-dim">
-                      {k}
-                    </p>
-                    <p className="mt-1 font-display text-[1.05rem] font-bold text-amber">{v}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
+          {/* RIGHT — the pipeline, walkable */}
+          <div
+            className="lg:col-span-5"
+            data-reveal
+            style={{ '--reveal-delay': '200ms' } as React.CSSProperties}
+          >
+            <PipelineViz />
           </div>
         </div>
       </div>
@@ -149,23 +166,14 @@ export default function Hero() {
       <div className="relative border-y border-cyan/15 bg-deep/60">
         <div className="shell">
           <ul className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
-            {marquee.map((m, i) => {
-              const Icon = statIcon[i] ?? Boxes;
-              return (
-                <li
-                  key={m.value}
-                  className="flex items-start gap-3 border-b border-r border-cyan/10 px-3 py-5 last:border-r-0 md:border-b-0"
-                >
-                  <Icon size={17} strokeWidth={1.7} className="mt-1 shrink-0 text-amber/80" />
-                  <div className="min-w-0">
-                    <p className="font-display text-[1.35rem] font-bold leading-none text-cyan">
-                      {m.value}
-                    </p>
-                    <p className="mt-2 text-[0.75rem] leading-snug text-dim">{m.label}</p>
-                  </div>
-                </li>
-              );
-            })}
+            {marquee.map((m, i) => (
+              <StatTile
+                key={m.value}
+                value={m.value}
+                label={m.label}
+                Icon={statIcon[i] ?? Boxes}
+              />
+            ))}
           </ul>
         </div>
       </div>

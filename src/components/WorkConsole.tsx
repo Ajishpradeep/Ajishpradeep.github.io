@@ -10,10 +10,13 @@ import {
   Target,
 } from 'lucide-react';
 import { work } from '../data/work';
+import CaseVisual from './CaseVisual';
+import { useSpotlight } from '../hooks/useSpotlight';
 
 /** Rail index on the left, case-file readout on the right, stepped with back / next. */
 export default function WorkConsole() {
   const [i, setI] = useState(0);
+  const spot = useSpotlight();
   const study = work[i];
 
   const go = (d: number) => setI((v) => (v + d + work.length) % work.length);
@@ -80,18 +83,32 @@ export default function WorkConsole() {
 
           {/* READOUT */}
           <div className="lg:col-span-9">
-            <div className="card p-6 sm:p-8">
+            <div className="card spot p-6 sm:p-8" onMouseMove={spot}>
               <div className="pointer-events-none absolute inset-x-0 top-0 h-px overflow-hidden">
                 <div className="sweep h-px w-1/3 bg-gradient-to-r from-transparent via-amber to-transparent" />
               </div>
 
-              <p className="tag-sm text-amber">{study.domain}</p>
+              <div className="grid gap-6 lg:grid-cols-12 lg:gap-8">
+                <div className="lg:col-span-7">
+                  <p className="tag-sm text-amber">{study.domain}</p>
 
-              <h3 className="mt-4 max-w-[22ch] font-display text-headline font-extrabold uppercase leading-[1.06] track-mid text-cyan text-balance">
-                {study.title}
-              </h3>
+                  <h3 className="mt-4 max-w-[20ch] font-display text-headline font-extrabold uppercase leading-[1.06] track-mid text-cyan text-balance">
+                    {study.title}
+                  </h3>
 
-              <p className="mt-4 max-w-[64ch] copy">{study.subtitle}</p>
+                  <p className="mt-4 max-w-[56ch] copy">{study.subtitle}</p>
+                </div>
+
+                {/* the mechanism, animated */}
+                <div className="lg:col-span-5">
+                  <div
+                    key={study.slug}
+                    className="rounded-sm border border-cyan/15 bg-void/60 p-3 animate-[fadeUp_0.6s_ease-out]"
+                  >
+                    <CaseVisual kind={study.visual} />
+                  </div>
+                </div>
+              </div>
 
               {/* metric tiles */}
               <ul className="mt-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">

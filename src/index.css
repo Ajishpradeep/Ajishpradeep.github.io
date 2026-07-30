@@ -130,10 +130,39 @@
 
   /* Solid card — the default container now, in place of outlined text boxes. */
   .card {
-    @apply relative overflow-hidden rounded-sm border border-cyan/15 bg-deep/70 transition-colors duration-500;
+    @apply relative overflow-hidden rounded-sm border border-cyan/15 bg-deep/70 transition-all duration-500;
   }
   .card:hover {
     @apply border-cyan/35 bg-panel/40;
+  }
+
+  /*
+   * Cursor spotlight. The pointer position is written to --mx/--my by
+   * useSpotlight; the glow is painted behind content and costs no layout.
+   */
+  .spot::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.45s ease;
+    background: radial-gradient(
+      22rem circle at var(--mx, 50%) var(--my, 50%),
+      rgb(var(--amber) / 0.13),
+      transparent 62%
+    );
+  }
+  .spot:hover::before {
+    opacity: 1;
+  }
+
+  /* Lifts slightly on hover — enough to feel responsive, not enough to jump. */
+  .lift {
+    @apply transition-transform duration-500;
+  }
+  .lift:hover {
+    transform: translateY(-3px);
   }
 
   /* Square icon plate. */
@@ -234,6 +263,27 @@
   }
   .blink {
     animation: blink 1.1s infinite steps(1);
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: none; }
+  }
+
+  @keyframes drift {
+    0%   { stroke-dashoffset: 0; }
+    100% { stroke-dashoffset: -60; }
+  }
+  .drift {
+    animation: drift 2.4s linear infinite;
+  }
+
+  @keyframes float-y {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-7px); }
+  }
+  .float-y {
+    animation: float-y 5s ease-in-out infinite;
   }
 
   @keyframes pulse-ring {
