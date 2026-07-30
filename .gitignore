@@ -96,3 +96,6 @@ yarn-error.log*
 # System Files
 .DS_Store
 Thumbs.db
+
+# Internal reference material — proprietary, must not be published
+project_docs/
