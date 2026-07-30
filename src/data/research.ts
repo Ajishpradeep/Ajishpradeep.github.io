@@ -104,35 +104,36 @@ export const capabilities = [
   },
 ];
 
+/** Kept short on purpose — each one is a claim, not an essay. */
 export const principles = [
   {
     n: '01',
-    title: 'A metric that cannot see the failure is not a metric',
-    body: 'A sport-specific model once scored better while getting demonstrably worse, because the validation set contained only poses where the bias was correct. Before trusting a number, I ask what failure it is structurally incapable of detecting.',
+    title: 'A metric blind to the failure is not a metric',
+    body: 'A model once scored better while getting worse — the validation set only contained poses where the bias was correct.',
   },
   {
     n: '02',
     title: 'Make the regression impossible, not unlikely',
-    body: 'Where a constraint really matters, I prefer architecture over regularisation — freezing a pathway so its outputs are bit-identical by construction is a guarantee. A penalty term is a hope with a coefficient.',
+    body: 'Freezing a pathway so its output is bit-identical by construction is a guarantee. A penalty term is a hope with a coefficient.',
   },
   {
     n: '03',
     title: 'The shape of an error names its cause',
-    body: 'Error that is U-shaped in distance means receptive field. Error that is stable across sessions but clustered by region means convention, not scale. Reading that structure is usually faster than another ablation sweep.',
+    body: 'U-shaped in distance means receptive field. Stable across sessions but clustered by region means convention, not scale.',
   },
   {
     n: '04',
     title: 'Know which failures training cannot fix',
-    body: 'An out-of-distribution artefact is absent from train and validation by definition, so no loss function can see it. Recognising that early saves the weeks otherwise spent on losses that were never going to converge on the problem.',
+    body: 'An out-of-distribution artefact is absent from train and validation by definition. No loss function can see it.',
   },
   {
     n: '05',
-    title: 'Deterministic where it can be, generative where it must be',
-    body: 'In domains where a confident wrong number causes real harm, the model narrates and Python computes. Constraining a system to what it can be held to is a design decision, not a limitation.',
+    title: 'Deterministic where it can be',
+    body: 'Where a confident wrong number causes harm, Python computes and the model narrates. That is a design decision, not a limitation.',
   },
   {
     n: '06',
     title: 'Write down what is still broken',
-    body: 'Every system I hand over documents its open failures as precisely as its results. Undocumented known-unknowns are simply defects with a delay.',
+    body: 'Undocumented known-unknowns are just defects with a delay. Every handover lists its open failures.',
   },
 ];

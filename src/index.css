@@ -4,17 +4,17 @@
 
 @layer base {
   :root {
-    /* Deep terminal teal-black, cyan phosphor text, amber signal. */
+    /* Deep terminal teal-black ground, brighter text than before for legibility. */
     --void: 3 12 14;
     --deep: 6 26 27;
     --panel: 10 46 46;
     --panel-hi: 17 74 72;
-    --cyan: 122 255 232;
+    --cyan: 190 255 244;
     --cyan-hot: 0 255 231;
-    --amber: 245 176 35;
-    --amber-hot: 255 190 60;
-    --signal: 255 74 28;
-    --dim: 92 150 148;
+    --amber: 250 189 63;
+    --amber-hot: 255 205 96;
+    --signal: 255 92 48;
+    --dim: 135 183 180;
     color-scheme: dark;
   }
 
@@ -25,6 +25,7 @@
 
   body {
     @apply bg-void font-display text-cyan;
+    font-size: 16px;
     overflow-x: hidden;
   }
 
@@ -34,11 +35,10 @@
   }
 
   :focus-visible {
-    outline: 1px solid rgb(var(--amber));
+    outline: 2px solid rgb(var(--amber));
     outline-offset: 3px;
   }
 
-  /* Thin terminal scrollbar */
   ::-webkit-scrollbar {
     width: 10px;
     height: 10px;
@@ -70,35 +70,50 @@
 
 @layer components {
   .shell {
-    @apply mx-auto w-full max-w-[100rem] px-5 sm:px-8 lg:px-12;
+    @apply mx-auto w-full max-w-[92rem] px-5 sm:px-8 lg:px-12;
   }
 
-  /* Bracketed, letter-spaced label — the interface's basic unit of text. */
+  /*
+   * Labels. Tracking is deliberately modest — the earlier 0.28em read as
+   * dot-matrix and cost more legibility than it bought atmosphere.
+   */
   .tag {
-    @apply font-mono text-[0.6875rem] uppercase tracking-[0.28em];
+    @apply font-mono text-[0.75rem] font-medium uppercase tracking-[0.1em];
+  }
+
+  .tag-sm {
+    @apply font-mono text-[0.6875rem] font-medium uppercase tracking-[0.08em];
   }
 
   .bracket::before {
-    content: '[\00b7';
-    @apply mr-[0.15em] opacity-70;
+    content: '[';
+    @apply mr-1 text-amber/70;
   }
   .bracket::after {
-    content: '\00b7]';
-    @apply ml-[0.15em] opacity-70;
+    content: ']';
+    @apply ml-1 text-amber/70;
   }
 
-  /* HUD panel: corner brackets drawn with gradients, no extra markup. */
+  /* Readable body copy. */
+  .copy {
+    @apply text-[1rem] leading-[1.75] text-cyan/85;
+  }
+  .copy-sm {
+    @apply text-[0.9375rem] leading-[1.7] text-cyan/80;
+  }
+
+  /* Panel with corner brackets, drawn without extra markup. */
   .hud {
     position: relative;
     background:
-      linear-gradient(to right, rgb(var(--cyan) / 0.5) 1px, transparent 1px) 0 0 / 14px 1px no-repeat,
-      linear-gradient(to bottom, rgb(var(--cyan) / 0.5) 1px, transparent 1px) 0 0 / 1px 14px no-repeat,
-      linear-gradient(to left, rgb(var(--cyan) / 0.5) 1px, transparent 1px) 100% 0 / 14px 1px no-repeat,
-      linear-gradient(to bottom, rgb(var(--cyan) / 0.5) 1px, transparent 1px) 100% 0 / 1px 14px no-repeat,
-      linear-gradient(to right, rgb(var(--cyan) / 0.5) 1px, transparent 1px) 0 100% / 14px 1px no-repeat,
-      linear-gradient(to top, rgb(var(--cyan) / 0.5) 1px, transparent 1px) 0 100% / 1px 14px no-repeat,
-      linear-gradient(to left, rgb(var(--cyan) / 0.5) 1px, transparent 1px) 100% 100% / 14px 1px no-repeat,
-      linear-gradient(to top, rgb(var(--cyan) / 0.5) 1px, transparent 1px) 100% 100% / 1px 14px no-repeat;
+      linear-gradient(to right, rgb(var(--cyan) / 0.45) 1px, transparent 1px) 0 0 / 16px 1px no-repeat,
+      linear-gradient(to bottom, rgb(var(--cyan) / 0.45) 1px, transparent 1px) 0 0 / 1px 16px no-repeat,
+      linear-gradient(to left, rgb(var(--cyan) / 0.45) 1px, transparent 1px) 100% 0 / 16px 1px no-repeat,
+      linear-gradient(to bottom, rgb(var(--cyan) / 0.45) 1px, transparent 1px) 100% 0 / 1px 16px no-repeat,
+      linear-gradient(to right, rgb(var(--cyan) / 0.45) 1px, transparent 1px) 0 100% / 16px 1px no-repeat,
+      linear-gradient(to top, rgb(var(--cyan) / 0.45) 1px, transparent 1px) 0 100% / 1px 16px no-repeat,
+      linear-gradient(to left, rgb(var(--cyan) / 0.45) 1px, transparent 1px) 100% 100% / 16px 1px no-repeat,
+      linear-gradient(to top, rgb(var(--cyan) / 0.45) 1px, transparent 1px) 100% 100% / 1px 16px no-repeat;
   }
 
   .hud-amber {
@@ -113,46 +128,59 @@
       linear-gradient(to top, rgb(var(--amber) / 0.9) 1px, transparent 1px);
   }
 
-  /* Dashed instruction frame */
-  .frame-dashed {
-    border: 1px dashed rgb(var(--cyan) / 0.35);
+  /* Solid card — the default container now, in place of outlined text boxes. */
+  .card {
+    @apply relative overflow-hidden rounded-sm border border-cyan/15 bg-deep/70 transition-colors duration-500;
+  }
+  .card:hover {
+    @apply border-cyan/35 bg-panel/40;
   }
 
-  /* CRT scanline veil laid over the whole document */
+  /* Square icon plate. */
+  .plate {
+    @apply flex h-11 w-11 shrink-0 items-center justify-center rounded-sm border border-cyan/25 bg-panel/50 text-amber;
+  }
+  .plate-lg {
+    @apply flex h-14 w-14 shrink-0 items-center justify-center rounded-sm border border-cyan/25 bg-panel/50 text-amber;
+  }
+
+  .frame-dashed {
+    border: 1px dashed rgb(var(--cyan) / 0.3);
+  }
+
+  /*
+   * The CRT scanline veil was removed: laid over the whole document it striped
+   * the display type and was the single biggest legibility cost on the page.
+   * A faint vignette gives depth without touching text.
+   */
   .scanlines::after {
     content: '';
     position: fixed;
     inset: 0;
     z-index: 40;
     pointer-events: none;
-    background: repeating-linear-gradient(
-      to bottom,
-      transparent 0 2px,
-      rgb(var(--void) / 0.35) 2px 3px
+    background: radial-gradient(
+      ellipse at center,
+      transparent 55%,
+      rgb(var(--void) / 0.55) 100%
     );
-    mix-blend-mode: multiply;
   }
 
-  /* Faint engineering grid */
   .grid-veil {
     background-image:
-      linear-gradient(to right, rgb(var(--cyan) / 0.055) 1px, transparent 1px),
-      linear-gradient(to bottom, rgb(var(--cyan) / 0.055) 1px, transparent 1px);
-    background-size: 46px 46px;
+      linear-gradient(to right, rgb(var(--cyan) / 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(var(--cyan) / 0.05) 1px, transparent 1px);
+    background-size: 52px 52px;
   }
 
   .btn {
-    @apply tag inline-flex items-center gap-3 px-6 py-3 transition-colors duration-300;
+    @apply inline-flex items-center gap-2.5 rounded-sm px-5 py-3 font-mono text-[0.75rem] font-medium uppercase tracking-[0.08em] transition-all duration-300;
   }
   .btn-amber {
     @apply btn bg-amber text-void hover:bg-amber-hot;
   }
   .btn-ghost {
-    @apply btn border border-cyan/40 text-cyan hover:border-amber hover:text-amber;
-  }
-
-  .rail-link {
-    @apply block w-full text-left transition-all duration-300;
+    @apply btn border border-cyan/35 text-cyan hover:border-amber hover:bg-amber/10 hover:text-amber;
   }
 }
 
@@ -164,19 +192,19 @@
     text-wrap: pretty;
   }
 
-  /* Wide-tracked display lettering, as used for the wordmark and section titles. */
+  /* Display tracking, dialled back from the previous 0.22em. */
   .track-wide {
-    letter-spacing: 0.22em;
+    letter-spacing: 0.06em;
   }
   .track-mid {
-    letter-spacing: 0.1em;
+    letter-spacing: 0.01em;
   }
 
   .glow-cyan {
-    text-shadow: 0 0 18px rgb(var(--cyan-hot) / 0.5);
+    text-shadow: 0 0 24px rgb(var(--cyan-hot) / 0.35);
   }
   .glow-amber {
-    text-shadow: 0 0 22px rgb(var(--amber) / 0.55);
+    text-shadow: 0 0 26px rgb(var(--amber) / 0.4);
   }
 
   [data-reveal] {
@@ -190,17 +218,6 @@
   [data-reveal='in'] {
     opacity: 1;
     transform: none;
-  }
-
-  @keyframes flicker {
-    0%, 100% { opacity: 1; }
-    92% { opacity: 1; }
-    94% { opacity: 0.4; }
-    96% { opacity: 1; }
-    97% { opacity: 0.7; }
-  }
-  .flicker {
-    animation: flicker 6s infinite steps(1);
   }
 
   @keyframes sweep {
@@ -217,6 +234,14 @@
   }
   .blink {
     animation: blink 1.1s infinite steps(1);
+  }
+
+  @keyframes pulse-ring {
+    0% { transform: scale(0.85); opacity: 0.9; }
+    100% { transform: scale(2.2); opacity: 0; }
+  }
+  .pulse-ring {
+    animation: pulse-ring 2.6s cubic-bezier(0.16, 1, 0.3, 1) infinite;
   }
 
   @media (prefers-reduced-motion: reduce) {

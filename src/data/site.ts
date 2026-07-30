@@ -7,8 +7,9 @@ export const site = {
   portrait: '/profile_pic.png',
   tagline:
     'I build AI systems where the mathematics has to survive contact with production.',
+  /** Kept deliberately short — the hero carries icons and numbers, not paragraphs. */
   intro:
-    'Four years turning research architectures into systems that run on real hardware, for real users — 3D human pose on-device at 240fps, agentic LLM systems grounded in domain facts, vision AI deployed in unmanned retail. The through-line is not a domain. It is the mathematics: linear algebra, probabilistic modelling, multi-view geometry, optimisation. Those transfer. Domains are just where you point them.',
+    'Four years turning research architectures into systems people actually depend on. The through-line is not a domain — it is the mathematics.',
   links: [
     { label: 'Email', href: 'mailto:ajishpradeep@gmail.com', handle: 'ajishpradeep@gmail.com' },
     { label: 'GitHub', href: 'https://github.com/Ajishpradeep', handle: '@Ajishpradeep' },

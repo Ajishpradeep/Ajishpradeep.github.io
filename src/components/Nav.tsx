@@ -4,11 +4,11 @@ import { site } from '../data/site';
 
 const items = [
   { label: 'work', href: '/#work' },
+  { label: 'impact', href: '/#impact' },
   { label: 'method', href: '/#method' },
-  { label: 'capabilities', href: '/#capabilities' },
+  { label: 'lab', href: '/#lab' },
   { label: 'research', href: '/#research' },
   { label: 'about', href: '/about' },
-  { label: 'contact', href: '/#contact' },
 ];
 
 export default function Nav() {
@@ -18,7 +18,7 @@ export default function Nav() {
 
   // The bar tints to match whichever section is under it.
   useEffect(() => {
-    const ids = ['work', 'method', 'capabilities', 'research', 'contact'];
+    const ids = ['work', 'impact', 'method', 'capabilities', 'lab', 'research', 'contact'];
     const onScroll = () => {
       let current = 'work';
       for (const id of ids) {
@@ -52,11 +52,18 @@ export default function Nav() {
       <div className="shell flex h-14 items-center justify-between gap-6 sm:h-16">
         <Link
           to="/"
-          className={`font-display text-[0.9rem] font-medium track-wide transition-colors ${
+          className={`flex items-baseline gap-2.5 transition-colors ${
             onAmber ? 'text-void' : 'text-cyan'
           }`}
         >
-          ·PradeepRajasekar·
+          <span className="font-display text-[1rem] font-bold track-mid">Pradeep Rajasekar</span>
+          <span
+            className={`hidden font-mono text-[0.625rem] sm:inline ${
+              onAmber ? 'text-void/70' : 'text-dim'
+            }`}
+          >
+            AI Research Engineer
+          </span>
         </Link>
 
         <nav className="hidden items-center gap-6 lg:flex xl:gap-8">
@@ -68,15 +75,15 @@ export default function Nav() {
               <Link
                 key={item.href}
                 to={item.href}
-                className={`tag transition-colors duration-300 ${
+                className={`rounded-sm px-2 py-1 font-mono text-[0.75rem] font-medium capitalize tracking-[0.04em] transition-colors duration-300 ${
                   isActive
-                    ? 'bg-signal px-1.5 py-0.5 text-void'
+                    ? 'bg-signal text-void'
                     : onAmber
                       ? 'text-void/80 hover:text-void'
-                      : 'text-cyan/80 hover:text-amber'
+                      : 'text-cyan/85 hover:bg-panel/60 hover:text-amber'
                 }`}
               >
-                <span className="bracket">{item.label}</span>
+                {item.label}
               </Link>
             );
           })}
@@ -88,7 +95,7 @@ export default function Nav() {
               onAmber ? 'text-void/80 hover:text-void' : 'text-cyan/80 hover:text-amber'
             }`}
           >
-            <span className="bracket">cv</span>
+            CV
           </a>
 
           {/* Command deck affordance — the palette itself listens globally. */}
@@ -142,18 +149,18 @@ export default function Nav() {
             <Link
               key={item.href}
               to={item.href}
-              className="tag border-b border-cyan/10 py-4 text-cyan/85"
+              className="border-b border-cyan/10 py-4 font-display text-[1rem] font-medium capitalize text-cyan/90"
             >
-              <span className="bracket">{item.label}</span>
+              {item.label}
             </Link>
           ))}
           <a
             href={site.resume}
             target="_blank"
             rel="noreferrer"
-            className="tag py-4 text-cyan/85"
+            className="py-4 font-display text-[1rem] font-medium text-cyan/90"
           >
-            <span className="bracket">cv</span>
+            CV
           </a>
         </nav>
       </div>
