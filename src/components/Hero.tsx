@@ -16,7 +16,7 @@ import {
 import { marquee, site } from '../data/site';
 import { domains } from '../data/domains';
 import HudCanvas from './HudCanvas';
-import ConstraintLab from './ConstraintLab';
+import CapabilityGraph from './CapabilityGraph';
 import { useInView, useCountUp } from '../hooks/useInView';
 
 const domainIcon = {
@@ -148,13 +148,13 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* RIGHT — a constraint solver the visitor can break */}
+          {/* RIGHT — the expertise, as an explorable graph */}
           <div
             className="lg:col-span-5"
             data-reveal
             style={{ '--reveal-delay': '200ms' } as React.CSSProperties}
           >
-            <ConstraintLab />
+            <CapabilityGraph />
           </div>
         </div>
       </div>

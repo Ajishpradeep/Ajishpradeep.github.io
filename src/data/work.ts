@@ -99,7 +99,7 @@ export const work: CaseStudy[] = [
       'A club-tracking model that beats prior generations on club accuracy while being the only one with a provably unbiased body model.',
       'An internal benchmarking suite for evaluating robustness across long-tailed action distributions — every claim above is a measured number, not an impression.',
     ],
-    visual: 'pose',
+    visual: 'solver',
     featured: true,
   },
   {

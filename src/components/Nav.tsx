@@ -1,14 +1,24 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import {
+  Layers,
+  Trophy,
+  Compass,
+  FlaskConical,
+  BookOpen,
+  User,
+  Download,
+  Command,
+} from 'lucide-react';
 import { site } from '../data/site';
 
 const items = [
-  { label: 'work', href: '/#work' },
-  { label: 'impact', href: '/#impact' },
-  { label: 'method', href: '/#method' },
-  { label: 'lab', href: '/#lab' },
-  { label: 'research', href: '/#research' },
-  { label: 'about', href: '/about' },
+  { label: 'Work', href: '/#work', id: 'work', icon: Layers },
+  { label: 'Impact', href: '/#impact', id: 'impact', icon: Trophy },
+  { label: 'Method', href: '/#method', id: 'method', icon: Compass },
+  { label: 'Lab', href: '/#lab', id: 'lab', icon: FlaskConical },
+  { label: 'Research', href: '/#research', id: 'research', icon: BookOpen },
+  { label: 'About', href: '/about', id: 'about', icon: User },
 ];
 
 export default function Nav() {
@@ -16,14 +26,13 @@ export default function Nav() {
   const [open, setOpen] = useState(false);
   const { pathname, hash } = useLocation();
 
-  // The bar tints to match whichever section is under it.
   useEffect(() => {
     const ids = ['work', 'impact', 'method', 'capabilities', 'lab', 'research', 'contact'];
     const onScroll = () => {
       let current = 'work';
       for (const id of ids) {
         const el = document.getElementById(id);
-        if (el && el.getBoundingClientRect().top <= 120) current = id;
+        if (el && el.getBoundingClientRect().top <= 140) current = id;
       }
       setActive(current);
     };
@@ -34,71 +43,74 @@ export default function Nav() {
 
   useEffect(() => setOpen(false), [pathname, hash]);
 
-  const tint =
-    pathname === '/about'
-      ? 'bg-panel-hi/90'
-      : active === 'contact'
-        ? 'bg-amber/90'
-        : active === 'research'
-          ? 'bg-panel-hi/85'
-          : 'bg-panel/85';
-
-  const onAmber = active === 'contact' && pathname === '/';
+  const isOn = (it: (typeof items)[number]) =>
+    it.href === '/about' ? pathname === '/about' : pathname === '/' && active === it.id;
 
   return (
-    <header
-      className={`fixed inset-x-0 top-0 z-50 border-b border-cyan/15 backdrop-blur-md transition-colors duration-700 ${tint}`}
-    >
-      <div className="shell flex h-14 items-center justify-between gap-6 sm:h-16">
-        <Link
-          to="/"
-          className={`flex items-baseline gap-2.5 transition-colors ${
-            onAmber ? 'text-void' : 'text-cyan'
-          }`}
-        >
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-cyan/15 bg-void/85 backdrop-blur-md">
+      <div className="shell flex h-16 items-center justify-between gap-4 sm:h-[4.75rem]">
+        <Link to="/" className="flex items-baseline gap-2.5 text-cyan">
           <span className="font-display text-[1rem] font-bold track-mid">Pradeep Rajasekar</span>
-          <span
-            className={`hidden font-mono text-[0.625rem] sm:inline ${
-              onAmber ? 'text-void/70' : 'text-dim'
-            }`}
-          >
+          <span className="hidden font-mono text-[0.625rem] text-dim xl:inline">
             AI Research Engineer
           </span>
         </Link>
 
-        <nav className="hidden items-center gap-6 lg:flex xl:gap-8">
-          {items.map((item) => {
-            const isActive =
-              (item.href.startsWith('/#') && `/${''}` === pathname && active === item.href.slice(2)) ||
-              (item.href === '/about' && pathname === '/about');
+        {/* icon tiles */}
+        <nav className="hidden items-center gap-1.5 lg:flex">
+          {items.map((it) => {
+            const Icon = it.icon;
+            const on = isOn(it);
             return (
               <Link
-                key={item.href}
-                to={item.href}
-                className={`rounded-sm px-2 py-1 font-mono text-[0.75rem] font-medium capitalize tracking-[0.04em] transition-colors duration-300 ${
-                  isActive
-                    ? 'bg-signal text-void'
-                    : onAmber
-                      ? 'text-void/80 hover:text-void'
-                      : 'text-cyan/85 hover:bg-panel/60 hover:text-amber'
+                key={it.href}
+                to={it.href}
+                aria-current={on ? 'page' : undefined}
+                className={`group relative flex w-[4.4rem] flex-col items-center gap-1 rounded-sm border px-1 py-2 transition-all duration-300 ${
+                  on
+                    ? 'border-amber/60 bg-amber/12'
+                    : 'border-transparent hover:border-cyan/25 hover:bg-panel/50'
                 }`}
               >
-                {item.label}
+                <Icon
+                  size={20}
+                  strokeWidth={1.7}
+                  className={`transition-all duration-300 ${
+                    on ? 'text-amber' : 'text-cyan/70 group-hover:-translate-y-0.5 group-hover:text-amber'
+                  }`}
+                />
+                <span
+                  className={`font-mono text-[0.625rem] tracking-[0.02em] transition-colors duration-300 ${
+                    on ? 'text-amber' : 'text-dim group-hover:text-cyan'
+                  }`}
+                >
+                  {it.label}
+                </span>
+                {on && (
+                  <span className="absolute inset-x-3 -bottom-px h-0.5 rounded-full bg-amber" />
+                )}
               </Link>
             );
           })}
+
+          <span className="mx-1.5 h-8 w-px bg-cyan/15" />
+
           <a
             href={site.resume}
             target="_blank"
             rel="noreferrer"
-            className={`tag transition-colors duration-300 ${
-              onAmber ? 'text-void/80 hover:text-void' : 'text-cyan/80 hover:text-amber'
-            }`}
+            className="group flex w-[4.4rem] flex-col items-center gap-1 rounded-sm border border-transparent px-1 py-2 transition-all duration-300 hover:border-cyan/25 hover:bg-panel/50"
           >
-            CV
+            <Download
+              size={20}
+              strokeWidth={1.7}
+              className="text-cyan/70 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:text-amber"
+            />
+            <span className="font-mono text-[0.625rem] text-dim transition-colors group-hover:text-cyan">
+              CV
+            </span>
           </a>
 
-          {/* Command deck affordance — the palette itself listens globally. */}
           <button
             type="button"
             onClick={() =>
@@ -107,13 +119,16 @@ export default function Nav() {
               )
             }
             aria-label="Open command deck"
-            className={`flex items-center gap-2 border px-2.5 py-1 transition-colors duration-300 ${
-              onAmber
-                ? 'border-void/40 text-void hover:bg-void/10'
-                : 'border-cyan/30 text-cyan/70 hover:border-amber hover:text-amber'
-            }`}
+            className="group flex w-[4.4rem] flex-col items-center gap-1 rounded-sm border border-cyan/25 px-1 py-2 transition-all duration-300 hover:border-amber hover:bg-amber/10"
           >
-            <span className="font-mono text-[0.625rem] tracking-[0.14em]">⌘K</span>
+            <Command
+              size={20}
+              strokeWidth={1.7}
+              className="text-cyan/70 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:text-amber"
+            />
+            <span className="font-mono text-[0.625rem] text-dim transition-colors group-hover:text-amber">
+              ⌘K
+            </span>
           </button>
         </nav>
 
@@ -122,9 +137,7 @@ export default function Nav() {
           onClick={() => setOpen((v) => !v)}
           aria-expanded={open}
           aria-label={open ? 'Close menu' : 'Open menu'}
-          className={`flex h-9 w-9 flex-col items-center justify-center gap-[5px] lg:hidden ${
-            onAmber ? 'text-void' : 'text-cyan'
-          }`}
+          className="flex h-10 w-10 flex-col items-center justify-center gap-[5px] text-cyan lg:hidden"
         >
           <span
             className={`h-px w-5 bg-current transition-transform duration-300 ${
@@ -139,28 +152,34 @@ export default function Nav() {
         </button>
       </div>
 
+      {/* mobile: icon grid */}
       <div
-        className={`overflow-hidden bg-void/95 transition-[max-height,opacity] duration-500 lg:hidden ${
-          open ? 'max-h-[28rem] opacity-100' : 'max-h-0 opacity-0'
+        className={`overflow-hidden border-t border-cyan/10 bg-void/95 transition-[max-height,opacity] duration-500 lg:hidden ${
+          open ? 'max-h-[24rem] opacity-100' : 'max-h-0 border-transparent opacity-0'
         }`}
       >
-        <nav className="shell flex flex-col py-4">
-          {items.map((item) => (
-            <Link
-              key={item.href}
-              to={item.href}
-              className="border-b border-cyan/10 py-4 font-display text-[1rem] font-medium capitalize text-cyan/90"
-            >
-              {item.label}
-            </Link>
-          ))}
+        <nav className="shell grid grid-cols-4 gap-2 py-4">
+          {items.map((it) => {
+            const Icon = it.icon;
+            return (
+              <Link
+                key={it.href}
+                to={it.href}
+                className="flex flex-col items-center gap-1.5 rounded-sm border border-cyan/15 bg-deep/60 px-1 py-3"
+              >
+                <Icon size={20} strokeWidth={1.7} className="text-amber" />
+                <span className="font-mono text-[0.625rem] text-cyan/80">{it.label}</span>
+              </Link>
+            );
+          })}
           <a
             href={site.resume}
             target="_blank"
             rel="noreferrer"
-            className="py-4 font-display text-[1rem] font-medium text-cyan/90"
+            className="flex flex-col items-center gap-1.5 rounded-sm border border-cyan/15 bg-deep/60 px-1 py-3"
           >
-            CV
+            <Download size={20} strokeWidth={1.7} className="text-amber" />
+            <span className="font-mono text-[0.625rem] text-cyan/80">CV</span>
           </a>
         </nav>
       </div>

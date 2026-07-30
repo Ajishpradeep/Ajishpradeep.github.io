@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import { work } from '../data/work';
 import CaseVisual from './CaseVisual';
+import ConstraintLab from './ConstraintLab';
 
 /** Rail index on the left, case-file readout on the right, stepped with back / next. */
 export default function WorkConsole() {
@@ -95,15 +96,24 @@ export default function WorkConsole() {
                   </h3>
 
                   <p className="mt-4 max-w-[56ch] copy">{study.subtitle}</p>
+
+                  {/* Sits here rather than below, so the column matches the visual's height. */}
+                  <div className="mt-6 flex items-start gap-3 rounded-sm border-l-2 border-amber/70 bg-panel/30 p-4">
+                    <Target size={17} strokeWidth={1.8} className="mt-0.5 shrink-0 text-amber" />
+                    <p className="max-w-[62ch] copy-sm">{study.problem}</p>
+                  </div>
                 </div>
 
-                {/* the mechanism, animated */}
+                {/* the mechanism — interactive where the study warrants it */}
                 <div className="lg:col-span-5">
-                  <div
-                    key={study.slug}
-                    className="rounded-sm border border-cyan/15 bg-void/60 p-3 animate-[fadeUp_0.6s_ease-out]"
-                  >
-                    <CaseVisual kind={study.visual} />
+                  <div key={study.slug} className="animate-[fadeUp_0.6s_ease-out]">
+                    {study.visual === 'solver' ? (
+                      <ConstraintLab />
+                    ) : (
+                      <div className="rounded-sm border border-cyan/15 bg-void/60 p-3">
+                        <CaseVisual kind={study.visual} />
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -138,11 +148,6 @@ export default function WorkConsole() {
                   );
                 })}
               </ul>
-
-              <div className="mt-6 flex items-start gap-3 rounded-sm border-l-2 border-amber/70 bg-panel/30 p-4">
-                <Target size={17} strokeWidth={1.8} className="mt-0.5 shrink-0 text-amber" />
-                <p className="max-w-[70ch] copy-sm">{study.problem}</p>
-              </div>
 
               <div className="mt-6 flex flex-wrap gap-1.5">
                 {study.stack.map((s) => (

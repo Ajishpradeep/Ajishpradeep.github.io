@@ -2,7 +2,8 @@
  * A small animated diagram per case study. Each one depicts the actual
  * mechanism of that system, and all motion is CSS so nothing ships as a GIF.
  */
-export type VisualKind = 'pose' | 'llm' | 'geometry' | 'retail' | 'generative';
+/** 'solver' is rendered by the interactive ConstraintLab, not by this module. */
+export type VisualKind = 'solver' | 'llm' | 'geometry' | 'retail' | 'generative';
 
 const C = 'rgb(var(--cyan))';
 const A = 'rgb(var(--amber))';
@@ -35,56 +36,6 @@ function Frame({ children }: { children: React.ReactNode }) {
       ))}
       {children}
     </svg>
-  );
-}
-
-/** Detection reticle sweeping a subject, keypoints lighting up behind it. */
-function Pose() {
-  const pts: [number, number][] = [
-    [120, 26], [120, 44], [104, 50], [136, 50], [96, 70], [144, 70],
-    [110, 66], [130, 66], [110, 92], [130, 92], [106, 114], [134, 114],
-  ];
-  return (
-    <Frame>
-      <g stroke={C} strokeOpacity="0.5" strokeWidth="1.5" strokeLinecap="round">
-        <line x1="120" y1="26" x2="120" y2="66" />
-        <line x1="104" y1="50" x2="136" y2="50" />
-        <line x1="104" y1="50" x2="96" y2="70" />
-        <line x1="136" y1="50" x2="144" y2="70" />
-        <line x1="110" y1="66" x2="130" y2="66" />
-        <line x1="110" y1="66" x2="110" y2="92" />
-        <line x1="130" y1="66" x2="130" y2="92" />
-        <line x1="110" y1="92" x2="106" y2="114" />
-        <line x1="130" y1="92" x2="134" y2="114" />
-      </g>
-      {/* club, the hard part */}
-      <line x1="120" y1="68" x2="168" y2="112" stroke={A} strokeWidth="1.8" strokeLinecap="round" />
-      <circle cx="168" cy="112" r="3.5" fill={A} />
-
-      {pts.map(([x, y], i) => (
-        <circle key={i} cx={x} cy={y} r="2.6" fill={C}>
-          <animate
-            attributeName="fill-opacity"
-            values="0.25;1;0.25"
-            dur="2.6s"
-            begin={`${i * 0.12}s`}
-            repeatCount="indefinite"
-          />
-        </circle>
-      ))}
-
-      {/* sweeping reticle */}
-      <g>
-        <rect x="70" y="12" width="46" height="106" stroke={A} strokeOpacity="0.9" strokeWidth="1" />
-        <animateTransform
-          attributeName="transform"
-          type="translate"
-          values="-56 0; 116 0; -56 0"
-          dur="5s"
-          repeatCount="indefinite"
-        />
-      </g>
-    </Frame>
   );
 }
 
@@ -243,7 +194,6 @@ function Generative() {
 }
 
 const map = {
-  pose: Pose,
   llm: Llm,
   geometry: Geometry,
   retail: Retail,
@@ -251,6 +201,6 @@ const map = {
 } as const;
 
 export default function CaseVisual({ kind }: { kind: VisualKind }) {
-  const V = map[kind] ?? Pose;
-  return <V />;
+  const V = map[kind as keyof typeof map];
+  return V ? <V /> : null;
 }
