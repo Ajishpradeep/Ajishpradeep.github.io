@@ -90,6 +90,24 @@ export default function Nav() {
           >
             <span className="bracket">cv</span>
           </a>
+
+          {/* Command deck affordance — the palette itself listens globally. */}
+          <button
+            type="button"
+            onClick={() =>
+              window.dispatchEvent(
+                new KeyboardEvent('keydown', { key: 'k', metaKey: true, bubbles: true }),
+              )
+            }
+            aria-label="Open command deck"
+            className={`flex items-center gap-2 border px-2.5 py-1 transition-colors duration-300 ${
+              onAmber
+                ? 'border-void/40 text-void hover:bg-void/10'
+                : 'border-cyan/30 text-cyan/70 hover:border-amber hover:text-amber'
+            }`}
+          >
+            <span className="font-mono text-[0.625rem] tracking-[0.14em]">⌘K</span>
+          </button>
         </nav>
 
         <button

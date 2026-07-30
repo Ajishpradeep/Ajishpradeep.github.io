@@ -3,6 +3,8 @@ import { Outlet, useLocation } from 'react-router-dom';
 import Nav from './components/Nav';
 import Footer from './components/Footer';
 import Boot from './components/Boot';
+import CommandDeck from './components/CommandDeck';
+import SectionRail from './components/SectionRail';
 import { useReveal, useScrollReset } from './hooks/useReveal';
 import './index.css';
 
@@ -41,6 +43,8 @@ export default function App() {
       </a>
 
       <Nav />
+      <CommandDeck />
+      <SectionRail />
       <main id="main">
         <Outlet />
       </main>
