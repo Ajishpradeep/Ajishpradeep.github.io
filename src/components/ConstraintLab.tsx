@@ -85,12 +85,20 @@ function naive(target: P): P[] {
   return pts;
 }
 
+const clamp01 = (v: number) => Math.min(100, Math.max(0, v));
+
 export default function ConstraintLab() {
   const [target, setTarget] = useState<P>(REST[REST.length - 1]);
   const [constrained, setConstrained] = useState(true);
   const [dragging, setDragging] = useState(false);
   const [touched, setTouched] = useState(false);
   const svgRef = useRef<SVGSVGElement>(null);
+
+  /** Arrow keys move the club head, so the demo is not drag-only. */
+  const nudge = useCallback((dx: number, dy: number) => {
+    setTouched(true);
+    setTarget((t) => ({ x: clamp01(t.x + dx), y: clamp01(t.y + dy) }));
+  }, []);
 
   const chain = useMemo(
     () => (constrained ? solve(target) : naive(target)),
@@ -139,29 +147,43 @@ export default function ConstraintLab() {
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
           <p className="tag-sm text-amber">Constraint solver</p>
-          <p className="mt-1 font-mono text-[0.625rem] text-dim">
+          <p className="mt-1 font-mono text-[0.6875rem] text-dim">
             Kinematic chain · bone lengths fixed
           </p>
         </div>
+        {/*
+          Labelled by its action, not its state. Read as "Physics ON" this was
+          a status badge nobody pressed — and the demo only makes its argument
+          once you turn the constraints off.
+        */}
         <button
           type="button"
+          aria-pressed={!constrained}
           onClick={() => setConstrained((v) => !v)}
           className={`inline-flex items-center gap-2 rounded-sm border px-3 py-2 font-mono text-[0.6875rem] transition-colors duration-300 ${
             constrained
-              ? 'border-amber bg-amber/15 text-amber'
+              ? 'border-amber text-amber hover:bg-amber hover:text-void'
               : 'border-signal bg-signal/15 text-signal'
           }`}
         >
-          {constrained ? <Lock size={13} strokeWidth={2} /> : <Unlock size={13} strokeWidth={2} />}
-          {constrained ? 'Physics ON' : 'Physics OFF'}
+          {constrained ? <Unlock size={13} strokeWidth={2} /> : <Lock size={13} strokeWidth={2} />}
+          {constrained ? 'Turn physics off' : 'Turn physics on'}
         </button>
       </div>
 
-      <div className="relative mt-4 overflow-hidden rounded-sm border border-cyan/15 bg-void/60">
+      <div className="relative mt-4 overflow-hidden rounded-sm border border-cyan/25 bg-void/60">
         <svg
           ref={svgRef}
           viewBox="0 0 100 100"
-          className="h-[17rem] w-full touch-none select-none sm:h-[19rem]"
+          tabIndex={0}
+          role="application"
+          aria-label="Kinematic chain. Drag the club head, or move it with the arrow keys."
+          /*
+           * pan-y, not none: a vertical swipe starting here must still scroll
+           * the page. This sits mid-hero on mobile, so touch-action: none read
+           * as the whole site freezing.
+           */
+          className="h-[17rem] w-full select-none [touch-action:pan-y] sm:h-[19rem]"
           onPointerDown={(e) => {
             const p = toLocal(e.clientX, e.clientY);
             if (p) {
@@ -169,6 +191,29 @@ export default function ConstraintLab() {
               setDragging(true);
               setTouched(true);
             }
+          }}
+          onKeyDown={(e) => {
+            const step = e.shiftKey ? 6 : 2;
+            switch (e.key) {
+              case 'ArrowLeft':
+                nudge(-step, 0);
+                break;
+              case 'ArrowRight':
+                nudge(step, 0);
+                break;
+              case 'ArrowUp':
+                nudge(0, -step);
+                break;
+              case 'ArrowDown':
+                nudge(0, step);
+                break;
+              case 'Home':
+                setTarget(REST[REST.length - 1]);
+                break;
+              default:
+                return;
+            }
+            e.preventDefault();
           }}
         >
           {/* ground plane */}
@@ -255,15 +300,15 @@ export default function ConstraintLab() {
         {!touched && (
           <p className="pointer-events-none absolute inset-x-0 bottom-3 text-center font-mono text-[0.6875rem] text-amber">
             <Hand size={12} strokeWidth={2} className="mr-1.5 inline" />
-            drag the club head
+            drag the club head · or use the arrow keys
           </p>
         )}
       </div>
 
-      {/* readout */}
+      {/* readout — announced, so the result of a keyboard move is not visual-only */}
       <div className="mt-4 grid grid-cols-3 gap-3">
-        <div className="rounded-sm border border-cyan/15 bg-void/50 px-3 py-2.5">
-          <p className="font-mono text-[0.5625rem] uppercase text-dim">Bone drift</p>
+        <div className="rounded-sm border border-cyan/25 bg-void/50 px-3 py-2.5">
+          <p className="font-mono text-[0.6875rem] uppercase text-dim">Bone drift</p>
           <p
             className={`mt-1 font-display text-[1.05rem] font-bold tabular-nums ${
               drift > 0.6 ? 'text-signal' : 'text-amber'
@@ -272,14 +317,14 @@ export default function ConstraintLab() {
             {drift.toFixed(3)}
           </p>
         </div>
-        <div className="rounded-sm border border-cyan/15 bg-void/50 px-3 py-2.5">
-          <p className="font-mono text-[0.5625rem] uppercase text-dim">Solver</p>
+        <div className="rounded-sm border border-cyan/25 bg-void/50 px-3 py-2.5">
+          <p className="font-mono text-[0.6875rem] uppercase text-dim">Solver</p>
           <p className="mt-1 font-display text-[1.05rem] font-bold text-cyan">
             {constrained ? 'FABRIK' : 'none'}
           </p>
         </div>
-        <div className="rounded-sm border border-cyan/15 bg-void/50 px-3 py-2.5">
-          <p className="font-mono text-[0.5625rem] uppercase text-dim">Pose</p>
+        <div className="rounded-sm border border-cyan/25 bg-void/50 px-3 py-2.5">
+          <p className="font-mono text-[0.6875rem] uppercase text-dim">Pose</p>
           <p
             className={`mt-1 font-display text-[1.05rem] font-bold ${
               drift > 0.6 ? 'text-signal' : 'text-cyan'
@@ -289,6 +334,11 @@ export default function ConstraintLab() {
           </p>
         </div>
       </div>
+
+      <p aria-live="polite" className="sr-only">
+        {constrained ? 'Solver FABRIK.' : 'Solver off.'} Bone drift {drift.toFixed(3)}. Pose{' '}
+        {drift > 0.6 ? 'invalid' : 'valid'}.
+      </p>
 
       <p className="mt-4 copy-sm">
         {constrained
@@ -302,7 +352,7 @@ export default function ConstraintLab() {
           setTarget(REST[REST.length - 1]);
           setConstrained(true);
         }}
-        className="mt-4 inline-flex items-center gap-2 font-mono text-[0.6875rem] text-dim transition-colors hover:text-amber"
+        className="mt-4 inline-flex min-h-[1.75rem] items-center gap-2 rounded-sm px-2 py-1 font-mono text-[0.6875rem] text-dim transition-colors hover:text-amber"
       >
         <RotateCcw size={12} strokeWidth={2} /> reset
       </button>

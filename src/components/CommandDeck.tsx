@@ -1,7 +1,17 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { work } from '../data/work';
-import { site } from '../data/site';
+import { site, sections as siteSections } from '../data/site';
+
+/** One line of context per destination, keyed to the shared nav inventory. */
+const sectionHint: Record<string, string> = {
+  work: 'selected systems',
+  impact: 'verified impact',
+  method: 'how I work',
+  research: 'research log',
+  lab: 'personal builds',
+  contact: 'get in touch',
+};
 
 type Cmd = {
   id: string;
@@ -20,6 +30,7 @@ export default function CommandDeck() {
   const [q, setQ] = useState('');
   const [sel, setSel] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
 
   const close = useCallback(() => {
@@ -34,27 +45,20 @@ export default function CommandDeck() {
       navigate('/');
       window.requestAnimationFrame(() => {
         const el = document.getElementById(id);
-        el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        el?.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
       });
     },
     [close, navigate],
   );
 
   const commands: Cmd[] = useMemo(() => {
-    const sections: Cmd[] = [
-      ['work', 'selected systems'],
-      ['impact', 'verified impact'],
-      ['method', 'how I work'],
-      ['capabilities', 'skills matrix'],
-      ['lab', 'personal builds'],
-      ['research', 'research log'],
-      ['contact', 'get in touch'],
-    ].map(([id, hint]) => ({
-      id: `go-${id}`,
-      label: `goto ${id}`,
-      hint,
+    const sections: Cmd[] = siteSections.map((s) => ({
+      id: `go-${s.id}`,
+      label: `goto ${s.id}`,
+      hint: sectionHint[s.id] ?? s.label,
       group: 'navigate',
-      run: () => goSection(id),
+      run: () => goSection(s.id),
     }));
 
     const cases: Cmd[] = work.map((w) => ({
@@ -118,7 +122,8 @@ export default function CommandDeck() {
         group: 'navigate',
         run: () => {
           close();
-          window.scrollTo({ top: 0, behavior: 'smooth' });
+          const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          window.scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' });
         },
       },
     ];
@@ -160,15 +165,46 @@ export default function CommandDeck() {
     return () => window.removeEventListener('keydown', onKey);
   }, [open, close]);
 
+  /*
+   * aria-modal="true" tells assistive tech the rest of the page is gone. Without
+   * a trap, Tab walked straight into it anyway — focus and the screen reader's
+   * model of the page diverged silently. Trap on open, restore on close.
+   */
   useEffect(() => {
-    if (open) {
-      document.body.style.overflow = 'hidden';
-      window.setTimeout(() => inputRef.current?.focus(), 30);
-    } else {
+    if (!open) {
       document.body.style.overflow = '';
+      return;
     }
+
+    const previous = document.activeElement as HTMLElement | null;
+    document.body.style.overflow = 'hidden';
+    const focusTimer = window.setTimeout(() => inputRef.current?.focus(), 30);
+
+    const onTab = (e: KeyboardEvent) => {
+      if (e.key !== 'Tab') return;
+      const panel = panelRef.current;
+      if (!panel) return;
+      const focusable = panel.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), input, [tabindex]:not([tabindex="-1"])',
+      );
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+
+    document.addEventListener('keydown', onTab, true);
     return () => {
+      window.clearTimeout(focusTimer);
+      document.removeEventListener('keydown', onTab, true);
       document.body.style.overflow = '';
+      previous?.focus?.();
     };
   }, [open]);
 
@@ -195,11 +231,12 @@ export default function CommandDeck() {
     <div
       className="fixed inset-0 z-[65] flex items-start justify-center bg-void/85 px-4 pt-[12vh] backdrop-blur-sm"
       onClick={close}
-      role="dialog"
-      aria-modal="true"
-      aria-label="Command deck"
     >
       <div
+        ref={panelRef}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Command deck"
         className="hud hud-amber w-full max-w-2xl bg-deep/95"
         onClick={(e) => e.stopPropagation()}
       >
@@ -212,9 +249,9 @@ export default function CommandDeck() {
             onKeyDown={onKeyDown}
             placeholder="type a command…"
             aria-label="Command input"
-            className="w-full bg-transparent font-mono text-[0.8125rem] text-cyan outline-none placeholder:text-dim/70"
+            className="w-full bg-transparent font-mono text-[0.8125rem] text-cyan outline-none placeholder:text-dim"
           />
-          <kbd className="font-mono text-[0.5625rem] uppercase tracking-[0.2em] text-dim">esc</kbd>
+          <kbd className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-dim">esc</kbd>
         </div>
 
         <ul className="max-h-[52vh] overflow-y-auto py-2">
@@ -230,7 +267,7 @@ export default function CommandDeck() {
             return (
               <li key={c.id}>
                 {header && (
-                  <p className="px-5 pb-1.5 pt-3 font-mono text-[0.5625rem] uppercase tracking-[0.24em] text-dim/70">
+                  <p className="px-5 pb-1.5 pt-3 font-mono text-[0.6875rem] uppercase tracking-[0.16em] text-dim">
                     ·{header}·
                   </p>
                 )}
@@ -243,11 +280,11 @@ export default function CommandDeck() {
                   }`}
                 >
                   <span className="font-mono text-[0.8125rem]">
-                    <span className={on ? 'text-void/60' : 'text-amber/70'}>›&nbsp;</span>
+                    <span className={on ? 'text-void/75' : 'text-amber/70'}>›&nbsp;</span>
                     {c.label}
                   </span>
                   <span
-                    className={`truncate font-mono text-[0.625rem] uppercase tracking-[0.14em] ${
+                    className={`truncate font-mono text-[0.6875rem] uppercase tracking-[0.14em] ${
                       on ? 'text-void/70' : 'text-dim'
                     }`}
                   >
@@ -260,10 +297,10 @@ export default function CommandDeck() {
         </ul>
 
         <div className="flex items-center justify-between border-t border-cyan/15 px-5 py-3">
-          <p className="font-mono text-[0.5625rem] uppercase tracking-[0.2em] text-dim">
+          <p className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-dim">
             ↑↓ move · ⏎ run · esc close
           </p>
-          <p className="font-mono text-[0.5625rem] uppercase tracking-[0.2em] text-amber">
+          <p className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-amber">
             {results.length} cmd
           </p>
         </div>

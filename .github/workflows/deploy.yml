@@ -27,12 +27,9 @@ jobs:
 
       - run: npm ci
 
+      # postbuild emits a real page per route (so Pages answers 200, not 404),
+      # plus 404.html as the catch-all and a sitemap generated from the routes.
       - run: npm run build
-        env:
-          VITE_GEMINI_API_KEY: ${{ secrets.VITE_GEMINI_API_KEY }}
-
-      # Pages has no SPA rewrite rule, so serve index.html for unknown paths.
-      - run: cp dist/index.html dist/404.html
 
       - uses: actions/configure-pages@v5
 

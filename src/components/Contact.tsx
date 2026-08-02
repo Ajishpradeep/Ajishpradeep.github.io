@@ -1,4 +1,15 @@
-import { Mail, Github, Linkedin, Globe, Download, ArrowUpRight, MapPin } from 'lucide-react';
+import { useCallback, useEffect, useState } from 'react';
+import {
+  Mail,
+  Github,
+  Linkedin,
+  Globe,
+  Download,
+  ArrowUpRight,
+  MapPin,
+  Copy,
+  Check,
+} from 'lucide-react';
 import { site } from '../data/site';
 import { about } from '../data/about';
 import HudCanvas from './HudCanvas';
@@ -7,13 +18,28 @@ const linkIcon: Record<string, typeof Mail> = {
   Email: Mail,
   GitHub: Github,
   LinkedIn: Linkedin,
-  Site: Globe,
 };
 
 export default function Contact() {
+  const [copied, setCopied] = useState(false);
+
+  const copy = useCallback(async () => {
+    try {
+      await navigator.clipboard.writeText(site.email);
+      setCopied(true);
+    } catch {
+      // No clipboard permission — the mailto link and the visible address remain.
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!copied) return;
+    const id = window.setTimeout(() => setCopied(false), 2400);
+    return () => window.clearTimeout(id);
+  }, [copied]);
 
   return (
-    <section id="contact" className="relative scroll-mt-16 overflow-hidden py-24">
+    <section id="contact" className="relative scroll-mt-[5.5rem] overflow-hidden py-24">
       <div className="grid-veil absolute inset-0 opacity-60" />
       <HudCanvas />
 
@@ -48,12 +74,10 @@ export default function Contact() {
         <div className="mt-12 grid gap-10 lg:grid-cols-12 lg:gap-10">
           <div className="lg:col-span-7">
             <h3
-              className="max-w-[16ch] font-display text-mega font-extrabold uppercase leading-[1.02] track-mid text-amber glow-amber"
+              className="max-w-[16ch] text-balance font-display text-mega font-extrabold uppercase leading-[1.02] track-mid text-amber glow-amber"
               data-reveal
             >
-              Let&rsquo;s build
-              <br />
-              something true
+              Let&rsquo;s build something true
             </h3>
             <p
               className="mt-7 max-w-[52ch] copy"
@@ -71,10 +95,23 @@ export default function Contact() {
               <a href={`mailto:${site.email}`} className="btn-amber">
                 <Mail size={15} strokeWidth={2} /> Email me
               </a>
+              {/* mailto is not a given — plenty of machines have nothing wired
+                  to it. Copying the address is the reliable path. */}
+              <button type="button" onClick={copy} className="btn-ghost">
+                {copied ? (
+                  <Check size={15} strokeWidth={2} />
+                ) : (
+                  <Copy size={15} strokeWidth={2} />
+                )}
+                {copied ? 'Address copied' : 'Copy address'}
+              </button>
               <a href={site.resume} target="_blank" rel="noreferrer" className="btn-ghost">
                 <Download size={15} strokeWidth={2} /> Résumé
               </a>
             </div>
+            <p aria-live="polite" className="sr-only">
+              {copied ? `${site.email} copied to the clipboard` : ''}
+            </p>
           </div>
 
           <div className="lg:col-span-5" data-reveal>

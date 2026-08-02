@@ -1,10 +1,19 @@
 export const site = {
   name: 'Pradeep Rajasekar',
+  /**
+   * The handle people search. Both names are deliberate: the professional name
+   * leads, and this is the one on GitHub, on the domain, and on any CV that was
+   * forwarded before someone arrived here. Surfaces must keep both legible.
+   */
+  alias: 'Ajish Pradeep',
   role: 'AI Research Engineer',
   location: 'New Taipei City, Taiwan',
   email: 'ajishpradeep@gmail.com',
   resume: '/Resume.pdf',
-  portrait: '/profile_pic.png',
+  /** 767×873. The 858KB PNG it replaced was 8× the size for the same picture. */
+  portrait: '/portrait.jpg',
+  /** 211×240, for the hero byline avatar. */
+  portraitSmall: '/portrait-sm.jpg',
   tagline:
     'Computer vision built on explicit mathematics, with physical law enforced inside the model.',
   /**
@@ -17,16 +26,27 @@ export const site = {
     { label: 'Email', href: 'mailto:ajishpradeep@gmail.com', handle: 'ajishpradeep@gmail.com' },
     { label: 'GitHub', href: 'https://github.com/Ajishpradeep', handle: '@Ajishpradeep' },
     { label: 'LinkedIn', href: 'https://linkedin.com/in/ajishpradeep', handle: 'in/ajishpradeep' },
-    { label: 'Site', href: 'https://ajishpradeep.github.io', handle: 'ajishpradeep.github.io' },
   ],
 } as const;
 
+/**
+ * The one navigation inventory. The header, the mobile drawer, the section rail
+ * and the command deck all read this, so they cannot disagree about what the
+ * site contains — they previously listed six, seven and eighteen destinations.
+ * `id` must match the section's DOM id for scroll-spy to resolve.
+ */
 export const nav = [
-  { label: 'Work', href: '/#work' },
-  { label: 'Approach', href: '/#approach' },
-  { label: 'Research', href: '/#research' },
-  { label: 'About', href: '/about' },
+  { label: 'Work', href: '/#work', id: 'work' },
+  { label: 'Impact', href: '/#impact', id: 'impact' },
+  { label: 'Method', href: '/#method', id: 'method' },
+  { label: 'Research', href: '/#research', id: 'research' },
+  { label: 'Lab', href: '/#lab', id: 'lab' },
+  { label: 'Contact', href: '/#contact', id: 'contact' },
+  { label: 'About', href: '/about', id: 'about' },
 ] as const;
+
+/** Just the on-page anchors, in scroll order. */
+export const sections = nav.filter((item) => item.href.startsWith('/#'));
 
 /**
  * Headline numbers. The last two are externally corroborated — see the impact

@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 export default function NotFound() {
   return (
     <section className="relative flex min-h-[80svh] items-center overflow-hidden pt-24">
-      <div className="grid-veil absolute inset-0" />
       <div className="shell relative">
         <p className="tag text-signal flicker">
           <span className="bracket">signal lost · 404</span>

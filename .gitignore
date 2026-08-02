@@ -17,6 +17,7 @@
 .env.test.local
 .env.production.local
 
+
 # Logs
 npm-debug.log*
 yarn-debug.log*
@@ -99,3 +100,6 @@ Thumbs.db
 
 # Internal reference material — proprietary, must not be published
 project_docs/
+.claude/*
+.github/*
+.impeccable/*

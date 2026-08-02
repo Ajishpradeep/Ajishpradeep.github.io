@@ -7,19 +7,21 @@ import {
   FlaskConical,
   BookOpen,
   User,
+  Mail,
   Download,
   Command,
 } from 'lucide-react';
-import { site } from '../data/site';
+import { site, nav as items, sections } from '../data/site';
 
-const items = [
-  { label: 'Work', href: '/#work', id: 'work', icon: Layers },
-  { label: 'Impact', href: '/#impact', id: 'impact', icon: Trophy },
-  { label: 'Method', href: '/#method', id: 'method', icon: Compass },
-  { label: 'Lab', href: '/#lab', id: 'lab', icon: FlaskConical },
-  { label: 'Research', href: '/#research', id: 'research', icon: BookOpen },
-  { label: 'About', href: '/about', id: 'about', icon: User },
-];
+const navIcon = {
+  work: Layers,
+  impact: Trophy,
+  method: Compass,
+  research: BookOpen,
+  lab: FlaskConical,
+  contact: Mail,
+  about: User,
+} as const;
 
 export default function Nav() {
   const [active, setActive] = useState('work');
@@ -27,7 +29,7 @@ export default function Nav() {
   const { pathname, hash } = useLocation();
 
   useEffect(() => {
-    const ids = ['work', 'impact', 'method', 'capabilities', 'lab', 'research', 'contact'];
+    const ids = sections.map((s) => s.id);
     const onScroll = () => {
       let current = 'work';
       for (const id of ids) {
@@ -49,24 +51,31 @@ export default function Nav() {
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-cyan/15 bg-void/85 backdrop-blur-md">
       <div className="shell flex h-16 items-center justify-between gap-4 sm:h-[4.75rem]">
-        <Link to="/" className="flex items-baseline gap-2.5 text-cyan">
-          <span className="font-display text-[1rem] font-bold track-mid">Pradeep Rajasekar</span>
-          <span className="hidden font-mono text-[0.625rem] text-dim xl:inline">
-            AI Research Engineer
+        {/*
+          Name and role, on every breakpoint. The role used to be gated behind
+          `xl:inline`, so on a phone or tablet the homepage never said what this
+          person does — the single field a recruiter needs first.
+        */}
+        <Link to="/" className="-my-2 flex flex-col justify-center py-2 text-cyan">
+          <span className="font-display text-[0.9375rem] font-bold leading-tight track-mid sm:text-[1rem]">
+            {site.name}
+          </span>
+          <span className="font-mono text-[0.6875rem] leading-tight text-dim">
+            {site.role}
           </span>
         </Link>
 
         {/* icon tiles */}
         <nav className="hidden items-center gap-1.5 lg:flex">
           {items.map((it) => {
-            const Icon = it.icon;
+            const Icon = navIcon[it.id];
             const on = isOn(it);
             return (
               <Link
                 key={it.href}
                 to={it.href}
                 aria-current={on ? 'page' : undefined}
-                className={`group relative flex w-[4.4rem] flex-col items-center gap-1 rounded-sm border px-1 py-2 transition-all duration-300 ${
+                className={`group relative flex w-[4rem] flex-col items-center gap-1 rounded-sm border px-1 py-2 transition-all duration-300 ${
                   on
                     ? 'border-amber/60 bg-amber/12'
                     : 'border-transparent hover:border-cyan/25 hover:bg-panel/50'
@@ -80,7 +89,7 @@ export default function Nav() {
                   }`}
                 />
                 <span
-                  className={`font-mono text-[0.625rem] tracking-[0.02em] transition-colors duration-300 ${
+                  className={`font-mono text-[0.6875rem] tracking-[0.02em] transition-colors duration-300 ${
                     on ? 'text-amber' : 'text-dim group-hover:text-cyan'
                   }`}
                 >
@@ -99,14 +108,14 @@ export default function Nav() {
             href={site.resume}
             target="_blank"
             rel="noreferrer"
-            className="group flex w-[4.4rem] flex-col items-center gap-1 rounded-sm border border-transparent px-1 py-2 transition-all duration-300 hover:border-cyan/25 hover:bg-panel/50"
+            className="group flex w-[4rem] flex-col items-center gap-1 rounded-sm border border-transparent px-1 py-2 transition-all duration-300 hover:border-cyan/25 hover:bg-panel/50"
           >
             <Download
               size={20}
               strokeWidth={1.7}
               className="text-cyan/70 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:text-amber"
             />
-            <span className="font-mono text-[0.625rem] text-dim transition-colors group-hover:text-cyan">
+            <span className="font-mono text-[0.6875rem] text-dim transition-colors group-hover:text-cyan">
               CV
             </span>
           </a>
@@ -119,14 +128,14 @@ export default function Nav() {
               )
             }
             aria-label="Open command deck"
-            className="group flex w-[4.4rem] flex-col items-center gap-1 rounded-sm border border-cyan/25 px-1 py-2 transition-all duration-300 hover:border-amber hover:bg-amber/10"
+            className="group flex w-[4rem] flex-col items-center gap-1 rounded-sm border border-cyan/25 px-1 py-2 transition-all duration-300 hover:border-amber hover:bg-amber/10"
           >
             <Command
               size={20}
               strokeWidth={1.7}
               className="text-cyan/70 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:text-amber"
             />
-            <span className="font-mono text-[0.625rem] text-dim transition-colors group-hover:text-amber">
+            <span className="font-mono text-[0.6875rem] text-dim transition-colors group-hover:text-amber">
               ⌘K
             </span>
           </button>
@@ -154,21 +163,21 @@ export default function Nav() {
 
       {/* mobile: icon grid */}
       <div
-        className={`overflow-hidden border-t border-cyan/10 bg-void/95 transition-[max-height,opacity] duration-500 lg:hidden ${
+        className={`overflow-hidden border-t border-cyan/20 bg-void/95 transition-[max-height,opacity] duration-500 lg:hidden ${
           open ? 'max-h-[24rem] opacity-100' : 'max-h-0 border-transparent opacity-0'
         }`}
       >
         <nav className="shell grid grid-cols-4 gap-2 py-4">
           {items.map((it) => {
-            const Icon = it.icon;
+            const Icon = navIcon[it.id];
             return (
               <Link
                 key={it.href}
                 to={it.href}
-                className="flex flex-col items-center gap-1.5 rounded-sm border border-cyan/15 bg-deep/60 px-1 py-3"
+                className="flex flex-col items-center gap-1.5 rounded-sm border border-cyan/30 bg-deep/60 px-1 py-3"
               >
                 <Icon size={20} strokeWidth={1.7} className="text-amber" />
-                <span className="font-mono text-[0.625rem] text-cyan/80">{it.label}</span>
+                <span className="font-mono text-[0.6875rem] text-cyan/80">{it.label}</span>
               </Link>
             );
           })}
@@ -176,10 +185,10 @@ export default function Nav() {
             href={site.resume}
             target="_blank"
             rel="noreferrer"
-            className="flex flex-col items-center gap-1.5 rounded-sm border border-cyan/15 bg-deep/60 px-1 py-3"
+            className="flex flex-col items-center gap-1.5 rounded-sm border border-cyan/30 bg-deep/60 px-1 py-3"
           >
             <Download size={20} strokeWidth={1.7} className="text-amber" />
-            <span className="font-mono text-[0.625rem] text-cyan/80">CV</span>
+            <span className="font-mono text-[0.6875rem] text-cyan/80">CV</span>
           </a>
         </nav>
       </div>

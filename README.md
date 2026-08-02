@@ -1,153 +1,87 @@
-# Ajish Pradeep - AI Engineer & Researcher Portfolio
+# ajishpradeep.github.io
 
-A modern, interactive portfolio website showcasing my expertise in AI Engineering and Research. Built with React, TypeScript, and Tailwind CSS, featuring an AI-powered terminal using Google's Gemini API.
+The personal site of **Pradeep Rajasekar** (also known as Ajish Pradeep), AI Research Engineer —
+3D computer vision, on-device inference and agentic LLM systems.
 
-## 🌟 Features
+A static React site. No backend, no runtime secrets, no third-party runtime dependencies.
 
-- **Modern UI/UX**: Clean, responsive design with smooth animations and transitions
-- **AI-Powered Terminal**: Interactive terminal powered by Google's Gemini API
-- **Portfolio Showcase**: Detailed sections for skills, experience, and projects
-- **Contact Form**: Secure contact form with file upload capability
-- **PWA Support**: Progressive Web App features for offline access
-- **Performance Optimized**: Fast loading and smooth interactions
+## Stack
 
-## 🛠️ Tech Stack
+- **React 18 + TypeScript**, routed with React Router
+- **Vite** for build
+- **Tailwind CSS** over a small set of CSS custom properties in `src/index.css`
+- **lucide-react** for icons
+- Deployed to **GitHub Pages** by `.github/workflows/deploy.yml` on push to `main`
 
-- **Frontend**: React, TypeScript, Tailwind CSS
-- **AI Integration**: Google Gemini API
-- **Deployment**: Netlify
-- **Styling**: Tailwind CSS, Custom Animations
-- **Icons**: Font Awesome
-- **Form Handling**: Netlify Forms
+## Local development
 
-## 📦 Installation
-
-1. Clone the repository:
-```bash
-git clone https://github.com/Ajishpradeep/Ajishpradeep.github.io.git
-cd Ajishpradeep.github.io
-```
-
-2. Install dependencies:
 ```bash
 npm install
+npm run dev      # http://localhost:3000
+npm run build    # typecheck, build, then emit route pages + sitemap
+npm run preview
+npm run lint
 ```
 
-3. Create a `.env` file in the root directory and add your Gemini API key:
-```env
-VITE_GEMINI_API_KEY=your_api_key_here
-```
+No environment variables are required. If you have a `.env` from an older version of this site,
+it is no longer read by anything.
 
-## 🔧 Configuration
-
-### Gemini API Integration
-
-1. Get your Gemini API key:
-   - Go to [Google AI Studio](https://makersuite.google.com/app/apikey)
-   - Create a new API key
-   - Copy the key to your `.env` file
-
-2. Model Selection:
-   - The project uses `gemini-2.0-flash` model
-   - Configured in `src/utils/gemini.ts`
-
-### Environment Variables
-
-Create a `.env` file with:
-```env
-VITE_GEMINI_API_KEY=your_api_key_here
-```
-
-## 📁 Project Structure
+## Layout
 
 ```
-├── public/                 # Static assets
-│   ├── profile_pic.png     # Profile picture
-│   └── Resume.pdf          # Resume file
-├── src/
-│   ├── components/         # React components
-│   │   ├── MainContent.tsx # Main content sections
-│   │   ├── Sidebar.tsx     # Sidebar navigation
-│   │   └── ...
-│   ├── utils/             # Utility functions
-│   │   ├── gemini.ts      # Gemini API integration
-│   │   ├── terminal.ts    # Terminal functionality
-│   │   └── ...
-│   └── ...
-└── ...
+index.html                 document shell, JSON-LD, <noscript> fallback
+scripts/postbuild.mjs      emits a real page per route + 404.html + sitemap.xml
+public/                    Resume.pdf, profile_pic.png, favicon, robots.txt, service-worker tombstone
+src/
+  data/                    all site copy — the source of truth for content
+    site.ts                name, role, location, links, headline figures
+    work.ts                case studies (the long-form writing)
+    impact.ts              externally corroborated milestones, with sources
+    research.ts            papers, posters, in-progress work
+    lab.ts                 personal repositories
+    about.ts               biography and timeline
+    domains.ts             the four capability areas
+  components/              section and interactive components
+  pages/                   Home, About, CaseStudy, NotFound
 ```
 
-## 🎯 Key Sections
+**Copy lives in `src/data/`, not in components.** That is deliberate: it keeps the writing
+reviewable in one place and keeps a future zh-TW translation possible.
 
-1. **About Me**
-   - Professional introduction
-   - Current focus areas
-   - Availability status
+## Content rules
 
-2. **Core Skills**
-   - Programming Languages
-   - AI Frameworks
-   - Cloud & Deployment
-   - Specializations
-   - Mathematics
+Two rules govern what may appear on this site:
 
-3. **Experience**
-   - Current Role at President Information Corp
-   - Previous Experience at AIBS Software Solutions
+1. **Every claim carries its source.** No figure, award, or affiliation appears without a real
+   reference. `src/data/impact.ts` keeps the externally corroborated record separate from personal
+   account, and labels which is which — the public record credits organisations, and this site does
+   not blur that into individual credit.
+2. **Nothing is fabricated.** There are no testimonials, client names, or invented metrics, and
+   their absence is intentional.
 
-4. **Portfolio**
-   - Research Projects
-   - Case Studies
-   - Private Projects (NDA)
+## Routing on GitHub Pages
 
-5. **Collaborations**
-   - Future Data Systems
-   - MobilityZ
-   - Research Lab (AI & Multimedia Systems)
+Pages has no SPA rewrite rule. Rather than relying only on a `404.html` fallback — which renders
+correctly but answers with an HTTP 404 status, so crawlers drop the URLs — `scripts/postbuild.mjs`
+writes a real `index.html` for every route the sitemap advertises, each with its own title,
+description and canonical URL. `404.html` remains as the catch-all for unknown paths.
 
-6. **Contact**
-   - Multiple contact methods
-   - Secure contact form
-   - Social media links
+## Accessibility
 
-## 🚀 Deployment
+WCAG 2.1 AA is treated as a requirement. In particular: every animation and simulation has a
+`prefers-reduced-motion` path, auto-advancing content has a pause control, all interactive elements
+are keyboard-reachable with visible focus, and contrast is checked against AA including the
+non-text 3:1 threshold for control boundaries.
 
-The project is configured for deployment on Netlify:
+## A note on the service worker
 
-1. Push your code to GitHub
-2. Connect your repository to Netlify
-3. Add environment variables in Netlify dashboard
-4. Deploy!
+`public/service-worker.js` is a tombstone. An earlier version of this site registered a cache-first
+worker that precached files which no longer exist; the tombstone unregisters it and clears its
+caches. Nothing in the app registers a service worker. It can be deleted once stale registrations
+have aged out.
 
-## 🔒 Security
+## Contact
 
-- API keys are stored in environment variables
-- Contact form submissions are handled securely through Netlify Forms
-- No sensitive information is exposed in the frontend
-
-## 📝 Customization
-
-### Profile Information
-- Update `src/utils/portfolio.ts` for profile data
-- Modify `public/profile_pic.png` for profile picture
-- Update `public/Resume.pdf` for resume
-
-### Styling
-- Customize colors in `tailwind.config.js`
-- Modify animations in `src/utils/animations.ts`
-- Update styles in `src/App.css`
-
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## 📄 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 📞 Contact
-
-- Email: ajishpradeep@gmail.com
-- LinkedIn: [Ajish Pradeep](https://www.linkedin.com/in/ajishpradeep/)
-- GitHub: [Ajishpradeep](https://github.com/Ajishpradeep)
-- Line: [Ajish Pradeep](https://line.me/ti/p/Ubq5KJIQTv) 
+- ajishpradeep@gmail.com
+- [linkedin.com/in/ajishpradeep](https://linkedin.com/in/ajishpradeep)
+- [github.com/Ajishpradeep](https://github.com/Ajishpradeep)

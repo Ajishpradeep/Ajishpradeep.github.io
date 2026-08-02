@@ -16,12 +16,15 @@ export default function CaseStudy() {
   return (
     <article>
       {/* MASTHEAD */}
-      <header className="relative overflow-hidden border-b border-cyan/15 pt-24">
+      <header className="relative overflow-hidden border-b border-cyan/15 pt-[5.5rem]">
         <div className="grid-veil absolute inset-0" />
         <HudCanvas />
 
         <div className="shell relative py-14">
-          <Link to="/#work" className="tag text-amber transition-opacity hover:opacity-70">
+          <Link
+            to={`/?case=${study.slug}#work`}
+            className="tag -mx-2 inline-block rounded-sm px-2 py-1.5 text-amber transition-opacity hover:opacity-70"
+          >
             <span className="bracket">← index</span>
           </Link>
 
@@ -29,7 +32,7 @@ export default function CaseStudy() {
             <p className="tag text-dim">
               <span className="bracket">{study.domain}</span>
             </p>
-            <p className="font-mono text-[0.625rem] uppercase tracking-[0.2em] text-amber">
+            <p className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-amber">
               case {study.index} / {String(work.length).padStart(2, '0')} · {study.slug}
             </p>
           </div>
@@ -75,24 +78,26 @@ export default function CaseStudy() {
       {/* TELEMETRY */}
       <div className="border-b border-cyan/15">
         <div className="shell">
-          <ul className="grid sm:grid-cols-2 lg:grid-cols-4">
+          <div className="overflow-hidden">
+          <ul className="-mb-px -mr-px grid sm:grid-cols-2 lg:grid-cols-4">
             {study.metrics.map((m, i) => (
               <li
                 key={m.label}
-                className="border-b border-r border-cyan/10 py-7 pr-5 last:border-r-0 lg:border-b-0"
+                className="border-b border-r border-cyan/20 py-7 pl-5 pr-5 first:pl-0"
               >
-                <p className="font-mono text-[0.5625rem] uppercase tracking-[0.24em] text-dim">
+                <p className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-dim">
                   ·{String(i + 1).padStart(2, '0')}·
                 </p>
                 <p className="mt-2.5 font-display text-[1.75rem] font-bold track-mid text-amber glow-amber">
                   {m.value}
                 </p>
-                <p className="mt-2 max-w-[26ch] font-mono text-[0.625rem] leading-snug text-dim">
+                <p className="mt-2 max-w-[26ch] font-mono text-[0.6875rem] leading-snug text-dim">
                   {m.label}
                 </p>
               </li>
             ))}
           </ul>
+          </div>
         </div>
       </div>
 
@@ -113,13 +118,13 @@ export default function CaseStudy() {
 
       {/* LOG ENTRIES */}
       {study.sections.map((s, i) => (
-        <section key={s.heading} className="border-b border-cyan/10 py-14">
+        <section key={s.heading} className="border-b border-cyan/20 py-14">
           <div className="shell grid gap-6 lg:grid-cols-12 lg:gap-10">
             <div className="lg:col-span-3" data-reveal>
-              <span className="font-mono text-[0.625rem] text-amber">
+              <span className="font-mono text-[0.6875rem] text-amber">
                 ·{String(i + 1).padStart(2, '0')}·
               </span>
-              <h2 className="mt-3 max-w-[26ch] font-display text-[1.0625rem] font-bold leading-snug text-cyan lg:sticky lg:top-24 text-balance">
+              <h2 className="mt-3 max-w-[26ch] font-display text-[1.0625rem] font-bold leading-snug text-cyan lg:sticky lg:top-28 text-balance">
                 {s.heading}
               </h2>
             </div>
@@ -147,7 +152,7 @@ export default function CaseStudy() {
             {study.outcome.map((o, i) => (
               <li
                 key={i}
-                className="flex gap-4 border-b border-cyan/10 py-4"
+                className="flex gap-4 border-b border-cyan/20 py-4"
                 data-reveal
                 style={{ '--reveal-delay': `${i * 60}ms` } as React.CSSProperties}
               >
@@ -166,7 +171,10 @@ export default function CaseStudy() {
         <Link to={`/work/${prev.slug}`} className="btn-ghost">
           <span aria-hidden>←</span> {prev.index} · back
         </Link>
-        <Link to="/#work" className="tag text-dim transition-colors hover:text-amber">
+        <Link
+          to={`/?case=${study.slug}#work`}
+          className="tag rounded-sm px-2 py-1.5 text-dim transition-colors hover:text-amber"
+        >
           <span className="bracket">index</span>
         </Link>
         <Link to={`/work/${next.slug}`} className="btn-amber">

@@ -9,8 +9,7 @@ export default function Lab() {
   const ghost = site.links.find((l) => l.label === 'GitHub')?.href;
 
   return (
-    <section id="lab" className="relative scroll-mt-16 overflow-hidden border-b border-cyan/15 py-20">
-      <div className="grid-veil absolute inset-0 opacity-50" />
+    <section id="lab" className="relative scroll-mt-[5.5rem] overflow-hidden border-b border-cyan/15 py-20">
 
       <div className="shell relative">
         <div className="flex flex-wrap items-end justify-between gap-4 border-b border-cyan/15 pb-5">
@@ -56,14 +55,14 @@ export default function Lab() {
                   </h3>
                   <p className="mt-2.5 flex-1 copy-sm">{p.description}</p>
 
-                  <div className="mt-5 flex flex-wrap items-center gap-1.5 border-t border-cyan/10 pt-4">
+                  <div className="mt-5 flex flex-wrap items-center gap-1.5 border-t border-cyan/20 pt-4">
                     {p.language && (
-                      <span className="inline-flex items-center gap-1.5 font-mono text-[0.625rem] text-cyan/70">
+                      <span className="inline-flex items-center gap-1.5 font-mono text-[0.6875rem] text-cyan/70">
                         <span className="h-2 w-2 rounded-full bg-amber" />
                         {p.language}
                       </span>
                     )}
-                    <span className="ml-auto font-mono text-[0.625rem] text-dim">{p.year}</span>
+                    <span className="ml-auto font-mono text-[0.6875rem] text-dim">{p.year}</span>
                   </div>
                 </a>
               </li>

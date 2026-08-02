@@ -30,7 +30,7 @@ export function RouteMap({ className = '' }: { className?: string }) {
           x2="350"
           y2={y}
           stroke="rgb(var(--cyan))"
-          strokeOpacity="0.09"
+          strokeOpacity="0.14"
           strokeWidth="1"
         />
       ))}
@@ -39,7 +39,7 @@ export function RouteMap({ className = '' }: { className?: string }) {
           key={x}
           d={`M ${x} 30 Q ${x + (180 - x) * 0.18} 100 ${x} 170`}
           stroke="rgb(var(--cyan))"
-          strokeOpacity="0.09"
+          strokeOpacity="0.14"
           strokeWidth="1"
         />
       ))}
@@ -82,7 +82,7 @@ export function RouteMap({ className = '' }: { className?: string }) {
             y={n.y - 12}
             textAnchor="middle"
             fill={n.primary ? 'rgb(var(--amber))' : 'rgb(var(--dim))'}
-            fontSize="10"
+            fontSize="12"
             fontFamily="JetBrains Mono, monospace"
             letterSpacing="0.5"
           >

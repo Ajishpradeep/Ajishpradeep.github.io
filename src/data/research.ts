@@ -104,32 +104,48 @@ export const capabilities = [
   },
 ];
 
-/** Kept short on purpose — each one is a claim, not an essay. */
-export const principles = [
+/**
+ * Kept short on purpose — each one is a claim, not an essay.
+ *
+ * `from` names the case study the finding actually came out of, so a reader can
+ * go and check it. Principle 06 has no single case behind it and deliberately
+ * carries no link rather than an invented one.
+ */
+export const principles: {
+  n: string;
+  title: string;
+  body: string;
+  from?: { slug: string; section: string };
+}[] = [
   {
     n: '01',
     title: 'A metric blind to the failure is not a metric',
     body: 'A model once scored better while getting worse — the validation set only contained poses where the bias was correct.',
+    from: { slug: 'markerless-3d-motion', section: 'The failure nobody catches in the metrics' },
   },
   {
     n: '02',
     title: 'Make the regression impossible, not unlikely',
     body: 'Freezing a pathway so its output is bit-identical by construction is a guarantee. A penalty term is a hope with a coefficient.',
+    from: { slug: 'markerless-3d-motion', section: 'Making the regression architecturally impossible' },
   },
   {
     n: '03',
     title: 'The shape of an error names its cause',
     body: 'U-shaped in distance means receptive field. Stable across sessions but clustered by region means convention, not scale.',
+    from: { slug: 'markerless-3d-motion', section: 'Diagnosing by error structure, not by loss curve' },
   },
   {
     n: '04',
     title: 'Know which failures training cannot fix',
     body: 'An out-of-distribution artefact is absent from train and validation by definition. No loss function can see it.',
+    from: { slug: 'markerless-3d-motion', section: 'Where training was the wrong tool' },
   },
   {
     n: '05',
     title: 'Deterministic where it can be',
     body: 'Where a confident wrong number causes harm, Python computes and the model narrates. That is a design decision, not a limitation.',
+    from: { slug: 'agentic-coaching-llm', section: 'Two pipelines, deliberately opposite' },
   },
   {
     n: '06',

@@ -1,3 +1,5 @@
+@import './fonts.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -128,12 +130,17 @@
       linear-gradient(to top, rgb(var(--amber) / 0.9) 1px, transparent 1px);
   }
 
-  /* Solid card — the default container now, in place of outlined text boxes. */
+  /*
+   * Solid card — the default container now, in place of outlined text boxes.
+   * The border was cyan/15, which measured 1.44:1 against the page: below the
+   * 3:1 WCAG 1.4.11 floor for a boundary that is the only thing defining the
+   * component. cyan/25 clears it without changing the character of the frame.
+   */
   .card {
-    @apply relative overflow-hidden rounded-sm border border-cyan/15 bg-deep/70 transition-all duration-500;
+    @apply relative overflow-hidden rounded-sm border border-cyan/25 bg-deep/70 transition-all duration-500;
   }
   .card:hover {
-    @apply border-cyan/35 bg-panel/40;
+    @apply border-cyan/45 bg-panel/40;
   }
 
   /*
@@ -183,10 +190,10 @@
 
   /* Square icon plate. */
   .plate {
-    @apply flex h-11 w-11 shrink-0 items-center justify-center rounded-sm border border-cyan/25 bg-panel/50 text-amber;
+    @apply flex h-11 w-11 shrink-0 items-center justify-center rounded-sm border border-cyan/40 bg-panel/50 text-amber;
   }
   .plate-lg {
-    @apply flex h-14 w-14 shrink-0 items-center justify-center rounded-sm border border-cyan/25 bg-panel/50 text-amber;
+    @apply flex h-14 w-14 shrink-0 items-center justify-center rounded-sm border border-cyan/40 bg-panel/50 text-amber;
   }
 
   .frame-dashed {
@@ -198,6 +205,12 @@
    * the display type and was the single biggest legibility cost on the page.
    * A faint vignette gives depth without touching text.
    */
+  /*
+   * The vignette sits above content, so its alpha is a contrast tax on every
+   * line of text near the viewport edge. At 0.55 it pulled `text-dim` in the
+   * corners down to 2.61:1. Held to 0.28 and starting further out, the deepest
+   * point still measures ≈5:1 — the depth survives, the reading does too.
+   */
   .scanlines::after {
     content: '';
     position: fixed;
@@ -206,8 +219,8 @@
     pointer-events: none;
     background: radial-gradient(
       ellipse at center,
-      transparent 55%,
-      rgb(var(--void) / 0.55) 100%
+      transparent 62%,
+      rgb(var(--void) / 0.28) 100%
     );
   }
 
@@ -224,8 +237,10 @@
   .btn-amber {
     @apply btn bg-amber text-void hover:bg-amber-hot;
   }
+  /* cyan/35 measured 2.94:1 — a hair under the 3:1 floor, and this border is
+     the only thing that makes a secondary button look like a button. */
   .btn-ghost {
-    @apply btn border border-cyan/35 text-cyan hover:border-amber hover:bg-amber/10 hover:text-amber;
+    @apply btn border border-cyan/50 text-cyan hover:border-amber hover:bg-amber/10 hover:text-amber;
   }
 }
 
@@ -314,6 +329,21 @@
     [data-reveal] {
       opacity: 1;
       transform: none;
+    }
+
+    /*
+     * The blanket duration kill in the base layer freezes every animation at
+     * its final keyframe, which for these two means "invisible" rather than
+     * "still". Each has a solid element underneath it, so hiding the animated
+     * ring outright is the honest resting state.
+     */
+    .pulse-ring,
+    .sweep {
+      display: none;
+    }
+
+    .blink {
+      opacity: 1;
     }
   }
 }

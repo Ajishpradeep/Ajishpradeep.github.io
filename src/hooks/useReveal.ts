@@ -36,10 +36,14 @@ export function useReveal(key?: string) {
 /** Restores scroll to the top on navigation, honouring in-page hash links. */
 export function useScrollReset(pathname: string, hash: string) {
   useEffect(() => {
+    // A JS-supplied `behavior: 'smooth'` overrides the stylesheet, so
+    // reduced-motion has to be honoured here rather than left to CSS.
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
     if (hash) {
       const el = document.querySelector(hash);
       if (el) {
-        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        el.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
         return;
       }
     }

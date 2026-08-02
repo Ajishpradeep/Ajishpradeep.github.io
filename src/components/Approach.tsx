@@ -1,17 +1,22 @@
-import { EyeOff, Lock, Waves, AlertTriangle, Calculator, FileWarning } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { ArrowUpRight } from 'lucide-react';
 import { principles } from '../data/research';
 
-const icons = [EyeOff, Lock, Waves, AlertTriangle, Calculator, FileWarning];
-
+/**
+ * Method.
+ *
+ * Deliberately not a card grid. Every one of these findings came out of a
+ * specific case study, so the section reads as a list of claims with their
+ * provenance attached — claim on the left, the evidence and a way to go and
+ * check it on the right. That relationship is the argument for reading the
+ * case files at all, and it was previously never drawn.
+ */
 export default function Approach() {
-
   return (
     <section
       id="method"
-      className="relative scroll-mt-16 overflow-hidden border-b border-cyan/15 py-20"
+      className="relative scroll-mt-[5.5rem] overflow-hidden border-b border-cyan/15 py-20"
     >
-      <div className="grid-veil absolute inset-0 opacity-50" />
-
       <div className="shell relative">
         <div className="flex flex-wrap items-end justify-between gap-4 border-b border-cyan/15 pb-5">
           <h2
@@ -23,33 +28,40 @@ export default function Approach() {
           <p className="tag-sm text-dim">Six findings · from being wrong measurably</p>
         </div>
 
-        <ol className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {principles.map((p, i) => {
-            const Icon = icons[i] ?? EyeOff;
-            return (
-              <li
-                key={p.n}
-                className="card trace lift group p-6"
-                data-reveal
-                style={{ '--reveal-delay': `${i * 50}ms` } as React.CSSProperties}
-              >
-                <div className="flex items-center justify-between">
-                  <span className="plate transition-colors duration-500 group-hover:border-amber/60">
-                    <Icon size={20} strokeWidth={1.7} />
-                  </span>
-                  <span className="font-display text-[2rem] font-extrabold leading-none text-cyan/10 transition-colors duration-500 group-hover:text-amber/25">
-                    {p.n}
-                  </span>
-                </div>
+        <ul className="mt-4">
+          {principles.map((p, i) => (
+            <li
+              key={p.n}
+              className="grid gap-x-10 gap-y-3 border-b border-cyan/20 py-8 lg:grid-cols-12"
+              data-reveal
+              style={{ '--reveal-delay': `${i * 40}ms` } as React.CSSProperties}
+            >
+              <h3 className="text-balance font-display text-[1.25rem] font-bold leading-snug text-cyan lg:col-span-5 lg:text-[1.375rem]">
+                {p.title}
+              </h3>
 
-                <h3 className="mt-5 font-display text-[1.0625rem] font-bold leading-snug text-cyan text-balance">
-                  {p.title}
-                </h3>
-                <p className="mt-2.5 copy-sm">{p.body}</p>
-              </li>
-            );
-          })}
-        </ol>
+              <div className="lg:col-span-7">
+                <p className="max-w-[68ch] copy">{p.body}</p>
+
+                {p.from && (
+                  <Link
+                    to={`/work/${p.from.slug}`}
+                    className="group mt-4 inline-flex items-baseline gap-2 text-[0.875rem] text-amber"
+                  >
+                    <span className="underline decoration-amber/40 underline-offset-4 transition-colors group-hover:decoration-amber">
+                      Where this came from: {p.from.section}
+                    </span>
+                    <ArrowUpRight
+                      size={14}
+                      strokeWidth={2}
+                      className="shrink-0 translate-y-0.5 transition-transform duration-300 group-hover:-translate-y-0 group-hover:translate-x-0.5"
+                    />
+                  </Link>
+                )}
+              </div>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );

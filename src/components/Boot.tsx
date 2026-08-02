@@ -25,7 +25,8 @@ export default function Boot({ onDone }: { onDone: () => void }) {
     }
 
     const start = performance.now();
-    const DUR = 2100;
+    // 2100ms was 4-9% of a 30-60 second visit spent on a splash screen.
+    const DUR = 1400;
     let raf = 0;
 
     const tick = (now: number) => {
@@ -39,7 +40,7 @@ export default function Boot({ onDone }: { onDone: () => void }) {
       } else if (!done.current) {
         done.current = true;
         setLeaving(true);
-        window.setTimeout(onDone, 620);
+        window.setTimeout(onDone, 420);
       }
     };
     raf = requestAnimationFrame(tick);
@@ -105,8 +106,8 @@ export default function Boot({ onDone }: { onDone: () => void }) {
           )}
         </ul>
 
-        <p className="mt-12 text-center tag text-dim/70">
-          <span className="bracket">press any key to skip</span>
+        <p className="mt-12 text-center tag text-dim">
+          <span className="bracket">tap or press any key to skip</span>
         </p>
       </div>
     </div>

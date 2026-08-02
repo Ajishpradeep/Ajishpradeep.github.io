@@ -14,8 +14,7 @@ export default function Impact() {
   if (!impact.length) return null;
 
   return (
-    <section id="impact" className="relative scroll-mt-16 overflow-hidden border-b border-cyan/15 bg-deep/30 py-20">
-      <div className="grid-veil absolute inset-0 opacity-50" />
+    <section id="impact" className="relative scroll-mt-[5.5rem] overflow-hidden border-b border-cyan/15 bg-deep/30 py-20">
 
       <div className="shell relative">
         <div className="flex flex-wrap items-end justify-between gap-4 border-b border-cyan/15 pb-5">
@@ -44,12 +43,14 @@ export default function Impact() {
                 data-reveal
                 style={{ '--reveal-delay': `${i * 50}ms` } as React.CSSProperties}
               >
-                <button
-                  type="button"
-                  onClick={() => setOpen(on ? null : m.id)}
-                  aria-expanded={on}
-                  className="flex w-full items-start gap-4 p-5 text-left sm:p-6"
-                >
+                <h3>
+                  <button
+                    type="button"
+                    onClick={() => setOpen(on ? null : m.id)}
+                    aria-expanded={on}
+                    aria-controls={`impact-panel-${m.id}`}
+                    className="flex w-full items-start gap-4 p-5 text-left sm:p-6"
+                  >
                   <span
                     className={`plate-lg transition-colors duration-500 ${
                       on ? 'border-amber/60 bg-amber/10' : ''
@@ -63,7 +64,7 @@ export default function Impact() {
                       <span className="font-display text-[1.0625rem] font-bold leading-snug text-cyan text-balance">
                         {m.title}
                       </span>
-                      <span className="rounded-sm border border-amber/40 px-1.5 py-0.5 font-mono text-[0.625rem] text-amber">
+                      <span className="rounded-sm border border-amber/40 px-1.5 py-0.5 font-mono text-[0.6875rem] text-amber">
                         {m.year}
                       </span>
                     </span>
@@ -81,15 +82,24 @@ export default function Impact() {
                       on ? 'rotate-45' : ''
                     }`}
                   />
-                </button>
+                  </button>
+                </h3>
 
+                {/*
+                  `inert` matters here: the collapsed panel is laid out at zero
+                  height rather than display:none, so without it the two or three
+                  source links inside every closed card stayed in the tab order,
+                  reachable but invisible.
+                */}
                 <div
+                  id={`impact-panel-${m.id}`}
+                  inert={!on ? '' : undefined}
                   className={`grid transition-all duration-500 ease-out ${
                     on ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
                   }`}
                 >
                   <div className="overflow-hidden">
-                    <div className="border-t border-cyan/10 p-5 sm:p-6">
+                    <div className="border-t border-cyan/20 p-5 sm:p-6">
                       <div className="grid gap-6 lg:grid-cols-12 lg:gap-8">
                         <div className="lg:col-span-7">
                           <p className="inline-flex items-center gap-2 tag-sm text-amber">
@@ -104,7 +114,7 @@ export default function Impact() {
 
                         <div className="lg:col-span-5">
                           {m.role && (
-                            <div className="rounded-sm border border-cyan/15 bg-panel/30 p-4">
+                            <div className="rounded-sm border border-cyan/30 bg-panel/30 p-4">
                               <p className="inline-flex items-center gap-2 tag-sm text-amber">
                                 <UserCheck size={14} strokeWidth={2} /> My part
                               </p>
@@ -122,14 +132,14 @@ export default function Impact() {
                                   href={s.url}
                                   target="_blank"
                                   rel="noreferrer"
-                                  className="group flex items-start gap-2 text-[0.8125rem] leading-snug text-cyan/75 transition-colors hover:text-amber"
+                                  className="group -mx-1 flex items-start gap-2 rounded-sm px-1 py-1.5 text-[0.8125rem] leading-snug text-cyan/75 transition-colors hover:text-amber"
                                 >
                                   <ExternalLink
                                     size={13}
                                     strokeWidth={2}
                                     className="mt-1 shrink-0 text-amber/70"
                                   />
-                                  <span className="underline decoration-cyan/25 underline-offset-4 group-hover:decoration-amber">
+                                  <span className="underline decoration-cyan/40 underline-offset-4 group-hover:decoration-amber">
                                     {s.label}
                                   </span>
                                 </a>

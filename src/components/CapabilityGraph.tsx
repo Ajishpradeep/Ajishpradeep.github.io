@@ -1,95 +1,55 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Axis3d, Atom, Brain, Gauge, Hand } from 'lucide-react';
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { Axis3d, Atom, Brain, Gauge, Hand, Pause, Play } from 'lucide-react';
+import { domains, type DomainKey } from '../data/domains';
 
-type Domain = {
-  key: string;
-  label: string;
-  short: string;
-  icon: typeof Axis3d;
-  blurb: string;
-  skills: string[];
+const domainIcon: Record<DomainKey, typeof Axis3d> = {
+  geometry: Axis3d,
+  physics: Atom,
+  llm: Brain,
+  edge: Gauge,
 };
-
-const domains: Domain[] = [
-  {
-    key: 'geometry',
-    label: 'Multi-view geometry',
-    short: 'Geometry',
-    icon: Axis3d,
-    blurb:
-      'Recovering metric 3D from uncalibrated cameras — and knowing when the result is only correct up to an unknown scale.',
-    skills: ['Calibration', 'Triangulation', '2D→3D lifting', 'Scale anchoring'],
-  },
-  {
-    key: 'physics',
-    label: 'Physics-infused models',
-    short: 'Physics',
-    icon: Atom,
-    blurb:
-      'Physical law compiled into the network and the solver, so impossible outputs are unrepresentable rather than merely penalised.',
-    skills: ['Bone-length', 'ROM priors', 'IK solvers', 'Temporal continuity'],
-  },
-  {
-    key: 'llm',
-    label: 'Agentic LLM systems',
-    short: 'Agentic LLMs',
-    icon: Brain,
-    blurb:
-      'Domain grounding where a confident wrong number causes real harm — deterministic computation, generated narration, and evaluation that tells them apart.',
-    skills: ['Grounding', 'Tool use', 'Fine-tuning', 'Evaluation'],
-  },
-  {
-    key: 'edge',
-    label: 'Edge inference',
-    short: 'Edge',
-    icon: Gauge,
-    blurb:
-      'Making capable models cheap enough to run where they have to run — on the device, in real time, with no network.',
-    skills: ['CoreML', 'TensorRT', 'Quantisation', 'ARM'],
-  },
-];
 
 const W = 340;
 const H = 264;
 const CORE = { x: W / 2, y: H / 2 };
 const ORBIT = 92;
-/** Keeps nodes and their satellite labels inside the frame. */
-const PAD = 44;
+/** Keeps nodes inside the frame. */
+const PAD = 40;
+/** How many energy pulses can be in flight at once. */
+const PULSE_POOL = 6;
 
 const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v));
 
-type Body = {
-  x: number;
-  y: number;
-  vx: number;
-  vy: number;
-  ang: number;
-};
+type Body = { x: number; y: number; vx: number; vy: number; ang: number };
 
+function initialBodies(): Body[] {
+  return domains.map((_, i) => {
+    const a = (i / domains.length) * Math.PI * 2 - Math.PI / 2;
+    return {
+      x: CORE.x + Math.cos(a) * ORBIT,
+      y: CORE.y + Math.sin(a) * ORBIT,
+      vx: 0,
+      vy: 0,
+      ang: a,
+    };
+  });
+}
+
+/**
+ * The expertise graph.
+ *
+ * The simulation writes node positions straight to the DOM rather than through
+ * React state: at 60fps a state-driven version re-rendered the whole SVG on
+ * every frame for the life of the page. React still owns everything that
+ * changes rarely — which domain is active, colours, the readout.
+ *
+ * The graphic is decorative and marked aria-hidden. Everything it conveys is
+ * also present as text: the tab strip names each domain, and the readout below
+ * carries the description and the named skills.
+ */
 export default function CapabilityGraph() {
   const [active, setActive] = useState(0);
-  const [held, setHeld] = useState(false);
-  const [dragIdx, setDragIdx] = useState<number | null>(null);
-  const [, tick] = useState(0);
-
-  const svgRef = useRef<SVGSVGElement>(null);
-  const pointer = useRef<{ x: number; y: number } | null>(null);
-  const pulses = useRef<number[]>([]);
-  const spin = useRef(0);
-  const satSpin = useRef(0);
-
-  const bodies = useRef<Body[]>(
-    domains.map((_, i) => {
-      const a = (i / domains.length) * Math.PI * 2 - Math.PI / 2;
-      return {
-        x: CORE.x + Math.cos(a) * ORBIT,
-        y: CORE.y + Math.sin(a) * ORBIT,
-        vx: 0,
-        vy: 0,
-        ang: a,
-      };
-    }),
-  );
+  const [status, setStatus] = useState<'orbiting' | 'held' | 'dragging'>('orbiting');
 
   const reduced = useMemo(
     () =>
@@ -98,35 +58,148 @@ export default function CapabilityGraph() {
     [],
   );
 
+  // Auto-advance is opt-out (WCAG 2.2.2) and never starts under reduced motion.
+  const [autoplay, setAutoplay] = useState(!reduced);
+
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const svgRef = useRef<SVGSVGElement>(null);
+  const nodeRefs = useRef<(SVGGElement | null)[]>([]);
+  const edgeRefs = useRef<(SVGPathElement | null)[]>([]);
+  const iconRefs = useRef<(HTMLSpanElement | null)[]>([]);
+  const satRefs = useRef<(SVGGElement | null)[]>([]);
+  const pulseRefs = useRef<(SVGCircleElement | null)[]>([]);
+
+  const bodies = useRef<Body[]>(initialBodies());
+  const pointer = useRef<{ x: number; y: number } | null>(null);
+  const pulses = useRef<number[]>([]);
+  const spin = useRef(0);
+  const satSpin = useRef(0);
+  const heldRef = useRef(false);
+  const dragIdx = useRef<number | null>(null);
+  const activeRef = useRef(0);
+  /** Pixel width of the plot box, cached so the icon layer never reads layout in the loop. */
+  const boxWidth = useRef(0);
+
+  useEffect(() => {
+    activeRef.current = active;
+  }, [active]);
+
   const toLocal = useCallback((cx: number, cy: number) => {
     const svg = svgRef.current;
     if (!svg) return null;
     const r = svg.getBoundingClientRect();
+    if (!r.width || !r.height) return null;
     return { x: ((cx - r.left) / r.width) * W, y: ((cy - r.top) / r.height) * H };
   }, []);
 
-  // cycle the selection while nobody is interacting
-  useEffect(() => {
-    if (held || reduced) return;
-    const id = window.setInterval(() => setActive((i) => (i + 1) % domains.length), 3600);
-    return () => window.clearInterval(id);
-  }, [held, reduced]);
+  /** Pushes the current simulation state into the DOM. */
+  const paint = useCallback(() => {
+    const B = bodies.current;
+    const act = B[activeRef.current];
+    const scale = boxWidth.current / W;
 
-  // the simulation
+    for (let i = 0; i < B.length; i += 1) {
+      const b = B[i];
+
+      nodeRefs.current[i]?.setAttribute('transform', `translate(${b.x} ${b.y})`);
+
+      const icon = iconRefs.current[i];
+      if (icon && scale) {
+        icon.style.transform = `translate(${b.x * scale}px, ${b.y * scale}px) translate(-50%, -50%)`;
+      }
+
+      const edge = edgeRefs.current[i];
+      if (edge) {
+        const mx = (CORE.x + b.x) / 2;
+        const my = (CORE.y + b.y) / 2;
+        const nx = -(b.y - CORE.y);
+        const ny = b.x - CORE.x;
+        const len = Math.hypot(nx, ny) || 1;
+        const bow = Math.hypot(b.vx, b.vy) * 2.2;
+        edge.setAttribute(
+          'd',
+          `M ${CORE.x} ${CORE.y} Q ${mx + (nx / len) * bow} ${my + (ny / len) * bow} ${b.x} ${b.y}`,
+        );
+      }
+    }
+
+    // Satellites ride around whichever node is active.
+    for (let k = 0; k < satRefs.current.length; k += 1) {
+      const sat = satRefs.current[k];
+      if (!sat || !act) continue;
+      const a = satSpin.current + (k / satRefs.current.length) * Math.PI * 2;
+      sat.setAttribute(
+        'transform',
+        `translate(${act.x + Math.cos(a) * 40} ${act.y + Math.sin(a) * 40})`,
+      );
+    }
+
+    for (let k = 0; k < PULSE_POOL; k += 1) {
+      const el = pulseRefs.current[k];
+      if (!el) continue;
+      const t = pulses.current[k];
+      if (t === undefined || !act) {
+        el.setAttribute('opacity', '0');
+        continue;
+      }
+      el.setAttribute('cx', String(CORE.x + (act.x - CORE.x) * t));
+      el.setAttribute('cy', String(CORE.y + (act.y - CORE.y) * t));
+      el.setAttribute('opacity', String(1 - t * 0.7));
+    }
+  }, []);
+
+  // Cache the plot width so the loop can position the icon layer without reading layout.
+  useLayoutEffect(() => {
+    const box = wrapRef.current;
+    if (!box) return;
+    const measure = () => {
+      boxWidth.current = box.getBoundingClientRect().width;
+      paint();
+    };
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(box);
+    return () => ro.disconnect();
+  }, [paint]);
+
+  // Changing the active domain remounts the satellite markers, so repaint.
+  // Under reduced motion this is the only paint that ever happens.
+  useLayoutEffect(() => {
+    paint();
+  }, [active, paint]);
+
+  // Auto-advance, pausable, and never running under reduced motion.
+  useEffect(() => {
+    if (!autoplay || reduced) return;
+    const id = window.setInterval(
+      () => setActive((i) => (i + 1) % domains.length),
+      3600,
+    );
+    return () => window.clearInterval(id);
+  }, [autoplay, reduced]);
+
+  // The simulation. Runs only while the graph is on screen, and not at all
+  // when the visitor has asked for reduced motion.
   useEffect(() => {
     if (reduced) return;
+    const box = wrapRef.current;
+    if (!box) return;
+
     let raf = 0;
-    let last = performance.now();
+    let last = 0;
+    let running = false;
 
     const step = (now: number) => {
       const dt = Math.min((now - last) / 16.67, 2.5);
       last = now;
 
-      spin.current += 0.0016 * dt * (held ? 0.25 : 1);
+      const activeIdx = activeRef.current;
+      spin.current += 0.0016 * dt * (heldRef.current ? 0.25 : 1);
       satSpin.current += 0.012 * dt;
 
-      bodies.current.forEach((b, i) => {
-        if (i === dragIdx && pointer.current) {
+      const B = bodies.current;
+      B.forEach((b, i) => {
+        if (i === dragIdx.current && pointer.current) {
           b.x = clamp(pointer.current.x, PAD, W - PAD);
           b.y = clamp(pointer.current.y, PAD, H - PAD);
           b.vx = 0;
@@ -134,18 +207,17 @@ export default function CapabilityGraph() {
           return;
         }
 
-        // orbital anchor, with the active node pulled out a little further
+        // Orbital anchor, with the active node pulled out a little further.
         const a = b.ang + spin.current;
-        const radius = ORBIT + (i === active ? 12 : 0);
+        const radius = ORBIT + (i === activeIdx ? 12 : 0);
         const ax = CORE.x + Math.cos(a) * radius;
         const ay = CORE.y + Math.sin(a) * radius;
 
-        // spring toward the anchor
         b.vx += (ax - b.x) * 0.014 * dt;
         b.vy += (ay - b.y) * 0.014 * dt;
 
-        // the cursor pushes nodes aside
-        if (pointer.current && dragIdx === null) {
+        // The cursor pushes nodes aside.
+        if (pointer.current && dragIdx.current === null) {
           const dx = b.x - pointer.current.x;
           const dy = b.y - pointer.current.y;
           const d = Math.hypot(dx, dy);
@@ -156,8 +228,8 @@ export default function CapabilityGraph() {
           }
         }
 
-        // keep nodes off each other
-        bodies.current.forEach((o, j) => {
+        // Keep nodes off each other.
+        B.forEach((o, j) => {
           if (i === j) return;
           const dx = b.x - o.x;
           const dy = b.y - o.y;
@@ -175,66 +247,105 @@ export default function CapabilityGraph() {
         b.y = clamp(b.y + b.vy * dt, PAD, H - PAD);
       });
 
-      // energy travelling core → active node
       pulses.current = pulses.current.map((t) => t + 0.012 * dt).filter((t) => t <= 1);
-      if (Math.random() < 0.045 * dt) pulses.current.push(0);
+      if (pulses.current.length < PULSE_POOL && Math.random() < 0.045 * dt) {
+        pulses.current.push(0);
+      }
 
-      tick((n) => (n + 1) % 100000);
+      paint();
       raf = requestAnimationFrame(step);
     };
 
-    raf = requestAnimationFrame(step);
-    return () => cancelAnimationFrame(raf);
-  }, [active, dragIdx, held, reduced]);
+    const start = () => {
+      if (running) return;
+      running = true;
+      last = performance.now();
+      raf = requestAnimationFrame(step);
+    };
+    const stop = () => {
+      running = false;
+      cancelAnimationFrame(raf);
+    };
 
-  // dragging continues outside the svg
+    const io = new IntersectionObserver(
+      ([entry]) => (entry.isIntersecting ? start() : stop()),
+      { rootMargin: '120px' },
+    );
+    io.observe(box);
+
+    return () => {
+      io.disconnect();
+      stop();
+    };
+  }, [reduced, paint]);
+
+  // Dragging continues outside the svg.
   useEffect(() => {
-    if (dragIdx === null) return;
     const move = (e: PointerEvent) => {
+      if (dragIdx.current === null) return;
       const p = toLocal(e.clientX, e.clientY);
       if (p) pointer.current = p;
     };
-    const up = () => setDragIdx(null);
+    const up = () => {
+      if (dragIdx.current === null) return;
+      dragIdx.current = null;
+      setStatus(heldRef.current ? 'held' : 'orbiting');
+    };
     window.addEventListener('pointermove', move);
     window.addEventListener('pointerup', up);
+    window.addEventListener('pointercancel', up);
     return () => {
       window.removeEventListener('pointermove', move);
       window.removeEventListener('pointerup', up);
+      window.removeEventListener('pointercancel', up);
     };
-  }, [dragIdx, toLocal]);
+  }, [toLocal]);
+
+  /** Selecting a domain by any means hands control to the visitor. */
+  const select = useCallback((i: number) => {
+    setActive(i);
+    setAutoplay(false);
+  }, []);
 
   const current = domains[active];
-  const B = bodies.current;
-  const act = B[active];
 
   return (
     <div
       className="card p-5 sm:p-6"
       onMouseLeave={() => {
-        setHeld(false);
+        heldRef.current = false;
         pointer.current = null;
+        if (dragIdx.current === null) setStatus('orbiting');
       }}
     >
-      <div className="flex items-center justify-between">
+      <div className="flex items-start justify-between gap-3">
         <div>
           <p className="tag-sm text-amber">Expertise graph</p>
-          <p className="mt-1 font-mono text-[0.625rem] text-dim">
-            One core · four domains it feeds
-          </p>
+          <p className="mt-1 font-mono text-[0.6875rem] text-dim">One core · four domains it feeds</p>
         </div>
-        <span className="flex items-center gap-1.5">
-          <span className="h-1.5 w-1.5 rounded-full bg-amber blink" />
-          <span className="font-mono text-[0.625rem] text-dim">
-            {dragIdx !== null ? 'dragging' : held ? 'held' : 'orbiting'}
-          </span>
-        </span>
+        <button
+          type="button"
+          onClick={() => setAutoplay((on) => !on)}
+          className="inline-flex min-h-[1.75rem] items-center gap-1.5 rounded-sm border border-cyan/40 px-2.5 py-1 font-mono text-[0.6875rem] text-cyan transition-colors duration-300 hover:border-amber hover:text-amber"
+        >
+          {autoplay ? <Pause size={11} strokeWidth={2.2} /> : <Play size={11} strokeWidth={2.2} />}
+          {autoplay ? 'Pause' : 'Play'}
+        </button>
       </div>
 
-      <div className="relative mt-4 aspect-[340/264] overflow-hidden rounded-sm border border-cyan/15 bg-void/50">
+      <div
+        ref={wrapRef}
+        className="relative mt-4 aspect-[340/264] overflow-hidden rounded-sm border border-cyan/25 bg-void/50"
+      >
         <svg
           ref={svgRef}
           viewBox={`0 0 ${W} ${H}`}
-          className="absolute inset-0 h-full w-full touch-none select-none"
+          aria-hidden
+          /*
+           * pan-y, not none: a vertical swipe that starts on the graph must
+           * still scroll the page. Horizontal drag stays with the simulation.
+           */
+          className="absolute inset-0 h-full w-full select-none [touch-action:pan-y]"
           onPointerMove={(e) => {
             const p = toLocal(e.clientX, e.clientY);
             if (p) pointer.current = p;
@@ -250,89 +361,59 @@ export default function CapabilityGraph() {
             </radialGradient>
           </defs>
 
-          {/* orbit ring */}
           <circle
             cx={CORE.x}
             cy={CORE.y}
             r={ORBIT}
             fill="none"
             stroke="rgb(var(--cyan))"
-            strokeOpacity="0.08"
+            strokeOpacity="0.14"
             strokeDasharray="2 6"
           />
 
-          {/* edges — bowed by how far each node has been displaced */}
-          {B.map((b, i) => {
+          {/* Edges. The `d` attribute is owned by the simulation, not by React. */}
+          {domains.map((d, i) => {
             const on = i === active;
-            const mx = (CORE.x + b.x) / 2;
-            const my = (CORE.y + b.y) / 2;
-            const nx = -(b.y - CORE.y);
-            const ny = b.x - CORE.x;
-            const len = Math.hypot(nx, ny) || 1;
-            const bow = Math.hypot(b.vx, b.vy) * 2.2;
             return (
               <path
-                key={domains[i].key}
-                d={`M ${CORE.x} ${CORE.y} Q ${mx + (nx / len) * bow} ${my + (ny / len) * bow} ${b.x} ${b.y}`}
+                key={d.key}
+                ref={(el) => {
+                  edgeRefs.current[i] = el;
+                }}
                 fill="none"
                 stroke={on ? 'rgb(var(--amber))' : 'rgb(var(--cyan))'}
-                strokeOpacity={on ? 0.9 : 0.18}
+                strokeOpacity={on ? 0.9 : 0.32}
                 strokeWidth={on ? 1.8 : 1}
                 strokeDasharray={on ? undefined : '4 5'}
               />
             );
           })}
 
-          {/* energy pulses along the active edge */}
-          {act &&
-            pulses.current.map((t, k) => {
-              const px = CORE.x + (act.x - CORE.x) * t;
-              const py = CORE.y + (act.y - CORE.y) * t;
-              return (
-                <circle
-                  key={k}
-                  cx={px}
-                  cy={py}
-                  r={2.6}
-                  fill="rgb(var(--amber))"
-                  opacity={1 - t * 0.7}
-                />
-              );
-            })}
+          {Array.from({ length: PULSE_POOL }).map((_, k) => (
+            <circle
+              key={k}
+              ref={(el) => {
+                pulseRefs.current[k] = el;
+              }}
+              r={2.6}
+              opacity={0}
+              fill="rgb(var(--amber))"
+            />
+          ))}
 
-          {/* satellites: the skills under the active domain */}
-          {act &&
-            current.skills.map((s, k) => {
-              const a = satSpin.current + (k / current.skills.length) * Math.PI * 2;
-              const sx = act.x + Math.cos(a) * 40;
-              const sy = act.y + Math.sin(a) * 40;
-              return (
-                <g key={s}>
-                  <line
-                    x1={act.x}
-                    y1={act.y}
-                    x2={sx}
-                    y2={sy}
-                    stroke="rgb(var(--amber))"
-                    strokeOpacity="0.22"
-                  />
-                  <circle cx={sx} cy={sy} r="2.4" fill="rgb(var(--amber))" opacity="0.85" />
-                  <text
-                    x={sx}
-                    y={sy - 6}
-                    textAnchor="middle"
-                    fill="rgb(var(--amber))"
-                    fillOpacity="0.8"
-                    fontSize="7"
-                    fontFamily="JetBrains Mono, monospace"
-                  >
-                    {s}
-                  </text>
-                </g>
-              );
-            })}
+          {/* Satellite markers for the active domain's skills. The names
+              themselves are rendered as text in the readout below. */}
+          {current.skills.map((s, k) => (
+            <g
+              key={s}
+              ref={(el) => {
+                satRefs.current[k] = el;
+              }}
+            >
+              <circle r="2.4" fill="rgb(var(--amber))" opacity="0.85" />
+            </g>
+          ))}
 
-          {/* core */}
           <circle cx={CORE.x} cy={CORE.y} r="52" fill="url(#coreGlow)" />
           <circle
             cx={CORE.x}
@@ -344,80 +425,65 @@ export default function CapabilityGraph() {
           />
           <text
             x={CORE.x}
-            y={CORE.y - 2}
+            y={CORE.y + 3}
             textAnchor="middle"
             fill="rgb(var(--amber))"
-            fontSize="12"
+            fontSize="13"
             fontFamily="Funnel Display, sans-serif"
             fontWeight="700"
           >
             Maths
           </text>
-          <text
-            x={CORE.x}
-            y={CORE.y + 11}
-            textAnchor="middle"
-            fill="rgb(var(--dim))"
-            fontSize="7.5"
-            fontFamily="JetBrains Mono, monospace"
-          >
-            core
-          </text>
 
-          {/* domain nodes */}
-          {B.map((b, i) => {
+          {domains.map((d, i) => {
             const on = i === active;
             return (
               <g
-                key={domains[i].key}
+                key={d.key}
+                ref={(el) => {
+                  nodeRefs.current[i] = el;
+                }}
                 className="cursor-grab"
                 onPointerDown={(e) => {
                   e.preventDefault();
                   const p = toLocal(e.clientX, e.clientY);
                   if (p) pointer.current = p;
-                  setActive(i);
-                  setHeld(true);
-                  setDragIdx(i);
+                  select(i);
+                  heldRef.current = true;
+                  dragIdx.current = i;
+                  setStatus('dragging');
                 }}
                 onMouseEnter={() => {
-                  setActive(i);
-                  setHeld(true);
+                  select(i);
+                  heldRef.current = true;
+                  setStatus('held');
                 }}
               >
                 <circle
-                  cx={b.x}
-                  cy={b.y}
                   r={on ? 25 : 20}
                   fill={on ? 'rgb(var(--amber))' : 'rgb(var(--deep))'}
                   stroke={on ? 'rgb(var(--amber))' : 'rgb(var(--cyan))'}
-                  strokeOpacity={on ? 1 : 0.4}
+                  strokeOpacity={on ? 1 : 0.55}
                   strokeWidth="1.4"
                 />
-                <text
-                  x={b.x}
-                  y={b.y + (on ? 40 : 34)}
-                  textAnchor="middle"
-                  fill={on ? 'rgb(var(--amber))' : 'rgb(var(--dim))'}
-                  fontSize="8.5"
-                  fontFamily="JetBrains Mono, monospace"
-                >
-                  {domains[i].short}
-                </text>
               </g>
             );
           })}
         </svg>
 
-        {/* icons ride on top so the lucide strokes stay crisp */}
-        <div className="pointer-events-none absolute inset-0">
-          {B.map((b, i) => {
-            const Icon = domains[i].icon;
+        {/* Icons ride on top so the lucide strokes stay crisp. Positioned by
+            transform only, so the loop never triggers layout. */}
+        <div className="pointer-events-none absolute inset-0" aria-hidden>
+          {domains.map((d, i) => {
+            const Icon = domainIcon[d.key];
             const on = i === active;
             return (
               <span
-                key={domains[i].key}
-                className="absolute -translate-x-1/2 -translate-y-1/2"
-                style={{ left: `${(b.x / W) * 100}%`, top: `${(b.y / H) * 100}%` }}
+                key={d.key}
+                ref={(el) => {
+                  iconRefs.current[i] = el;
+                }}
+                className="absolute left-0 top-0 will-change-transform"
               >
                 <Icon
                   size={on ? 22 : 18}
@@ -429,34 +495,64 @@ export default function CapabilityGraph() {
           })}
         </div>
 
+        <p
+          className="pointer-events-none absolute bottom-2 right-2.5 flex items-center gap-1.5 font-mono text-[0.6875rem] text-dim"
+          aria-hidden
+        >
+          <span className="h-1.5 w-1.5 rounded-full bg-amber" />
+          {status}
+        </p>
       </div>
 
-      <p className="mt-2.5 flex items-center gap-1.5 font-mono text-[0.625rem] text-dim">
+      <p className="mt-2.5 hidden items-center gap-1.5 font-mono text-[0.6875rem] text-dim sm:flex">
         <Hand size={11} strokeWidth={2} />
         hover to hold · drag a node · it springs back
       </p>
 
-      {/* readout */}
-      <div key={current.key} className="mt-4 animate-[fadeUp_0.5s_ease-out]">
-        <p className="font-display text-[1.0625rem] font-bold text-amber">{current.label}</p>
-        <p className="mt-2 copy-sm">{current.blurb}</p>
-      </div>
-
-      <div className="mt-4 flex gap-1.5">
+      {/* The graph's information, as text. This is the accessible interface. */}
+      <div
+        role="tablist"
+        aria-label="Capability domains"
+        className="mt-4 grid grid-cols-2 gap-1.5 sm:grid-cols-4"
+      >
         {domains.map((d, i) => (
           <button
             key={d.key}
             type="button"
-            aria-label={d.label}
-            onClick={() => {
-              setActive(i);
-              setHeld(true);
-            }}
-            className={`h-0.5 flex-1 rounded-full transition-colors duration-500 ${
-              i === active ? 'bg-amber' : 'bg-cyan/15 hover:bg-cyan/40'
+            role="tab"
+            id={`domain-tab-${d.key}`}
+            aria-selected={i === active}
+            aria-controls="domain-readout"
+            onClick={() => select(i)}
+            className={`min-h-[2rem] rounded-sm border px-2 py-1.5 font-mono text-[0.6875rem] transition-colors duration-300 ${
+              i === active
+                ? 'border-amber bg-amber/15 text-amber'
+                : 'border-cyan/30 text-cyan/70 hover:border-amber/60 hover:text-amber'
             }`}
-          />
+          >
+            {d.short}
+          </button>
         ))}
+      </div>
+
+      <div
+        id="domain-readout"
+        role="tabpanel"
+        aria-labelledby={`domain-tab-${current.key}`}
+        className="mt-4"
+      >
+        <p className="font-display text-[1.0625rem] font-bold text-amber">{current.label}</p>
+        <p className="mt-2 copy-sm">{current.blurb}</p>
+        <ul className="mt-3 flex flex-wrap gap-1.5">
+          {current.skills.map((s) => (
+            <li
+              key={s}
+              className="rounded-sm border border-cyan/25 bg-panel/60 px-2 py-1 font-mono text-[0.6875rem] text-cyan/80"
+            >
+              {s}
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );

@@ -57,11 +57,11 @@ export const impact: ImpactEntry[] = [
     org: 'TAITRA · EXPO XXI Warsaw, Poland',
     year: '2026',
     claim:
-      'IdeasLab Formosa is a listed exhibitor at Taiwan Expo in Europe, 22–24 June 2026 in Warsaw, showing XView under the Taiwan Excellence banner.',
+      'IdeasLab Formosa was a listed exhibitor at Taiwan Expo in Europe, 22–24 June 2026 in Warsaw, showing XView under the Taiwan Excellence banner.',
     detail: [
-      'Taiwan Expo in Europe runs 22–24 June 2026 at EXPO XXI Warsaw, organised by TAITRA. Its themes cover AI and AIoT, smart manufacturing, digital infrastructure, smart cities and mobility, and sustainable development, with the Taiwan Excellence Pavilion presenting award-winning products from Taiwanese companies.',
+      'Taiwan Expo in Europe ran 22–24 June 2026 at EXPO XXI Warsaw, organised by TAITRA. Its themes cover AI and AIoT, smart manufacturing, digital infrastructure, smart cities and mobility, and sustainable development, with the Taiwan Excellence Pavilion presenting award-winning products from Taiwanese companies.',
       '“Go Healthy with Taiwan” features as a named highlight of the programme, presenting Taiwan’s capabilities in smart healthcare, sports technology and AI for health and well-being.',
-      'The official exhibitor listing names Ideas Lab, Formosa, with XView as the listed product — also exhibiting at Taipei Cycle Show, 25–28 March 2026.',
+      'The official exhibitor listing names Ideas Lab, Formosa, with XView as the listed product — the company also exhibited at Taipei Cycle Show, 25–28 March 2026.',
     ],
     role:
       'Selected as lead engineering representative for the AI capabilities being presented.',

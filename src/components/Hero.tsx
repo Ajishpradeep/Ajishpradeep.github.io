@@ -5,7 +5,6 @@ import {
   Gauge,
   ArrowRight,
   FileText,
-  MapPin,
   Ruler,
   Activity,
   Boxes,
@@ -45,7 +44,7 @@ function StatTile({
   return (
     <li
       ref={ref}
-      className="group flex items-start gap-3 border-b border-r border-cyan/10 px-3 py-5 transition-colors duration-500 last:border-r-0 hover:bg-panel/30 md:border-b-0"
+      className="group flex items-start gap-3 border-b border-r border-cyan/20 px-3 py-5 transition-colors duration-500 hover:bg-panel/30"
     >
       <Icon
         size={17}
@@ -65,11 +64,11 @@ function StatTile({
 export default function Hero() {
 
   return (
-    <section className="relative overflow-hidden pt-24">
+    <section className="relative overflow-hidden pt-[4.5rem] sm:pt-[5.5rem]">
       <div className="grid-veil absolute inset-0" />
       <HudCanvas />
 
-      <div className="shell relative pb-14 pt-12 lg:pt-16">
+      <div className="shell relative pb-14 pt-6 lg:pt-12">
         <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-10">
           {/* LEFT — headline */}
           <div className="lg:col-span-7">
@@ -81,22 +80,20 @@ export default function Hero() {
                 </span>
                 <span className="tag-sm text-amber">Open to research roles</span>
               </span>
-              <span className="inline-flex items-center gap-1.5 text-dim">
-                <MapPin size={13} strokeWidth={2} />
-                <span className="tag-sm">{site.location}</span>
-              </span>
             </div>
 
+            {/*
+              No hard <br />. At 375px the forced breaks made the browser split
+              "COMPUTER VISION" mid-phrase into five ragged lines; balance wraps
+              it on its own terms at every width.
+            */}
             <h1
-              className="mt-7 font-display text-mega font-extrabold uppercase leading-[0.98] track-mid text-cyan glow-cyan"
+              className="mt-7 max-w-[15ch] text-balance font-display text-mega font-extrabold uppercase leading-[0.98] text-cyan glow-cyan"
               data-reveal
               style={{ '--reveal-delay': '60ms' } as React.CSSProperties}
             >
-              Computer vision
-              <br />
-              <span className="text-amber glow-amber">with physics</span>
-              <br />
-              in the model
+              Computer vision <span className="text-amber glow-amber">with physics</span> in the
+              model
             </h1>
 
             <p
@@ -106,6 +103,35 @@ export default function Hero() {
             >
               {site.intro}
             </p>
+
+            {/*
+              Byline. Carries the three things a 45-second visitor needs and the
+              page did not previously give them on a phone: a face, the role,
+              and the other name they may be holding a CV under.
+            */}
+            <div
+              className="mt-7 flex items-center gap-3.5"
+              data-reveal
+              style={{ '--reveal-delay': '150ms' } as React.CSSProperties}
+            >
+              <img
+                src={site.portraitSmall}
+                alt=""
+                width={56}
+                height={56}
+                className="h-14 w-14 shrink-0 rounded-full border border-amber/50 object-cover object-top"
+              />
+              <div className="min-w-0">
+                <p className="font-display text-[1rem] font-bold leading-tight text-cyan">
+                  {site.name}
+                  <span className="text-dim"> · </span>
+                  <span className="text-amber">{site.role}</span>
+                </p>
+                <p className="mt-1 font-mono text-[0.6875rem] leading-tight text-dim">
+                  also known as {site.alias} · {site.location}
+                </p>
+              </div>
+            </div>
 
             {/* domain chips — icons carry the meaning */}
             <ul
@@ -126,7 +152,7 @@ export default function Hero() {
                     <p className="mt-3 font-display text-[0.9375rem] font-bold leading-tight text-cyan">
                       {d.label}
                     </p>
-                    <p className="mt-1 font-mono text-[0.625rem] leading-snug text-dim">
+                    <p className="mt-1 font-mono text-[0.6875rem] leading-snug text-dim">
                       {d.note}
                     </p>
                   </li>
@@ -159,19 +185,26 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* telemetry strip, now icon-led */}
+      {/*
+        Telemetry strip. Every tile carries a right and bottom hairline; the
+        wrapper clips the ones that would otherwise sit flush against the
+        container edge, so the grid reads correctly at 2, 3 and 6 columns
+        without a single nth-child rule.
+      */}
       <div className="relative border-y border-cyan/15 bg-deep/60">
         <div className="shell">
-          <ul className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
-            {marquee.map((m, i) => (
-              <StatTile
-                key={m.value}
-                value={m.value}
-                label={m.label}
-                Icon={statIcon[i] ?? Boxes}
-              />
-            ))}
-          </ul>
+          <div className="overflow-hidden">
+            <ul className="-mb-px -mr-px grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
+              {marquee.map((m, i) => (
+                <StatTile
+                  key={m.value}
+                  value={m.value}
+                  label={m.label}
+                  Icon={statIcon[i] ?? Boxes}
+                />
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     </section>

@@ -42,13 +42,19 @@ export default function App() {
         skip to content
       </a>
 
-      <Nav />
-      <CommandDeck />
-      <SectionRail />
-      <main id="main">
-        <Outlet />
-      </main>
-      <Footer />
+      {/*
+        While the boot overlay covers the page, everything behind it is inert —
+        otherwise a keyboard user could tab into content they cannot see.
+      */}
+      <div inert={!booted ? '' : undefined}>
+        <Nav />
+        <CommandDeck />
+        <SectionRail />
+        <main id="main">
+          <Outlet />
+        </main>
+        <Footer />
+      </div>
     </div>
   );
 }

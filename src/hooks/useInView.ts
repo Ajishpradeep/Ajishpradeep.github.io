@@ -42,10 +42,21 @@ export function useCountUp(display: string, seen: boolean, duration = 1100) {
       return;
     }
 
-    // Animate the LAST number in the string — for "8cm → 3cm" that is the result.
     const matches = [...display.matchAll(/[\d.,]+/g)];
     const last = matches[matches.length - 1];
     if (!last) {
+      setOut(display);
+      return;
+    }
+
+    /*
+     * Only count when the last number is the figure being claimed: either it is
+     * the only number ("240fps"), or the string is a stated progression whose
+     * result is the last number ("8cm → 3cm"). Anything else is a compound
+     * figure where animating one part misreads it — "1 of 3" counted its
+     * denominator and rendered a competition win as "1 of 0".
+     */
+    if (matches.length > 1 && !display.includes('→')) {
       setOut(display);
       return;
     }

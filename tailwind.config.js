@@ -20,7 +20,9 @@ export default {
         mono: ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'monospace'],
       },
       fontSize: {
-        mega: ['clamp(2.5rem, 7.5vw, 6.5rem)', { lineHeight: '1.06', letterSpacing: '0.02em' }],
+        // Floor dropped from 2.5rem: at 375px a 40px uppercase extrabold line
+        // could not fit "COMPUTER VISION" in the available 335px.
+        mega: ['clamp(2rem, 7.2vw, 6rem)', { lineHeight: '1.06', letterSpacing: '0.02em' }],
         headline: ['clamp(1.75rem, 3.6vw, 3.25rem)', { lineHeight: '1.12', letterSpacing: '0.01em' }],
         title: ['clamp(1.25rem, 2vw, 1.75rem)', { lineHeight: '1.2' }],
         lede: ['clamp(0.9375rem, 1.15vw, 1.0625rem)', { lineHeight: '1.75' }],
