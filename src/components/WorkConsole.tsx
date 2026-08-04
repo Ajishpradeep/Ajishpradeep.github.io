@@ -14,6 +14,33 @@ import CaseVisual from './CaseVisual';
 import ConstraintLab from './ConstraintLab';
 import { useReducedMotion } from '../hooks/useReducedMotion';
 
+/** Org, period and role. One row, three columns, wherever it is placed. */
+function Facts({
+  study,
+  className = '',
+}: {
+  study: (typeof work)[number];
+  className?: string;
+}) {
+  return (
+    <ul className={`grid gap-x-8 gap-y-3 border-t border-cyan/20 sm:grid-cols-3 ${className}`}>
+      {[
+        [Building2, study.org],
+        [CalendarDays, study.period],
+        [UserCog, study.role],
+      ].map(([Icon, v], k) => {
+        const I = Icon as typeof Building2;
+        return (
+          <li key={k} className="flex items-start gap-2.5">
+            <I size={15} strokeWidth={1.8} className="mt-0.5 shrink-0 text-amber/80" />
+            <span className="text-fine leading-snug text-cyan/75">{v as string}</span>
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
+
 /**
  * Rail index on the left, case-file readout on the right.
  *
@@ -161,70 +188,61 @@ export default function WorkConsole() {
                 <div className="sweep h-px w-1/3 bg-gradient-to-r from-transparent via-amber to-transparent" />
               </div>
 
-              <div className="grid gap-6 lg:grid-cols-12 lg:gap-8">
-                <div className="flex flex-col lg:col-span-7">
-                  <p className="tag-sm text-amber">{study.domain}</p>
+              {/*
+                Two layouts, because the two kinds of mechanism have opposite
+                shapes. The solver is tall and interactive and needs a column of
+                its own. A static diagram is short and wide, and putting it in a
+                column meant a 185px graphic sitting on top of 470px of nothing
+                while the prose beside it was squeezed into 460px and broke into
+                five-word lines. Floated, the diagram is half again as large and
+                the prose closes around it.
+              */}
+              {study.visual === 'solver' ? (
+                <div className="grid gap-6 lg:grid-cols-12 lg:gap-8">
+                  <div className="flex flex-col lg:col-span-7">
+                    <p className="tag-sm text-amber">{study.domain}</p>
+                    <h3 className="mt-4 max-w-[22ch] text-balance font-display text-title font-extrabold uppercase leading-[1.12] text-cyan">
+                      {study.title}
+                    </h3>
+                    <p className="mt-4 max-w-[56ch] copy">{study.subtitle}</p>
+                    <div className="mt-6 flex items-start gap-3.5 border-t border-cyan/20 pt-5">
+                      <Target size={22} strokeWidth={1.7} className="icon-mark mt-0.5" />
+                      <p className="copy-sm max-w-[62ch]">{study.problem}</p>
+                    </div>
+                    <Facts study={study} className="mt-auto pt-5 lg:pt-6" />
+                  </div>
+                  <div className="lg:col-span-5">
+                    <div key={study.slug} className="animate-[fadeUp_0.6s_ease-out]">
+                      <ConstraintLab />
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <div>
+                  <div
+                    key={study.slug}
+                    className="mb-5 animate-[fadeUp_0.6s_ease-out] lg:float-right lg:mb-4 lg:ml-8 lg:w-[27rem]"
+                  >
+                    <div className="well p-4">
+                      <CaseVisual kind={study.visual} />
+                    </div>
+                  </div>
 
-                  {/*
-                    One rank below the section heading, not level with it. This
-                    was `text-headline` — the same token as "Selected systems"
-                    directly above it — so the card title and the section title
-                    competed at identical weight.
-                  */}
-                  <h3 className="mt-4 max-w-[22ch] text-balance font-display text-title font-extrabold uppercase leading-[1.12] text-cyan">
+                  <p className="tag-sm text-amber">{study.domain}</p>
+                  <h3 className="mt-4 max-w-[26ch] text-balance font-display text-title font-extrabold uppercase leading-[1.12] text-cyan">
                     {study.title}
                   </h3>
+                  <p className="mt-4 copy">{study.subtitle}</p>
 
-                  <p className="mt-4 max-w-[56ch] copy">{study.subtitle}</p>
-
-                  {/*
-                    The constraint that made it hard. Sits here rather than
-                    below, so the column matches the visual's height. Marked by
-                    a rule and the icon rather than a tinted box — it is a
-                    distinct rhetorical unit, not a distinct surface.
-                  */}
                   <div className="mt-6 flex items-start gap-3.5 border-t border-cyan/20 pt-5">
                     <Target size={22} strokeWidth={1.7} className="icon-mark mt-0.5" />
-                    <p className="copy-sm max-w-[62ch]">{study.problem}</p>
+                    <p className="copy-sm">{study.problem}</p>
                   </div>
 
-                  {/*
-                    Org, period and role sit at the foot of this column rather
-                    than in a full-width row below the grid. The solver beside
-                    them is ~320px taller than the prose, and that difference
-                    used to be an empty hole inside a bordered card. `mt-auto`
-                    spends it, and the two columns now finish together.
-                  */}
-                  <ul className="mt-auto grid gap-4 border-t border-cyan/20 pt-5 sm:grid-cols-3 lg:pt-6">
-                    {[
-                      [Building2, study.org],
-                      [CalendarDays, study.period],
-                      [UserCog, study.role],
-                    ].map(([Icon, v], k) => {
-                      const I = Icon as typeof Building2;
-                      return (
-                        <li key={k} className="flex items-start gap-2.5">
-                          <I size={15} strokeWidth={1.8} className="mt-0.5 shrink-0 text-amber/80" />
-                          <span className="text-fine leading-snug text-cyan/75">{v as string}</span>
-                        </li>
-                      );
-                    })}
-                  </ul>
+                  {/* clear the float so the facts run the full width of the card */}
+                  <Facts study={study} className="mt-6 pt-5 lg:clear-right" />
                 </div>
-
-                {/* the mechanism — interactive where the study warrants it */}
-                <div className="lg:col-span-5">
-                  <div key={study.slug} className="animate-[fadeUp_0.6s_ease-out]">
-                    {study.visual === 'solver' ? (
-                      <ConstraintLab />
-                    ) : (
-                      <div className="well p-3">
-                        <CaseVisual kind={study.visual} />
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
+              )}
 
               {/*
                 Four readings side by side already read as a group; the four

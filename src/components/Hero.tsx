@@ -67,7 +67,13 @@ export default function Hero() {
       <HudCanvas />
 
       <div className="shell relative pb-12 pt-6 lg:pt-10">
-        <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-10">
+        {/*
+          `items-start`, not `items-center`. Centred, the panel floated against
+          the taller headline column and left a band of empty space above it
+          that read as a mistake. Aligned to the top, the two columns start on
+          the same line.
+        */}
+        <div className="grid items-start gap-12 lg:grid-cols-12 lg:gap-10">
           {/* LEFT — headline */}
           <div className="lg:col-span-7">
             <div className="flex flex-wrap items-center gap-3" data-reveal>

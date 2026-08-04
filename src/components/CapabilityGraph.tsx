@@ -431,31 +431,62 @@ export default function CapabilityGraph() {
 
       </div>
 
-      <p className="mt-2.5 flex items-center gap-1.5 font-mono text-[0.625rem] text-dim">
-        <Hand size={11} strokeWidth={2} />
+      <p className="mt-3 flex items-start gap-2 font-mono text-micro text-dim">
+        <Hand size={13} strokeWidth={2} className="mt-0.5 shrink-0" />
         hover to hold · drag a node · it springs back
       </p>
 
-      {/* readout */}
-      <div key={current.key} className="mt-4 animate-[fadeUp_0.5s_ease-out]">
-        <p className="font-display text-[1.0625rem] font-bold text-amber">{current.label}</p>
-        <p className="mt-2 copy-sm">{current.blurb}</p>
+      {/*
+        The readout. It carried a heading and one sentence; the skills it names
+        only existed as 8px labels orbiting inside the graphic, where they are
+        unreadable and gone the moment the selection changes. They are text now,
+        so the panel explains itself whether or not the simulation is running.
+      */}
+      <div key={current.key} className="mt-5 animate-[fadeUp_0.5s_ease-out] border-t border-cyan/20 pt-5">
+        <div className="flex items-baseline justify-between gap-3">
+          <p className="font-display text-lead font-bold leading-tight text-amber">
+            {current.label}
+          </p>
+          <p className="tag-sm shrink-0 text-dim">
+            {String(active + 1).padStart(2, '0')} / {String(domains.length).padStart(2, '0')}
+          </p>
+        </div>
+
+        <p className="copy-sm mt-2.5">{current.blurb}</p>
+
+        <ul className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-fine text-cyan/70">
+          {current.skills.map((sk, k) => (
+            <li key={sk} className="flex items-center gap-2">
+              {sk}
+              {k < current.skills.length - 1 && <span className="text-cyan/30">·</span>}
+            </li>
+          ))}
+        </ul>
       </div>
 
-      <div className="mt-4 flex gap-1.5">
+      {/*
+        The hairline selector. The bar stays a hairline; the button around it
+        grew a real hit area, because a 2px-tall target is not one.
+      */}
+      <div className="mt-5 flex gap-1.5">
         {domains.map((d, i) => (
           <button
             key={d.key}
             type="button"
             aria-label={d.label}
+            aria-pressed={i === active}
             onClick={() => {
               setActive(i);
               setHeld(true);
             }}
-            className={`h-0.5 flex-1 rounded-full transition-colors duration-500 ${
-              i === active ? 'bg-amber' : 'bg-cyan/15 hover:bg-cyan/40'
-            }`}
-          />
+            className="group flex flex-1 items-center py-3"
+          >
+            <span
+              className={`h-0.5 w-full rounded-full transition-colors duration-500 ${
+                i === active ? 'bg-amber' : 'bg-cyan/15 group-hover:bg-cyan/40'
+              }`}
+            />
+          </button>
         ))}
       </div>
     </div>
