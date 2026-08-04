@@ -18,12 +18,19 @@ import { useReducedMotion } from '../hooks/useReducedMotion';
 function Facts({
   study,
   className = '',
+  stacked = false,
 }: {
   study: (typeof work)[number];
   className?: string;
+  /** One column, for when this sits inside a narrow half of the card. */
+  stacked?: boolean;
 }) {
   return (
-    <ul className={`grid gap-x-8 gap-y-3 border-t border-cyan/20 sm:grid-cols-3 ${className}`}>
+    <ul
+      className={`grid gap-x-8 gap-y-3 border-t border-cyan/20 ${
+        stacked ? "" : "sm:grid-cols-3"
+      } ${className}`}
+    >
       {[
         [Building2, study.org],
         [CalendarDays, study.period],
@@ -209,7 +216,7 @@ export default function WorkConsole() {
                       <Target size={22} strokeWidth={1.7} className="icon-mark mt-0.5" />
                       <p className="copy-sm max-w-[62ch]">{study.problem}</p>
                     </div>
-                    <Facts study={study} className="mt-auto pt-5 lg:pt-6" />
+                    <Facts study={study} stacked className="mt-auto pt-5 lg:pt-6" />
                   </div>
                   <div className="lg:col-span-5">
                     <div key={study.slug} className="animate-[fadeUp_0.6s_ease-out]">

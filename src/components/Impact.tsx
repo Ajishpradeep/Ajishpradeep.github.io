@@ -1,6 +1,17 @@
 import { useState } from 'react';
-import { Trophy, Globe2, Smartphone, Store, Plus, ExternalLink, UserCheck, ScrollText } from 'lucide-react';
+import {
+  Trophy,
+  Globe2,
+  Smartphone,
+  Store,
+  Plane,
+  Plus,
+  ExternalLink,
+  UserCheck,
+  ScrollText,
+} from 'lucide-react';
 import { impact } from '../data/impact';
+import { RouteMap } from './Vectors';
 
 const icons = [Trophy, Globe2, Smartphone, Store];
 
@@ -163,6 +174,51 @@ export default function Impact() {
             );
           })}
         </ul>
+
+        {/*
+          Reach. It lived at the foot of Capabilities, where it read as a note
+          about where three products went. It belongs here, under the dossier —
+          this is the consolidated answer to "how far has the work actually
+          got", and every figure in it is one an entry above corroborates.
+
+          Attribution stays exact, because the whole section is built on that:
+          the pose research is his and led by him; the retail deployment is a
+          problem he worked on at a company whose own peer-reviewed paper
+          reports the scale; the award and the Warsaw listing were won and held
+          by the organisation.
+        */}
+        <div className="mt-14 grid gap-8 border-t border-cyan/20 pt-12 lg:grid-cols-12 lg:items-center" data-reveal>
+          <div className="lg:col-span-5">
+            <p className="tag-sm text-amber">Reach</p>
+            <p className="mt-4 max-w-[54ch] copy">
+              None of it stayed in a notebook. The pose research I led ships worldwide on the App
+              Store and runs entirely on the phone. The retail vision problem I worked on is
+              deployed across more than 7,000 stores in Taiwan. The motion models behind that work
+              were judged against 638 proposals from 55 countries, then shown in Warsaw under the
+              Taiwan Excellence banner.
+            </p>
+            <ul className="mt-6 space-y-3">
+              {[
+                [Smartphone, 'On consumer phones', 'worldwide, on-device'],
+                [Store, 'In national retail', '7,000+ stores'],
+                [Plane, 'On an international floor', 'Warsaw, Jun 2026'],
+              ].map(([Icon, label, note], k) => {
+                const I = Icon as typeof Smartphone;
+                return (
+                  <li key={k} className="flex items-center gap-3">
+                    <I size={16} strokeWidth={1.8} className="shrink-0 text-amber/80" />
+                    <span className="flex-1 text-fine text-cyan/80">{label as string}</span>
+                    <span className="font-mono text-micro text-dim">{note as string}</span>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+
+          <div className="lg:col-span-7">
+            <RouteMap className="w-full" />
+          </div>
+        </div>
       </div>
     </section>
   );

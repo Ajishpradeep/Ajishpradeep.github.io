@@ -44,32 +44,33 @@ export default function Research() {
           {research.map((r, i) => {
             const body = (
               <>
-                <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-2">
-                  <h3 className="max-w-[52ch] text-balance font-display text-lead font-bold leading-snug text-cyan">
-                    {r.title}
-                  </h3>
-                  <span
-                    className={`shrink-0 rounded-sm border px-2 py-0.5 font-mono text-micro ${statusStyle[r.status]}`}
-                  >
-                    {statusLabel[r.status]}
-                  </span>
-                </div>
-                <p className="mt-2 font-mono text-micro text-dim">{r.venue}</p>
-                <p className="mt-3 max-w-[70ch] copy-sm">{r.summary}</p>
+                <h3 className="max-w-[46ch] text-balance font-display text-lead font-bold leading-snug text-cyan">
+                  {r.title}
+                </h3>
+                <p className="copy-sm mt-2.5 max-w-[62ch]">{r.summary}</p>
               </>
             );
 
             return (
               <li
                 key={r.title}
-                className="grid gap-x-8 gap-y-2 border-b border-cyan/20 py-7 sm:grid-cols-12"
+                className="grid gap-x-8 gap-y-3 border-b border-cyan/20 py-7 sm:grid-cols-12"
                 data-reveal
                 style={{ '--reveal-delay': `${i * 40}ms` } as React.CSSProperties}
               >
-                <p className="font-mono text-fine tabular-nums text-amber sm:col-span-2">
+                {/*
+                  A 4-character year had a 197px gutter, the body stopped at its
+                  measure ~400px short of the row's right edge, and the only
+                  thing out there was a floating status chip. The year gutter is
+                  one column now, and the venue joins the status in a metadata
+                  column — so the right of the row carries information instead
+                  of a chip and a void.
+                */}
+                <p className="font-mono text-fine tabular-nums text-amber sm:col-span-1">
                   {r.year}
                 </p>
-                <div className="sm:col-span-10">
+
+                <div className="sm:col-span-8">
                   {r.href ? (
                     <a href={r.href} target="_blank" rel="noreferrer" className="group block">
                       {body}
@@ -80,6 +81,15 @@ export default function Research() {
                   ) : (
                     body
                   )}
+                </div>
+
+                <div className="flex flex-wrap items-start gap-x-3 gap-y-2 sm:col-span-3 sm:flex-col sm:items-end sm:text-right">
+                  <span
+                    className={`shrink-0 rounded-sm border px-2 py-0.5 font-mono text-micro ${statusStyle[r.status]}`}
+                  >
+                    {statusLabel[r.status]}
+                  </span>
+                  <p className="font-mono text-micro leading-snug text-dim">{r.venue}</p>
                 </div>
               </li>
             );

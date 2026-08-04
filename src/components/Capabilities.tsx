@@ -1,6 +1,4 @@
-import { Smartphone, Store, Plane } from 'lucide-react';
 import { capabilities } from '../data/research';
-import { RouteMap } from './Vectors';
 
 /**
  * Capabilities.
@@ -53,36 +51,6 @@ export default function Capabilities() {
           ))}
         </dl>
 
-        {/* Where the work has travelled. */}
-        <div className="mt-12 grid gap-8 lg:grid-cols-12 lg:items-center" data-reveal>
-          <div className="lg:col-span-5">
-            <p className="tag-sm text-amber">Reach</p>
-            <p className="mt-4 max-w-[52ch] copy">
-              Built in Taipei. Shipped to iOS worldwide, deployed across Taiwanese retail, and
-              presented in Warsaw at Taiwan Expo Europe 2026.
-            </p>
-            <ul className="mt-6 space-y-3">
-              {[
-                [Smartphone, 'iOS App Store', 'worldwide'],
-                [Store, 'Retail deployment', '7,000+ sites'],
-                [Plane, 'Taiwan Expo Europe', 'Warsaw, Jun 2026'],
-              ].map(([Icon, label, note], k) => {
-                const I = Icon as typeof Smartphone;
-                return (
-                  <li key={k} className="flex items-center gap-3">
-                    <I size={16} strokeWidth={1.8} className="shrink-0 text-amber/80" />
-                    <span className="flex-1 text-fine text-cyan/80">{label as string}</span>
-                    <span className="font-mono text-micro text-dim">{note as string}</span>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
-
-          <div className="lg:col-span-7">
-            <RouteMap className="w-full" />
-          </div>
-        </div>
       </div>
     </section>
   );

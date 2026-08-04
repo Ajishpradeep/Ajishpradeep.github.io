@@ -1,8 +1,4 @@
 import {
-  Axis3d,
-  Atom,
-  Brain,
-  Gauge,
   ArrowRight,
   FileText,
   Ruler,
@@ -13,17 +9,9 @@ import {
   Globe2,
 } from 'lucide-react';
 import { marquee, site } from '../data/site';
-import { domains } from '../data/domains';
 import HudCanvas from './HudCanvas';
 import CapabilityGraph from './CapabilityGraph';
 import { useInView, useCountUp } from '../hooks/useInView';
-
-const domainIcon = {
-  geometry: Axis3d,
-  physics: Atom,
-  llm: Brain,
-  edge: Gauge,
-} as const;
 
 /** One icon per headline figure, in the order they appear in the data. */
 const statIcon = [Ruler, Activity, Boxes, Store, Trophy, Globe2];
@@ -44,17 +32,19 @@ function StatTile({
   return (
     <li
       ref={ref}
-      className="group flex items-start gap-3 border-b border-r border-cyan/20 px-3 py-5 transition-colors duration-500 hover:bg-panel/30"
+      className="group border-b border-r border-cyan/20 px-4 py-5 transition-colors duration-500 hover:bg-panel/30"
     >
-      <Icon
-        size={18}
-        strokeWidth={1.7}
-        className="icon-mark mt-1 text-amber/80 transition-transform duration-500 group-hover:scale-110"
-      />
-      <div className="min-w-0">
-        <p className="font-display text-title font-bold text-cyan tabular-nums">{shown}</p>
-        <p className="mt-1.5 font-text text-fine text-dim">{label}</p>
+      <div className="flex items-baseline gap-2.5">
+        <Icon
+          size={16}
+          strokeWidth={1.7}
+          className="icon-mark translate-y-0.5 text-amber/80 transition-transform duration-500 group-hover:scale-110"
+        />
+        <p className="font-display text-title font-bold leading-none text-cyan tabular-nums">
+          {shown}
+        </p>
       </div>
+      <p className="mt-2 font-text text-micro leading-snug text-dim">{label}</p>
     </li>
   );
 }
@@ -68,14 +58,15 @@ export default function Hero() {
 
       <div className="shell relative pb-12 pt-6 lg:pt-10">
         {/*
-          `items-start`, not `items-center`. Centred, the panel floated against
-          the taller headline column and left a band of empty space above it
-          that read as a mistake. Aligned to the top, the two columns start on
-          the same line.
+          `items-stretch`, not `items-center`. Centred, the panel floated
+          against the taller headline column and left a band of empty space
+          above it that read as a mistake. Stretched, both columns start on the
+          same line AND share a height — which is what lets the CTA row below
+          push itself to the panel's bottom edge with `mt-auto`.
         */}
-        <div className="grid items-start gap-12 lg:grid-cols-12 lg:gap-10">
+        <div className="grid items-stretch gap-12 lg:grid-cols-12 lg:gap-10">
           {/* LEFT — headline */}
-          <div className="lg:col-span-7">
+          <div className="flex flex-col lg:col-span-7">
             <div className="flex flex-wrap items-center gap-3" data-reveal>
               <span className="inline-flex items-center gap-2 rounded-sm border border-amber/40 bg-amber/10 px-3 py-1.5">
                 <span className="relative flex h-2 w-2">
@@ -148,35 +139,10 @@ export default function Hero() {
               </p>
             </div>
 
-            {/*
-              Domain summary. These were four `.card`s, each wrapping its icon
-              in a second bordered `.plate` — two nested frames apiece to show
-              one 20px glyph. They are not link targets and they are not
-              expandable, so they never needed an extent stated: one hairline
-              across the top of the row groups them, and the icon sits on the
-              ground where it can simply be seen.
-            */}
-            <ul
-              className="mt-8 grid grid-cols-2 gap-x-6 gap-y-6 border-t border-cyan/20 pt-6 sm:grid-cols-4"
-              data-reveal
-              style={{ '--reveal-delay': '220ms' } as React.CSSProperties}
-            >
-              {domains.map((d) => {
-                const Icon = domainIcon[d.key];
-                return (
-                  <li key={d.key}>
-                    <Icon size={24} strokeWidth={1.6} className="icon-mark" />
-                    <p className="mt-3 font-display text-base font-bold leading-tight text-cyan">
-                      {d.label}
-                    </p>
-                    <p className="mt-1.5 font-text text-fine leading-snug text-dim">{d.note}</p>
-                  </li>
-                );
-              })}
-            </ul>
-
+            {/* mt-auto: the CTAs land on the panel's bottom edge rather than
+                leaving the column short of it. */}
             <div
-              className="mt-8 flex flex-wrap gap-3"
+              className="mt-8 flex flex-wrap gap-3 lg:mt-auto lg:pt-8"
               data-reveal
               style={{ '--reveal-delay': '260ms' } as React.CSSProperties}
             >
@@ -196,6 +162,7 @@ export default function Hero() {
             style={{ '--reveal-delay': '200ms' } as React.CSSProperties}
           >
             <CapabilityGraph />
+
           </div>
         </div>
       </div>

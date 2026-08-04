@@ -215,16 +215,24 @@ export default function CapabilityGraph() {
         pointer.current = null;
       }}
     >
-      <div className="flex items-center justify-between">
+      {/*
+        Panel typography, brought onto the site's scale. This header was a
+        10px uppercase mono label over a 10px mono line — two sizes that exist
+        nowhere else on the page, in a family the rest of the site reserves for
+        figures and measurements. It reads like a heading now, in the display
+        face, at the same rank as every other panel title. The graphic below is
+        untouched.
+      */}
+      <div className="flex items-start justify-between gap-3">
         <div>
-          <p className="tag-sm text-amber">Expertise graph</p>
-          <p className="mt-1 font-mono text-[0.625rem] text-dim">
-            One core · four domains it feeds
+          <p className="font-display text-lead font-bold leading-tight text-cyan">
+            Expertise graph
           </p>
+          <p className="mt-1 font-text text-fine text-dim">One core · four domains it feeds</p>
         </div>
-        <span className="flex items-center gap-1.5">
-          <span className="h-1.5 w-1.5 rounded-full bg-amber blink" />
-          <span className="font-mono text-[0.625rem] text-dim">
+        <span className="flex shrink-0 items-center gap-2 pt-1">
+          <span className="blink h-1.5 w-1.5 rounded-full bg-amber" />
+          <span className="font-mono text-micro text-dim">
             {dragIdx !== null ? 'dragging' : held ? 'held' : 'orbiting'}
           </span>
         </span>
