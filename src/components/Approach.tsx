@@ -15,15 +15,15 @@ export default function Approach() {
   return (
     <section
       id="method"
-      className="relative scroll-mt-[5.5rem] overflow-hidden border-b border-cyan/15 py-20"
+      className="relative scroll-mt-[5.5rem] overflow-hidden border-b border-cyan/15 py-14 sm:py-16 lg:py-20"
     >
       <div className="shell relative">
         <div className="flex flex-wrap items-end justify-between gap-4 border-b border-cyan/15 pb-5">
           <h2
-            className="font-display text-headline font-extrabold uppercase track-mid text-cyan"
+            className="font-text text-title font-semibold text-cyan/75"
             data-reveal
           >
-            <span className="text-amber">[</span>Method<span className="text-amber">]</span>
+            Method
           </h2>
           <p className="tag-sm text-dim">Six findings · from being wrong measurably</p>
         </div>
@@ -32,21 +32,21 @@ export default function Approach() {
           {principles.map((p, i) => (
             <li
               key={p.n}
-              className="grid gap-x-10 gap-y-3 border-b border-cyan/20 py-8 lg:grid-cols-12"
+              className="grid gap-x-10 gap-y-2 border-b border-cyan/20 py-6 lg:grid-cols-12"
               data-reveal
               style={{ '--reveal-delay': `${i * 40}ms` } as React.CSSProperties}
             >
-              <h3 className="text-balance font-display text-[1.25rem] font-bold leading-snug text-cyan lg:col-span-5 lg:text-[1.375rem]">
+              <h3 className="text-balance font-display text-lead font-bold leading-snug text-cyan lg:col-span-4">
                 {p.title}
               </h3>
 
-              <div className="lg:col-span-7">
+              <div className="lg:col-span-8">
                 <p className="max-w-[68ch] copy">{p.body}</p>
 
                 {p.from && (
                   <Link
                     to={`/work/${p.from.slug}`}
-                    className="group mt-4 inline-flex items-baseline gap-2 text-[0.875rem] text-amber"
+                    className="group -mx-1 mt-3 inline-flex min-h-[2.25rem] items-center gap-2 rounded-sm px-1 text-fine text-amber"
                   >
                     <span className="underline decoration-amber/40 underline-offset-4 transition-colors group-hover:decoration-amber">
                       Where this came from: {p.from.section}

@@ -78,9 +78,9 @@ export default function Boot({ onDone }: { onDone: () => void }) {
           <span className="bracket">pradeep rajasekar · ai research engineer</span>
         </p>
 
-        <p className="mt-8 text-center font-mono text-[2.75rem] leading-none text-amber glow-amber sm:text-[4rem]">
+        <p className="mt-8 text-center font-mono text-headline leading-none text-amber glow-amber">
           {String(pct).padStart(3, '0')}
-          <span className="ml-1 text-[1.25rem] align-top opacity-70">%</span>
+          <span className="ml-1 text-lead align-top opacity-70">%</span>
         </p>
 
         {/* progress rail */}
@@ -91,7 +91,7 @@ export default function Boot({ onDone }: { onDone: () => void }) {
           />
         </div>
 
-        <ul className="mt-10 space-y-1.5 font-mono text-[0.6875rem] tracking-[0.06em] text-cyan/70">
+        <ul className="mt-10 space-y-1.5 font-mono text-micro tracking-[0.06em] text-cyan/70">
           {LINES.slice(0, shown).map((l) => (
             <li key={l} className="flex gap-3">
               <span className="text-amber/80">›</span>

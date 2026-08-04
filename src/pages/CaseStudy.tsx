@@ -32,7 +32,7 @@ export default function CaseStudy() {
             <p className="tag text-dim">
               <span className="bracket">{study.domain}</span>
             </p>
-            <p className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-amber">
+            <p className="font-mono text-micro uppercase tracking-[0.14em] text-amber">
               case {study.index} / {String(work.length).padStart(2, '0')} · {study.slug}
             </p>
           </div>
@@ -67,7 +67,7 @@ export default function CaseStudy() {
               <p className="tag text-amber/80">
                 <span className="bracket">{k}</span>
               </p>
-              <p className="mt-3 max-w-[34ch] text-[0.8125rem] leading-relaxed text-cyan/75 text-pretty">
+              <p className="mt-3 max-w-[34ch] text-fine leading-relaxed text-cyan/75 text-pretty">
                 {v}
               </p>
             </div>
@@ -85,13 +85,13 @@ export default function CaseStudy() {
                 key={m.label}
                 className="border-b border-r border-cyan/20 py-7 pl-5 pr-5 first:pl-0"
               >
-                <p className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-dim">
+                <p className="font-mono text-micro uppercase tracking-[0.14em] text-dim">
                   ·{String(i + 1).padStart(2, '0')}·
                 </p>
-                <p className="mt-2.5 font-display text-[1.75rem] font-bold track-mid text-amber glow-amber">
+                <p className="mt-2.5 font-display text-title font-bold text-amber glow-amber">
                   {m.value}
                 </p>
-                <p className="mt-2 max-w-[26ch] font-mono text-[0.6875rem] leading-snug text-dim">
+                <p className="mt-2 max-w-[26ch] font-mono text-micro leading-snug text-dim">
                   {m.label}
                 </p>
               </li>
@@ -121,10 +121,10 @@ export default function CaseStudy() {
         <section key={s.heading} className="border-b border-cyan/20 py-14">
           <div className="shell grid gap-6 lg:grid-cols-12 lg:gap-10">
             <div className="lg:col-span-3" data-reveal>
-              <span className="font-mono text-[0.6875rem] text-amber">
+              <span className="font-mono text-micro text-amber">
                 ·{String(i + 1).padStart(2, '0')}·
               </span>
-              <h2 className="mt-3 max-w-[26ch] font-display text-[1.0625rem] font-bold leading-snug text-cyan lg:sticky lg:top-28 text-balance">
+              <h2 className="mt-3 max-w-[26ch] font-display text-lead font-bold leading-snug text-cyan lg:sticky lg:top-28 text-balance">
                 {s.heading}
               </h2>
             </div>
@@ -132,7 +132,7 @@ export default function CaseStudy() {
               {s.body.map((p, j) => (
                 <p
                   key={j}
-                  className="text-[0.9375rem] leading-[1.85] text-cyan/65 text-pretty [&+&]:mt-5"
+                  className="text-base leading-[1.85] text-cyan/65 text-pretty [&+&]:mt-5"
                 >
                   {p}
                 </p>
@@ -157,7 +157,7 @@ export default function CaseStudy() {
                 style={{ '--reveal-delay': `${i * 60}ms` } as React.CSSProperties}
               >
                 <span className="mt-2 h-1.5 w-1.5 shrink-0 bg-amber" />
-                <span className="text-[0.9375rem] leading-relaxed text-cyan/80 text-pretty">
+                <span className="text-base leading-relaxed text-cyan/80 text-pretty">
                   {o}
                 </span>
               </li>

@@ -241,7 +241,7 @@ export default function CommandDeck() {
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center gap-3 border-b border-cyan/15 px-5 py-4">
-          <span className="font-mono text-[0.75rem] text-amber">›</span>
+          <span className="font-mono text-fine text-amber">›</span>
           <input
             ref={inputRef}
             value={q}
@@ -249,14 +249,14 @@ export default function CommandDeck() {
             onKeyDown={onKeyDown}
             placeholder="type a command…"
             aria-label="Command input"
-            className="w-full bg-transparent font-mono text-[0.8125rem] text-cyan outline-none placeholder:text-dim"
+            className="w-full bg-transparent font-mono text-fine text-cyan outline-none placeholder:text-dim"
           />
-          <kbd className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-dim">esc</kbd>
+          <kbd className="font-mono text-micro uppercase tracking-[0.14em] text-dim">esc</kbd>
         </div>
 
         <ul className="max-h-[52vh] overflow-y-auto py-2">
           {results.length === 0 && (
-            <li className="px-5 py-6 font-mono text-[0.75rem] text-dim">
+            <li className="px-5 py-6 font-mono text-fine text-dim">
               no matching command · try “work”, “case”, “cv”
             </li>
           )}
@@ -267,7 +267,7 @@ export default function CommandDeck() {
             return (
               <li key={c.id}>
                 {header && (
-                  <p className="px-5 pb-1.5 pt-3 font-mono text-[0.6875rem] uppercase tracking-[0.16em] text-dim">
+                  <p className="px-5 pb-1.5 pt-3 font-mono text-micro uppercase tracking-[0.16em] text-dim">
                     ·{header}·
                   </p>
                 )}
@@ -279,12 +279,12 @@ export default function CommandDeck() {
                     on ? 'bg-amber text-void' : 'text-cyan/80 hover:bg-panel/50'
                   }`}
                 >
-                  <span className="font-mono text-[0.8125rem]">
+                  <span className="font-mono text-fine">
                     <span className={on ? 'text-void/75' : 'text-amber/70'}>›&nbsp;</span>
                     {c.label}
                   </span>
                   <span
-                    className={`truncate font-mono text-[0.6875rem] uppercase tracking-[0.14em] ${
+                    className={`truncate font-mono text-micro uppercase tracking-[0.14em] ${
                       on ? 'text-void/70' : 'text-dim'
                     }`}
                   >
@@ -297,10 +297,10 @@ export default function CommandDeck() {
         </ul>
 
         <div className="flex items-center justify-between border-t border-cyan/15 px-5 py-3">
-          <p className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-dim">
+          <p className="font-mono text-micro uppercase tracking-[0.14em] text-dim">
             ↑↓ move · ⏎ run · esc close
           </p>
-          <p className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-amber">
+          <p className="font-mono text-micro uppercase tracking-[0.14em] text-amber">
             {results.length} cmd
           </p>
         </div>

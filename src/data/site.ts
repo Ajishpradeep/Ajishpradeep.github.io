@@ -18,10 +18,16 @@ export const site = {
     'Computer vision built on explicit mathematics, with physical law enforced inside the model.',
   /**
    * Positioned around the expertise, not around any employer's product.
-   * Kept short — the hero carries icons and an interactive demo, not paragraphs.
+   *
+   * Split into two sentences deliberately. The single 42-word version put its
+   * payoff — "physically possible by construction" — at word 34, behind a
+   * technology list, so a thirty-second reader stopped before reaching it. The
+   * second sentence is the differentiator a CV structurally cannot carry, and
+   * it is now the last thing read rather than an unread subordinate clause.
    */
   intro:
-    'I work on 3D computer vision where the mathematics is explicit and the physics is enforced — multi-view geometry, constrained optimisation and anatomical priors compiled into the network itself, so its output is physically possible by construction rather than merely plausible.',
+    'The mathematics is explicit and the physics is enforced — multi-view geometry, constrained optimisation and anatomical priors compiled into the network itself, so the output is physically possible by construction rather than merely plausible.',
+  introEmphasis: "I care most about the failures a model's own metric cannot see.",
   links: [
     { label: 'Email', href: 'mailto:ajishpradeep@gmail.com', handle: 'ajishpradeep@gmail.com' },
     { label: 'GitHub', href: 'https://github.com/Ajishpradeep', handle: '@Ajishpradeep' },

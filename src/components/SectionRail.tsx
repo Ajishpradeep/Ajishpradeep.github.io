@@ -46,10 +46,10 @@ export default function SectionRail() {
   return (
     <nav
       aria-label="Section navigation"
-      className="fixed right-5 top-1/2 z-40 hidden -translate-y-1/2 xl:block"
+      className="fixed right-5 top-1/2 z-40 hidden -translate-y-1/2 2xl:block"
     >
       <div className="flex flex-col items-end gap-2">
-        <span className="mb-1 font-mono text-[0.6875rem] tracking-[0.16em] text-amber" aria-hidden>
+        <span className="mb-1 font-mono text-micro tracking-[0.16em] text-amber" aria-hidden>
           {String(pct).padStart(3, '0')}%
         </span>
 
@@ -64,7 +64,7 @@ export default function SectionRail() {
               className="group flex items-center gap-2.5 py-1.5"
             >
               <span
-                className={`font-mono text-[0.6875rem] uppercase tracking-[0.14em] transition-all duration-300 ${
+                className={`font-mono text-micro uppercase tracking-[0.14em] transition-all duration-300 ${
                   on
                     ? 'text-amber opacity-100'
                     : 'text-dim opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100'

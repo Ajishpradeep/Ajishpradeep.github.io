@@ -71,8 +71,14 @@
 }
 
 @layer components {
+  /*
+   * 92rem (1472px) was wider than the prose ever fills. At 20px body type a
+   * comfortable measure is 700–800px, so on a 1440px screen roughly 550px of
+   * every row was structurally dead — which is what "lots of empty space"
+   * actually was. 80rem holds the same content with the air taken out.
+   */
   .shell {
-    @apply mx-auto w-full max-w-[92rem] px-5 sm:px-8 lg:px-12;
+    @apply mx-auto w-full max-w-[80rem] px-5 sm:px-8 lg:px-12;
   }
 
   /*
@@ -80,11 +86,11 @@
    * dot-matrix and cost more legibility than it bought atmosphere.
    */
   .tag {
-    @apply font-mono text-[0.75rem] font-medium uppercase tracking-[0.1em];
+    @apply font-mono text-fine font-medium uppercase tracking-[0.1em];
   }
 
   .tag-sm {
-    @apply font-mono text-[0.6875rem] font-medium uppercase tracking-[0.08em];
+    @apply font-mono text-micro font-medium uppercase;
   }
 
   .bracket::before {
@@ -96,12 +102,48 @@
     @apply ml-1 text-amber/70;
   }
 
-  /* Readable body copy. */
+  /*
+   * Prose is set in the serif, not in the display face. Funnel Display was
+   * doing both jobs and doing the second one badly: at 16px its tight counters
+   * and high contrast read as a generic geometric sans, so the one distinctive
+   * face on the site was diluted by being the default.
+   *
+   * Leading was 1.75 at a 46ch measure, which is the pairing for a 75ch
+   * measure — the hero paragraph read as a stack of separate lines rather than
+   * a paragraph. 1.65 is right for the measures this site actually sets.
+   */
   .copy {
-    @apply text-[1rem] leading-[1.75] text-cyan/85;
+    @apply font-text text-base leading-[1.62] text-cyan/85;
   }
   .copy-sm {
-    @apply text-[0.9375rem] leading-[1.7] text-cyan/80;
+    @apply font-text text-fine leading-[1.65] text-cyan/80;
+  }
+  /* Hero and section ledes — the step that was missing between h1 and body. */
+  .copy-lead {
+    @apply font-text text-lead leading-[1.5] text-cyan/85;
+  }
+
+  /*
+   * The constraint the solver actually enforces, set as type.
+   *
+   * No vendored face carries U+2016 or the Unicode subscripts, so the norm
+   * bars are two ASCII pipes pulled together and the indices are real <sub>
+   * elements. Mono is correct here under its own definition: this is a
+   * measurement, not a costume.
+   */
+  .eq {
+    @apply font-mono tabular-nums;
+    font-feature-settings: 'ss01' off;
+  }
+  .eq sub {
+    font-size: 0.68em;
+    line-height: 0;
+    vertical-align: -0.28em;
+    letter-spacing: 0;
+  }
+  .eq .norm {
+    letter-spacing: -0.16em;
+    padding-right: 0.16em;
   }
 
   /* Panel with corner brackets, drawn without extra markup. */
@@ -131,16 +173,39 @@
   }
 
   /*
-   * Solid card — the default container now, in place of outlined text boxes.
-   * The border was cyan/15, which measured 1.44:1 against the page: below the
-   * 3:1 WCAG 1.4.11 floor for a boundary that is the only thing defining the
-   * component. cyan/25 clears it without changing the character of the frame.
+   * THREE SURFACES, AND THE RULE IS DIRECTIONAL.
+   *
+   * The page previously carried nineteen distinct border+background pairings:
+   * backgrounds from three families at twelve alpha values, borders from two
+   * families at eight. Over a near-black ground those "elevations" were within
+   * a few percent luminance of each other — three levels that were visually
+   * one — while the border alpha was assigned by local taste rather than by
+   * depth. `.plate` (cyan/40) sat inside `.card` (cyan/25) inside a section
+   * rule (cyan/15), so the innermost frame was drawn strongest and the eye had
+   * no way to tell which rectangle was the object and which was the field.
+   *
+   *   page      the void ground. No border. Most things belong here.
+   *   .card     raised. One frame, on the page ground.
+   *   .well     recessed. Lives only inside a .card, and is drawn weaker.
+   *
+   * A container may frame its children. A child may never out-frame its
+   * container. If something needs a third level, it needs less content, not
+   * another box.
+   *
+   * cyan/28 clears the 3:1 WCAG 1.4.11 floor for a boundary that is the only
+   * thing defining a component; .well is exempt because it always sits inside
+   * a .card that has already stated the extent.
    */
   .card {
-    @apply relative overflow-hidden rounded-sm border border-cyan/25 bg-deep/70 transition-all duration-500;
+    @apply relative overflow-hidden rounded-sm border border-cyan/28 bg-deep/70 transition-all duration-500;
   }
-  .card:hover {
-    @apply border-cyan/45 bg-panel/40;
+  .card:hover,
+  .card:focus-within {
+    @apply border-cyan/50 bg-panel/40;
+  }
+
+  .well {
+    @apply rounded-sm border border-cyan/14 bg-void/60;
   }
 
   /*
@@ -174,8 +239,11 @@
     border-right: 1px solid;
     transform: translate(-6px, -6px);
   }
+  /* Keyboard parity: the corner brackets were mouse-only by construction. */
   .trace:hover::before,
-  .trace:hover::after {
+  .trace:hover::after,
+  .trace:focus-within::before,
+  .trace:focus-within::after {
     opacity: 1;
     transform: none;
   }
@@ -184,20 +252,20 @@
   .lift {
     @apply transition-transform duration-500;
   }
-  .lift:hover {
+  .lift:hover,
+  .lift:focus-within {
     transform: translateY(-3px);
   }
 
-  /* Square icon plate. */
-  .plate {
-    @apply flex h-11 w-11 shrink-0 items-center justify-center rounded-sm border border-cyan/40 bg-panel/50 text-amber;
-  }
-  .plate-lg {
-    @apply flex h-14 w-14 shrink-0 items-center justify-center rounded-sm border border-cyan/40 bg-panel/50 text-amber;
-  }
-
-  .frame-dashed {
-    border: 1px dashed rgb(var(--cyan) / 0.3);
+  /*
+   * `.plate` and `.plate-lg` are gone. They wrapped a 20–24px icon in a
+   * 44–56px bordered, backgrounded box at seventeen call sites — seventeen
+   * frames drawn more strongly than the cards containing them, to say nothing
+   * an icon does not already say. Icons now sit on the ground at 22–26px in
+   * amber, which is what `.icon-mark` is: a size and a colour, not a box.
+   */
+  .icon-mark {
+    @apply shrink-0 text-amber;
   }
 
   /*
@@ -231,8 +299,9 @@
     background-size: 52px 52px;
   }
 
+  /* min-h holds the 44px pointer-target floor regardless of label length. */
   .btn {
-    @apply inline-flex items-center gap-2.5 rounded-sm px-5 py-3 font-mono text-[0.75rem] font-medium uppercase tracking-[0.08em] transition-all duration-300;
+    @apply inline-flex min-h-[2.75rem] items-center gap-2.5 rounded-sm px-5 py-3 font-mono text-fine font-medium uppercase tracking-[0.08em] transition-all duration-300;
   }
   .btn-amber {
     @apply btn bg-amber text-void hover:bg-amber-hot;
@@ -255,9 +324,6 @@
   /* Display tracking, dialled back from the previous 0.22em. */
   .track-wide {
     letter-spacing: 0.06em;
-  }
-  .track-mid {
-    letter-spacing: 0.01em;
   }
 
   .glow-cyan {
@@ -307,14 +373,6 @@
   }
   .drift {
     animation: drift 2.4s linear infinite;
-  }
-
-  @keyframes float-y {
-    0%, 100% { transform: translateY(0); }
-    50%      { transform: translateY(-7px); }
-  }
-  .float-y {
-    animation: float-y 5s ease-in-out infinite;
   }
 
   @keyframes pulse-ring {

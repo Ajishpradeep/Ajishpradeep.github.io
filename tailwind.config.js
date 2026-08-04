@@ -17,15 +17,61 @@ export default {
       },
       fontFamily: {
         display: ['"Funnel Display"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        text: ['"Source Serif 4"', 'ui-serif', 'Georgia', 'serif'],
         mono: ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'monospace'],
       },
+      /*
+       * Six steps and no more. The page previously carried these four tokens
+       * plus fifteen arbitrary `text-[Nrem]` values across 106 usages —
+       * including three sizes inside a 1.2px band (16.8 / 17 / 18px), which no
+       * reader perceives as a distinction and every reader has to absorb.
+       *
+       * micro  12  mono labels, figure captions
+       * fine   14  secondary prose, notes
+       * body   17  running prose (see `.copy`)
+       * lead   19→22  hero intro, section ledes, card titles
+       * title  24→31  subheads, case titles, section markers
+       * headline 34→54  the two loud section headings
+       * mega   46→88  the h1, once per page
+       *
+       * The first pass set this floor at 11/13/16 and it read small on a
+       * desktop browser — a label at 11px is a native-app convention, not a
+       * web one. Every step moved up one notch; the ratios between them are
+       * unchanged, so the hierarchy is identical and only the floor moved.
+       *
+       * `lead` exists because the hero previously jumped 96px → 16px with
+       * nothing between it, and that gap collapsed to 2.0× on a phone.
+       * Tracking is negative on display, where uppercase extrabold needs it,
+       * and zero below — the old positive 0.02em was an unexamined default.
+       */
       fontSize: {
-        // Floor dropped from 2.5rem: at 375px a 40px uppercase extrabold line
-        // could not fit "COMPUTER VISION" in the available 335px.
-        mega: ['clamp(2rem, 7.2vw, 6rem)', { lineHeight: '1.06', letterSpacing: '0.02em' }],
-        headline: ['clamp(1.75rem, 3.6vw, 3.25rem)', { lineHeight: '1.12', letterSpacing: '0.01em' }],
-        title: ['clamp(1.25rem, 2vw, 1.75rem)', { lineHeight: '1.2' }],
-        lede: ['clamp(0.9375rem, 1.15vw, 1.0625rem)', { lineHeight: '1.75' }],
+        micro: ['0.875rem', { lineHeight: '1.45', letterSpacing: '0.06em' }],
+        fine: ['1rem', { lineHeight: '1.55' }],
+        // Overrides Tailwind's 16px default so `text-base` and running prose are
+        // one step. Left apart they sat a pixel from each other — a distinction
+        // nobody perceives and every reader still has to absorb.
+        base: ['1.25rem', { lineHeight: '1.58' }],
+        /*
+         * Prose and labels are the sizes that were too small; the display tier
+         * was not, and blowing it up with them turned the hero into five lines
+         * of 96px type. Reading sizes stay raised, display goes back.
+         */
+        lead: ['clamp(1.1875rem, 0.5vw + 1.08rem, 1.375rem)', { lineHeight: '1.5', letterSpacing: '-0.008em' }],
+        title: ['clamp(1.5rem, 1.1vw + 1.22rem, 1.9375rem)', { lineHeight: '1.2', letterSpacing: '-0.016em' }],
+        headline: ['clamp(2.125rem, 2.6vw + 1.45rem, 3.4rem)', { lineHeight: '1.06', letterSpacing: '-0.024em' }],
+        mega: ['clamp(2.75rem, 6.2vw + 0.6rem, 5.5rem)', { lineHeight: '0.96', letterSpacing: '-0.028em' }],
+      },
+      /*
+       * The two alpha steps the surface system is built on. `.card` sits at 28
+       * (clears the 3:1 WCAG 1.4.11 floor for a boundary that is the only
+       * thing defining a component) and `.well` at 14 (exempt — it always sits
+       * inside a card that has already stated the extent). Registered here
+       * rather than written as arbitrary values so the two levels stay a
+       * decision the system owns.
+       */
+      opacity: {
+        14: '0.14',
+        28: '0.28',
       },
       transitionTimingFunction: {
         out: 'cubic-bezier(0.16, 1, 0.3, 1)',

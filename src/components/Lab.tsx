@@ -9,15 +9,15 @@ export default function Lab() {
   const ghost = site.links.find((l) => l.label === 'GitHub')?.href;
 
   return (
-    <section id="lab" className="relative scroll-mt-[5.5rem] overflow-hidden border-b border-cyan/15 py-20">
+    <section id="lab" className="relative scroll-mt-[5.5rem] overflow-hidden border-b border-cyan/15 py-14 sm:py-16 lg:py-20">
 
       <div className="shell relative">
         <div className="flex flex-wrap items-end justify-between gap-4 border-b border-cyan/15 pb-5">
           <h2
-            className="font-display text-headline font-extrabold uppercase track-mid text-cyan"
+            className="font-text text-title font-semibold text-cyan/75"
             data-reveal
           >
-            <span className="text-amber">[</span>The lab<span className="text-amber">]</span>
+            The lab
           </h2>
           <p className="inline-flex items-center gap-1.5 tag-sm text-dim">
             <Github size={13} strokeWidth={2} /> Personal builds
@@ -40,9 +40,7 @@ export default function Lab() {
                   className="card trace lift group flex h-full flex-col p-6"
                 >
                   <div className="flex items-start justify-between">
-                    <span className="plate transition-colors duration-500 group-hover:border-amber/60">
-                      <Icon size={20} strokeWidth={1.7} />
-                    </span>
+                    <Icon size={24} strokeWidth={1.6} className="icon-mark" />
                     <ArrowUpRight
                       size={17}
                       strokeWidth={2}
@@ -50,19 +48,19 @@ export default function Lab() {
                     />
                   </div>
 
-                  <h3 className="mt-5 font-display text-[1.0625rem] font-bold text-cyan group-hover:text-amber">
+                  <h3 className="mt-5 font-display text-lead font-bold text-cyan group-hover:text-amber">
                     {p.name}
                   </h3>
                   <p className="mt-2.5 flex-1 copy-sm">{p.description}</p>
 
                   <div className="mt-5 flex flex-wrap items-center gap-1.5 border-t border-cyan/20 pt-4">
                     {p.language && (
-                      <span className="inline-flex items-center gap-1.5 font-mono text-[0.6875rem] text-cyan/70">
+                      <span className="inline-flex items-center gap-1.5 font-mono text-micro text-cyan/70">
                         <span className="h-2 w-2 rounded-full bg-amber" />
                         {p.language}
                       </span>
                     )}
-                    <span className="ml-auto font-mono text-[0.6875rem] text-dim">{p.year}</span>
+                    <span className="ml-auto font-mono text-micro text-dim">{p.year}</span>
                   </div>
                 </a>
               </li>

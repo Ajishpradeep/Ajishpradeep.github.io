@@ -39,10 +39,10 @@ export default function About() {
                 style={{ background: 'rgb(var(--cyan) / 0.14)' }}
               />
               <div className="absolute inset-x-2 bottom-2 flex items-center justify-between bg-void/80 px-3 py-1.5">
-                <span className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-amber">
+                <span className="font-mono text-micro uppercase tracking-[0.14em] text-amber">
                   id · pr
                 </span>
-                <span className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-dim">
+                <span className="font-mono text-micro uppercase tracking-[0.14em] text-dim">
                   taiwan
                 </span>
               </div>
@@ -57,10 +57,10 @@ export default function About() {
                 ['status', 'open to research roles'],
               ].map(([k, v]) => (
                 <div key={k} className="flex justify-between gap-4 border-b border-cyan/20 pb-2">
-                  <dt className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-dim">
+                  <dt className="font-mono text-micro uppercase tracking-[0.14em] text-dim">
                     {k}
                   </dt>
-                  <dd className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-cyan">
+                  <dd className="font-mono text-micro uppercase tracking-[0.14em] text-cyan">
                     {v}
                   </dd>
                 </div>
@@ -72,7 +72,7 @@ export default function About() {
             {about.paragraphs.map((p, i) => (
               <p
                 key={i}
-                className="text-[0.9375rem] leading-[1.85] text-cyan/65 text-pretty [&+&]:mt-5"
+                className="text-base leading-[1.85] text-cyan/65 text-pretty [&+&]:mt-5"
               >
                 {p}
               </p>
@@ -84,7 +84,7 @@ export default function About() {
       <section className="border-b border-cyan/15 py-16">
         <div className="shell">
           <div className="flex items-end justify-between gap-6 border-b border-cyan/15 pb-5">
-            <h2 className="font-display text-headline font-extrabold uppercase track-mid text-cyan" data-reveal>
+            <h2 className="font-display text-headline font-extrabold uppercase text-cyan" data-reveal>
               <span className="text-amber">[</span>Trajectory<span className="text-amber">]</span>
             </h2>
           </div>
@@ -94,22 +94,22 @@ export default function About() {
               <li key={t.year + t.role} className="border-b border-cyan/20 py-8" data-reveal>
                 <div className="grid gap-5 lg:grid-cols-12 lg:gap-10">
                   <div className="lg:col-span-3">
-                    <p className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-amber">
+                    <p className="font-mono text-micro uppercase tracking-[0.14em] text-amber">
                       ·{String(i + 1).padStart(2, '0')}· {t.year}
                     </p>
                   </div>
                   <div className="lg:col-span-9">
-                    <h3 className="font-display text-title font-bold track-mid text-cyan">
+                    <h3 className="font-display text-title font-bold text-cyan">
                       {t.role}
                     </h3>
-                    <p className="mt-2 font-mono text-[0.6875rem] uppercase tracking-[0.18em] text-dim">
+                    <p className="mt-2 font-mono text-micro uppercase tracking-[0.18em] text-dim">
                       {t.org} · {t.place}
                     </p>
                     <ul className="mt-5 space-y-2.5">
                       {t.points.map((p, j) => (
                         <li key={j} className="flex max-w-[72ch] gap-3.5">
                           <span className="mt-2.5 h-px w-3 shrink-0 bg-amber/70" />
-                          <span className="text-[0.875rem] leading-relaxed text-cyan/60 text-pretty">
+                          <span className="text-fine leading-relaxed text-cyan/60 text-pretty">
                             {p}
                           </span>
                         </li>

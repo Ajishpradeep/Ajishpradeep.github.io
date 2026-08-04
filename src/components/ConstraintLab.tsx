@@ -143,12 +143,29 @@ export default function ConstraintLab() {
   const grip = chain[2];
 
   return (
-    <div className="card p-5 sm:p-6">
+    /*
+      No `.card` here. This component is always rendered inside the case
+      card in WorkConsole, and a card inside a card with the same border and
+      background is the literal box-inside-a-box: two frames of equal strength
+      with nothing to tell the eye which one is the object. The plot below
+      states the extent; the root does not need to.
+    */
+    <div>
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <p className="tag-sm text-amber">Constraint solver</p>
-          <p className="mt-1 font-mono text-[0.6875rem] text-dim">
-            Kinematic chain · bone lengths fixed
+          <p className="font-display text-lead font-bold leading-tight text-cyan">
+            Constraint solver
+          </p>
+          {/*
+            The invariant, set where it is enforced. `drift` below is the worst
+            violation of exactly this expression, measured every frame.
+          */}
+          <p className="mt-1.5 flex flex-wrap items-baseline gap-x-2.5 gap-y-1">
+            <span className="eq text-fine font-semibold text-amber">
+              <span className="norm">||</span>p<sub>i</sub> − p<sub>i+1</sub>
+              <span className="norm">||</span> = L<sub>i</sub>
+            </span>
+            <span className="font-text text-fine text-dim">for every bone, every frame</span>
           </p>
         </div>
         {/*
@@ -160,7 +177,7 @@ export default function ConstraintLab() {
           type="button"
           aria-pressed={!constrained}
           onClick={() => setConstrained((v) => !v)}
-          className={`inline-flex items-center gap-2 rounded-sm border px-3 py-2 font-mono text-[0.6875rem] transition-colors duration-300 ${
+          className={`inline-flex min-h-[2.75rem] items-center gap-2 rounded-sm border px-3.5 font-mono text-micro transition-colors duration-300 ${
             constrained
               ? 'border-amber text-amber hover:bg-amber hover:text-void'
               : 'border-signal bg-signal/15 text-signal'
@@ -171,12 +188,20 @@ export default function ConstraintLab() {
         </button>
       </div>
 
-      <div className="relative mt-4 overflow-hidden rounded-sm border border-cyan/25 bg-void/60">
+      <div className="well relative mt-4 overflow-hidden">
         <svg
           ref={svgRef}
           viewBox="0 0 100 100"
           tabIndex={0}
-          role="application"
+          /*
+           * `role="application"` was here. It forces a screen reader out of
+           * browse mode and hands every key to the widget — a heavy instrument
+           * for something that already has a complete text alternative in the
+           * aria-live readout below. `role="img"` states what it is; the
+           * arrow-key affordance is described in the label and the tabIndex
+           * keeps it reachable.
+           */
+          role="img"
           aria-label="Kinematic chain. Drag the club head, or move it with the arrow keys."
           /*
            * pan-y, not none: a vertical swipe starting here must still scroll
@@ -297,50 +322,56 @@ export default function ConstraintLab() {
           <circle cx={grip.x} cy={grip.y} r="2.6" fill="none" stroke="rgb(var(--amber))" strokeWidth="1.2" />
         </svg>
 
-        {!touched && (
-          <p className="pointer-events-none absolute inset-x-0 bottom-3 text-center font-mono text-[0.6875rem] text-amber">
-            <Hand size={12} strokeWidth={2} className="mr-1.5 inline" />
-            drag the club head · or use the arrow keys
-          </p>
-        )}
       </div>
 
-      {/* readout — announced, so the result of a keyboard move is not visual-only */}
-      <div className="mt-4 grid grid-cols-3 gap-3">
-        <div className="rounded-sm border border-cyan/25 bg-void/50 px-3 py-2.5">
-          <p className="font-mono text-[0.6875rem] uppercase text-dim">Bone drift</p>
-          <p
-            className={`mt-1 font-display text-[1.05rem] font-bold tabular-nums ${
+      {!touched && (
+        <p className="mt-2 flex items-center gap-1.5 font-mono text-micro text-amber">
+          <Hand size={12} strokeWidth={2} className="shrink-0" />
+          drag the club head · or use the arrow keys
+        </p>
+      )}
+
+      {/*
+        Readout — announced, so the result of a keyboard move is not
+        visual-only. Three bordered tiles became one ruled row: three readings
+        side by side already read as a group, and the boxes were three more
+        frames inside a component that was itself inside two of them.
+      */}
+      <dl className="mt-4 grid grid-cols-3 gap-3 border-t border-cyan/20 pt-3.5">
+        <div>
+          <dt className="tag-sm text-dim">Bone drift</dt>
+          <dd
+            className={`mt-1 font-display text-lead font-bold tabular-nums ${
               drift > 0.6 ? 'text-signal' : 'text-amber'
             }`}
           >
             {drift.toFixed(3)}
-          </p>
+          </dd>
         </div>
-        <div className="rounded-sm border border-cyan/25 bg-void/50 px-3 py-2.5">
-          <p className="font-mono text-[0.6875rem] uppercase text-dim">Solver</p>
-          <p className="mt-1 font-display text-[1.05rem] font-bold text-cyan">
+        <div>
+          <dt className="tag-sm text-dim">Solver</dt>
+          <dd className="mt-1 font-display text-lead font-bold text-cyan">
             {constrained ? 'FABRIK' : 'none'}
-          </p>
+          </dd>
         </div>
-        <div className="rounded-sm border border-cyan/25 bg-void/50 px-3 py-2.5">
-          <p className="font-mono text-[0.6875rem] uppercase text-dim">Pose</p>
-          <p
-            className={`mt-1 font-display text-[1.05rem] font-bold ${
+        <div>
+          <dt className="tag-sm text-dim">Pose</dt>
+          <dd
+            className={`mt-1 font-display text-lead font-bold ${
               drift > 0.6 ? 'text-signal' : 'text-cyan'
             }`}
           >
             {drift > 0.6 ? 'invalid' : 'valid'}
-          </p>
+          </dd>
         </div>
-      </div>
+      </dl>
 
       <p aria-live="polite" className="sr-only">
         {constrained ? 'Solver FABRIK.' : 'Solver off.'} Bone drift {drift.toFixed(3)}. Pose{' '}
         {drift > 0.6 ? 'invalid' : 'valid'}.
       </p>
 
-      <p className="mt-4 copy-sm">
+      <p className="copy-sm mt-4">
         {constrained
           ? 'Bone lengths are enforced as hard constraints, so every position you drag to is anatomically possible. This is what physics priors buy you.'
           : 'Without constraints the limb simply stretches to reach. The output still looks like a pose — it is just not one a body can hold.'}
@@ -352,9 +383,9 @@ export default function ConstraintLab() {
           setTarget(REST[REST.length - 1]);
           setConstrained(true);
         }}
-        className="mt-4 inline-flex min-h-[1.75rem] items-center gap-2 rounded-sm px-2 py-1 font-mono text-[0.6875rem] text-dim transition-colors hover:text-amber"
+        className="-ml-2 mt-2 inline-flex min-h-[2.75rem] items-center gap-2 rounded-sm px-2 font-mono text-micro text-dim transition-colors hover:text-amber"
       >
-        <RotateCcw size={12} strokeWidth={2} /> reset
+        <RotateCcw size={13} strokeWidth={2} /> reset
       </button>
     </div>
   );

@@ -14,12 +14,12 @@ export default function Impact() {
   if (!impact.length) return null;
 
   return (
-    <section id="impact" className="relative scroll-mt-[5.5rem] overflow-hidden border-b border-cyan/15 bg-deep/30 py-20">
+    <section id="impact" className="relative scroll-mt-[5.5rem] overflow-hidden border-b border-cyan/15 bg-deep/30 py-14 sm:py-16 lg:py-20">
 
       <div className="shell relative">
         <div className="flex flex-wrap items-end justify-between gap-4 border-b border-cyan/15 pb-5">
           <h2
-            className="font-display text-headline font-extrabold uppercase track-mid text-cyan"
+            className="font-display text-headline font-extrabold uppercase text-cyan"
             data-reveal
           >
             <span className="text-amber">[</span>Impact dossier<span className="text-amber">]</span>
@@ -51,24 +51,24 @@ export default function Impact() {
                     aria-controls={`impact-panel-${m.id}`}
                     className="flex w-full items-start gap-4 p-5 text-left sm:p-6"
                   >
-                  <span
-                    className={`plate-lg transition-colors duration-500 ${
-                      on ? 'border-amber/60 bg-amber/10' : ''
+                  <Icon
+                    size={26}
+                    strokeWidth={1.6}
+                    className={`icon-mark mt-0.5 transition-colors duration-500 ${
+                      on ? 'text-amber' : 'text-amber/70'
                     }`}
-                  >
-                    <Icon size={24} strokeWidth={1.6} />
-                  </span>
+                  />
 
                   <span className="min-w-0 flex-1">
                     <span className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                      <span className="font-display text-[1.0625rem] font-bold leading-snug text-cyan text-balance">
+                      <span className="font-display text-lead font-bold leading-snug text-cyan text-balance">
                         {m.title}
                       </span>
-                      <span className="rounded-sm border border-amber/40 px-1.5 py-0.5 font-mono text-[0.6875rem] text-amber">
+                      <span className="rounded-sm border border-amber/40 px-1.5 py-0.5 font-mono text-micro text-amber">
                         {m.year}
                       </span>
                     </span>
-                    <span className="mt-1.5 block font-mono text-[0.6875rem] text-dim">
+                    <span className="mt-1.5 block font-mono text-micro text-dim">
                       {m.org}
                     </span>
                     <span className="mt-3 block max-w-[70ch] copy-sm">{m.claim}</span>
@@ -113,12 +113,20 @@ export default function Impact() {
                         </div>
 
                         <div className="lg:col-span-5">
+                          {/*
+                            This box stays. It is the one frame on the page
+                            that carries meaning rather than decoration: it
+                            separates the personal contribution from the public
+                            record, and making that restraint visible is the
+                            point. It is a `.well` now, so it sits inside the
+                            accordion card without out-framing it.
+                          */}
                           {m.role && (
-                            <div className="rounded-sm border border-cyan/30 bg-panel/30 p-4">
-                              <p className="inline-flex items-center gap-2 tag-sm text-amber">
+                            <div className="well p-4">
+                              <p className="tag-sm inline-flex items-center gap-2 text-amber">
                                 <UserCheck size={14} strokeWidth={2} /> My part
                               </p>
-                              <p className="mt-2.5 copy-sm">{m.role}</p>
+                              <p className="copy-sm mt-2.5">{m.role}</p>
                             </div>
                           )}
 
@@ -132,12 +140,12 @@ export default function Impact() {
                                   href={s.url}
                                   target="_blank"
                                   rel="noreferrer"
-                                  className="group -mx-1 flex items-start gap-2 rounded-sm px-1 py-1.5 text-[0.8125rem] leading-snug text-cyan/75 transition-colors hover:text-amber"
+                                  className="group -mx-2 flex min-h-[2.75rem] items-center gap-2 rounded-sm px-2 py-2 text-fine leading-snug text-cyan/75 transition-colors hover:text-amber"
                                 >
                                   <ExternalLink
                                     size={13}
                                     strokeWidth={2}
-                                    className="mt-1 shrink-0 text-amber/70"
+                                    className="shrink-0 text-amber/70"
                                   />
                                   <span className="underline decoration-cyan/40 underline-offset-4 group-hover:decoration-amber">
                                     {s.label}

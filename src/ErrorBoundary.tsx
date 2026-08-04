@@ -41,7 +41,7 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
               clears it. If it does not, the rest of the site is still reachable from the home page.
             </p>
             {this.state.error?.message ? (
-              <p className="mt-5 max-w-[52ch] font-mono text-[0.75rem] leading-relaxed text-dim">
+              <p className="mt-5 max-w-[52ch] font-mono text-fine leading-relaxed text-dim">
                 {this.state.error.message}
               </p>
             ) : null}

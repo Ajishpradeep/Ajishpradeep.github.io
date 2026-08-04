@@ -10,27 +10,27 @@ export default function Footer() {
     <footer className="border-t border-cyan/15 bg-void py-10">
       <div className="shell flex flex-col gap-4 sm:flex-row sm:items-baseline sm:justify-between">
         <div>
-          <p className="font-display text-[0.9375rem] font-bold text-cyan">
+          <p className="font-display text-base font-bold text-cyan">
             {site.name}
-            <span className="ml-2 font-mono text-[0.6875rem] font-normal text-dim">
+            <span className="ml-2 font-mono text-micro font-normal text-dim">
               also {site.alias}
             </span>
           </p>
-          <p className="mt-1.5 font-mono text-[0.6875rem] text-dim">
+          <p className="mt-1.5 font-mono text-micro text-dim">
             {site.role} · {site.location}
           </p>
         </div>
 
-        <div className="flex flex-wrap items-baseline gap-x-5 gap-y-2">
+        <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+          {/* -mx-2 keeps the optical left edge aligned while the padding
+              carries the target up to the 44px floor. */}
           <a
             href={`mailto:${site.email}`}
-            className="font-mono text-[0.8125rem] text-cyan underline decoration-cyan/40 underline-offset-4 transition-colors hover:text-amber hover:decoration-amber"
+            className="-mx-2 inline-flex min-h-[2.75rem] items-center rounded-sm px-2 font-mono text-fine text-cyan underline decoration-cyan/40 underline-offset-4 transition-colors hover:text-amber hover:decoration-amber"
           >
             {site.email}
           </a>
-          <p className="font-mono text-[0.6875rem] text-dim">
-            © {new Date().getFullYear()}
-          </p>
+          <p className="font-mono text-micro text-dim">© {new Date().getFullYear()}</p>
         </div>
       </div>
     </footer>

@@ -47,15 +47,13 @@ function StatTile({
       className="group flex items-start gap-3 border-b border-r border-cyan/20 px-3 py-5 transition-colors duration-500 hover:bg-panel/30"
     >
       <Icon
-        size={17}
+        size={18}
         strokeWidth={1.7}
-        className="mt-1 shrink-0 text-amber/80 transition-transform duration-500 group-hover:scale-110"
+        className="icon-mark mt-1 text-amber/80 transition-transform duration-500 group-hover:scale-110"
       />
       <div className="min-w-0">
-        <p className="font-display text-[1.35rem] font-bold leading-none text-cyan tabular-nums">
-          {shown}
-        </p>
-        <p className="mt-2 text-[0.75rem] leading-snug text-dim">{label}</p>
+        <p className="font-display text-title font-bold text-cyan tabular-nums">{shown}</p>
+        <p className="mt-1.5 font-text text-fine text-dim">{label}</p>
       </div>
     </li>
   );
@@ -68,7 +66,7 @@ export default function Hero() {
       <div className="grid-veil absolute inset-0" />
       <HudCanvas />
 
-      <div className="shell relative pb-14 pt-6 lg:pt-12">
+      <div className="shell relative pb-12 pt-6 lg:pt-10">
         <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-10">
           {/* LEFT — headline */}
           <div className="lg:col-span-7">
@@ -86,18 +84,24 @@ export default function Hero() {
               No hard <br />. At 375px the forced breaks made the browser split
               "COMPUTER VISION" mid-phrase into five ragged lines; balance wraps
               it on its own terms at every width.
+
+              The emphasis is one contiguous phrase at the end of the line, so
+              a wrap inside it still reads as one amber unit. The previous
+              headline coloured "with physics", which the browser split across
+              lines 2 and 3 at 1440 — the emphasised unit was severed and the
+              colour read as arbitrary.
             */}
             <h1
-              className="mt-7 max-w-[15ch] text-balance font-display text-mega font-extrabold uppercase leading-[0.98] text-cyan glow-cyan"
+              className="mt-6 max-w-[16ch] text-balance font-display text-mega font-extrabold uppercase text-cyan glow-cyan"
               data-reveal
               style={{ '--reveal-delay': '60ms' } as React.CSSProperties}
             >
-              Computer vision <span className="text-amber glow-amber">with physics</span> in the
-              model
+              Computer vision that cannot be{' '}
+              <span className="text-amber glow-amber">quietly wrong.</span>
             </h1>
 
             <p
-              className="mt-7 max-w-[46ch] copy"
+              className="copy-lead mt-6 max-w-[52ch]"
               data-reveal
               style={{ '--reveal-delay': '120ms' } as React.CSSProperties}
             >
@@ -105,56 +109,61 @@ export default function Hero() {
             </p>
 
             {/*
-              Byline. Carries the three things a 45-second visitor needs and the
-              page did not previously give them on a phone: a face, the role,
-              and the other name they may be holding a CV under.
+              The differentiator, given its own line and its own weight. It is
+              the one claim a forwarded CV cannot carry, so it is the one thing
+              the hero must not bury in a subordinate clause.
             */}
-            <div
-              className="mt-7 flex items-center gap-3.5"
+            <p
+              className="mt-3 max-w-[52ch] font-text text-lead font-semibold italic leading-[1.45] text-amber"
               data-reveal
               style={{ '--reveal-delay': '150ms' } as React.CSSProperties}
             >
-              <img
-                src={site.portraitSmall}
-                alt=""
-                width={56}
-                height={56}
-                className="h-14 w-14 shrink-0 rounded-full border border-amber/50 object-cover object-top"
-              />
-              <div className="min-w-0">
-                <p className="font-display text-[1rem] font-bold leading-tight text-cyan">
-                  {site.name}
-                  <span className="text-dim"> · </span>
-                  <span className="text-amber">{site.role}</span>
-                </p>
-                <p className="mt-1 font-mono text-[0.6875rem] leading-tight text-dim">
-                  also known as {site.alias} · {site.location}
-                </p>
-              </div>
+              {site.introEmphasis}
+            </p>
+
+            {/*
+              Byline. Carries what a 45-second visitor needs: the role, and the
+              other name they may be holding a CV under. The portrait that used
+              to sit beside it is gone — the hero is a claim, not an introduction,
+              and the face belongs on About where the person is the subject.
+            */}
+            <div
+              className="mt-8 border-l border-amber/50 pl-4"
+              data-reveal
+              style={{ '--reveal-delay': '190ms' } as React.CSSProperties}
+            >
+              <p className="font-display text-base font-bold leading-tight text-cyan">
+                {site.name}
+                <span className="text-dim"> · </span>
+                <span className="text-amber">{site.role}</span>
+              </p>
+              <p className="tag-sm mt-1.5 normal-case text-dim">
+                also known as {site.alias} · {site.location}
+              </p>
             </div>
 
-            {/* domain chips — icons carry the meaning */}
+            {/*
+              Domain summary. These were four `.card`s, each wrapping its icon
+              in a second bordered `.plate` — two nested frames apiece to show
+              one 20px glyph. They are not link targets and they are not
+              expandable, so they never needed an extent stated: one hairline
+              across the top of the row groups them, and the icon sits on the
+              ground where it can simply be seen.
+            */}
             <ul
-              className="mt-9 grid grid-cols-2 gap-3 sm:grid-cols-4"
+              className="mt-8 grid grid-cols-2 gap-x-6 gap-y-6 border-t border-cyan/20 pt-6 sm:grid-cols-4"
               data-reveal
-              style={{ '--reveal-delay': '180ms' } as React.CSSProperties}
+              style={{ '--reveal-delay': '220ms' } as React.CSSProperties}
             >
               {domains.map((d) => {
                 const Icon = domainIcon[d.key];
                 return (
-                  <li
-                    key={d.key}
-                    className="card trace lift group p-4"
-                  >
-                    <span className="plate transition-all duration-500 group-hover:border-amber/60 group-hover:bg-amber group-hover:text-void">
-                      <Icon size={20} strokeWidth={1.7} />
-                    </span>
-                    <p className="mt-3 font-display text-[0.9375rem] font-bold leading-tight text-cyan">
+                  <li key={d.key}>
+                    <Icon size={24} strokeWidth={1.6} className="icon-mark" />
+                    <p className="mt-3 font-display text-base font-bold leading-tight text-cyan">
                       {d.label}
                     </p>
-                    <p className="mt-1 font-mono text-[0.6875rem] leading-snug text-dim">
-                      {d.note}
-                    </p>
+                    <p className="mt-1.5 font-text text-fine leading-snug text-dim">{d.note}</p>
                   </li>
                 );
               })}
@@ -163,10 +172,10 @@ export default function Hero() {
             <div
               className="mt-8 flex flex-wrap gap-3"
               data-reveal
-              style={{ '--reveal-delay': '240ms' } as React.CSSProperties}
+              style={{ '--reveal-delay': '260ms' } as React.CSSProperties}
             >
               <a href="#work" className="btn-amber">
-                View systems <ArrowRight size={15} strokeWidth={2.2} />
+                Read the case studies <ArrowRight size={15} strokeWidth={2.2} />
               </a>
               <a href={site.resume} target="_blank" rel="noreferrer" className="btn-ghost">
                 <FileText size={15} strokeWidth={2} /> Résumé

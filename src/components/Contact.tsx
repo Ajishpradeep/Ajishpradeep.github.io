@@ -39,7 +39,7 @@ export default function Contact() {
   }, [copied]);
 
   return (
-    <section id="contact" className="relative scroll-mt-[5.5rem] overflow-hidden py-24">
+    <section id="contact" className="relative scroll-mt-[5.5rem] overflow-hidden py-16 sm:py-20">
       <div className="grid-veil absolute inset-0 opacity-60" />
       <HudCanvas />
 
@@ -60,10 +60,10 @@ export default function Contact() {
       <div className="shell relative">
         <div className="flex flex-wrap items-end justify-between gap-4 border-b border-cyan/15 pb-5">
           <h2
-            className="font-display text-headline font-extrabold uppercase track-mid text-cyan"
+            className="font-text text-title font-semibold text-cyan/75"
             data-reveal
           >
-            <span className="text-amber">[</span>Contact<span className="text-amber">]</span>
+            Contact
           </h2>
           <p className="inline-flex items-center gap-1.5 tag-sm text-dim">
             <MapPin size={13} strokeWidth={2} />
@@ -74,7 +74,7 @@ export default function Contact() {
         <div className="mt-12 grid gap-10 lg:grid-cols-12 lg:gap-10">
           <div className="lg:col-span-7">
             <h3
-              className="max-w-[16ch] text-balance font-display text-mega font-extrabold uppercase leading-[1.02] track-mid text-amber glow-amber"
+              className="max-w-[16ch] text-balance font-display text-mega font-extrabold uppercase leading-[1.02] text-amber glow-amber"
               data-reveal
             >
               Let&rsquo;s build something true
@@ -126,12 +126,10 @@ export default function Contact() {
                       rel="noreferrer"
                       className="card trace lift group flex items-center gap-4 p-4"
                     >
-                      <span className="plate transition-colors duration-500 group-hover:border-amber/60">
-                        <Icon size={19} strokeWidth={1.8} />
-                      </span>
+                      <Icon size={24} strokeWidth={1.6} className="icon-mark" />
                       <span className="min-w-0 flex-1">
                         <span className="block tag-sm text-dim">{l.label}</span>
-                        <span className="mt-0.5 block truncate font-display text-[0.9375rem] font-medium text-cyan group-hover:text-amber">
+                        <span className="mt-0.5 block truncate font-display text-base font-medium text-cyan group-hover:text-amber">
                           {l.handle}
                         </span>
                       </span>

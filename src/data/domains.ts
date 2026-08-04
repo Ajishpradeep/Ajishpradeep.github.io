@@ -2,9 +2,14 @@ export type DomainKey = 'geometry' | 'physics' | 'llm' | 'edge';
 
 export type Domain = {
   key: DomainKey;
-  /** Full name, used as the readout heading and the accessible label. */
+  /** Full name, used as the readout heading, the tab strip and the a11y label. */
   label: string;
-  /** Compact form for the graph node and the tab strip. */
+  /**
+   * Marker for the graph node itself. A node in a diagram gets a marker, not a
+   * sentence — "Multi-view geometry" is 160px of type under a 48px circle. The
+   * full name is never more than one glance away: it is on the tab directly
+   * below and on the readout heading under that.
+   */
   short: string;
   /** One-line summary under the hero chips. */
   note: string;
@@ -24,8 +29,8 @@ export type Domain = {
 export const domains: Domain[] = [
   {
     key: 'geometry',
-    label: 'Multi-view geometry',
     short: 'Geometry',
+    label: 'Multi-view geometry',
     note: 'calibration · triangulation · 3D lifting',
     blurb:
       'Recovering metric 3D from uncalibrated cameras — and knowing when the result is only correct up to an unknown scale.',
@@ -33,8 +38,8 @@ export const domains: Domain[] = [
   },
   {
     key: 'physics',
-    label: 'Physics-infused models',
     short: 'Physics',
+    label: 'Physics-infused models',
     note: 'bone-length · ROM · IK priors',
     blurb:
       'Physical law compiled into the network and the solver, so impossible outputs are unrepresentable rather than merely penalised.',
@@ -42,8 +47,8 @@ export const domains: Domain[] = [
   },
   {
     key: 'llm',
-    label: 'Agentic LLM systems',
     short: 'Agentic LLMs',
+    label: 'Agentic LLM systems',
     note: 'grounding · tool use · evaluation',
     blurb:
       'Domain grounding where a confident wrong number causes real harm — deterministic computation, generated narration, and evaluation that tells them apart.',
@@ -51,8 +56,8 @@ export const domains: Domain[] = [
   },
   {
     key: 'edge',
-    label: 'Edge inference',
     short: 'Edge',
+    label: 'Edge inference',
     note: 'CoreML · TensorRT · quantisation',
     blurb:
       'Making capable models cheap enough to run where they have to run — on the device, in real time, with no network.',
