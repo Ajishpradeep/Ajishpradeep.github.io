@@ -110,21 +110,56 @@ repaired rather than restored:
   pause button, and any deliberate selection stops the cycle for good.
 - **A reduced-motion path needs a designed resting state, not an absent one.**
   Skipping the animation left the nodes at their seed angles, which is the one
-  arrangement where labels leave the frame. The rest layout is rotated 45° with a
-  tighter orbit so every node, label and satellite sits inside the frame.
-- **The status and the instructions must be true in every mode.** The pill reads
-  `static`, not `orbiting`, when nothing moves; the hint says "select a domain
-  below" rather than describing a drag that does nothing.
+  arrangement where labels leave the frame. The rest layout is rotated 45°. It
+  shares the orbit the animation uses rather than a smaller one — the frame is
+  now sized so every node, caption and satellite is inside it at every angle, so
+  the reduced-motion visitor sees the picture the animation settles into.
+- **The status must be true in every mode.** The pill reads `static`, not
+  `orbiting`, when nothing moves.
+- **An affordance is worth more than a caption describing it.** The panel used to
+  carry a mono line under the frame naming the drag and the tap. A caption that
+  explains how to operate a picture is documentation, and it goes stale the
+  moment either half stops being true — this one already had, twice. The
+  controls announce themselves instead: the nodes take a grab cursor, the skills
+  are controls that respond to a pointer, and nothing is reachable only through
+  the sentence that used to describe it.
 - **`[touch-action:pan-y]`, never `touch-none`**, on anything in the scroll path.
 - **Prefer the platform control.** `MetricBlindness` is a native
   `input[type=range]`: keyboard stepping, touch handling and value announcement
   come free and correct.
 
-**Graphics do not carry text that a readout can carry better.** The graph's
+**Graphics do not carry text at a size the graphic chose.** The graph's
 satellites were labelled at 7px inside a 40px ring around a 25px node; they
 collided with each other, with the node and with its caption, and were unreadable
-even when they did not. The dots show that a domain has depth; the readout below
-names the skills at a size a person can read.
+even when they did not. Four permanent labels do not fit in that ring at any
+readable size, and no amount of nudging changes that.
+
+What replaced them is the rule worth keeping:
+
+- **Every label in the graphic is HTML on top of it, at the site's own sizes.**
+  The viewBox scales; 14px does not. Inside the SVG a caption is whatever the
+  box happens to scale it to, which on a phone was 7px. The frame is capped
+  (`max-w`) so the drawing only ever lives between 0.87× and 1.13×, which is the
+  band every clearance in the layout is solved for.
+- **One label at a time, on demand, is the version that fits.** Point at a skill
+  in the readout — or at its dot — and that dot alone is named on a plate that
+  opens away from the node and is clamped to the frame. One label cannot collide
+  with three others.
+- **A hover previews and a press latches.** Naming a skill on hover alone meant
+  the label went out on the way to the thing it was pointing at, and on a pointer
+  device the press looked dead because the hover had already lit it. The pin
+  survives the pointer leaving and the domain cycle; a second press releases it.
+  This is the same rule one level up, where selecting a domain stops the cycle
+  for good — a deliberate action outranks a passing one, everywhere in the panel.
+- **The readout is the permanent legend, and it is spatial.** The four skills are
+  a fixed 2×2 whose reading order is the four satellites' fixed positions, so the
+  top-left chip is the top-left dot. That is the labelling; the peek confirms it.
+  Satellites do not rotate — a rotating dot is one the reader has to chase, and
+  it swept through the node's caption four times a revolution.
+- **A capability list points at the work that proves it.** Each domain carries
+  "Where this shows up: `<case study>`", in the same device Method uses. A
+  skills list is the easiest thing on a portfolio to assert and the hardest to
+  believe.
 
 ## Motion and access
 
