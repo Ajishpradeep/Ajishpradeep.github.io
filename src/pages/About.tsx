@@ -1,15 +1,12 @@
 import { Link } from 'react-router-dom';
 import { about } from '../data/about';
 import { site } from '../data/site';
-import HudCanvas from '../components/HudCanvas';
 
 export default function About() {
   return (
     <>
       <header className="relative overflow-hidden border-b border-cyan/15 pt-[5.5rem]">
         <div className="grid-veil absolute inset-0" />
-        <HudCanvas />
-
         <div className="shell relative py-16">
           <h1
             className="max-w-[16ch] font-display text-mega font-extrabold uppercase leading-[1.02] text-cyan glow-cyan text-balance"

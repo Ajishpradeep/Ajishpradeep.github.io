@@ -25,14 +25,6 @@ export const research: Entry[] = [
       'A GAN architecture integrating contextual and spatial attention, addressing mode collapse, memorisation and underfitting in low-data regimes through extended receptive-field capacity.',
   },
   {
-    title: 'Efficient LLM Inference via Kolmogorov–Arnold Networks',
-    venue: 'Independent research',
-    year: 'in progress',
-    status: 'in-progress',
-    summary:
-      'Investigating substitution of dense MLP blocks with KAN layers to reduce inference cost — connecting function-approximation theory to deployment on resource-constrained hardware.',
-  },
-  {
     title: 'Pose Lifting and Biomechanical Motion Analysis',
     venue: 'Applied R&D — IdeasLab Formosa',
     year: '2025 —',
@@ -49,40 +41,54 @@ export const research: Entry[] = [
       'A step-by-step mathematical treatment of the transformer, carrying one worked example from tokenisation and positional encoding through multi-head self-attention to the decoder’s masked attention and final softmax.',
     href: 'https://github.com/Ajishpradeep/Case_Study',
   },
+  /*
+    Last, and labelled as speculative in its own summary rather than only by the
+    status chip. It sits in a list whose other entries carry measured numbers and
+    a shipped product; an exploratory idea printed in the same register borrows
+    their credibility, and a reader who later discovers there are no results
+    discounts the measured entries too. Saying "no results yet" costs nothing and
+    protects everything above it.
+  */
+  {
+    title: 'Efficient LLM Inference via Kolmogorov–Arnold Networks',
+    venue: 'Independent research',
+    /*
+      The year gutter is four characters of tabular-nums. This entry has no
+      start year on record, and it previously printed the string "in progress"
+      into that column beside a status chip already reading "In progress" — the
+      same fact twice, in a column that exists to carry dates. An em dash holds
+      the alignment and says the honest thing: undated.
+    */
+    year: '—',
+    status: 'in-progress',
+    summary:
+      'Investigating substitution of dense MLP blocks with KAN layers to reduce inference cost, connecting function-approximation theory to deployment on constrained hardware. Exploratory: the public repository is a small approximation study, and there are no results on a language model yet.',
+    href: 'https://github.com/Ajishpradeep/kan_experiment',
+  },
 ];
 
-export const recognition = [
-  {
-    title: 'NVIDIA GTC 2025',
-    detail: 'Technical poster presenter — scalable vision AI for retail compliance.',
-    year: '2025',
-  },
-  {
-    title: 'TAITRA "Go Healthy Taiwan" Award',
-    detail:
-      'Technical lead behind the winning proposal — selected from 638 submissions across 55 countries.',
-    year: '2025',
-  },
-  {
-    title: 'Taiwan Expo Europe, Poland',
-    detail: 'Selected as lead engineering representative to present AI capabilities.',
-    year: '2026',
-  },
-];
+/*
+  A `recognition` list used to sit here and render under the research log: GTC
+  2025, the TAITRA award, the Warsaw exhibitor listing. All three already have
+  a fully sourced card in the impact dossier — with the 638-proposal figure and
+  the exhibitor listing linked — and GTC is the first entry of the log directly
+  above it. Restating them a third time, unsourced, made corroborated work read
+  as padding. The dossier is the record; this is deleted, not moved.
+*/
 
 /** What I actually do, grouped so a reader can find their own vocabulary quickly. */
 export const capabilities = [
   {
     area: 'Mathematical foundations',
     detail:
-      'Linear algebra, probabilistic modelling, multi-view geometry, optimisation theory, information theory, contrastive learning. The part that transfers between domains.',
+      'Linear algebra, probabilistic modelling, multi-view geometry, optimisation and metric learning. The part that transfers between domains — every case study on this site rests on one of these rather than on a framework.',
     items: ['Multi-view geometry', 'Optimisation', 'Probabilistic modelling', 'Temporal modelling'],
   },
   {
     area: 'Computer vision',
     detail:
-      '2D/3D pose estimation, object detection, 3D reconstruction, kinematic and biomechanical analysis, temporal consistency under occlusion and fast motion.',
-    items: ['Pose estimation', 'YOLO / DETR', '3D reconstruction', 'Gaussian splatting'],
+      '2D/3D pose estimation and lifting, dense object detection, open-set recognition by embedding retrieval, 3D reconstruction, kinematic and biomechanical analysis, temporal consistency under occlusion and fast motion.',
+    items: ['Pose estimation', 'YOLO / DETR', '3D reconstruction', 'Metric learning'],
   },
   {
     area: 'LLMs & agentic systems',

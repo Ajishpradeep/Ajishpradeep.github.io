@@ -13,6 +13,23 @@ import {
 } from 'lucide-react';
 import { site, nav as items, sections } from '../data/site';
 
+/*
+  The shortcut hint was hardcoded to ⌘K, so every Windows and Linux visitor was
+  shown a key their keyboard does not have, on a button whose whole purpose is
+  to teach the shortcut. `userAgentData.platform` where it exists, `userAgent`
+  where it does not; either way this is a label, so being wrong costs a wrong
+  hint rather than a broken control.
+*/
+const isMac =
+  typeof navigator !== 'undefined' &&
+  /mac|iphone|ipad|ipod/i.test(
+    (navigator as { userAgentData?: { platform?: string } }).userAgentData?.platform ??
+      navigator.userAgent,
+  );
+
+/** Both the header button and the command deck itself listen for this. */
+export const OPEN_DECK = 'commanddeck:open';
+
 const navIcon = {
   work: Layers,
   impact: Trophy,
@@ -66,7 +83,7 @@ export default function Nav() {
         </Link>
 
         {/* icon tiles */}
-        <nav className="hidden items-center gap-1.5 lg:flex">
+        <nav aria-label="Sections" className="hidden items-center gap-1.5 lg:flex">
           {items.map((it) => {
             const Icon = navIcon[it.id];
             const on = isOn(it);
@@ -120,13 +137,15 @@ export default function Nav() {
             </span>
           </a>
 
+          {/*
+            This dispatched a synthetic KeyboardEvent with metaKey:true and let
+            the deck's global shortcut handler catch it — a button pretending to
+            be a keypress. It worked, and it broke the moment anything else
+            reasoned about real key events. A named event says what is meant.
+          */}
           <button
             type="button"
-            onClick={() =>
-              window.dispatchEvent(
-                new KeyboardEvent('keydown', { key: 'k', metaKey: true, bubbles: true }),
-              )
-            }
+            onClick={() => window.dispatchEvent(new CustomEvent(OPEN_DECK))}
             aria-label="Open command deck"
             className="group flex w-[5rem] flex-col items-center gap-1 rounded-sm border border-cyan/25 px-1 py-2 transition-all duration-300 hover:border-amber hover:bg-amber/10"
           >
@@ -136,7 +155,7 @@ export default function Nav() {
               className="text-cyan/70 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:text-amber"
             />
             <span className="font-mono text-micro text-dim transition-colors group-hover:text-amber">
-              ⌘K
+              {isMac ? '⌘K' : 'Ctrl K'}
             </span>
           </button>
         </nav>
@@ -171,13 +190,29 @@ export default function Nav() {
         links. Impact's collapsed panels already solved this; the fix simply
         had not been carried across.
       */}
+      {/*
+        `transition-[max-height]` against a guessed 24rem ceiling: the drawer
+        animated to a height it does not have, so the ease was wrong at the end
+        and the guess would have broken the moment a nav item was added.
+        `grid-template-rows: 0fr → 1fr` animates the real height, and the same
+        idiom is already what Impact's accordion panels use.
+      */}
       <div
         inert={!open ? '' : undefined}
-        className={`overflow-hidden border-t border-cyan/20 bg-void/95 transition-[max-height,opacity] duration-500 lg:hidden ${
-          open ? 'max-h-[24rem] opacity-100' : 'max-h-0 border-transparent opacity-0'
+        className={`grid border-t bg-void/95 transition-[grid-template-rows,opacity] duration-500 ease-out lg:hidden ${
+          open
+            ? 'grid-rows-[1fr] border-cyan/20 opacity-100'
+            : 'grid-rows-[0fr] border-transparent opacity-0'
         }`}
       >
-        <nav className="shell grid grid-cols-4 gap-2 py-4">
+        {/*
+          The clipping element carries no padding of its own. With
+          `box-sizing: border-box` a 0fr track cannot squeeze padding below the
+          border box, so `py-4` here would have left a 32px sliver of drawer
+          visible while closed.
+        */}
+        <div className="overflow-hidden">
+        <nav aria-label="Sections" className="shell grid grid-cols-4 gap-2 py-4">
           {items.map((it) => {
             const Icon = navIcon[it.id];
             const on = isOn(it);
@@ -211,6 +246,7 @@ export default function Nav() {
             <span className="font-mono text-micro text-cyan/80">CV</span>
           </a>
         </nav>
+        </div>
       </div>
     </header>
   );

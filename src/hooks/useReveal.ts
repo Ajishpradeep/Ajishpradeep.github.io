@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { prefersReducedMotion } from './useReducedMotion';
 
 /**
  * Reveals every [data-reveal] element once it enters the viewport.
@@ -9,10 +10,7 @@ export function useReveal(key?: string) {
     const nodes = Array.from(document.querySelectorAll<HTMLElement>('[data-reveal]'));
     if (!nodes.length) return;
 
-    if (
-      typeof IntersectionObserver === 'undefined' ||
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    ) {
+    if (typeof IntersectionObserver === 'undefined' || prefersReducedMotion()) {
       nodes.forEach((n) => n.setAttribute('data-reveal', 'in'));
       return;
     }
@@ -38,7 +36,7 @@ export function useScrollReset(pathname: string, hash: string) {
   useEffect(() => {
     // A JS-supplied `behavior: 'smooth'` overrides the stylesheet, so
     // reduced-motion has to be honoured here rather than left to CSS.
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const reduced = prefersReducedMotion();
 
     if (hash) {
       const el = document.querySelector(hash);

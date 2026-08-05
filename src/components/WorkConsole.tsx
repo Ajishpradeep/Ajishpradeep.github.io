@@ -82,6 +82,35 @@ export default function WorkConsole() {
 
   const step = (d: number) => open((i + d + work.length) % work.length, true);
 
+  /*
+    Roving tabindex: the rail is one tab stop and the arrows move within it,
+    which is what `role="tablist"` promises. `moveFocus` is set only by a key
+    press, so focus follows the arrows without being stolen when the same case
+    is opened from the stepper, from a deep link, or from the command deck.
+  */
+  const activeTabRef = useRef<HTMLButtonElement>(null);
+  const moveFocus = useRef(false);
+
+  useEffect(() => {
+    if (!moveFocus.current) return;
+    moveFocus.current = false;
+    activeTabRef.current?.focus();
+  }, [i]);
+
+  const onRailKey = (e: React.KeyboardEvent) => {
+    const keys: Record<string, number> = { ArrowDown: 1, ArrowRight: 1, ArrowUp: -1, ArrowLeft: -1 };
+    let next: number | null = null;
+
+    if (e.key in keys) next = (i + keys[e.key] + work.length) % work.length;
+    else if (e.key === 'Home') next = 0;
+    else if (e.key === 'End') next = work.length - 1;
+
+    if (next === null) return;
+    e.preventDefault();
+    moveFocus.current = true;
+    open(next);
+  };
+
   // Keep the announced position in sync for anyone not watching the card change.
   const liveRef = useRef<HTMLParagraphElement>(null);
   useEffect(() => {
@@ -93,17 +122,30 @@ export default function WorkConsole() {
   return (
     <section
       id="work"
+      aria-labelledby="work-title"
       className="relative scroll-mt-[5.5rem] overflow-hidden border-b border-cyan/15 py-14 sm:py-16 lg:py-20"
     >
       <div className="grid-veil absolute inset-0 opacity-70" />
 
       <div className="shell relative">
         <div className="flex flex-wrap items-end justify-between gap-4 border-b border-cyan/15 pb-5">
+          {/*
+            One h2 register across all seven sections. Two were in use: this
+            one, and `font-text text-title font-semibold text-cyan/75` on the
+            other five — quieter than the h3 inside the card below it, which
+            made "Method" read as a sub-label of the section above rather than
+            as a peer of this one.
+
+            The amber brackets are gone with it. They are the same device as
+            the thirteen corner traces and the bracketed labels; spent on
+            headings too, they stopped being a mark and became the wallpaper.
+          */}
           <h2
+            id="work-title"
             className="font-display text-headline font-extrabold uppercase text-cyan"
             data-reveal
           >
-            <span className="text-amber">[</span>Selected systems<span className="text-amber">]</span>
+            Selected systems
           </h2>
 
           {/*
@@ -137,14 +179,25 @@ export default function WorkConsole() {
         <p ref={liveRef} aria-live="polite" className="sr-only" />
 
         <div className="mt-8 grid gap-8 lg:grid-cols-12 lg:gap-10">
-          {/* RAIL — a tablist, not navigation: these switch a panel in place. */}
+          {/*
+            RAIL — a tablist, not navigation: these switch a panel in place.
+
+            It announced `role="tablist"` and implemented none of the rest of
+            the pattern: all five tabs were separate tab stops and the arrow
+            keys did nothing, so a screen-reader user was told "tab, 1 of 5"
+            and handed a control that did not behave like one. Roving tabindex
+            and arrow handling below make the announcement true.
+          */}
           <div className="lg:col-span-3">
-            <p className="tag-sm text-dim">Index</p>
+            <h3 className="tag-sm text-dim" id="case-index-label">
+              Index
+            </h3>
             <ul
               role="tablist"
-              aria-label="Case studies"
+              aria-labelledby="case-index-label"
               aria-orientation="vertical"
               className="mt-4 space-y-1.5"
+              onKeyDown={onRailKey}
             >
               {work.map((wk, idx) => {
                 const on = idx === i;
@@ -156,6 +209,8 @@ export default function WorkConsole() {
                       id={`case-tab-${wk.slug}`}
                       aria-selected={on}
                       aria-controls="case-readout"
+                      tabIndex={on ? 0 : -1}
+                      ref={on ? activeTabRef : undefined}
                       onClick={() => open(idx)}
                       className={`flex w-full items-start gap-3 rounded-sm p-3 text-left transition-all duration-300 ${
                         on
@@ -216,7 +271,15 @@ export default function WorkConsole() {
                       <Target size={22} strokeWidth={1.7} className="icon-mark mt-0.5" />
                       <p className="copy-sm max-w-[62ch]">{study.problem}</p>
                     </div>
-                    <Facts study={study} stacked className="mt-auto pt-5 lg:pt-6" />
+                    {/*
+                      Not `mt-auto`. This column's height is set by the solver
+                      panel beside it, so pushing Facts to the bottom edge left
+                      a measured 206px hole between the problem paragraph and
+                      the org/period/role row — the fix for the column's bottom
+                      edge dug a pit in its middle. Trailing space under a short
+                      column reads as layout; a gap inside one reads as a bug.
+                    */}
+                    <Facts study={study} stacked className="mt-6 pt-5" />
                   </div>
                   <div className="lg:col-span-5">
                     <div key={study.slug} className="animate-[fadeUp_0.6s_ease-out]">

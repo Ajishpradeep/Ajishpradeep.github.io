@@ -2,6 +2,8 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { work } from '../data/work';
 import { site, sections as siteSections } from '../data/site';
+import { OPEN_DECK } from './Nav';
+import { useReducedMotion } from '../hooks/useReducedMotion';
 
 /** One line of context per destination, keyed to the shared nav inventory. */
 const sectionHint: Record<string, string> = {
@@ -31,7 +33,19 @@ export default function CommandDeck() {
   const [sel, setSel] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
+  const activeOptRef = useRef<HTMLButtonElement>(null);
   const navigate = useNavigate();
+
+  /*
+    The list is `max-h-[52vh] overflow-y-auto` and the selection moved without
+    scrolling it, so on the unfiltered list fourteen presses of ArrowDown put
+    the highlighted row 444px below the visible area — a palette that silently
+    loses its own cursor. `block: 'nearest'` scrolls only when it has to, so
+    short lists never jump.
+  */
+  useEffect(() => {
+    activeOptRef.current?.scrollIntoView({ block: 'nearest' });
+  }, [sel, q]);
 
   const close = useCallback(() => {
     setOpen(false);
@@ -39,17 +53,24 @@ export default function CommandDeck() {
     setSel(0);
   }, []);
 
+  /*
+    `useReducedMotion` already existed and already tracked changes to the
+    setting. This file sampled `matchMedia` inline in two places instead, and
+    `useReveal` in a third — three implementations of one decision, two of
+    which never updated if the visitor changed the setting mid-session.
+  */
+  const still = useReducedMotion();
+
   const goSection = useCallback(
     (id: string) => {
       close();
       navigate('/');
       window.requestAnimationFrame(() => {
         const el = document.getElementById(id);
-        const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        el?.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+        el?.scrollIntoView({ behavior: still ? 'auto' : 'smooth', block: 'start' });
       });
     },
-    [close, navigate],
+    [close, navigate, still],
   );
 
   const commands: Cmd[] = useMemo(() => {
@@ -122,14 +143,13 @@ export default function CommandDeck() {
         group: 'navigate',
         run: () => {
           close();
-          const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-          window.scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' });
+          window.scrollTo({ top: 0, behavior: still ? 'auto' : 'smooth' });
         },
       },
     ];
 
     return [...sections, ...cases, ...misc];
-  }, [close, goSection, navigate]);
+  }, [close, goSection, navigate, still]);
 
   const results = useMemo(() => {
     const term = q.trim().toLowerCase();
@@ -161,8 +181,14 @@ export default function CommandDeck() {
       }
       if (e.key === 'Escape' && open) close();
     };
+    const onOpen = () => setOpen(true);
+
     window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
+    window.addEventListener(OPEN_DECK, onOpen);
+    return () => {
+      window.removeEventListener('keydown', onKey);
+      window.removeEventListener(OPEN_DECK, onOpen);
+    };
   }, [open, close]);
 
   /*
@@ -241,7 +267,14 @@ export default function CommandDeck() {
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center gap-3 border-b border-cyan/15 px-5 py-4">
-          <span className="font-mono text-fine text-amber">›</span>
+          <span aria-hidden className="font-mono text-fine text-amber">
+            ›
+          </span>
+          {/*
+            A real combobox. Without these the palette was silent: a screen
+            reader announced a bare text field, never named the highlighted
+            command, and never said how many results a query had left.
+          */}
           <input
             ref={inputRef}
             value={q}
@@ -249,12 +282,23 @@ export default function CommandDeck() {
             onKeyDown={onKeyDown}
             placeholder="type a command…"
             aria-label="Command input"
+            role="combobox"
+            aria-expanded
+            aria-controls="cmd-list"
+            aria-autocomplete="list"
+            aria-activedescendant={results[sel] ? `cmd-opt-${results[sel].id}` : undefined}
             className="w-full bg-transparent font-mono text-fine text-cyan outline-none placeholder:text-dim"
           />
           <kbd className="font-mono text-micro uppercase tracking-[0.14em] text-dim">esc</kbd>
         </div>
 
-        <ul className="max-h-[52vh] overflow-y-auto py-2">
+        <p aria-live="polite" className="sr-only">
+          {results.length === 0
+            ? 'No matching command'
+            : `${results.length} command${results.length === 1 ? '' : 's'}`}
+        </p>
+
+        <ul id="cmd-list" role="listbox" aria-label="Commands" className="max-h-[52vh] overflow-y-auto py-2">
           {results.length === 0 && (
             <li className="px-5 py-6 font-mono text-fine text-dim">
               no matching command · try “work”, “case”, “cv”
@@ -265,14 +309,22 @@ export default function CommandDeck() {
             lastGroup = c.group;
             const on = i === sel;
             return (
-              <li key={c.id}>
+              <li key={c.id} role="presentation">
                 {header && (
-                  <p className="px-5 pb-1.5 pt-3 font-mono text-micro uppercase tracking-[0.16em] text-dim">
+                  <p
+                    aria-hidden
+                    className="px-5 pb-1.5 pt-3 font-mono text-micro uppercase tracking-[0.16em] text-dim"
+                  >
                     ·{header}·
                   </p>
                 )}
                 <button
                   type="button"
+                  id={`cmd-opt-${c.id}`}
+                  role="option"
+                  aria-selected={on}
+                  ref={on ? activeOptRef : undefined}
+                  tabIndex={-1}
                   onMouseEnter={() => setSel(i)}
                   onClick={c.run}
                   className={`flex w-full items-baseline justify-between gap-4 px-5 py-2.5 text-left transition-colors ${

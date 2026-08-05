@@ -59,7 +59,19 @@ export default {
         lead: ['clamp(1.1875rem, 0.5vw + 1.08rem, 1.375rem)', { lineHeight: '1.5', letterSpacing: '-0.008em' }],
         title: ['clamp(1.5rem, 1.1vw + 1.22rem, 1.9375rem)', { lineHeight: '1.2', letterSpacing: '-0.016em' }],
         headline: ['clamp(2.125rem, 2.6vw + 1.45rem, 3.4rem)', { lineHeight: '1.06', letterSpacing: '-0.024em' }],
-        mega: ['clamp(2.75rem, 6.2vw + 0.6rem, 5.5rem)', { lineHeight: '0.96', letterSpacing: '-0.028em' }],
+        /*
+         * The ceiling was 5.5rem (88px). At 1440×900 that set the h1 in five
+         * lines spanning 423px — 47% of the viewport — and pushed every
+         * headline figure and the primary call to action below the fold, on a
+         * page whose first named audience has sixty seconds. 4.25rem (68px)
+         * holds the same words in three lines. Loudness was never the problem;
+         * five lines of it was.
+         *
+         * The floor moved too, 2.75rem → 2.375rem. At 390px the headline was
+         * still setting five lines and 430px of h1, which is the same defect
+         * on the viewport that can least afford it.
+         */
+        mega: ['clamp(2.375rem, 5vw + 0.7rem, 4.25rem)', { lineHeight: '0.98', letterSpacing: '-0.028em' }],
       },
       /*
        * The two alpha steps the surface system is built on. `.card` sits at 28

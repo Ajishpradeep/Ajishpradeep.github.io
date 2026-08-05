@@ -1,5 +1,5 @@
-import { Award, Trophy, Globe2, ArrowUpRight } from 'lucide-react';
-import { recognition, research } from '../data/research';
+import { ArrowUpRight } from 'lucide-react';
+import { research } from '../data/research';
 
 const statusStyle: Record<string, string> = {
   published: 'border-cyan/50 text-cyan',
@@ -13,8 +13,6 @@ const statusLabel: Record<string, string> = {
   'in-progress': 'In progress',
 };
 
-const recIcon = [Award, Trophy, Globe2];
-
 /**
  * Research log.
  *
@@ -27,12 +25,14 @@ export default function Research() {
   return (
     <section
       id="research"
+      aria-labelledby="research-title"
       className="relative scroll-mt-[5.5rem] overflow-hidden border-b border-cyan/15 py-14 sm:py-16 lg:py-20"
     >
       <div className="shell relative">
         <div className="flex flex-wrap items-end justify-between gap-4 border-b border-cyan/15 pb-5">
           <h2
-            className="font-text text-title font-semibold text-cyan/75"
+            id="research-title"
+            className="font-display text-headline font-extrabold uppercase text-cyan"
             data-reveal
           >
             Research log
@@ -96,32 +96,6 @@ export default function Research() {
           })}
         </ol>
 
-        <div className="mt-12" data-reveal>
-          <p className="tag-sm text-amber">Recognition</p>
-          <ul className="mt-6 grid gap-6 sm:grid-cols-3">
-            {recognition.map((r, i) => {
-              const Icon = recIcon[i] ?? Award;
-              return (
-                <li key={r.title} className="flex gap-3.5">
-                  <Icon size={22} strokeWidth={1.7} className="icon-mark mt-0.5" />
-                  <div className="min-w-0">
-                    <div className="flex items-baseline justify-between gap-3">
-                      <h3 className="font-display text-base font-bold text-cyan">
-                        {r.title}
-                      </h3>
-                      <span className="shrink-0 font-mono text-micro text-amber">
-                        {r.year}
-                      </span>
-                    </div>
-                    <p className="mt-1.5 text-fine leading-relaxed text-cyan/75">
-                      {r.detail}
-                    </p>
-                  </div>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
       </div>
     </section>
   );

@@ -1,7 +1,12 @@
 export type LabProject = {
   name: string;
   url: string;
-  /** Drawn from the repository's own README — not extrapolated. */
+  /**
+   * Drawn from the repository's own README — not extrapolated. The one
+   * exception is Pulse, whose repository has no README at all; its description
+   * is written from memory of building the thing, which is a different kind of
+   * claim and is noted here rather than left to look like the others.
+   */
   description: string;
   language?: string;
   tags: string[];

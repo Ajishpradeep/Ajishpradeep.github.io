@@ -1,6 +1,5 @@
 import { Link, useParams } from 'react-router-dom';
 import { byslug, work } from '../data/work';
-import HudCanvas from '../components/HudCanvas';
 import NotFound from './NotFound';
 
 export default function CaseStudy() {
@@ -18,8 +17,6 @@ export default function CaseStudy() {
       {/* MASTHEAD */}
       <header className="relative overflow-hidden border-b border-cyan/15 pt-[5.5rem]">
         <div className="grid-veil absolute inset-0" />
-        <HudCanvas />
-
         <div className="shell relative py-14">
           <Link
             to={`/?case=${study.slug}#work`}

@@ -194,15 +194,26 @@ export default function ConstraintLab() {
           viewBox="0 0 100 100"
           tabIndex={0}
           /*
-           * `role="application"` was here. It forces a screen reader out of
-           * browse mode and hands every key to the widget — a heavy instrument
-           * for something that already has a complete text alternative in the
-           * aria-live readout below. `role="img"` states what it is; the
-           * arrow-key affordance is described in the label and the tabIndex
-           * keeps it reachable.
+           * `role="application"`, deliberately, and this is a reversal.
+           *
+           * It was `role="img"` on the reasoning that the aria-live readout
+           * below is already a complete text alternative, so the heavier role
+           * was not needed. That is true of the readout and false of the
+           * control: `role="img"` declares a static graphic, and in the browse
+           * mode NVDA and JAWS default to, the arrow keys are claimed by the
+           * reader's own cursor and never reach the handler below. The label
+           * said "move it with the arrow keys" to precisely the user for whom
+           * the arrow keys did nothing.
+           *
+           * `application` hands keys to the widget, which is what a widget
+           * driven by keys requires. `aria-roledescription` keeps the
+           * announcement meaningful rather than the bare "application", and
+           * the live readout outside this element still carries the state in
+           * text, so nothing is lost by browse mode being suspended inside it.
            */
-          role="img"
-          aria-label="Kinematic chain. Drag the club head, or move it with the arrow keys."
+          role="application"
+          aria-roledescription="Interactive diagram"
+          aria-label="Kinematic chain. Drag the club head, or move it with the arrow keys. Home resets."
           /*
            * pan-y, not none: a vertical swipe starting here must still scroll
            * the page. This sits mid-hero on mobile, so touch-action: none read

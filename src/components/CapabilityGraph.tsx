@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Axis3d, Atom, Brain, Gauge, Hand } from 'lucide-react';
+import { Axis3d, Atom, Brain, Gauge, Hand, Pause, Play } from 'lucide-react';
+import { useReducedMotion } from '../hooks/useReducedMotion';
 
 type Domain = {
   key: string;
@@ -44,7 +45,7 @@ const domains: Domain[] = [
     short: 'Edge',
     icon: Gauge,
     blurb:
-      'Making capable models cheap enough to run where they have to run — on the device, in real time, with no network.',
+      'Making capable models cheap enough to run where they have to run — on the device, with no network and no data leaving it.',
     skills: ['CoreML', 'TensorRT', 'Quantisation', 'ARM'],
   },
 ];
@@ -55,6 +56,25 @@ const CORE = { x: W / 2, y: H / 2 };
 const ORBIT = 92;
 /** Keeps nodes and their satellite labels inside the frame. */
 const PAD = 44;
+
+/*
+  THE RESTING LAYOUT, for `prefers-reduced-motion`.
+
+  There was no resting layout. The simulation simply never started, which left
+  the nodes frozen at their seed angles — 12, 3, 6 and 9 o'clock — and that is
+  the one arrangement where the geometry breaks. The 6 o'clock node sits at
+  y=224 and its label is drawn 40px below it, at y=264: exactly the frame edge,
+  clipped. The satellite ring around the 12 o'clock node reaches y=0 for the
+  same reason. Nothing was wrong with the maths; the seed angles were chosen for
+  a picture that was always supposed to be rotating past them.
+
+  Rotating the layout 45° and pulling the orbit in puts every node, every label
+  and every satellite inside the frame with the ring still legible. The
+  satellites get a matching 45° base so they never stack on the core.
+*/
+const REST_ORBIT = 80;
+const REST_ROTATION = Math.PI / 4;
+const SAT_ORBIT = 40;
 
 const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v));
 
@@ -91,10 +111,43 @@ export default function CapabilityGraph() {
     }),
   );
 
-  const reduced = useMemo(
+  /*
+    The hook, not an inline `matchMedia` sampled once at mount — this now
+    tracks a visitor who changes the setting mid-session, and the resting
+    layout below swaps with it.
+  */
+  const still = useReducedMotion();
+
+  /*
+    Autoplay is a real feature here: four domains introduce themselves without
+    the visitor having to discover that the graph is interactive. It is also
+    auto-updating content, which WCAG 2.2.2 (Level A) requires a mechanism to
+    stop. It previously had none — `held` paused it on hover, and hover does
+    not exist on a touch screen.
+
+    So it keeps the autoplay and gains a real control: a labelled pause button,
+    and any deliberate selection stops the cycle for good, because a visitor
+    who has chosen a domain is reading it and should not have it swapped out.
+  */
+  const [playing, setPlaying] = useState(true);
+
+  const choose = useCallback((i: number) => {
+    setActive(i);
+    setPlaying(false);
+  }, []);
+
+  const restBodies = useMemo<Body[]>(
     () =>
-      typeof window !== 'undefined' &&
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+      domains.map((_, i) => {
+        const a = (i / domains.length) * Math.PI * 2 - Math.PI / 2 + REST_ROTATION;
+        return {
+          x: CORE.x + Math.cos(a) * REST_ORBIT,
+          y: CORE.y + Math.sin(a) * REST_ORBIT,
+          vx: 0,
+          vy: 0,
+          ang: a,
+        };
+      }),
     [],
   );
 
@@ -107,14 +160,14 @@ export default function CapabilityGraph() {
 
   // cycle the selection while nobody is interacting
   useEffect(() => {
-    if (held || reduced) return;
+    if (!playing || held || still) return;
     const id = window.setInterval(() => setActive((i) => (i + 1) % domains.length), 3600);
     return () => window.clearInterval(id);
-  }, [held, reduced]);
+  }, [playing, held, still]);
 
   // the simulation
   useEffect(() => {
-    if (reduced) return;
+    if (still) return;
     let raf = 0;
     let last = performance.now();
 
@@ -185,7 +238,7 @@ export default function CapabilityGraph() {
 
     raf = requestAnimationFrame(step);
     return () => cancelAnimationFrame(raf);
-  }, [active, dragIdx, held, reduced]);
+  }, [active, dragIdx, held, still]);
 
   // dragging continues outside the svg
   useEffect(() => {
@@ -204,8 +257,20 @@ export default function CapabilityGraph() {
   }, [dragIdx, toLocal]);
 
   const current = domains[active];
-  const B = bodies.current;
+  /* One source of positions: the solver's when it runs, the resting layout when it does not. */
+  const B = still ? restBodies : bodies.current;
   const act = B[active];
+  const satBase = still ? REST_ROTATION : satSpin.current;
+
+  const status = still
+    ? 'static'
+    : dragIdx !== null
+      ? 'dragging'
+      : held
+        ? 'held'
+        : playing
+          ? 'orbiting'
+          : 'paused';
 
   return (
     <div
@@ -230,11 +295,27 @@ export default function CapabilityGraph() {
           </p>
           <p className="mt-1 font-text text-fine text-dim">One core · four domains it feeds</p>
         </div>
-        <span className="flex shrink-0 items-center gap-2 pt-1">
-          <span className="blink h-1.5 w-1.5 rounded-full bg-amber" />
-          <span className="font-mono text-micro text-dim">
-            {dragIdx !== null ? 'dragging' : held ? 'held' : 'orbiting'}
-          </span>
+        <span className="flex shrink-0 items-center gap-2">
+          <span className="font-mono text-micro text-dim">{status}</span>
+          {/*
+            The pause control WCAG 2.2.2 requires. Hidden under reduced motion,
+            where there is nothing cycling to pause and the button would be a
+            control for a state that cannot occur.
+          */}
+          {!still && (
+            <button
+              type="button"
+              onClick={() => setPlaying((v) => !v)}
+              aria-label={playing ? 'Pause the domain cycle' : 'Cycle through the domains'}
+              className="flex h-9 w-9 items-center justify-center rounded-sm border border-cyan/30 text-cyan transition-colors duration-300 hover:border-amber hover:text-amber"
+            >
+              {playing ? (
+                <Pause size={13} strokeWidth={2} />
+              ) : (
+                <Play size={13} strokeWidth={2} />
+              )}
+            </button>
+          )}
         </span>
       </div>
 
@@ -242,7 +323,13 @@ export default function CapabilityGraph() {
         <svg
           ref={svgRef}
           viewBox={`0 0 ${W} ${H}`}
-          className="absolute inset-0 h-full w-full touch-none select-none"
+          /*
+            pan-y, not none. `touch-none` meant a vertical swipe that began on
+            the graph stopped the page scrolling — and this sits in the hero,
+            so on a phone it read as the whole site freezing. ConstraintLab had
+            already hit this and fixed it; the fix was never carried across.
+          */
+          className="absolute inset-0 h-full w-full select-none [touch-action:pan-y]"
           onPointerMove={(e) => {
             const p = toLocal(e.clientX, e.clientY);
             if (p) pointer.current = p;
@@ -308,12 +395,25 @@ export default function CapabilityGraph() {
               );
             })}
 
-          {/* satellites: the skills under the active domain */}
+          {/*
+            Satellites: how many skills sit under the active domain, not which.
+
+            They used to carry 7px mono labels. Four of them ring a node of
+            radius 25 at radius 40, which leaves 15px for a word — so
+            "Triangulation" ran under the node, "Calibration" landed on the
+            node's own caption, and "Scale anchoring" left the frame. They were
+            unreadable at that size even when they did not collide.
+
+            The readout below already names all four as real text at a real
+            size, which is where a reader actually reads them. What the graphic
+            is good at is showing that the domain has depth and how much; the
+            dots do that on their own.
+          */}
           {act &&
             current.skills.map((s, k) => {
-              const a = satSpin.current + (k / current.skills.length) * Math.PI * 2;
-              const sx = act.x + Math.cos(a) * 40;
-              const sy = act.y + Math.sin(a) * 40;
+              const a = satBase + (k / current.skills.length) * Math.PI * 2;
+              const sx = act.x + Math.cos(a) * SAT_ORBIT;
+              const sy = act.y + Math.sin(a) * SAT_ORBIT;
               return (
                 <g key={s}>
                   <line
@@ -325,17 +425,6 @@ export default function CapabilityGraph() {
                     strokeOpacity="0.22"
                   />
                   <circle cx={sx} cy={sy} r="2.4" fill="rgb(var(--amber))" opacity="0.85" />
-                  <text
-                    x={sx}
-                    y={sy - 6}
-                    textAnchor="middle"
-                    fill="rgb(var(--amber))"
-                    fillOpacity="0.8"
-                    fontSize="7"
-                    fontFamily="JetBrains Mono, monospace"
-                  >
-                    {s}
-                  </text>
                 </g>
               );
             })}
@@ -383,9 +472,9 @@ export default function CapabilityGraph() {
                   e.preventDefault();
                   const p = toLocal(e.clientX, e.clientY);
                   if (p) pointer.current = p;
-                  setActive(i);
+                  choose(i);
                   setHeld(true);
-                  setDragIdx(i);
+                  if (!still) setDragIdx(i);
                 }}
                 onMouseEnter={() => {
                   setActive(i);
@@ -403,7 +492,8 @@ export default function CapabilityGraph() {
                 />
                 <text
                   x={b.x}
-                  y={b.y + (on ? 40 : 34)}
+                  /* The active node is r=25, so 40 left the caption touching it. */
+                  y={b.y + (on ? 45 : 34)}
                   textAnchor="middle"
                   fill={on ? 'rgb(var(--amber))' : 'rgb(var(--dim))'}
                   fontSize="8.5"
@@ -439,9 +529,15 @@ export default function CapabilityGraph() {
 
       </div>
 
+      {/*
+        The hint said "hover to hold · drag a node · it springs back" in every
+        condition — including reduced motion, where the loop that moves the
+        nodes never runs, so dragging did nothing at all. Documentation for
+        behaviour the build does not have is worse than no documentation.
+      */}
       <p className="mt-3 flex items-start gap-2 font-mono text-micro text-dim">
         <Hand size={13} strokeWidth={2} className="mt-0.5 shrink-0" />
-        hover to hold · drag a node · it springs back
+        {still ? 'select a domain below' : 'hover to hold · drag a node · it springs back'}
       </p>
 
       {/*
@@ -483,10 +579,7 @@ export default function CapabilityGraph() {
             type="button"
             aria-label={d.label}
             aria-pressed={i === active}
-            onClick={() => {
-              setActive(i);
-              setHeld(true);
-            }}
+            onClick={() => choose(i)}
             className="group flex flex-1 items-center py-3"
           >
             <span

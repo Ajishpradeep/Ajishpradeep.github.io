@@ -311,6 +311,80 @@
   .btn-ghost {
     @apply btn border border-cyan/50 text-cyan hover:border-amber hover:bg-amber/10 hover:text-amber;
   }
+
+  /*
+   * The one slider on the site, drawn as an instrument control rather than
+   * left as the platform default — a stock blue iOS/Chrome thumb inside the
+   * hero panel was the one element that looked borrowed from another product.
+   *
+   * A native `input[type=range]` and not a custom drag handle, deliberately:
+   * it comes with keyboard stepping, touch handling that does not eat a
+   * scroll, and screen-reader value announcement already correct. The
+   * predecessor to this control was a hand-rolled pointer-drag graph, and all
+   * three of those were broken in it.
+   *
+   * The 44px block is the pointer target; the visible rail is 4px and centred
+   * inside it, so the control meets the touch floor without looking heavy.
+   */
+  .range-hud {
+    @apply block h-11 w-full cursor-pointer bg-transparent;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  .range-hud:focus {
+    outline: none;
+  }
+  .range-hud:focus-visible::-webkit-slider-thumb {
+    outline: 2px solid rgb(var(--amber));
+    outline-offset: 3px;
+  }
+  .range-hud:focus-visible::-moz-range-thumb {
+    outline: 2px solid rgb(var(--amber));
+    outline-offset: 3px;
+  }
+
+  .range-hud::-webkit-slider-runnable-track {
+    height: 4px;
+    border-radius: 2px;
+    background: rgb(var(--cyan) / 0.2);
+  }
+  .range-hud::-moz-range-track {
+    height: 4px;
+    border-radius: 2px;
+    background: rgb(var(--cyan) / 0.2);
+  }
+  .range-hud::-moz-range-progress {
+    height: 4px;
+    border-radius: 2px;
+    background: rgb(var(--amber) / 0.8);
+  }
+
+  /* 20px thumb on a 4px track: (4 - 20) / 2 = -8px to re-centre it. */
+  .range-hud::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    margin-top: -8px;
+    border-radius: 2px;
+    border: 1px solid rgb(var(--void));
+    background: rgb(var(--amber));
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .range-hud::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 2px;
+    border: 1px solid rgb(var(--void));
+    background: rgb(var(--amber));
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .range-hud:active::-webkit-slider-thumb {
+    transform: scale(1.15);
+  }
+  .range-hud:active::-moz-range-thumb {
+    transform: scale(1.15);
+  }
 }
 
 @layer utilities {

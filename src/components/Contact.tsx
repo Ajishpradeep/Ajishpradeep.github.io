@@ -12,7 +12,6 @@ import {
 } from 'lucide-react';
 import { site } from '../data/site';
 import { about } from '../data/about';
-import HudCanvas from './HudCanvas';
 
 const linkIcon: Record<string, typeof Mail> = {
   Email: Mail,
@@ -39,11 +38,19 @@ export default function Contact() {
   }, [copied]);
 
   return (
-    <section id="contact" className="relative scroll-mt-[5.5rem] overflow-hidden py-16 sm:py-20">
+    <section
+      id="contact"
+      aria-labelledby="contact-title"
+      className="relative scroll-mt-[5.5rem] overflow-hidden py-16 sm:py-20"
+    >
       <div className="grid-veil absolute inset-0 opacity-60" />
-      <HudCanvas />
 
-      {/* drawn horizon */}
+      {/*
+        The horizon stays and the particle canvas that sat on top of it does
+        not. A ground plane in perspective is the one background on this page
+        that belongs to a product about measuring things in three dimensions;
+        a drifting node field was the same decoration as every other site's.
+      */}
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-56 overflow-hidden opacity-40">
         <div
           className="absolute inset-x-[-50%] bottom-0 h-full"
@@ -60,7 +67,8 @@ export default function Contact() {
       <div className="shell relative">
         <div className="flex flex-wrap items-end justify-between gap-4 border-b border-cyan/15 pb-5">
           <h2
-            className="font-text text-title font-semibold text-cyan/75"
+            id="contact-title"
+            className="font-display text-headline font-extrabold uppercase text-cyan"
             data-reveal
           >
             Contact
@@ -73,11 +81,22 @@ export default function Contact() {
 
         <div className="mt-12 grid gap-10 lg:grid-cols-12 lg:gap-10">
           <div className="lg:col-span-7">
+            {/*
+              `text-mega` is documented as the h1, once per page. This is an
+              h3 in the last section and it was set at the same size as the
+              page's only h1, which made the type scale say the two were peers.
+
+              It read "Let's build something true" — the one slogan on a site
+              that otherwise only states things, and an imperative aimed at a
+              reader who has not agreed to anything yet. The paragraph beneath
+              it is already `about.open.body`; this is that block's own heading,
+              so the two now come from one place and say the same thing.
+            */}
             <h3
-              className="max-w-[16ch] text-balance font-display text-mega font-extrabold uppercase leading-[1.02] text-amber glow-amber"
+              className="max-w-[18ch] text-balance font-display text-headline font-extrabold uppercase text-amber glow-amber"
               data-reveal
             >
-              Let&rsquo;s build something true
+              {about.open.heading}
             </h3>
             <p
               className="mt-7 max-w-[52ch] copy"

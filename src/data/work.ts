@@ -32,22 +32,29 @@ export const work: CaseStudy[] = [
     index: '01',
     title: 'Markerless 3D motion capture, on a phone',
     subtitle:
-      'A 29-keypoint pose model and 2D-to-3D lifting stack that put full golf-swing biomechanics on-device — the first markerless app to do it in real time.',
+      'A 29-keypoint pose model and 2D-to-3D lifting stack that put full golf-swing biomechanics on a phone — body and club, from two consumer cameras, with nothing leaving the device.',
     org: 'IdeasLab Formosa',
     period: '2025 — present',
     domain: 'Computer Vision · 3D Geometry · Edge AI',
     role: 'R&D lead — architecture, training, deployment',
-    stack: ['PyTorch', 'YOLO-pose', 'CoreML', 'Multi-view geometry', 'Apple Vision', 'TensorRT'],
+    stack: [
+      'PyTorch',
+      'YOLO-pose',
+      'CoreML',
+      'Temporal lifting (TCPFormer-family)',
+      'Multi-view geometry',
+      'Apple Vision',
+    ],
     teaser:
       'Getting 3cm 3D joint accuracy out of a phone camera, without letting a sport-specific model quietly corrupt the general body model underneath it.',
     metrics: [
-      { value: '8cm → 3cm', label: 'mean per-joint error' },
-      { value: '240fps', label: 'on-device, no cloud' },
+      { value: '8cm → 3cm', label: 'mean per-joint error, pelvis-relative' },
+      { value: '0.000px', label: 'body drift, verified by weight diff' },
       { value: '+30%', label: 'fidelity under occlusion' },
-      { value: '0.000px', label: 'body drift vs. base model' },
+      { value: 'On-device', label: 'no cloud, no footage leaves the phone' },
     ],
     problem:
-      'Markerless motion capture that PGA professionals will actually trust needs mocap-grade 3D from two consumer cameras, in real time, on an ARM device — while tracking a golf club that moves faster than the shutter and disappears behind the body twice per swing.',
+      'Markerless motion capture that PGA professionals will actually trust needs mocap-grade 3D from two consumer cameras, on an ARM device — while tracking a golf club that moves faster than the shutter and disappears behind the body twice per swing.',
     sections: [
       {
         heading: 'The failure nobody catches in the metrics',
@@ -63,6 +70,8 @@ export const work: CaseStudy[] = [
           'Rather than regularise the drift and hope, I made it unrepresentable: freeze the backbone, neck and every body keypoint output channel, and train only the club channels. The deployed body pathway is then bit-identical to the base model on every image — not "close", identical, verifiable by weight diff.',
           'That bought correctness and immediately exposed the real problem. A linear club readout over body-only frozen features plateaued badly: the frozen trunk had no representation of a thin metal shaft, because nothing in its training had ever asked for one.',
           'The resolution was a parallel trainable adapter — a small feature pyramid over early frozen backbone taps, fused into the club branch only. Club accuracy went from a hard plateau to production quality with the body still provably untouched.',
+          'Every mechanism in that stack has a literature behind it. Frozen columns with adapter-mediated lateral connections are Progressive Neural Networks (2016), which states the goal in the same terms — forgetting made impossible by design rather than penalised. A trainable side network fused into an unchanged pretrained one is Side-Tuning (ECCV 2020). Zero-initialised blocks that start as the identity and can only improve from there are ControlNet\'s zero-convolutions (ICCV 2023). The composition is the contribution, and so is the acceptance criterion underneath it: "the body model must never regress for any customer" is an architectural constraint rather than a validation threshold, and bit-identity turns an ML risk into a CI check.',
+          'The trade is real and worth stating. A fully frozen body pathway can never learn from club data, and club position is genuinely informative about the hands — the shaft is anchored to them. That transfer is architecturally forbidden in the direction where it would help most. I took the guarantee over the potential gain because a silent regression on a general user is a worse failure than a marginally better wrist keypoint on a golfer, but it is a choice with a cost, not a free win.',
         ],
       },
       {
@@ -87,15 +96,24 @@ export const work: CaseStudy[] = [
         ],
       },
       {
+        heading: 'What the number is measured against',
+        body: [
+          'The 3cm is mean per-joint error, pelvis-relative, on our own golf corpus — the same metric family as Human3.6M rather than absolute position in the room. Stating which metric matters more than the digit: a reader who knows the field will ask inside three minutes, and an unqualified number reads as either naive or evasive.',
+          'The comparison that gives it meaning is not the Human3.6M leaderboard, where the top lifting models sit around 38mm on studio motion. It is what happens when those models meet athletic speed. AthletePose3D (2025) evaluated TCPFormer — state of the art at 37.9mm on Human3.6M — zero-shot on high-speed sport: 213mm. Fine-tuned on athletic data it recovers to roughly 66mm.',
+          'That is the honest frame for this work. Golf is the motion class that breaks general pose models, and the interesting result is not beating a studio benchmark but holding accuracy where studio-trained models lose an order of magnitude. It is also why the general-body regression described above was the binding constraint: the fix for athletic motion is domain fine-tuning, and domain fine-tuning is exactly what corrupts the base model.',
+        ],
+      },
+      {
         heading: 'Deployment as a constraint, not a phase',
         body: [
-          'The target was Apple ARM silicon via CoreML at real-time rates with no cloud dependency — chosen as much for privacy as for latency, since swing footage of identifiable clients should not leave the device. Quantisation and compression were part of the architecture conversation from the start, not a compression pass bolted on at the end.',
+          'The target was Apple ARM silicon via CoreML with no cloud dependency — chosen as much for privacy as for latency, since swing footage of identifiable clients should not leave the device. Quantisation and compression were part of the architecture conversation from the start, not a compression pass bolted on at the end.',
+          'Worth being exact about what "on-device" means here, because the phrase gets stretched. The phone captures the swing and the full analysis pipeline then runs locally on that recording — it is edge inference over stored video, not live streaming inference on the camera feed. The guarantee that matters is that the footage and every model in the stack stay on the handset. Real-time frame-rate figures describe capture, not the inference budget.',
         ],
       },
     ],
     outcome: [
-      'Mean per-joint 3D error reduced 8cm → 3cm through temporal consistency modelling, motion-aligned lifting and spatial refinement.',
-      '240fps markerless tracking on-device, powering an iOS app used by PGA professionals.',
+      'Mean per-joint 3D error reduced 8cm → 3cm, pelvis-relative, through temporal consistency modelling, motion-aligned lifting and spatial refinement.',
+      'The full analysis stack running locally on Apple ARM silicon, with no cloud round-trip and no footage leaving the device — shipped in an iOS app used by PGA professionals.',
       'A club-tracking model that beats prior generations on club accuracy while being the only one with a provably unbiased body model.',
       'An internal benchmarking suite for evaluating robustness across long-tailed action distributions — every claim above is a measured number, not an impression.',
     ],
@@ -128,7 +146,8 @@ export const work: CaseStudy[] = [
         heading: 'The architectural commitment',
         body: [
           'Numbers come from Python. Prose comes from the LLM. The system prompt forbids the model from computing or inventing any quantity, and the deterministic half of the pipeline is fully reproducible and covered by a test suite that needs no API key — so the part that can be verified is verified, on every commit, without network flakiness.',
-          'This is the inverse of the common pattern of handing an LLM raw data and asking for analysis. The model receives verdicts that a rule engine has already reached, and its job is to render them as coaching that cites the specific rule it came from. Every claim in the output is traceable to a deterministic evaluation.',
+          'This is the inverse of the common pattern of handing an LLM raw data and asking for analysis. The model receives verdicts that a rule engine has already reached, and its job is to render them as coaching that cites the specific rule it came from. Every claim in the output is traceable to a deterministic evaluation. It is the same separation PAL (ICML 2023) identified — decomposition is the model\'s job, solving belongs to the interpreter — and the same one that regulated lending has been forced into by adverse-action reason requirements: an interpretable scorer decides, a language layer explains.',
+          'Forbidding the model from computing a number does not forbid it from describing one wrongly, and that gap is where this architecture is usually oversold. A narrator can still invert a comparison, attribute a verdict to the wrong rule, or add a causal claim the engine never made — Turpin et al. (NeurIPS 2023) showed how fluently models rationalise rather than report. So the narration is checked against the verdicts it cites, not just the arithmetic behind it. A guarantee that stops at the arithmetic is a guarantee about the easy half.',
         ],
       },
       {
@@ -251,8 +270,9 @@ export const work: CaseStudy[] = [
       {
         heading: 'Separating detection from identity',
         body: [
-          'Dense object detection locates products on a shelf; a separately fine-tuned embedding model, trained with triplet loss, decides what each one is by nearest-neighbour lookup against a catalogue of reference vectors.',
-          'The consequence is that adding a product means adding vectors, not retraining a classifier. A new SKU is a data operation. That is the difference between a demo that works on a fixed catalogue and a system a retailer can actually operate.',
+          'Dense object detection locates products on a shelf; a separately fine-tuned embedding model, trained with triplet loss, decides what each one is by nearest-neighbour lookup against a catalogue of reference vectors. Adding a product means adding vectors, not retraining a classifier.',
+          'Treating SKU identity as instance-level retrieval rather than closed-set classification is the reference architecture for open-set product recognition — established since Tonioni and Di Stefano in 2018, and the property it buys is what the literature calls one-shot or few-shot generalisation to unseen products. Choosing it here was a call about which constraint would decide the system\'s fate: the operational one, not the accuracy one. A catalogue that changes weekly kills a classifier long before accuracy becomes the argument.',
+          'The choice worth defending is the fine-tuned domain embedding. Foundation-model embeddings are the default starting point now, and they cluster categories well while failing precisely where retail hurts — ranking near-identical flavour and size variants apart. A domain-specialised metric space is where triplet loss still earns its place.',
           'On top of that, comparing detected shelf state against the intended planogram surfaces discrepancies automatically — the actual business question, rather than raw detections.',
         ],
       },
@@ -260,6 +280,7 @@ export const work: CaseStudy[] = [
         heading: 'Occlusion as the default case',
         body: [
           'For autonomous retail, products are recognised in a customer\'s hand — partially occluded, at arbitrary orientation, under motion blur. Occlusion is not an edge case in that setting; it is the normal case, and any evaluation treating it as an outlier will overstate performance.',
+          'This is the part of the problem the industry mostly declines to solve in vision. Amazon\'s Just Walk Out fuses camera streams with shelf weight sensors, and the sensors exist precisely to cover the small-and-occluded case; the ITRI/7-Eleven X-STORE build in Taiwan went further in the same direction, arguing explicitly that weight sensors and light curtains cost less computation than solving it visually. Doing it from cameras is a harder problem than the planogram work and a less crowded one.',
           'Combining custom detection with vector-embedding search under those conditions produced a 30% performance gain, and the system was deployed to Taiwan\'s 8th unmanned 7-Eleven store.',
         ],
       },
@@ -288,7 +309,7 @@ export const work: CaseStudy[] = [
     org: 'National Taipei University of Technology',
     period: '2022 — 2023',
     domain: 'Generative Models · Attention · Thesis',
-    role: 'Principal researcher',
+    role: 'Author',
     stack: ['PyTorch', 'GANs', 'Attention mechanisms', 'Receptive field design'],
     teaser:
       'Mode collapse, memorisation and underfitting are three different diseases with one symptom — bad samples.',

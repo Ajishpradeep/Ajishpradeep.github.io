@@ -12,17 +12,19 @@ export default function Capabilities() {
   return (
     <section
       id="capabilities"
+      aria-labelledby="capabilities-title"
       className="relative scroll-mt-[5.5rem] overflow-hidden border-b border-cyan/15 bg-deep/40 py-14 sm:py-16 lg:py-20"
     >
       <div className="shell relative">
         <div className="flex flex-wrap items-end justify-between gap-4 border-b border-cyan/15 pb-5">
           <h2
-            className="font-text text-title font-semibold text-cyan/75"
+            id="capabilities-title"
+            className="font-display text-headline font-extrabold uppercase text-cyan"
             data-reveal
           >
             Capabilities
           </h2>
-          <p className="tag-sm text-dim">Maths constant · domain variable</p>
+          <p className="tag-sm text-dim">Reference · what each area contains</p>
         </div>
 
         <dl className="mt-4">
