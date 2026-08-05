@@ -38,9 +38,16 @@ export const site = {
    * it is the register he wants the page opened in. Two things to know before
    * changing it:
    *
-   * The first sentence is also `about.headline` verbatim. That is deliberate
-   * and it is his call — the two pages now open on the same line, which reads
-   * as a refrain to anyone who visits both.
+   * THE FIRST SENTENCE IS NOW THE H1 AND IS NOT REPEATED HERE. "I work on the
+   * part of AI that has to be true" opens the page in Hero.tsx; this paragraph
+   * starts at what used to be its second sentence. It was the best line on the
+   * page and it was the fourth thing read — under a badge, a headline and a
+   * blank. Say a fact once.
+   *
+   * It remains `about.headline` verbatim, and that is still deliberate: the two
+   * pages open on the same line, which reads as a refrain to anyone who visits
+   * both. It is now a refrain between two headlines rather than between a
+   * headline and a paragraph, which is the stronger version of the same idea.
    *
    * It stays in one block and in one voice. A draft split the third sentence
    * into the amber slot to save a line; it read as two tones arguing over one
@@ -54,7 +61,7 @@ export const site = {
    * not a bare past "let". `about.ts` already had it right.
    */
   intro:
-    'I work on the part of AI that has to be true. I engineer AI where the mathematics is explicit and the physics is enforced. Having those foundations right is what has let me move from generative models to retail vision to 3D biomechanics to agentic LLM systems without starting over each time — the domain changes, the mathematics does not.',
+    'I engineer AI where the mathematics is explicit and the physics is enforced. Having those foundations right is what has let me move from generative models to retail vision to 3D biomechanics to agentic LLM systems without starting over each time — the domain changes, the mathematics does not.',
   /**
    * The differentiator, and the one claim a forwarded CV cannot carry. It read
    * "I care most about the failures a model's own metric cannot see" — which

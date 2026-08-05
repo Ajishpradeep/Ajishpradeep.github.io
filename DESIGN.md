@@ -87,8 +87,44 @@ repeated as the page's skeleton.
 ## The two instruments, and which slot each one earns
 
 The hero answers **"what is this person expert in"**. Nothing else can have that
-slot. `CapabilityGraph` — one maths core feeding four domains — answers it in a
-single picture, which is why it is there.
+slot. `CapabilityGraph` answers it in a single picture, which is why it is there.
+
+**It is a link graph, and the links are the argument.** It was an orbit — one
+maths core, four domains circling it — and that picture was true and said
+nothing the positioning had not already said in a sentence. What it could not
+draw is the part that is actually unusual: that moving from generative models to
+retail vision to 3D biomechanics to agentic systems did not mean starting over,
+because the same techniques kept doing work on the other side.
+
+So sixteen skills are nodes too, and the four that serve two domains are drawn
+once, between them, wired to both. Point at one and both its domains light on
+opposite sides of the frame. That is not a caption claiming the foundation is
+shared; it is the shared thing lighting both ends.
+
+**Every cross-link is something a case study shows.** Scale anchoring is
+geometry↔physics because metric scale is fixed by an anatomical prior — 204 bone
+measurements validated against published anthropometrics. Temporal continuity is
+physics↔edge because the club-telescoping failure was solved at inference by a
+shaft-length tracker running on the device. Grounding is geometry↔agentic
+because the coaching rules run on biomechanics the geometry stack produced.
+Evaluation is agentic↔physics, and it is the one edge that crosses the middle,
+because it is the site's own thesis at both ends. **Do not add a fifth link to
+make the picture prettier.** The sourcing rule binds a drawn relationship
+exactly as it binds a number.
+
+**Placed, not solved.** Obsidian runs a force simulation; twenty-one nodes
+relaxing inside a 340×300 panel land somewhere new on every load, including on
+top of each other and outside the frame. The arrangement is computed from two
+ellipses and drifts on it, so it breathes like a settled force graph — but the
+settling was done by hand, where it can be checked. Domains sit at the four
+diagonals precisely because an ellipse leaves its corners empty, which is where
+the four domain names are pinned: four labels that cannot collide with anything,
+at any width, however the graph drifts. Position says which name belongs to
+which node; lighting says which is being read.
+
+**Edges stop at the rim of what they connect.** Drawn centre to centre, the four
+core→domain links were mostly underneath the two discs — present in the markup
+and invisible in the picture, on the one relationship the panel is named after.
 
 `MetricBlindness` briefly held the hero and was moved out. It is good work and it
 was in the wrong position: it introduces *one* problem from *one* case study,
@@ -109,20 +145,24 @@ repaired rather than restored:
   and hover-to-pause is not a mechanism on a touch screen. It has a labelled
   pause button, and any deliberate selection stops the cycle for good.
 - **A reduced-motion path needs a designed resting state, not an absent one.**
-  Skipping the animation left the nodes at their seed angles, which is the one
-  arrangement where labels leave the frame. The rest layout is rotated 45°. It
-  shares the orbit the animation uses rather than a smaller one — the frame is
-  now sized so every node, caption and satellite is inside it at every angle, so
-  the reduced-motion visitor sees the picture the animation settles into.
-- **The status must be true in every mode.** The pill reads `static`, not
-  `orbiting`, when nothing moves.
+  The layout is deterministic, so the resting state is the layout with the drift
+  amplitude at zero — the reduced-motion visitor sees exactly the picture the
+  drift moves around, not a smaller substitute for it.
+- **The status must be true in every mode.** The pill reads `static` when
+  nothing moves, and it reads `drifting` rather than `orbiting`, because nothing
+  orbits any more.
 - **An affordance is worth more than a caption describing it.** The panel used to
   carry a mono line under the frame naming the drag and the tap. A caption that
   explains how to operate a picture is documentation, and it goes stale the
   moment either half stops being true — this one already had, twice. The
-  controls announce themselves instead: the nodes take a grab cursor, the skills
-  are controls that respond to a pointer, and nothing is reachable only through
-  the sentence that used to describe it.
+  controls announce themselves instead, and nothing is reachable only through the
+  sentence that used to describe it.
+- **A `useState` setter is not a dependency.** `at` and `view` were memoised on
+  `tick`, which React guarantees is stable, so both were computed once at mount
+  and never again: the drift did not drift and the camera sat where it had been
+  initialised, showing one domain's cluster while the readout described another.
+  Depend on the frame *value*. This cost a full round of screenshots to find,
+  because a still frame of a frozen animation looks exactly like a still frame.
 - **`[touch-action:pan-y]`, never `touch-none`**, on anything in the scroll path.
 - **Prefer the platform control.** `MetricBlindness` is a native
   `input[type=range]`: keyboard stepping, touch handling and value announcement
@@ -138,24 +178,41 @@ What replaced them is the rule worth keeping:
 
 - **Every label in the graphic is HTML on top of it, at the site's own sizes.**
   The viewBox scales; 14px does not. Inside the SVG a caption is whatever the
-  box happens to scale it to, which on a phone was 7px. The frame is capped
-  (`max-w`) so the drawing only ever lives between 0.87× and 1.13×, which is the
-  band every clearance in the layout is solved for.
-- **One label at a time, on demand, is the version that fits.** Point at a skill
-  in the readout — or at its dot — and that dot alone is named on a plate that
-  opens away from the node and is clamped to the frame. One label cannot collide
-  with three others.
-- **A hover previews and a press latches.** Naming a skill on hover alone meant
-  the label went out on the way to the thing it was pointing at, and on a pointer
-  device the press looked dead because the hover had already lit it. The pin
-  survives the pointer leaving and the domain cycle; a second press releases it.
-  This is the same rule one level up, where selecting a domain stops the cycle
-  for good — a deliberate action outranks a passing one, everywhere in the panel.
-- **The readout is the permanent legend, and it is spatial.** The four skills are
-  a fixed 2×2 whose reading order is the four satellites' fixed positions, so the
-  top-left chip is the top-left dot. That is the labelling; the peek confirms it.
-  Satellites do not rotate — a rotating dot is one the reader has to chase, and
-  it swept through the node's caption four times a revolution.
+  drawing happens to scale it to, which on a phone was 7px.
+- **The frame is not a box inside a box.** It was: a bordered, inset,
+  24rem-capped panel inside a bordered card, which is a child framed more
+  strongly than its container. It bleeds to the card's edges now, on `bg-void` —
+  the page showing through rather than a fourth surface.
+- **A graph view is a quiet thing, and this one had stopped being one.** It had
+  acquired, one reasonable decision at a time: a knockout plate behind every
+  name, a leader line from every dot to its name, an arrow glyph on four of them,
+  dashed edges in a second colour, a glow under the core and another under the
+  selected node, a beam under every live edge, and a camera that pulled back and
+  dived in every few seconds. Each solved something real. Together they were
+  noise, and the mesh underneath — which is the actual argument — could not be
+  seen through them. **Before adding a device here, check what it is competing
+  with.**
+- **The drawing carries four names, not twenty.** The four domains are the map
+  legend. Everything else is named in the list under the picture, and pointing at
+  a name swells its node and rings it — which is the pairing a graphic cannot do
+  alone. Sixteen labels in a 470px panel is exactly what made this cluttered.
+- **The turn moves the graph, not the camera.** The cluster being read expands
+  away from the core and brightens; the rest contracts toward it and fades. Depth
+  is the right mechanism for a step that happens on a timer, because nothing the
+  reader was already looking at slides out from under them. The camera is
+  reserved for the one move the reader asks for: press a domain and it goes in.
+- **A domain comes forward as a ring first and a solid second.** Fading an amber
+  fill up from zero renders the part-way states as amber over deep teal, which is
+  olive, and olive is in no part of this palette. Below 0.6 the node carries an
+  amber outline instead.
+- **Geometry that is a property of the arrangement is computed from the
+  arrangement, not from the frame.** The edges bowed away from the core by the
+  sign of (midpoint − core) · normal, recomputed every frame. For an edge that
+  starts at the core the midpoint lies *on* the edge, so that value is exactly
+  zero, and the drift pushed it either side of zero several times a second —
+  four edges snapping their bow continuously. That was the jitter. The sign is
+  decided once from the home positions; where it is genuinely zero there is no
+  bow, which is what a spoke from the middle of a graph should look like anyway.
 - **A capability list points at the work that proves it.** Each domain carries
   "Where this shows up: `<case study>`", in the same device Method uses. A
   skills list is the easiest thing on a portfolio to assert and the hardest to
@@ -182,8 +239,20 @@ WCAG 2.1 AA is a hard requirement, not an aspiration.
 ## Copy
 
 The product's own language, and no more of it than the claim needs. Controls are
-named by their action — "Turn physics off", not "Physics: ON" — because the
+named by their action — "Reset", not "Reset: ready" — because the
 argument only lands once the visitor breaks the system themselves.
+
+**A binary state is a switch, and the label states the thing, not the verb.**
+The constraint solver's control was a status badge reading "Physics: ON" that
+nobody pressed; naming the action fixed that and introduced a second problem, an
+action label on a binary state has to lie about half of what it shows. "Turn
+physics off" sat there while the state it reported was on, so the word the eye
+landed on was always the opposite of the truth of the panel. A switch is
+unmistakably operable from its shape, so the label is free to name what it
+controls and the readout is free to be true. The knob's position carries the
+state without colour, and `signal` on the off side is correct under its own
+definition — constraints off is a violation, and the drift readout below turns
+the same colour.
 
 Say a fact once. Three figures were stated four times each across the hero, the
 dossier, a Reach paragraph and a Recognition list; every instance was true and
@@ -192,6 +261,12 @@ the repetition still read as padding to the exact reader the page most wants.
 **This is a portfolio, not a product page.** The distinction is not abstract, and
 two things failed it:
 
+- The h1 is Pradeep's own sentence, promoted out of the intro paragraph beneath
+  it, where it was the strongest line on the page and was being read fourth. It
+  is said once: `site.intro` now starts at what used to be its second sentence.
+  The line is also `about.headline`, which makes the two pages open on the same
+  words — a refrain between two headlines rather than between a headline and a
+  paragraph.
 - The hero's headline figures were once 3cm, 240fps and on-device tracking —
   three properties of *one product*, which reads as a spec sheet for XView rather
   than a profile of the person who built it. The three that stand there now each
@@ -200,5 +275,15 @@ two things failed it:
 - "Reach" was a half-page block with a stylised world map of three cities. A world
   map of offices is an employer's global-presence slide; it says something about a
   company's footprint and nothing about what this person can do. It is one row now.
+
+**Empty space in a column is a question, and the answer is usually already in the
+data.** The Selected systems index was 587px of content in a column whose height
+a 1,347px card set — a quarter of the section held open and holding nothing. It
+is filled by `outcome`, the one field on a case study the console never rendered
+and the only one that says what was true *after* the system shipped, which is
+what the industry reader is there for. It is set at `text-fine` rather than
+`.copy`, because the column is a 36-character measure and 20px prose does not
+survive that, and it sits after the card in the DOM so a phone reads what a
+system did after reading what it was.
 
 Before adding anything, ask whether it describes a product or a practitioner.

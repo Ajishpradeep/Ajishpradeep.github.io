@@ -162,7 +162,14 @@ export default function WorkConsole() {
               <ArrowLeft size={15} strokeWidth={2} />
               <span className="sr-only">Previous case</span>
             </button>
-            <p className="tag-sm w-16 text-center text-dim">
+            {/*
+              `w-16` was 64px holding 66px of text. `tag-sm` is 14px mono at
+              0.06em, so "01 / 05" measures 66 and the box broke it after the
+              slash — a counter reading "01 /" over "05", between two arrows,
+              which is why it looked bent. Sized from the content and told not
+              to wrap; `tabular-nums` so the width does not twitch from 01 to 05.
+            */}
+            <p className="tag-sm min-w-[4.75rem] whitespace-nowrap text-center tabular-nums text-dim">
               {study.index} / {String(work.length).padStart(2, '0')}
             </p>
             <button
@@ -178,7 +185,25 @@ export default function WorkConsole() {
 
         <p ref={liveRef} aria-live="polite" className="sr-only" />
 
-        <div className="mt-8 grid gap-8 lg:grid-cols-12 lg:gap-10">
+        {/*
+          Three cells, two rows, and the row template is what makes the left
+          column work: `auto` sizes it to the index, `1fr` gives everything
+          left over to the block underneath it.
+
+          The index is 587px of content in a column the 1,347px card sets the
+          height of, so 760px of it was empty — a quarter of the section, held
+          open by a card beside it and holding nothing. What went into it is the
+          one part of the record this console never showed: `outcome`, which
+          until now was only reachable by opening the full case. It is also the
+          thing the industry reader is here for. They ask what shipped and what
+          happened after it shipped, and the console answered the first half.
+
+          The outcomes come after the card in the DOM, and are pulled back up
+          beside it on a wide screen. On a phone that is the honest order —
+          what a system did belongs after what it was — and on a desktop the
+          eye reads the column, not the source.
+        */}
+        <div className="mt-8 grid gap-8 lg:grid-cols-12 lg:grid-rows-[auto_1fr] lg:gap-10">
           {/*
             RAIL — a tablist, not navigation: these switch a panel in place.
 
@@ -188,7 +213,7 @@ export default function WorkConsole() {
             and handed a control that did not behave like one. Roving tabindex
             and arrow handling below make the announcement true.
           */}
-          <div className="lg:col-span-3">
+          <div className="lg:col-span-3 lg:col-start-1 lg:row-start-1">
             <h3 className="tag-sm text-dim" id="case-index-label">
               Index
             </h3>
@@ -238,7 +263,7 @@ export default function WorkConsole() {
           </div>
 
           {/* READOUT */}
-          <div className="lg:col-span-9">
+          <div className="lg:col-span-9 lg:col-start-4 lg:row-span-2 lg:row-start-1">
             <div
               ref={cardRef}
               id="case-readout"
@@ -375,6 +400,52 @@ export default function WorkConsole() {
                 </ul>
               </Link>
             </div>
+          </div>
+
+          {/*
+            WHAT CAME OF IT.
+
+            `outcome` is the only field on a case study the console never
+            rendered. It is not a summary of the case — it is what was true
+            afterwards, which is a different claim and the one a reader deciding
+            whether to start a conversation is actually weighing.
+
+            Set at `text-fine` and not `.copy`: the column is 266px, which is a
+            36-character measure, and 20px prose does not survive that. These
+            are four separate statements rather than a paragraph, so each gets a
+            rule and its own air, and reads as a list of findings — which is
+            what it is.
+
+            The stagger is guarded rather than left to the stylesheet. The
+            reduced-motion rule collapses animation *duration* and says nothing
+            about delay, so an unguarded 70ms step would hold each line blank
+            and then snap it in — the one thing the setting exists to prevent.
+          */}
+          <div className="lg:col-span-3 lg:col-start-1 lg:row-start-2 lg:self-start">
+            <h3 className="tag-sm text-dim" id="case-outcome-label">
+              What came of it
+            </h3>
+            <ul
+              key={study.slug}
+              aria-labelledby="case-outcome-label"
+              className="mt-4 border-t border-cyan/20"
+            >
+              {study.outcome.map((o, k) => (
+                <li
+                  key={o}
+                  className="flex gap-3 border-b border-cyan/20 py-3.5 animate-[fadeUp_0.5s_ease-out]"
+                  style={{
+                    animationDelay: still ? undefined : `${k * 70}ms`,
+                    animationFillMode: still ? undefined : 'backwards',
+                  }}
+                >
+                  <span className="mt-2 h-1.5 w-1.5 shrink-0 bg-amber" />
+                  <span className="font-text text-fine leading-[1.55] text-cyan/80 text-pretty">
+                    {o}
+                  </span>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </div>

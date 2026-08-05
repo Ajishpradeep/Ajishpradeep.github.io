@@ -66,14 +66,25 @@ export default function Hero() {
               tops out at 68px (see tailwind.config.js) and the measure is 18ch,
               which holds the same words in three lines.
             */}
+            {/*
+              The headline is Pradeep's own sentence, promoted from the first
+              line of the intro paragraph beneath it — where it was the strongest
+              thing on the page and was being read fourth. It is now said once:
+              `site.intro` starts at the second sentence.
+
+              "Models that cannot be quietly wrong" was the previous h1. It was
+              a good line and it described the work; this one describes the
+              person doing it, in the first person the rest of the page is
+              written in, which is what the top of a portfolio is for.
+            */}
             <h1
               id="hero-title"
               className="mt-4 max-w-[18ch] text-balance font-display text-mega font-extrabold uppercase text-cyan glow-cyan"
               data-reveal
               style={{ '--reveal-delay': '60ms' } as React.CSSProperties}
             >
-              Models that cannot be{' '}
-              <span className="text-amber glow-amber">quietly wrong.</span>
+              I work on the part of AI that{' '}
+              <span className="text-amber glow-amber">has to be true.</span>
             </h1>
 
             <p

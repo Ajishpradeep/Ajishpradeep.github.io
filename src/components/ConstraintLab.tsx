@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Hand, Lock, Unlock, RotateCcw } from 'lucide-react';
+import { Hand, RotateCcw } from 'lucide-react';
 
 type P = { x: number; y: number };
 
@@ -169,22 +169,53 @@ export default function ConstraintLab() {
           </p>
         </div>
         {/*
-          Labelled by its action, not its state. Read as "Physics ON" this was
-          a status badge nobody pressed — and the demo only makes its argument
-          once you turn the constraints off.
+          A switch, and the reasoning that made it a command button still holds
+          — it just no longer needs the label to carry it.
+
+          The original was a status badge reading "Physics: ON", which nobody
+          pressed, and the demo only makes its argument once the visitor breaks
+          it themselves. Naming the action fixed that. But an action label on a
+          binary state has to lie about half of what it shows: the control said
+          "Turn physics off" while the state it reported was on, so the word the
+          eye landed on was always the opposite of the truth of the panel.
+
+          A switch is unmistakably operable from its shape, so the label is free
+          to state the thing it controls and the readout is free to be true.
+          The knob's position carries the state without colour, and `signal` is
+          correct on the off side under its own definition — constraints off is
+          a violation state, and the drift readout below turns the same colour.
         */}
         <button
           type="button"
-          aria-pressed={!constrained}
+          role="switch"
+          aria-checked={constrained}
+          aria-label="Physics constraints"
           onClick={() => setConstrained((v) => !v)}
-          className={`inline-flex min-h-[2.75rem] items-center gap-2 rounded-sm border px-3.5 font-mono text-micro transition-colors duration-300 ${
-            constrained
-              ? 'border-amber text-amber hover:bg-amber hover:text-void'
-              : 'border-signal bg-signal/15 text-signal'
-          }`}
+          className="group -mx-1 flex min-h-[2.75rem] shrink-0 items-center gap-2.5 rounded-sm px-1"
         >
-          {constrained ? <Unlock size={13} strokeWidth={2} /> : <Lock size={13} strokeWidth={2} />}
-          {constrained ? 'Turn physics off' : 'Turn physics on'}
+          <span className="font-mono text-micro uppercase tracking-[0.06em] text-dim transition-colors duration-300 group-hover:text-cyan">
+            Physics
+          </span>
+          <span
+            aria-hidden="true"
+            className={`relative flex h-6 w-11 shrink-0 items-center rounded-sm border transition-colors duration-300 ${
+              constrained ? 'border-amber bg-amber/15' : 'border-signal bg-signal/15'
+            }`}
+          >
+            <span
+              className={`absolute h-4 w-4 rounded-[2px] transition-all duration-300 ease-out ${
+                constrained ? 'left-[1.5rem] bg-amber' : 'left-[0.1875rem] bg-signal'
+              }`}
+            />
+          </span>
+          {/* Fixed width: "on" and "off" must not move the switch beside them. */}
+          <span
+            className={`w-6 font-mono text-micro transition-colors duration-300 ${
+              constrained ? 'text-amber' : 'text-signal'
+            }`}
+          >
+            {constrained ? 'on' : 'off'}
+          </span>
         </button>
       </div>
 
