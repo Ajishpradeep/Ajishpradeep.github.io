@@ -103,6 +103,32 @@
         }
       }
     </script>
+    <!--
+      THEME, BEFORE THE FIRST PAINT.
+
+      This is blocking and inline on purpose. Anything that runs after the
+      bundle loads paints the dark world first and then corrects itself, and a
+      full-page flash from near-black to paper is the single most jarring thing
+      a theme toggle can do. Four lines in the head cost nothing and remove it
+      entirely; React reads the attribute this sets rather than deciding again.
+
+      The stored choice outranks the OS, because a visitor who pressed the
+      switch has said something more specific than their system setting has.
+    -->
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem('ajishpradeep:theme');
+          var t = stored || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+          document.documentElement.dataset.theme = t;
+          document.documentElement.style.colorScheme = t;
+          var meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', t === 'light' ? '#F4F2EB' : '#030C0E');
+        } catch (e) {
+          document.documentElement.dataset.theme = 'dark';
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

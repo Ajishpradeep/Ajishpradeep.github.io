@@ -1,3 +1,5 @@
+import type { PlateKind } from '../components/ResearchPlate';
+
 export type Entry = {
   title: string;
   venue: string;
@@ -5,11 +7,19 @@ export type Entry = {
   status: 'published' | 'presented' | 'in-progress';
   summary: string;
   href?: string;
+  /*
+    Which diagram accompanies this entry. Named here rather than picked by
+    array position in the component, for the reason the lab's icons were
+    deleted: a drawing assigned by position makes a claim about the entry and
+    reassigns it silently the next time the list is reordered.
+  */
+  plate: PlateKind;
 };
 
 export const research: Entry[] = [
   {
     title: 'Scalable Vision AI for Planogram Compliance',
+    plate: 'planogram',
     venue: 'NVIDIA GTC 2025 — Technical Poster',
     year: '2025',
     status: 'presented',
@@ -18,6 +28,7 @@ export const research: Entry[] = [
   },
   {
     title: 'Content and Spatial Aware Generative Model for Inpainting',
+    plate: 'inpainting',
     venue: 'MSc Thesis — National Taipei University of Technology',
     year: '2023',
     status: 'published',
@@ -26,6 +37,7 @@ export const research: Entry[] = [
   },
   {
     title: 'Pose Lifting and Biomechanical Motion Analysis',
+    plate: 'lifting',
     venue: 'Applied R&D — IdeasLab Formosa',
     year: '2025 —',
     status: 'in-progress',
@@ -34,6 +46,7 @@ export const research: Entry[] = [
   },
   {
     title: 'The Transformer Architecture — a mathematical walkthrough',
+    plate: 'transformer',
     venue: 'Public technical writing',
     year: '2024',
     status: 'published',
@@ -51,6 +64,7 @@ export const research: Entry[] = [
   */
   {
     title: 'Efficient LLM Inference via Kolmogorov–Arnold Networks',
+    plate: 'kan',
     venue: 'Independent research',
     /*
       The year gutter is four characters of tabular-nums. This entry has no
@@ -138,7 +152,7 @@ export const principles: {
   {
     n: '03',
     title: 'The shape of an error names its cause',
-    body: 'U-shaped in distance means receptive field. Stable across sessions but clustered by region means convention, not scale.',
+    body: 'An error that grows toward the edge of what the network can see is a receptive-field limit, not a capacity one. An error that stays flat across sessions but clusters by camera setup is a labelling convention, not a scale problem.',
     from: { slug: 'markerless-3d-motion', section: 'Diagnosing by error structure, not by loss curve' },
   },
   {

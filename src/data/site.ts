@@ -34,34 +34,25 @@ export const site = {
    * input is an image, a sentence or a skeleton — which a reader can check
    * rather than take.
    *
-   * This is Pradeep's own wording, chosen by him over three alternatives, and
-   * it is the register he wants the page opened in. Two things to know before
-   * changing it:
+   * This is Pradeep's own wording, given verbatim rather than split or
+   * paraphrased. It opens with "the fine line between hallucination and
+   * prediction is not magic or a data dump, it maths" — its own clause,
+   * once also carried by the h1 as a lifted fragment ("It's mathematics."),
+   * which read as the same line said twice two lines apart. The h1 is now
+   * "AI works because mathematics does." instead — a causal claim, not an
+   * identity one, so it makes a genuinely different point than this
+   * paragraph's opening clause rather than restating it.
    *
-   * THE FIRST SENTENCE IS NOW THE H1 AND IS NOT REPEATED HERE. "I work on the
-   * part of AI that has to be true" opens the page in Hero.tsx; this paragraph
-   * starts at what used to be its second sentence. It was the best line on the
-   * page and it was the fourth thing read — under a badge, a headline and a
-   * blank. Say a fact once.
-   *
-   * It remains `about.headline` verbatim, and that is still deliberate: the two
-   * pages open on the same line, which reads as a refrain to anyone who visits
-   * both. It is now a refrain between two headlines rather than between a
-   * headline and a paragraph, which is the stronger version of the same idea.
-   *
-   * It stays in one block and in one voice. A draft split the third sentence
-   * into the amber slot to save a line; it read as two tones arguing over one
-   * thought, and the amber paragraph is for a separate claim, not for the tail
-   * of this one. The line it costs is a real cost — six lines at the 54ch
-   * measure puts the figure row past the 1440×900 fold — and it is the trade
-   * taken deliberately.
-   *
-   * "Having the foundations correct let me move" was the draft before this and
-   * is ungrammatical: "having X correct" wants a present-perfect continuation,
-   * not a bare past "let". `about.ts` already had it right.
+   * `about.headline` is its own line ("I work on the part of AI that has
+   * to be true.") and does not follow this h1 through every rewrite —
+   * a past version of this comment treated keeping the two in sync as
+   * automatic, and re-wrote About's own headline on the hero's say-so
+   * several times before that was corrected. The two pages' opening lines
+   * matching is a decision to make on purpose, not a default this file
+   * enforces by itself.
    */
   intro:
-    'I engineer AI where the mathematics is explicit and the physics is enforced. Having those foundations right is what has let me move from generative models to retail vision to 3D biomechanics to agentic LLM systems without starting over each time — the domain changes, the mathematics does not.',
+    'The fine line between hallucination and prediction is not magic or a data dump, it maths. I engineer AI where the mathematics is explicit and the physics is enforced. It may be an LLM, a vision or multimodal system, generative or predictive — the domain changes, the mathematics does not.',
   /**
    * The differentiator, and the one claim a forwarded CV cannot carry. It read
    * "I care most about the failures a model's own metric cannot see" — which
@@ -130,9 +121,28 @@ export const sections = nav.filter((item) => item.href.startsWith('/#'));
  * answer without a qualifying clause this row has no space for; the reduction
  * is the defensible claim, it is mine, and the case study carries the metric
  * definition in full.
+ *
+ * `source` is where each number is grounded — the same "Where this shows up"
+ * device `CapabilityGraph` and Method already use for the same reason: a
+ * three-word label reads as an assertion until it names what it is standing
+ * on. It also answers what a first-touch visitor cannot yet know just from
+ * "7,000+" — stores of *what*, whose 638 proposals — without restating the
+ * dossier's own sentence here, which the sourcing rule above already forbids.
  */
 export const marquee = [
-  { value: '8cm → 3cm', label: 'mean per-joint 3D error, my R&D' },
-  { value: '7,000+', label: 'stores running the retail vision work' },
-  { value: '1 of 3', label: 'global winners from 638 proposals' },
+  {
+    value: '8cm → 3cm',
+    label: 'mean per-joint 3D error, my R&D',
+    source: { label: 'Markerless 3D motion capture, on a phone', href: '/work/markerless-3d-motion' },
+  },
+  {
+    value: '7,000+',
+    label: 'stores running the retail vision work',
+    source: { label: 'Retail vision AI that scales without retraining', href: '/work/planogram-vision-ai' },
+  },
+  {
+    value: '1 of 3',
+    label: 'global winners from 638 proposals',
+    source: { label: 'TAITRA "Go Healthy with Taiwan" 2025 — the record', href: '/#impact' },
+  },
 ] as const;

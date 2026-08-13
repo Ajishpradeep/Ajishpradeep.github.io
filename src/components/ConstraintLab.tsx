@@ -1,5 +1,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { motion } from 'motion/react';
 import { Hand, RotateCcw } from 'lucide-react';
+import { useReducedMotion } from '../hooks/useReducedMotion';
+import { springOr, SPRING } from '../lib/motion';
 
 type P = { x: number; y: number };
 
@@ -90,6 +93,7 @@ const clamp01 = (v: number) => Math.min(100, Math.max(0, v));
 export default function ConstraintLab() {
   const [target, setTarget] = useState<P>(REST[REST.length - 1]);
   const [constrained, setConstrained] = useState(true);
+  const still = useReducedMotion();
   const [dragging, setDragging] = useState(false);
   const [touched, setTouched] = useState(false);
   const svgRef = useRef<SVGSVGElement>(null);
@@ -202,10 +206,25 @@ export default function ConstraintLab() {
               constrained ? 'border-amber bg-amber/15' : 'border-signal bg-signal/15'
             }`}
           >
-            <span
-              className={`absolute h-4 w-4 rounded-[2px] transition-all duration-300 ease-out ${
-                constrained ? 'left-[1.5rem] bg-amber' : 'left-[0.1875rem] bg-signal'
+            {/*
+              The knob travels; it does not cut.
+
+              `left` was animated from 0.1875rem to 1.5rem, which is a layout
+              property being tweened 60 times a second inside a component that
+              is already running an IK solver on every pointer move. It is a
+              transform now, and the spring is the site's `press` — the one
+              curve with overshoot in it, because this is a physical switch
+              being thrown and a thrown switch settles into its detent.
+
+              The overshoot is also the joke, and it is the right joke: this is
+              the control that turns the physics off.
+            */}
+            <motion.span
+              className={`absolute left-[0.1875rem] h-4 w-4 rounded-[2px] transition-colors duration-300 ${
+                constrained ? 'bg-amber' : 'bg-signal'
               }`}
+              animate={{ x: constrained ? 20 : 0 }}
+              transition={springOr(still, SPRING.press)}
             />
           </span>
           {/* Fixed width: "on" and "off" must not move the switch beside them. */}

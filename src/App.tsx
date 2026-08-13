@@ -1,9 +1,12 @@
+import { useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import Nav from './components/Nav';
 import Footer from './components/Footer';
 import CommandDeck from './components/CommandDeck';
 import SectionRail from './components/SectionRail';
+import Dock from './components/Dock';
 import { useReveal, useScrollReset } from './hooks/useReveal';
+import { remeasureSections } from './hooks/useSectionSpy';
 import './index.css';
 
 export default function App() {
@@ -11,6 +14,16 @@ export default function App() {
 
   useScrollReset(pathname, hash);
   useReveal(pathname + hash);
+
+  /*
+    The section store recomputes on scroll and resize, and a client-side route
+    change is neither — arriving at `/` from `/about` with the window already
+    at the top fires no event, so the nav, the rail and the dock would all be
+    looking at a document that no longer exists.
+  */
+  useEffect(() => {
+    remeasureSections();
+  }, [pathname, hash]);
 
   return (
     <div className="scanlines min-h-screen bg-void">
@@ -23,7 +36,14 @@ export default function App() {
 
       <Nav />
       <CommandDeck />
+      {/*
+        Two navigations, one answer. The rail owns ≥1400px where there is a
+        side margin to stand in; the dock owns everything below it. They are
+        never both on screen, and they cannot disagree — `useSectionSpy` is the
+        single definition of which section is being read.
+      */}
       <SectionRail />
+      <Dock />
       <main id="main">
         <Outlet />
       </main>

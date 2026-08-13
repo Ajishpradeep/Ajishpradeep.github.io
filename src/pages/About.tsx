@@ -8,8 +8,11 @@ export default function About() {
       <header className="relative overflow-hidden border-b border-cyan/15 pt-[5.5rem]">
         <div className="grid-veil absolute inset-0" />
         <div className="shell relative py-16">
+          {/* 24ch: 16ch balanced "I work on the part of AI that has to be
+              true." across three lines; this is the narrowest measure
+              `text-balance` settles it into two instead. */}
           <h1
-            className="max-w-[16ch] font-display text-mega font-extrabold uppercase leading-[1.02] text-cyan glow-cyan text-balance"
+            className="max-w-[24ch] font-display text-mega font-extrabold uppercase leading-[1.02] text-cyan glow-cyan text-balance"
             data-reveal
             style={{ '--reveal-delay': '60ms' } as React.CSSProperties}
           >
@@ -104,7 +107,7 @@ export default function About() {
                     </p>
                     <ul className="mt-5 space-y-2.5">
                       {t.points.map((p, j) => (
-                        <li key={j} className="flex max-w-[72ch] gap-3.5">
+                        <li key={j} className="flex gap-3.5">
                           <span className="mt-2.5 h-px w-3 shrink-0 bg-amber/70" />
                           <span className="text-fine leading-relaxed text-cyan/60 text-pretty">
                             {p}
@@ -129,7 +132,7 @@ export default function About() {
             <h2 className="max-w-[52ch] text-balance font-display text-headline font-extrabold uppercase text-cyan" data-reveal>
               Let&rsquo;s talk.
             </h2>
-            <p className="mt-6 max-w-[60ch] text-lede text-cyan/65 text-pretty" data-reveal>
+            <p className="mt-6 text-lede text-cyan/65 text-pretty" data-reveal>
               {about.open.body}
             </p>
             <div className="mt-9 flex flex-wrap gap-3" data-reveal>

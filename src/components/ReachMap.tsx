@@ -15,8 +15,15 @@
  * a screen reader that read both would hear the same three facts twice.
  */
 export default function ReachMap({ className = '' }: { className?: string }) {
+  /*
+    Taipei's note is the widest label this drawing carries, and `textAnchor`
+    is "middle" — an SVG's default `overflow: hidden` clips a centered label
+    the moment its half-width crosses the viewBox edge. `x: 300` in a
+    360-wide viewBox left only 60 units of margin for a ~126-unit-wide
+    string; 282 leaves enough on both sides at every width the card renders.
+  */
   const nodes = [
-    { id: 'tpe', label: 'Taipei', note: 'built · 7,000+ stores', x: 300, y: 128, primary: true },
+    { id: 'tpe', label: 'Taipei', note: 'built · 7,000+ stores', x: 282, y: 128, primary: true },
     { id: 'waw', label: 'Warsaw', note: 'shown · Jun 2026', x: 152, y: 84, primary: false },
   ];
 
@@ -61,7 +68,7 @@ export default function ReachMap({ className = '' }: { className?: string }) {
 
       {/* Taipei → Warsaw: the one journey the dossier actually documents. */}
       <path
-        d="M 300 128 Q 226 34 152 84"
+        d="M 282 128 Q 217 34 152 84"
         stroke="url(#reach-arc)"
         strokeWidth="1.6"
         strokeDasharray="3 4"

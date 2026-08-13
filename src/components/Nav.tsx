@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import {
   Layers,
@@ -11,7 +11,13 @@ import {
   Download,
   Command,
 } from 'lucide-react';
-import { site, nav as items, sections } from '../data/site';
+import { motion } from 'motion/react';
+import { site, nav as items } from '../data/site';
+import SwitchMode from './motion/SwitchMode';
+import { useSectionSpy } from '../hooks/useSectionSpy';
+import { useReducedMotion } from '../hooks/useReducedMotion';
+import { useDialog } from '../hooks/useDialog';
+import { springOr, SPRING } from '../lib/motion';
 
 /*
   The shortcut hint was hardcoded to ⌘K, so every Windows and Linux visitor was
@@ -41,24 +47,39 @@ const navIcon = {
 } as const;
 
 export default function Nav() {
-  const [active, setActive] = useState('work');
   const [open, setOpen] = useState(false);
   const { pathname, hash } = useLocation();
+  const still = useReducedMotion();
+  const panelRef = useRef<HTMLDivElement>(null);
+
+  /*
+    Visually this drawer is indistinguishable from the overlays that already
+    get the full treatment — fixed, layered, covers content — so it gets the
+    same three things: focus moves in, Tab stays inside, the page behind
+    stops scrolling. Confirmed live before this fix: scrolling with the
+    drawer open scrolled the page underneath it.
+  */
+  useDialog(open, panelRef);
 
   useEffect(() => {
-    const ids = sections.map((s) => s.id);
-    const onScroll = () => {
-      let current = 'work';
-      for (const id of ids) {
-        const el = document.getElementById(id);
-        if (el && el.getBoundingClientRect().top <= 140) current = id;
-      }
-      setActive(current);
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setOpen(false);
     };
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, [pathname]);
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [open]);
+
+  /*
+    This used to run its own scroll listener with its own threshold — a section
+    became active here once its top passed 140px, and in the rail once it
+    passed 40% of the viewport. Two definitions of one fact, which was
+    invisible while the two surfaces were gated to non-overlapping widths and
+    is not any more: the dock spans 320–1600px, so between 1024 and 1600 the
+    header and the dock are both on screen and used to highlight different
+    sections at the same moment.
+  */
+  const { active } = useSectionSpy();
 
   useEffect(() => setOpen(false), [pathname, hash]);
 
@@ -112,14 +133,30 @@ export default function Nav() {
                 >
                   {it.label}
                 </span>
+                {/*
+                  The same travelling marker as the work console's rail and the
+                  dock's dot. It used to blink out under one tile and in under
+                  the next, which on a bar of seven tiles reads as a redraw; it
+                  slides now, so the header reports the reader's progress
+                  through the document as a movement rather than as a series of
+                  unrelated states.
+                */}
                 {on && (
-                  <span className="absolute inset-x-3 -bottom-px h-0.5 rounded-full bg-amber" />
+                  <motion.span
+                    layoutId="nav-marker"
+                    transition={springOr(still, SPRING.marker)}
+                    aria-hidden
+                    className="absolute inset-x-3 -bottom-px h-0.5 rounded-full bg-amber"
+                  />
                 )}
               </Link>
             );
           })}
 
           <span className="mx-1.5 h-8 w-px bg-cyan/15" />
+
+          {/* The switch that changes the world the rest of this bar is drawn in. */}
+          <SwitchMode size={26} className="mr-1.5" />
 
           <a
             href={site.resume}
@@ -160,12 +197,20 @@ export default function Nav() {
           </button>
         </nav>
 
+        {/*
+          On a phone the switch sits beside the menu button rather than inside
+          the drawer. Changing the theme is not a navigation, and putting it
+          behind a menu means the visitor has to open something, change it, and
+          close it again to see what they changed.
+        */}
+        <div className="flex items-center gap-2 lg:hidden">
+        <SwitchMode size={24} />
         <button
           type="button"
           onClick={() => setOpen((v) => !v)}
           aria-expanded={open}
           aria-label={open ? 'Close menu' : 'Open menu'}
-          className="-mr-1 flex h-11 w-11 flex-col items-center justify-center gap-[5px] text-cyan lg:hidden"
+          className="-mr-1 flex h-11 w-11 flex-col items-center justify-center gap-[5px] text-cyan"
         >
           <span
             className={`h-px w-5 bg-current transition-transform duration-300 ${
@@ -178,6 +223,7 @@ export default function Nav() {
             }`}
           />
         </button>
+        </div>
       </div>
 
       {/*
@@ -198,6 +244,10 @@ export default function Nav() {
         idiom is already what Impact's accordion panels use.
       */}
       <div
+        ref={panelRef}
+        role="dialog"
+        aria-modal={open ? true : undefined}
+        aria-label="Site navigation"
         inert={!open ? '' : undefined}
         className={`grid border-t bg-void/95 transition-[grid-template-rows,opacity] duration-500 ease-out lg:hidden ${
           open
@@ -213,13 +263,14 @@ export default function Nav() {
         */}
         <div className="overflow-hidden">
         <nav aria-label="Sections" className="shell grid grid-cols-4 gap-2 py-4">
-          {items.map((it) => {
+          {items.map((it, idx) => {
             const Icon = navIcon[it.id];
             const on = isOn(it);
             return (
               <Link
                 key={it.href}
                 to={it.href}
+                data-autofocus={idx === 0 ? '' : undefined}
                 aria-current={on ? 'page' : undefined}
                 className={`flex min-h-[2.75rem] flex-col items-center justify-center gap-1.5 rounded-sm border px-1 py-3 ${
                   on ? 'border-amber/60 bg-amber/12' : 'border-cyan/30 bg-deep/60'
@@ -230,7 +281,22 @@ export default function Nav() {
                   strokeWidth={1.7}
                   className={on ? 'text-amber' : 'text-amber/80'}
                 />
-                <span className={`font-mono text-micro ${on ? 'text-amber' : 'text-cyan/80'}`}>
+                {/*
+                  `w-full`, and this is the actual fix — `min-w-0` alone did
+                  nothing here. The container is `items-center`, and a centred
+                  flex item is sized to its own content and never stretched, so
+                  the span was rendering at "Research"'s natural one-line width
+                  (74px) regardless of how small its *allowed minimum* was —
+                  there was no force making it any narrower. `min-width:0` only
+                  raises the ceiling on how far something CAN shrink; it does
+                  not shrink it. `w-full` gives the span the container's actual
+                  width to wrap against, and `break-words` is what lets it
+                  break the one long word once it has that width to break
+                  inside of.
+                */}
+                <span
+                  className={`w-full break-words text-center font-mono text-micro ${on ? 'text-amber' : 'text-cyan/80'}`}
+                >
                   {it.label}
                 </span>
               </Link>

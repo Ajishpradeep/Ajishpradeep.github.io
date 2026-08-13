@@ -12,7 +12,7 @@ export default function NotFound() {
           <br />
           <span className="text-amber">to that page</span>
         </h1>
-        <p className="mt-7 max-w-[52ch] text-lede text-cyan/60">
+        <p className="mt-7 text-lede text-cyan/60">
           The link may be stale, or the case file may have been re-indexed.
         </p>
         <Link to="/" className="btn-amber mt-10">

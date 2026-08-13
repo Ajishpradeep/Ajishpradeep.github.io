@@ -12,6 +12,7 @@ import {
 } from 'lucide-react';
 import { site } from '../data/site';
 import { about } from '../data/about';
+import SpotlightBorder from './motion/SpotlightBorder';
 
 const linkIcon: Record<string, typeof Mail> = {
   Email: Mail,
@@ -79,7 +80,7 @@ export default function Contact() {
           </p>
         </div>
 
-        <div className="mt-12 grid gap-10 lg:grid-cols-12 lg:gap-10">
+        <div className="mt-12 grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-10">
           <div className="lg:col-span-7">
             {/*
               `text-mega` is documented as the h1, once per page. This is an
@@ -99,7 +100,7 @@ export default function Contact() {
               {about.open.heading}
             </h3>
             <p
-              className="mt-7 max-w-[52ch] copy"
+              className="mt-7 copy"
               data-reveal
               style={{ '--reveal-delay': '80ms' } as React.CSSProperties}
             >
@@ -134,16 +135,38 @@ export default function Contact() {
           </div>
 
           <div className="lg:col-span-5" data-reveal>
-            <ul className="grid gap-3">
+            {/*
+              `grid-cols-1`: without an explicit column, an unconstrained
+              single implicit track auto-sizes to its widest child's
+              max-content width rather than the container's — and `truncate`
+              on the email handle below needs a *constrained* width to know
+              when to clip. Without this the track just grows to fit the full
+              un-ellipsised address and truncate never fires.
+            */}
+            <ul className="grid grid-cols-1 gap-3">
               {site.links.map((l) => {
                 const Icon = linkIcon[l.label] ?? Globe;
                 return (
                   <li key={l.label}>
+                    {/*
+                      The three ways to start the conversation the whole page
+                      exists to start, and the only place besides the case-study
+                      band where the border spotlight is spent.
+
+                      `.card trace lift` came off them. The trace draws corner
+                      brackets on hover and the lift raises the card 3px; with
+                      the spotlight running the frame as well, that is three
+                      devices reporting one hover, which is exactly the pile-up
+                      DESIGN.md records having to strip off the capability
+                      graph. The light is the strongest of the three and it is
+                      the only one that says *where* you are pointing.
+                    */}
+                    <SpotlightBorder size={220} innerClassName="bg-deep">
                     <a
                       href={l.href}
                       target={l.href.startsWith('mailto') ? undefined : '_blank'}
                       rel="noreferrer"
-                      className="card trace lift group flex items-center gap-4 p-4"
+                      className="group flex items-center gap-4 rounded-[3px] p-4 transition-colors duration-500 hover:bg-panel/40"
                     >
                       <Icon size={24} strokeWidth={1.6} className="icon-mark" />
                       <span className="min-w-0 flex-1">
@@ -158,6 +181,7 @@ export default function Contact() {
                         className="shrink-0 text-dim transition-all duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-amber"
                       />
                     </a>
+                    </SpotlightBorder>
                   </li>
                 );
               })}

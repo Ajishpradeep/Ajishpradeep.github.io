@@ -36,10 +36,43 @@ had cold-started. Nothing had loaded. It was the one place the design told a
 small lie, and it primed a reader to discount the real 3cm figure 600px later.
 It is gone. Do not reintroduce simulated telemetry in any form.
 
-## The world
+## The world — and now there are two of them
 
 Dark instrument panel. Deep teal-black ground, cyan as the reading colour, amber
 as the single accent, `--signal` orange reserved for genuine cost or violation.
+
+**The light world is a drafting sheet, not the panel inverted.** Warm paper
+rather than white, deep teal *ink* rather than pale teal light, and the amber
+drops two stops to an ochre that reads at 14px on paper. The ruled grid that was
+a faint scanline in the dark becomes graph paper, which is what it always looked
+like it wanted to be.
+
+Every colour on the site is `rgb(var(--x) / <alpha>)`, so both worlds are ten
+CSS variables in `index.css` and no component knows which one it is in. The
+names keep their meanings, and that is what makes it work: `.card` is `bg-deep`
+on `bg-void` and `.well` is `bg-void` inside a card, so *white on paper is
+raised and paper inside white is recessed* — the directional surface rule
+survives the swap untouched.
+
+Three things do not survive a token swap and are handled explicitly:
+
+- **Glow is a screen device.** On paper a text-shadow is a smudge, and at
+  `text-mega` it made the h1 look out of focus. `--glow-cyan` / `--glow-amber`
+  resolve to `none` in the light world rather than being overridden at 26 call
+  sites.
+- **Elevation is carried differently.** A dark card is legible because it is
+  *lighter* than the ground; on paper that is a 4% luminance step where it was
+  30%. The light card goes fully opaque and gets a real drop shadow — offset and
+  blur, never a zero-offset halo. `.well` becomes an inset shadow rather than a
+  darker fill.
+- **The vignette nearly vanishes** (0.28 → 0.05) and the grid nearly doubles
+  (0.05 → 0.09). A dark corner on a white page reads as dirt; a hairline that
+  glowed on black disappears on paper.
+
+The switch is `SwitchMode`, and the flash is prevented by a blocking inline
+script in `index.html` — the only place it can be. A stored choice outranks the
+OS, because a visitor who pressed the switch has said something more specific
+than their system setting has.
 
 **Type.** Funnel Display for display and UI, Source Serif 4 for prose, JetBrains
 Mono for data, labels and measurement. Mono is allowed for code, data and
@@ -57,11 +90,23 @@ text-cyan`, on every section. There were two, and the quieter one was set below
 the h3 inside the card underneath it — which put the site's best writing (Method)
 in its faintest voice.
 
-**Sections may not share a shape.** Method, Capabilities and the research log
-once rendered the identical twelve-column ruled row for ~3,600px. Reference
-material earns the matrix; claims-with-receipts get set as claims. When a new
-section arrives, ask what shape its content actually has before reaching for the
-row.
+**Sections may not share a shape**, and the second pass finished what the first
+one started. Method, Capabilities and the research log once rendered the
+identical twelve-column ruled row for ~3,600px. All three now have the shape
+their content actually has:
+
+- **Method is a deck.** Six numbered findings that are meant to be *compared*
+  sat as six full-width rows of one pattern, which read as reference material —
+  the opposite of what they are. As a deck they fit on one screen, the sequence
+  is visible as a sequence, and reading one is a decision rather than a scroll.
+- **Capabilities is a stack.** Five equal rows in a matrix said the five areas
+  are peers. They are not: "Mathematical foundations" is what "Deployment &
+  inference" is standing on, and that is the site's entire positioning claim.
+  It is drawn as a stratigraphic section, each layer reaching less far than the
+  one beneath it, and the accordion beside it reads in the same direction.
+- **The research log is a plate grid.** The chronology survives — the cards are
+  in order and lead with their year — but each entry now carries a *drawing* of
+  what the work is.
 
 ## What was cut, and why it stays cut
 
@@ -84,7 +129,7 @@ row.
 kicker above a heading, or a card whose structure is icon + heading + text
 repeated as the page's skeleton.
 
-## The two instruments, and which slot each one earns
+## The instruments, and which slot each one earns
 
 The hero answers **"what is this person expert in"**. Nothing else can have that
 slot. `CapabilityGraph` answers it in a single picture, which is why it is there.
@@ -218,16 +263,234 @@ What replaced them is the rule worth keeping:
   skills list is the easiest thing on a portfolio to assert and the hardest to
   believe.
 
+## The motion vocabulary
+
+The site runs `motion` (v13). Before it, every transition on the page was one
+CSS curve — `cubic-bezier(0.16, 1, 0.3, 1)`, an exponential ease-out. A spring
+library arriving with its own defaults would have given the page two motion
+accents, which is the same defect as the two h2 registers recorded above. So
+there are **three springs, in `src/lib/motion.ts`, and no more**, all tuned to
+sound like that curve:
+
+- `marker` — stiffness 420, damping 38. Fast and dead-stop. A selector on an
+  instrument arrives at its detent; it does not wobble past it.
+- `panel` — bounce 0.06, 0.42s. Layout and overlay. A spring rather than a
+  tween so an interruption is continuous instead of restarting.
+- `press` — stiffness 520, damping 17. The only overshoot on the site, and it
+  is spent on controls being *struck*: the dock item, the physics switch, the
+  tilt.
+
+`springOr(still, …)` collapses any of them to a 1ms tween under
+`prefers-reduced-motion`. Not "no transition" — `AnimatePresence` and `layout`
+need something to resolve against, and a snap is what the stylesheet already
+does to every CSS animation, so the two agree.
+
+**One way of saying "this one", and it moves.** The travelling amber marker —
+a single element shared across siblings by `layoutId` — is the site's selection
+device, in three places: the work console's case rail, the header nav's
+underline, the dock's active dot. All three previously blinked out here and in
+over there, which on a list reads as a redraw rather than as a movement. This
+is the vocabulary; a fourth selection surface uses it too, and does not invent
+a second one.
+
+**The focal moment is the dossier, and it is a shared-element morph.** The
+impact accordion is gone: four entries expanding in place made a 3,000px
+section whose height depended on how curious the visitor had been, and nobody
+compares two open accordions. A dossier is a stack of files and a file is a
+thing you take *out* of the stack, so the card's own geometry — its frame, its
+icon, its title, its year chip, its org line, each with a `layoutId` — travels
+into a focused reader. It is the one modal on the page that earns itself:
+checking a source wants protected focus and is finished with.
+
+Two things that transition needs and did not get for free:
+
+- **The source card fades to 0.25 while its file is open.** Motion leaves the
+  origin element rendered during a shared-element transition, so without this
+  the card and its own enlargement are both on screen and the metaphor dies the
+  moment you see the file still sitting in the stack it came out of.
+- **Content that has nothing to morph from arrives after the geometry settles**
+  — 120ms, through a short blur. It reads as "this resolved" rather than as "a
+  second thing appeared".
+
+**`.card` carries `overflow-hidden`, and that is a trap for anything that hangs
+outside its own box.** The dock is built from the card's border and background
+written out longhand rather than from the class, because all six of its hover
+labels sit *above* the bar and under `.card` every one of them was clipped to
+nothing — an affordance that existed in the markup and had never been visible.
+
+### The primitives, and the rule that governs adding another
+
+`src/components/motion/` holds the Motion Primitives adaptations. Each one is
+the upstream mechanism with the site's own constraints applied, and where the
+two disagreed the site won:
+
+- **`TextRoll`** — the hero h1, rolling in word by word on a 3D hinge, amber
+  clause last. **Splits on words, not characters.** Upstream splits on
+  characters and sets each `inline-block`, which is correct for a one-word
+  demo and destroys a three-line headline: the browser can no longer see
+  words, so it breaks lines mid-word and `text-balance` has nothing left to
+  balance. `data-reveal` came off the h1 with it — a CSS reveal sliding a
+  hinge that is still turning is two entrances fighting.
+- **`TextScramble`** — the work console's domain line, which changes whenever
+  the reader picks a different case. **Scrambles through letters, digits and
+  the middot, never `#$%^&*`.** The upstream alphabet resolves through
+  punctuation, which reads as a glitch — something broke and is repairing
+  itself — and this page does not get to imply a state the system is not in.
+  Through letters it reads as a readout settling, which is what has actually
+  happened.
+- **`InView`** — Capabilities and the Lab grid. It exists for what CSS cannot
+  do: coordinate a stagger across *children*. `[data-reveal]` fires each row
+  on its own threshold crossing, so a tall list arrives in whatever order and
+  rhythm the scroll happens to produce. `once: true` by default, against the
+  upstream demo — a section that re-animates every time it is scrolled past is
+  a loop, not an entrance.
+- **`TransitionPanel`** — inside the dossier, so the four files can be stepped
+  through rather than opened and closed four times. Height is animated from a
+  `ResizeObserver` reading because the exiting panel must be `position:
+  absolute`, which otherwise leaves a hard height cut under a smooth slide.
+- **`BorderTrail`** — the capability graph's frame, **bound to `playing`**.
+  This is the only reason it is allowed to exist next to the no-simulated-
+  telemetry rule: press pause and it stops, because the thing it reports has
+  stopped. The status pill still says it in words; the trail never carries it
+  alone.
+- **`SpotlightBorder`** — the case-study band and the contact cards. The light
+  is confined to a 1px ring by an opaque inner surface, so it never crosses
+  the content. **Whatever it wraps gives up its own border.** The first pass
+  wrapped an element that kept `border border-amber/50`, which laid an opaque
+  line exactly over the ring the light travels in — the effect worked
+  perfectly and was invisible behind the border it was lighting.
+- **`Dock`** — real distance-based magnification off one shared pointer value,
+  so the tiles either side of the one you are on grow too. **44 → 60 over
+  130px, not the library's 48 → 80 over 150.** macOS's curve is built for a
+  dock that is the only thing on screen; this one sits over research prose. It
+  magnifies *width*, so neighbours move aside instead of being covered.
+- **`Tilt`** — the lab cards, `rotationFactor={8}` and reversed so the corner
+  you are nearest comes up to meet you. 8 is a ceiling, not a taste: at the
+  library's other default of 15 the text shears visibly while you are reading
+  it.
+
+**The rule for the next one.** Every primitive above is bound to something the
+page already had a state for — a selection, a timer, a case change, a pointer.
+None was added because a section looked static. `animate.md`'s line is the
+test: *do not animate a static area merely because it exists.* A mechanism with
+no state to make legible is decoration, and this document has a record of what
+happens when decoration accumulates one reasonable decision at a time.
+
+### The drawings, and why they are drawn rather than photographed
+
+Two new graphics, and both exist because a sentence could not do the job:
+
+- **`CapabilityStack`** is Capabilities' right column. Left-aligned, not
+  centred: centred slabs narrowing 13% a layer put the longest label on the
+  narrowest slab, and "RESEARCH LEADERSHIP" hung off both ends of the thing it
+  named. Left-aligned it reads as a stratigraphic section, every label starts
+  inside its own slab at any width, and the taper still carries the argument.
+- **`ResearchPlate`** gives each research entry the image `ExpandableEventCard`
+  is built around and this site does not have. Filling that hole with stock
+  photography would have put five pictures of laboratories on a page whose one
+  rule is that nothing appears without being the actual thing. Instead: a GAN's
+  hole and the context pulled across it, a shelf and the embedding space a new
+  SKU lands in, two views and the body lifted out of them, one query attending
+  across a row of keys, a spline replacing a dense layer. Keyed by the entry's
+  own `plate` field, never by array position.
+
+### What was taken from the component libraries, and what was not
+
+Twelve Watermelon UI and Motion Primitives components were on the table. Four
+were used, and the mapping was content-first in every case: the mechanism was
+picked because a piece of this site already had the state it describes.
+
+- **Expandable card** → the impact dossier. The focal moment above.
+- **Dock** → section navigation below 1400px, where `SectionRail` cannot fit
+  and the header has scrolled away.
+- **Carousel-navigator's direction awareness** → the work console. Previous and
+  Next used to produce the identical fade-up, so the one thing the animation
+  could have said was the one thing it did not.
+- **Tilt** → the six lab cards, at 6° rather than the library's 15. At 15 the
+  text shears visibly while you are reading it. `.lift` came off those six and
+  only those six: a `translateY` on hover was fighting the tilt for the same
+  transform.
+
+These were declined, and the reasons generalise:
+
+- **Fractional-picker** would have replaced `MetricBlindness`'s native
+  `input[type=range]`, and "prefer the platform control" is a rule above it.
+- **Minimal-carousel, voice-chat-disclosure, show-qr, weight-widget,
+  discrete-tabs, tooltip-11, and the Blog2 card grid** describe content this
+  site does not have. Blog2 in particular is six saturated pastel fills and a
+  bookmark icon, which is a different world, not a component.
+- **`InViewImagesGrid` as drawn** needs a masonry of photographs, and there are
+  none — the only images on the site are a portrait and a résumé. Its
+  *mechanism*, `staggerChildren` over a grid with a blur-and-scale entrance,
+  shipped on the two grids that do exist: the lab cards and the case-study
+  metrics row.
+- **`Spotlight` used bare** is a glow following the cursor, which this document
+  rejects by name, and a soft blob drifting over 17px serif prose is a
+  legibility cost paid for atmosphere. `SpotlightBorder` is the same primitive
+  in the configuration that does not have that problem — the light is in the
+  frame, which is the same family as the `.trace` corner brackets, described
+  above as "an instrument framing its reading".
+
+### The hand-picked five
+
+A second, shorter list arrived with the instruction to use all of it. Each one
+found real content, and in three cases the component's own default was wrong for
+this page and was changed rather than accommodated:
+
+- **`SwitchMode`** → the theme toggle, and the light world it needed. Its
+  `next-themes` dependency, its `react-icons` glyphs and its eight colour props
+  are all gone: this is a static SPA with one document, one icon library at one
+  stroke weight, and a token system that the switch's whole job is to *change*.
+- **`MinimalCarousel`** → the six Method findings. The tiles are buttons, not
+  divs — the demo puts `onClick` on a `div`, and six findings behind a control
+  nobody can tab to is worse than six findings in a list. **Nothing is open by
+  default.** An earlier pass defaulted principle 01 open, with a companion
+  diagram (`BlindSpotMap`, since removed) pinned above the whole deck making
+  the same argument a second time. Scrolling to Method meant arriving at an
+  already-expanded card nobody had pressed, plus a permanently-open twin above
+  it wearing none of the deck's own affordances — no number, no close button.
+  The deck now opens the same closed shape it returns to, and every expansion
+  on this page is something the visitor did.
+- **`Features2`** → the Capabilities layout. Its accordion holds two items in a
+  row; this holds five in a column, because five side by side at this width
+  gives each a 14-character measure.
+- **`Blog2`** → the lab grid. Its six saturated pastel fills became a ramp built
+  from this site's own two colours, running newest to oldest — so the variation
+  carries a date axis instead of nothing. Six unrelated hues on a card grid read
+  as six unrelated *kinds of thing*, and these six are all personal repositories
+  in one lab.
+- **`ExpandableEventCard`** → the research log, with `ResearchPlate` supplying
+  the image it is built around.
+
+**A component library is an inventory of mechanisms, not a shopping list.** The
+question is never "is this good" — every one of them was good. It is "which
+piece of this site already has the state this mechanism makes legible", and
+where the answer is none, the mechanism either finds different content, or has
+that content drawn for it, or does not ship.
+
 ## Motion and access
 
 WCAG 2.1 AA is a hard requirement, not an aspiration.
 
 - **One authored moment per surface**, not an effect on every section.
+- **An overlay owes three things**, and `useDialog` is where they live: focus
+  in on open and back to the trigger on close, Tab cycling inside the panel,
+  and no scrolling behind it. `aria-modal="true"` announces that the rest of
+  the page is gone; it does not make it so.
 - Nothing auto-advances content without a visible pause control. Prefer not
   auto-advancing.
 - `prefers-reduced-motion` is read through `useReducedMotion` (reactive) or
   `prefersReducedMotion()` (one-shot). Never hand-roll the media query again —
   there were three copies and two never updated.
+- **"Which section is being read" is one definition**, in `useSectionSpy`, and
+  it is one scroll listener behind `useSyncExternalStore` rather than one per
+  consumer. It was computed twice with two thresholds — the header marked a
+  section active at 140px, the rail at 40% of the viewport — which nobody
+  noticed while the two were gated to widths that never overlapped. The dock
+  spans 320–1400px, so all three are now on screen together and any
+  disagreement is a bug the visitor can see. The store recomputes on scroll and
+  resize, and a client-side route change is neither, so `App` calls
+  `remeasureSections()` on every navigation.
 - Any widget with custom key handling gets `role="application"` plus
   `aria-roledescription`, because `role="img"` on an interactive thing means the
   screen reader eats the arrow keys and the affordance you documented does not

@@ -2,6 +2,7 @@ import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } fr
 import { Link } from 'react-router-dom';
 import { ArrowUpRight, Axis3d, Atom, Brain, Gauge, Pause, Play } from 'lucide-react';
 import { useReducedMotion } from '../hooks/useReducedMotion';
+import BorderTrail from './motion/BorderTrail';
 
 /**
  * One phrase of the blurb is set in amber — the clause that carries the actual
@@ -449,6 +450,33 @@ export default function CapabilityGraph() {
 
   return (
     <div className="card p-5 sm:p-6">
+      {/*
+        A LIGHT THAT RUNS THE FRAME WHILE THE GRAPH IS TURNING.
+
+        DESIGN.md forbids simulated telemetry, and this is the reason it is
+        allowed to exist: it is bound to `playing`, which is the actual state
+        of the actual timer. Press pause and it stops, because the thing it
+        reports has stopped. It is not a decoration that implies activity — it
+        is the activity, drawn.
+
+        It also solves something the panel genuinely had: the status pill reads
+        `turning` in 14px mono in the corner, and nobody looks at the corner.
+        The frame does not have to be looked at to be noticed.
+
+        Confined to the border by a two-mask intersection, so the light never
+        crosses the drawing — the graph is a quiet thing and this document has
+        already recorded what happened the last time devices were stacked on
+        top of it. The status pill still states the state in words; this never
+        carries it alone.
+      */}
+      {playing && !opened && (
+        <BorderTrail
+          size={110}
+          className="bg-[radial-gradient(circle_at_center,rgb(var(--amber)/0.85),transparent_65%)]"
+          transition={{ repeat: Infinity, duration: 7, ease: 'linear' }}
+        />
+      )}
+
       <div className="flex items-start justify-between gap-3">
         <div>
           <p className="font-display text-lead font-bold leading-tight text-cyan">
@@ -479,10 +507,19 @@ export default function CapabilityGraph() {
         bordered card — a child framed more strongly than its container, which
         the surface rule forbids. On `bg-void` it reads as the page showing
         through, and it gives the captions a ground that holds still.
+
+        Held at `sm:aspect-[340/260]` at every width ≥640px, deliberately: a
+        flatter `lg`-only ratio was tried to close the height gap against the
+        hero's text column, and it worked, but it bought that room by
+        showing less of the ellipse's vertical spread at once — the graph is
+        the page's one instrument whose job is to be seen whole. The gap is
+        closed from the content side instead: three skill columns below
+        instead of two, and the keyboard-only hairline selector folded into
+        the domain nodes themselves (see the button in the label loop below).
       */}
       <div
         ref={frameRef}
-        className="relative -mx-5 mt-4 aspect-[340/300] overflow-hidden bg-void sm:-mx-6 sm:aspect-[340/260]"
+        className="relative -mx-5 mt-3 aspect-[340/300] overflow-hidden bg-void sm:-mx-6 sm:aspect-[340/260]"
       >
         <svg
           viewBox={`${view.x} ${view.y} ${view.w} ${view.h}`}
@@ -600,22 +637,6 @@ export default function CapabilityGraph() {
             strokeWidth={hair * 1.2}
           />
 
-          {/* Press a domain to move in on it. Hover only brings it forward. */}
-          {domains.map((d, i) => {
-            const p = at.get(d.key)!;
-            return (
-              <circle
-                key={`hit-${d.key}`}
-                cx={p.x}
-                cy={p.y}
-                r={NODE_D + 6}
-                fill="transparent"
-                className="cursor-pointer"
-                onPointerEnter={() => !opened && setActive(i)}
-                onPointerDown={() => open(i)}
-              />
-            );
-          })}
         </svg>
 
         {/*
@@ -625,18 +646,32 @@ export default function CapabilityGraph() {
           the name. A name whose node the camera has carried past the edge waits
           until there is room for all of it, because half a word against the
           frame reads as a bug.
+
+          Each domain is a real `<button>` here, not a `<span>` — the keyboard
+          path to "press a domain" used to be a separate hairline selector
+          below the panel; removing it for room meant this had to become the
+          keyboard path instead, not lose one. It has to live outside the
+          `<svg>` to do that: the SVG carries `aria-hidden`, because its paths
+          and circles have no independent meaning to announce, and
+          `aria-hidden` on an ancestor hides every descendant regardless of
+          that descendant's own attributes — a focusable, `aria-label`led hit
+          circle inside it would still be invisible to a screen reader while
+          staying reachable by Tab, which is a worse bug than the one being
+          fixed. `pointer-events-auto` opts each button back in to clicks the
+          wrapping `pointer-events-none` div otherwise blocks.
         */}
         <div className="pointer-events-none absolute inset-0">
-          {domains.map((d) => {
+          {domains.map((d, i) => {
             const Icon = d.icon;
             const p = at.get(d.key)!;
             const cx = ((p.x - view.x) / view.w) * (boxW || 1);
             const cy = ((p.y - view.y) / view.h) * (box.h || 1) + capDrop;
             const named = boxW === 0 || (cx > 42 && cx < boxW - 42 && cy > 12 && cy < box.h - 12);
             return (
-              <span key={d.key} aria-hidden="true">
+              <span key={d.key}>
                 <span
-                  className="absolute -translate-x-1/2 -translate-y-1/2"
+                  aria-hidden="true"
+                  className="pointer-events-none absolute -translate-x-1/2 -translate-y-1/2"
                   style={{ left: pctX(p.x), top: pctY(p.y), opacity: mix(0.45, 1, p.d) }}
                 >
                   <Icon
@@ -646,13 +681,23 @@ export default function CapabilityGraph() {
                   />
                 </span>
                 <span
-                  className={`absolute -translate-x-1/2 -translate-y-1/2 whitespace-nowrap font-mono text-micro ${
+                  aria-hidden="true"
+                  className={`pointer-events-none absolute -translate-x-1/2 -translate-y-1/2 whitespace-nowrap font-mono text-micro ${
                     named ? '' : 'opacity-0'
                   } ${p.d > 0.75 ? 'text-amber' : p.d > 0.2 ? 'text-amber/70' : 'text-dim/70'}`}
                   style={{ left: pctX(p.x), top: `calc(${pctY(p.y)} + ${capDrop}px)`, ...halo }}
                 >
                   {d.short}
                 </span>
+                <button
+                  type="button"
+                  aria-label={`Open ${d.label}`}
+                  onClick={() => open(i)}
+                  onPointerEnter={() => !opened && setActive(i)}
+                  onFocus={() => !opened && setActive(i)}
+                  className="pointer-events-auto absolute h-11 w-11 -translate-x-1/2 -translate-y-1/2 rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-amber focus-visible:ring-offset-2 focus-visible:ring-offset-void"
+                  style={{ left: pctX(p.x), top: pctY(p.y) }}
+                />
               </span>
             );
           })}
@@ -664,10 +709,54 @@ export default function CapabilityGraph() {
           >
             Maths
           </span>
+
+          {/*
+            Skill names, on the drawing rather than only in the list beneath
+            it. DESIGN.md records why they were pulled off before — sixteen
+            labels permanently on a 470px panel was clutter no nudging fixed.
+            This is a different density: `p.d` already fades a skill toward
+            its home domain, so only the handful genuinely forward — the
+            active domain's own skills, plus whichever bridge skill the turn
+            is carrying between two domains — ever cross the opacity floor
+            that makes a label render at all. Sixteen names never share the
+            panel at once; at most the five under one domain do, which is the
+            same set the list below already names.
+          */}
+          {skills.map((sk) => {
+            const p = at.get(sk.name)!;
+            if (p.d < 0.35) return null;
+            const cx = ((p.x - view.x) / view.w) * (boxW || 1);
+            const cy = ((p.y - view.y) / view.h) * (box.h || 1);
+            /*
+              Same edge guard the domain labels use. The margin is wider
+              than 24px looks like it should need: `d.short` is a single
+              word capped short, but a skill name is not — "Scale
+              anchoring" centred 25px from the edge still hangs its second
+              word past it. The guard has to clear half of the longest name
+              this list carries, not a fixed cosmetic gutter.
+            */
+            if (boxW !== 0 && (cx < 55 || cx > boxW - 55 || cy < 6 || cy > box.h - 18)) return null;
+            const on = pointing === sk.name;
+            return (
+              <span
+                key={sk.name}
+                aria-hidden="true"
+                className="pointer-events-none absolute -translate-x-1/2 whitespace-nowrap font-mono text-[0.625rem] leading-none text-amber transition-opacity duration-300"
+                style={{
+                  left: pctX(p.x),
+                  top: `calc(${pctY(p.y)} + 7px)`,
+                  opacity: on ? 1 : mix(0, 0.85, (p.d - 0.35) / 0.65),
+                  ...halo,
+                }}
+              >
+                {sk.name}
+              </span>
+            );
+          })}
         </div>
       </div>
 
-      <div key={current.key} className="mt-4 animate-[fadeUp_0.5s_ease-out] border-t border-cyan/20 pt-4">
+      <div key={current.key} className="mt-3 animate-[fadeUp_0.5s_ease-out] border-t border-cyan/20 pt-3">
         <p className="font-display text-lead font-bold leading-tight text-amber">{current.label}</p>
 
         {/*
@@ -678,7 +767,7 @@ export default function CapabilityGraph() {
           thumb. Stacking makes the cell exactly as tall as the longest one at
           whatever width it is being read.
         */}
-        <div className="mt-2.5 grid">
+        <div className="mt-2.5 grid grid-cols-1">
           {domains.map((d, i) => (
             <p
               key={d.key}
@@ -696,10 +785,13 @@ export default function CapabilityGraph() {
           The skills, named here rather than in the drawing, and wired to it.
           Point at one and its node swells and takes a ring; the turn holds while
           you are pointing. This is the pairing the graphic could never do alone —
-          sixteen names in a 470px panel is what made it cluttered, and five names
-          in a two-column list is what a person actually reads.
+          sixteen names in a 470px panel is what made it cluttered, and a short
+          list here is what a person actually reads. Three columns, not two:
+          five names at two-per-row cost a third row the card's height budget
+          no longer has room for: the row it removes is worth more than the
+          slightly narrower column it costs.
         */}
-        <ul className="mt-3 grid grid-cols-2 gap-x-3" aria-label={`Skills under ${current.label}`}>
+        <ul className="mt-2.5 grid grid-cols-3 gap-x-3" aria-label={`Skills under ${current.label}`}>
           {currentSkills.map((sk) => {
             const on = pointing === sk.name;
             const shared = sk.domains.length > 1;
@@ -719,8 +811,16 @@ export default function CapabilityGraph() {
                       shared ? '' : 'bg-amber'
                     } ${on ? 'shadow-[0_0_0_3px_rgb(var(--amber)/0.3)]' : 'opacity-70'}`}
                   />
+                  {/*
+                    `min-w-0 break-words`: this is a two-column grid
+                    (`grid-cols-2`), so each button gets roughly half the
+                    panel's width minus the dot and its gap. "Triangulation"
+                    has no space to break on and, without `min-w-0`, the flex
+                    item refused to shrink below that word's own width — it ran
+                    27px past its own li at 320px.
+                  */}
                   <span
-                    className={`font-mono text-micro transition-colors duration-300 ${
+                    className={`min-w-0 break-words font-mono text-micro transition-colors duration-300 ${
                       on ? 'text-amber' : 'text-cyan/75 group-hover:text-amber'
                     }`}
                   >
@@ -732,12 +832,6 @@ export default function CapabilityGraph() {
             );
           })}
         </ul>
-
-        {/* The legend, to the right and outside the list — one sharing a list's
-            indent and its marker reads as another item in it. */}
-        <p aria-hidden="true" className="mt-1 text-right font-mono text-micro text-dim">
-          hollow · a shared skill
-        </p>
 
         <Link
           to={`/work/${current.proof.slug}`}
@@ -754,30 +848,6 @@ export default function CapabilityGraph() {
         </Link>
       </div>
 
-      {/*
-        The hairline selector, and the keyboard path to all four domains — the
-        nodes in the graphic are pointer-only by construction. Pressing one moves
-        the view in on it, exactly as pressing the node does. The bar stays a
-        hairline; the padding around it carries the 44px target.
-      */}
-      <div className="mt-2 flex gap-1.5" role="group" aria-label="Open a domain">
-        {domains.map((d, i) => (
-          <button
-            key={d.key}
-            type="button"
-            aria-label={d.label}
-            aria-pressed={i === active}
-            onClick={() => open(i)}
-            className="group flex flex-1 items-center py-[1.3125rem]"
-          >
-            <span
-              className={`h-0.5 w-full rounded-full transition-colors duration-500 ${
-                i === active ? 'bg-amber' : 'bg-cyan/15 group-hover:bg-cyan/40'
-              }`}
-            />
-          </button>
-        ))}
-      </div>
     </div>
   );
 }

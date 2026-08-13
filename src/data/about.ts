@@ -62,8 +62,13 @@ export const about = {
       points: ['Foundations in computer science, algorithms and systems design.'],
     },
   ],
+  // Reads as availability, not a job search — the difference is deliberate.
+  // "Looking for a role" states a need; this states a standing openness to
+  // work worth doing, which is what a visitor already mid-conversation
+  // (a referral, a forwarded CV) wants confirmed, and what a visitor with
+  // no specific ask in mind can still act on.
   open: {
-    heading: 'What I am looking for',
-    body: 'Research roles in AI fundamentals, novel applications of mathematical frameworks to new domains, and technical leadership where research depth and production reality are expected to meet. Based in Taiwan, open to relocation.',
+    heading: 'What I’m open to',
+    body: 'Interesting problems, research collaborations, and conversations about where mathematics-first AI can go next. Based in Taiwan, open to relocation.',
   },
 } as const;

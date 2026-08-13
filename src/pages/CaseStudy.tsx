@@ -42,7 +42,7 @@ export default function CaseStudy() {
           </h1>
 
           <p
-            className="mt-8 max-w-[68ch] text-lede text-cyan/70 text-pretty"
+            className="mt-8 text-lede text-cyan/70 text-pretty"
             data-reveal
             style={{ '--reveal-delay': '80ms' } as React.CSSProperties}
           >
@@ -105,7 +105,7 @@ export default function CaseStudy() {
             <span className="bracket">the constraint</span>
           </p>
           <p
-            className="max-w-[62ch] font-display text-[clamp(1.125rem,2.1vw,1.6rem)] font-medium leading-[1.5] text-cyan text-pretty lg:col-span-9"
+            className="font-display text-[clamp(1.125rem,2.1vw,1.6rem)] font-medium leading-[1.5] text-cyan text-pretty lg:col-span-9"
             data-reveal
           >
             {study.problem}

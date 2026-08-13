@@ -17,12 +17,78 @@
     --amber-hot: 255 205 96;
     --signal: 255 92 48;
     --dim: 135 183 180;
+
+    /* Text shadows are a dark-world device. See the light block. */
+    --glow-cyan: 0 0 24px rgb(var(--cyan-hot) / 0.35);
+    --glow-amber: 0 0 26px rgb(var(--amber) / 0.4);
+    /* How strongly the ruled grid and the vignette read. */
+    --veil: 0.05;
+    --vignette: 0.28;
+
     color-scheme: dark;
+  }
+
+  /*
+   * THE SECOND WORLD.
+   *
+   * Not the instrument panel inverted. An inverted dark UI is the most common
+   * way a light theme goes wrong: the greys become washes, the accent becomes
+   * unreadable, and the result is the same layout with the confidence drained
+   * out of it.
+   *
+   * This is a *drafting sheet* — the other object the site could plausibly be.
+   * Warm paper rather than white, deep teal ink rather than pale teal light,
+   * and the amber stays but drops two stops to an ochre that can be read at
+   * 14px on paper. The ruled grid that was a faint scanline in the dark becomes
+   * a graph-paper grid, which is what it always looked like it wanted to be.
+   *
+   * Every colour on this site is `rgb(var(--x) / <alpha>)`, so the whole page
+   * turns on these ten lines. The names still mean what they meant:
+   *
+   *   --void   the page ground        paper
+   *   --deep   the raised card        white, one step ABOVE the paper
+   *   --panel  hover / fill           a cool grey-green wash
+   *   --cyan   the reading colour     teal ink
+   *   --amber  the single accent      ochre
+   *
+   * `.card` is `bg-deep` on `bg-void` and `.well` is `bg-void` inside a card,
+   * so the directional surface rule survives the swap without touching a single
+   * component: white on paper is raised, paper inside white is recessed.
+   */
+  :root[data-theme='light'] {
+    --void: 244 242 235;
+    --deep: 255 254 250;
+    --panel: 222 230 226;
+    --panel-hi: 198 214 208;
+    --cyan: 11 54 53;
+    --cyan-hot: 0 122 110;
+    --amber: 150 92 4;
+    --amber-hot: 116 70 0;
+    --signal: 186 44 12;
+    --dim: 92 112 109;
+
+    /*
+     * A glow is light emitted by a screen. On paper it is a smudge, and at
+     * `text-mega` it made the h1 look out of focus. The dark world keeps it;
+     * here both resolve to nothing rather than being overridden at 26 call
+     * sites.
+     */
+    --glow-cyan: none;
+    --glow-amber: none;
+
+    /* Ink on paper takes a stronger rule than light on black, and the vignette
+       has to nearly vanish — a dark corner on a white page reads as dirt. */
+    --veil: 0.09;
+    --vignette: 0.05;
+
+    color-scheme: light;
   }
 
   html {
     -webkit-font-smoothing: antialiased;
     scroll-behavior: smooth;
+    /* The ground changes under the toggle, including the overscroll gutter. */
+    background: rgb(var(--void));
   }
 
   body {
@@ -34,6 +100,12 @@
   ::selection {
     background: rgb(var(--amber) / 0.85);
     color: rgb(var(--void));
+  }
+  :root[data-theme='light'] ::selection {
+    /* Ochre at 85% against paper-coloured glyphs measures 1.9:1. The light
+       world highlights with a tint and keeps the ink. */
+    background: rgb(var(--amber) / 0.28);
+    color: rgb(var(--cyan));
   }
 
   :focus-visible {
@@ -72,13 +144,26 @@
 
 @layer components {
   /*
-   * 92rem (1472px) was wider than the prose ever fills. At 20px body type a
-   * comfortable measure is 700–800px, so on a 1440px screen roughly 550px of
-   * every row was structurally dead — which is what "lots of empty space"
-   * actually was. 80rem holds the same content with the air taken out.
+   * Every paragraph on the site already carries its own ch-based measure cap
+   * (46–68ch, set at the call site), so a wider shell does not stretch prose
+   * past a comfortable line length — it gives the *structural* content next
+   * to that prose (grids, cards, the graph, the constraint solver) the room
+   * a 12-column layout was built to use.
+   *
+   * 80rem (1280px) was reverted to from 92rem once for leaving prose rows
+   * with dead space beside them; the site has since grown into the kind of
+   * disciplined per-section grid DESIGN.md documents (Method's deck,
+   * Capabilities' stack, the plate grid), so most rows are no longer bare
+   * prose with nothing beside it. What 80rem actually cost was worse: on
+   * anything wider than a 1280px laptop, the shell stopped growing and the
+   * difference became pure margin outside it instead — at a 1920px window
+   * that is over 300px of flat, unlit ground on each side, on every section,
+   * for the entire scroll. 92rem (1472px) fills a 1440–1472px laptop
+   * completely (no side margin at all, versus 80px each side before) and
+   * still leaves the margin `SectionRail` stands in on wider monitors.
    */
   .shell {
-    @apply mx-auto w-full max-w-[80rem] px-5 sm:px-8 lg:px-12;
+    @apply mx-auto w-full max-w-[92rem] px-5 sm:px-8 lg:px-12;
   }
 
   /*
@@ -209,6 +294,35 @@
   }
 
   /*
+   * ELEVATION IS CARRIED DIFFERENTLY ON PAPER.
+   *
+   * In the dark world a card is legible because it is *lighter* than the ground
+   * and its border catches the eye against near-black. Both mechanisms weaken
+   * on a sheet: white-on-paper is a 4% luminance step where black-on-teal was
+   * 30%, and ink at 28% is a hairline rather than a glow.
+   *
+   * So the light world spends the alpha it has: the fill goes fully opaque
+   * (a raised object on paper is not translucent), and a real drop shadow does
+   * the work the luminance step cannot. Offset and blur, never a zero-offset
+   * halo — this is a sheet lying on a sheet.
+   */
+  :root[data-theme='light'] .card {
+    @apply border-cyan/[0.12] bg-deep;
+    box-shadow: 0 1px 2px rgb(var(--cyan) / 0.05), 0 6px 16px -8px rgb(var(--cyan) / 0.16);
+  }
+  :root[data-theme='light'] .card:hover,
+  :root[data-theme='light'] .card:focus-within {
+    @apply border-cyan/25 bg-deep;
+    box-shadow: 0 2px 4px rgb(var(--cyan) / 0.07), 0 12px 28px -10px rgb(var(--cyan) / 0.22);
+  }
+
+  /* Recessed on paper is an inset shadow, not a darker fill. */
+  :root[data-theme='light'] .well {
+    @apply border-cyan/[0.1] bg-void;
+    box-shadow: inset 0 1px 3px rgb(var(--cyan) / 0.07);
+  }
+
+  /*
    * Corner brackets that draw themselves in on hover — an instrument framing
    * its reading, rather than a generic glow following the cursor.
    */
@@ -288,14 +402,18 @@
     background: radial-gradient(
       ellipse at center,
       transparent 62%,
-      rgb(var(--void) / 0.28) 100%
+      rgb(var(--void) / var(--vignette)) 100%
     );
   }
 
+  /*
+   * A faint scanline field in the dark; graph paper in the light, where it
+   * needs nearly twice the alpha to register at all against the sheet.
+   */
   .grid-veil {
     background-image:
-      linear-gradient(to right, rgb(var(--cyan) / 0.05) 1px, transparent 1px),
-      linear-gradient(to bottom, rgb(var(--cyan) / 0.05) 1px, transparent 1px);
+      linear-gradient(to right, rgb(var(--cyan) / var(--veil)) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(var(--cyan) / var(--veil)) 1px, transparent 1px);
     background-size: 52px 52px;
   }
 
@@ -310,6 +428,11 @@
      the only thing that makes a secondary button look like a button. */
   .btn-ghost {
     @apply btn border border-cyan/50 text-cyan hover:border-amber hover:bg-amber/10 hover:text-amber;
+  }
+  /* Teal ink at 50% on paper is a grey suggestion; a secondary button has to
+     read as pressable before it is hovered. */
+  :root[data-theme='light'] .btn-ghost {
+    @apply border-cyan/30;
   }
 
   /*
@@ -347,6 +470,10 @@
     height: 4px;
     border-radius: 2px;
     background: rgb(var(--cyan) / 0.2);
+  }
+  :root[data-theme='light'] .range-hud::-webkit-slider-runnable-track,
+  :root[data-theme='light'] .range-hud::-moz-range-track {
+    background: rgb(var(--cyan) / 0.14);
   }
   .range-hud::-moz-range-track {
     height: 4px;
@@ -400,11 +527,13 @@
     letter-spacing: 0.06em;
   }
 
+  /* Resolved from a token so the light world can turn them off in one place
+     rather than at every call site. On paper a glow is a smudge. */
   .glow-cyan {
-    text-shadow: 0 0 24px rgb(var(--cyan-hot) / 0.35);
+    text-shadow: var(--glow-cyan);
   }
   .glow-amber {
-    text-shadow: 0 0 26px rgb(var(--amber) / 0.4);
+    text-shadow: var(--glow-amber);
   }
 
   [data-reveal] {

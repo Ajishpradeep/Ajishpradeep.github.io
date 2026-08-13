@@ -1,5 +1,6 @@
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
+import { motion } from 'motion/react';
 import {
   ArrowLeft,
   ArrowRight,
@@ -13,6 +14,11 @@ import { work } from '../data/work';
 import CaseVisual from './CaseVisual';
 import ConstraintLab from './ConstraintLab';
 import { useReducedMotion } from '../hooks/useReducedMotion';
+import { springOr, SPRING } from '../lib/motion';
+import TextScramble from './motion/TextScramble';
+import SpotlightBorder from './motion/SpotlightBorder';
+import InView from './motion/InView';
+import { RISE_GROUP, RISE_ITEM } from '../lib/variants';
 
 /** Org, period and role. One row, three columns, wherever it is placed. */
 function Facts({
@@ -27,7 +33,7 @@ function Facts({
 }) {
   return (
     <ul
-      className={`grid gap-x-8 gap-y-3 border-t border-cyan/20 ${
+      className={`grid grid-cols-1 gap-x-8 gap-y-3 border-t border-cyan/20 ${
         stacked ? "" : "sm:grid-cols-3"
       } ${className}`}
     >
@@ -49,6 +55,46 @@ function Facts({
 }
 
 /**
+ * The four readings, directly under `Facts` rather than as their own
+ * full-width row under the whole card.
+ *
+ * `columns` defaults to four across, which is right when this sits at the
+ * card's full width (the non-solver layout). Passed `sm:grid-cols-2` it
+ * reads as two rows of two — the shape that fits the solver layout's own
+ * `lg:col-span-7` column, which is roughly half the card's width and would
+ * have crushed four figures into columns too narrow for "mean per-joint
+ * error, pelvis-relative" to sit under its own number.
+ */
+function Metrics({
+  study,
+  className = '',
+  columns = 'sm:grid-cols-2 lg:grid-cols-4',
+}: {
+  study: (typeof work)[number];
+  className?: string;
+  columns?: string;
+}) {
+  return (
+    <InView
+      key={study.slug}
+      as="ul"
+      variants={RISE_GROUP}
+      viewOptions={{ once: true, margin: '0px 0px -60px 0px' }}
+      className={`grid grid-cols-1 gap-x-8 gap-y-6 border-t border-cyan/20 pt-6 ${columns} ${className}`}
+    >
+      {study.metrics.map((m) => (
+        <motion.li key={m.label} variants={RISE_ITEM}>
+          <p className="font-display text-title font-bold leading-none text-amber tabular-nums">
+            {m.value}
+          </p>
+          <p className="mt-2 font-text text-fine leading-snug text-dim">{m.label}</p>
+        </motion.li>
+      ))}
+    </InView>
+  );
+}
+
+/**
  * Rail index on the left, case-file readout on the right.
  *
  * Which case is open lives in the URL rather than in component state, so a
@@ -64,23 +110,38 @@ export default function WorkConsole() {
   const i = fromUrl === -1 ? 0 : fromUrl;
   const study = work[i];
 
+  /*
+    Which way the reader went, so the incoming case arrives from the side they
+    left rather than always from the same one.
+
+    It is state and not `useMemo(() => index > i)`, because the stepper wraps:
+    pressing Next on case 05 lands on index 0, which is numerically backwards
+    and was, to the reader, unambiguously forwards. The caller knows what
+    happened; the indices do not.
+  */
+  const [dir, setDir] = useState(1);
+
   const open = useCallback(
-    (index: number, keepInView = false) => {
+    (index: number, opts: { keepInView?: boolean; dir?: number } = {}) => {
+      setDir(opts.dir ?? (index >= i ? 1 : -1));
+
       const next = new URLSearchParams(params);
       next.set('case', work[index].slug);
       // replace, not push: stepping through cases should not fill the back button.
       setParams(next, { replace: true, preventScrollReset: true });
-      if (keepInView) {
+
+      if (opts.keepInView) {
         const card = cardRef.current;
         if (card && card.getBoundingClientRect().top < 0) {
           card.scrollIntoView({ behavior: still ? 'auto' : 'smooth', block: 'start' });
         }
       }
     },
-    [params, setParams, still],
+    [i, params, setParams, still],
   );
 
-  const step = (d: number) => open((i + d + work.length) % work.length, true);
+  const step = (d: number) =>
+    open((i + d + work.length) % work.length, { keepInView: true, dir: d });
 
   /*
     Roving tabindex: the rail is one tab stop and the arrows move within it,
@@ -120,10 +181,19 @@ export default function WorkConsole() {
   }, [study]);
 
   return (
+    /*
+      Top padding cut well below the other sections' shared `py-14 sm:py-16
+      lg:py-20` — this is the one section that follows the hero rather than
+      another section, and the hero's own taller column (the graph, kept
+      full-size on request) was already landing "Selected systems" 226px
+      below where the shorter column's content stopped. Bottom padding is
+      untouched; it is what separates this section from Impact, a normal
+      section-to-section gap, not the one that was too big.
+    */
     <section
       id="work"
       aria-labelledby="work-title"
-      className="relative scroll-mt-[5.5rem] overflow-hidden border-b border-cyan/15 py-14 sm:py-16 lg:py-20"
+      className="relative scroll-mt-[5.5rem] overflow-hidden border-b border-cyan/15 pb-14 pt-6 sm:pb-16 sm:pt-8 lg:pb-20 lg:pt-10"
     >
       <div className="grid-veil absolute inset-0 opacity-70" />
 
@@ -203,7 +273,7 @@ export default function WorkConsole() {
           what a system did belongs after what it was — and on a desktop the
           eye reads the column, not the source.
         */}
-        <div className="mt-8 grid gap-8 lg:grid-cols-12 lg:grid-rows-[auto_1fr] lg:gap-10">
+        <div className="mt-8 grid grid-cols-1 gap-8 lg:grid-cols-12 lg:grid-rows-[auto_1fr] lg:gap-10">
           {/*
             RAIL — a tablist, not navigation: these switch a panel in place.
 
@@ -237,19 +307,44 @@ export default function WorkConsole() {
                       tabIndex={on ? 0 : -1}
                       ref={on ? activeTabRef : undefined}
                       onClick={() => open(idx)}
-                      className={`flex w-full items-start gap-3 rounded-sm p-3 text-left transition-all duration-300 ${
-                        on
-                          ? 'border border-amber/45 bg-amber/10'
-                          : 'border border-transparent hover:bg-panel/40'
+                      className={`relative flex w-full items-start gap-3 rounded-sm p-3 text-left transition-colors duration-300 ${
+                        on ? '' : 'hover:bg-panel/40'
                       }`}
                     >
+                      {/*
+                        THE TRAVELLING MARKER.
+
+                        One amber block, shared across all five tabs by
+                        `layoutId`, so the selection slides down the index to
+                        the case you picked instead of vanishing here and
+                        appearing there. On a five-item list that is the
+                        difference between a control that reports a state and
+                        an instrument you can see yourself operating — and it
+                        is the same device as the dock's dot and the
+                        capabilities marker, because the site should have one
+                        way of saying "this one".
+
+                        It sits behind the label rather than being the label's
+                        own border, which is what lets it move independently of
+                        the text it is currently under.
+                      */}
+                      {on && (
+                        <motion.span
+                          layoutId="case-marker"
+                          transition={springOr(still, SPRING.marker)}
+                          aria-hidden
+                          className="absolute inset-0 rounded-sm border border-amber/45 bg-amber/10"
+                        />
+                      )}
                       <span
-                        className={`mt-0.5 font-mono text-micro ${on ? 'text-amber' : 'text-dim'}`}
+                        className={`relative mt-0.5 font-mono text-micro transition-colors duration-300 ${
+                          on ? 'text-amber' : 'text-dim'
+                        }`}
                       >
                         {wk.index}
                       </span>
                       <span
-                        className={`font-display text-base leading-snug ${
+                        className={`relative font-display text-base leading-snug transition-colors duration-300 ${
                           on ? 'font-bold text-amber' : 'font-medium text-cyan/75'
                         }`}
                       >
@@ -276,6 +371,32 @@ export default function WorkConsole() {
               </div>
 
               {/*
+                THE READOUT ARRIVES FROM THE DIRECTION YOU LEFT.
+
+                Every case used to fade up from below regardless of which way
+                the reader had gone — Previous and Next produced the identical
+                move, so the one thing the animation could have told them was
+                the one thing it did not. The panel now enters from the side
+                the rail travelled, which makes the stepper and the index feel
+                like the same control operated two ways, because they are.
+
+                Keyed on the slug, so React remounts it and `initial` runs
+                again on every change. There is deliberately no exit: this card
+                is 1,300px tall and holds the reader's scroll position, and
+                animating it out would collapse the page under them mid-read.
+                The new one arrives over the old one's footprint instead.
+
+                18px, not 40. The distance should read as a nudge from a
+                control, not as a slide between two screens — the card has not
+                gone anywhere, its contents have changed.
+              */}
+              <motion.div
+                key={study.slug}
+                initial={still ? false : { opacity: 0, x: dir * 18 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={springOr(still, SPRING.panel)}
+              >
+              {/*
                 Two layouts, because the two kinds of mechanism have opposite
                 shapes. The solver is tall and interactive and needs a column of
                 its own. A static diagram is short and wide, and putting it in a
@@ -285,9 +406,26 @@ export default function WorkConsole() {
                 the prose closes around it.
               */}
               {study.visual === 'solver' ? (
-                <div className="grid gap-6 lg:grid-cols-12 lg:gap-8">
+                <div className="grid grid-cols-1 gap-6 lg:grid-cols-12 lg:gap-8">
                   <div className="flex flex-col lg:col-span-7">
-                    <p className="tag-sm text-amber">{study.domain}</p>
+                    {/*
+                      THE READOUT RETUNES.
+
+                      This line changes on every case, and it is a measurement
+                      label on an instrument — mono, uppercase, technical
+                      nouns. Resolving it character by character is what a
+                      readout does when the thing under it has been switched;
+                      a hard swap is what a static caption does.
+
+                      Scrambled through letters, digits and the middot the
+                      labels already contain, never through `#$%^&*`. That
+                      alphabet reads as a glitch — something broke and is
+                      repairing itself — and this page does not get to imply a
+                      state the system is not in. See `motion/TextScramble`.
+                    */}
+                    <p className="tag-sm text-amber">
+                      <TextScramble trigger={study.slug}>{study.domain}</TextScramble>
+                    </p>
                     <h3 className="mt-4 max-w-[22ch] text-balance font-display text-title font-extrabold uppercase leading-[1.12] text-cyan">
                       {study.title}
                     </h3>
@@ -303,27 +441,37 @@ export default function WorkConsole() {
                       the org/period/role row — the fix for the column's bottom
                       edge dug a pit in its middle. Trailing space under a short
                       column reads as layout; a gap inside one reads as a bug.
+
+                      The four readings go directly under Facts now rather than
+                      as their own row under the whole card, and that closes
+                      the same hole from the other side: this column's natural
+                      content — title, subtitle, problem, org/period/role — ran
+                      shorter than the solver beside it, so there was empty
+                      well below Facts before the readings ever arrived. Two
+                      columns, not the card's usual four: at this column's own
+                      width, four would have run past it into the solver's.
                     */}
                     <Facts study={study} stacked className="mt-6 pt-5" />
+                    <Metrics study={study} className="mt-6" columns="sm:grid-cols-2" />
                   </div>
                   <div className="lg:col-span-5">
-                    <div key={study.slug} className="animate-[fadeUp_0.6s_ease-out]">
-                      <ConstraintLab />
-                    </div>
+                    {/* The enclosing readout is keyed on the slug and already
+                        re-enters; a second fadeUp here was the same move played
+                        twice, half a beat apart. */}
+                    <ConstraintLab />
                   </div>
                 </div>
               ) : (
                 <div>
-                  <div
-                    key={study.slug}
-                    className="mb-5 animate-[fadeUp_0.6s_ease-out] lg:float-right lg:mb-4 lg:ml-8 lg:w-[27rem]"
-                  >
+                  <div className="mb-5 lg:float-right lg:mb-4 lg:ml-8 lg:w-[27rem]">
                     <div className="well p-4">
                       <CaseVisual kind={study.visual} />
                     </div>
                   </div>
 
-                  <p className="tag-sm text-amber">{study.domain}</p>
+                  <p className="tag-sm text-amber">
+                    <TextScramble trigger={study.slug}>{study.domain}</TextScramble>
+                  </p>
                   <h3 className="mt-4 max-w-[26ch] text-balance font-display text-title font-extrabold uppercase leading-[1.12] text-cyan">
                     {study.title}
                   </h3>
@@ -334,28 +482,37 @@ export default function WorkConsole() {
                     <p className="copy-sm">{study.problem}</p>
                   </div>
 
-                  {/* clear the float so the facts run the full width of the card */}
+                  {/*
+                    Four readings side by side already read as a group; the
+                    four boxes were four more frames inside a card. One rule
+                    above the row does the same work, and `tabular-nums` stops
+                    the figures jittering — the contents swap on every case
+                    change.
+
+                    Directly under Facts, at the card's full width — this
+                    branch's visual is floated, not a persistent column, so
+                    there is no "other side" the readings would run over.
+
+                    This is `InViewImagesGrid`'s mechanism — `staggerChildren`
+                    on a grid whose items blur and scale up — applied to the
+                    grid this page actually has. The demo staggers a masonry
+                    of photographs; there are no photographs here, and the
+                    thing that genuinely benefits from being read left to
+                    right is a row of four measurements that changed when the
+                    case changed.
+
+                    Keyed on the slug so it replays on every case switch,
+                    which is the only time these values are new. `once` is
+                    therefore off, and the entrance is short enough that
+                    stepping through five cases quickly does not queue.
+
+                    Clear the float so the facts and the readings run the
+                    full width of the card rather than under the visual.
+                  */}
                   <Facts study={study} className="mt-6 pt-5 lg:clear-right" />
+                  <Metrics study={study} className="mt-6" />
                 </div>
               )}
-
-              {/*
-                Four readings side by side already read as a group; the four
-                boxes were four more frames inside a card. One rule above the
-                row does the same work, and `tabular-nums` stops the figures
-                jittering — the contents swap on every case change.
-              */}
-              <ul className="mt-8 grid gap-x-8 gap-y-6 border-t border-cyan/20 pt-6 sm:grid-cols-2 lg:grid-cols-4">
-                {study.metrics.map((m) => (
-                  <li key={m.label}>
-                    <p className="font-display text-title font-bold leading-none text-amber tabular-nums">
-                      {m.value}
-                    </p>
-                    <p className="mt-2 font-text text-fine leading-snug text-dim">{m.label}</p>
-                  </li>
-                ))}
-              </ul>
-
 
               {/* Non-interactive nouns. A middot set says "these are a set". */}
               <p className="mt-6 flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-fine text-cyan/70">
@@ -374,9 +531,28 @@ export default function WorkConsole() {
                 It now gets its own band, says what is behind it, and shows the
                 argument before you commit to reading it.
               */}
+              {/*
+                THE BORDER LIGHTS WHERE YOU POINT AT IT.
+
+                This is the most important link on the site for the audience it
+                exists to reach, and `SpotlightBorder` is spent here rather than
+                scattered across the cards. The light is confined to the 1px
+                frame by an opaque inner surface, so it never crosses the text
+                — which is the whole reason a spotlight is usable on this page
+                at all. A soft blob drifting over 17px serif prose is a
+                legibility cost paid for atmosphere, and DESIGN.md rejects it
+                by name; a frame that brightens under the cursor is the same
+                family as the `.trace` corner brackets the document kept.
+              */}
+              <SpotlightBorder
+                className="mt-8 block"
+                ringClassName="bg-amber/50"
+                innerClassName="bg-deep"
+                size={200}
+              >
               <Link
                 to={`/work/${study.slug}`}
-                className="group mt-8 block rounded-sm border border-amber/50 bg-amber/10 p-5 transition-colors duration-300 hover:border-amber hover:bg-amber/20 sm:p-6"
+                className="group block rounded-[3px] bg-amber/10 p-5 transition-colors duration-300 hover:bg-amber/20 sm:p-6"
               >
                 <div className="flex flex-wrap items-center justify-between gap-3">
                   <p className="font-display text-lead font-bold text-amber">
@@ -388,7 +564,7 @@ export default function WorkConsole() {
                     className="text-amber transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
                   />
                 </div>
-                <ul className="mt-4 grid gap-x-6 gap-y-2 sm:grid-cols-2">
+                <ul className="mt-4 grid grid-cols-1 gap-x-6 gap-y-2 sm:grid-cols-2">
                   {study.sections.map((s, k) => (
                     <li key={s.heading} className="flex items-baseline gap-2.5">
                       <span className="font-mono text-micro text-amber/80">
@@ -399,6 +575,8 @@ export default function WorkConsole() {
                   ))}
                 </ul>
               </Link>
+              </SpotlightBorder>
+              </motion.div>
             </div>
           </div>
 
