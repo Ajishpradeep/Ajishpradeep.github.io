@@ -98,10 +98,19 @@ const styles = StyleSheet.create({
   page: {
     fontFamily: 'IBMPlexSans',
     fontSize: 9.8,
-    lineHeight: 1.45,
+    /*
+      TIGHTENED 2026-08-16: lineHeight 1.45→1.42, page padding 38/34→32/28,
+      plus matching cuts to section/role/entry/bullet spacing below. This
+      round added a Research section, two more projects and a longer summary
+      — content the reader asked for — which pushed the document to 3 pages.
+      Font size did not move; the paragraph above is explicit about why 9.8pt
+      is the floor, and that reasoning didn't change. This is the other lever:
+      spacing, not type size, absorbs new content within the 2-page budget.
+    */
+    lineHeight: 1.38,
     color: C.ink,
-    paddingTop: 38,
-    paddingBottom: 34,
+    paddingTop: 24,
+    paddingBottom: 20,
     paddingHorizontal: 44,
   },
 
@@ -202,7 +211,7 @@ const styles = StyleSheet.create({
   },
 
   /* ---------- sections ---------- */
-  section: { marginTop: 13 },
+  section: { marginTop: 6 },
   /*
     letterSpacing is capped low on purpose, and this is a correctness
     constraint rather than a taste one. Text extractors synthesise a space
@@ -245,12 +254,12 @@ const styles = StyleSheet.create({
   rowAside: { flexShrink: 0, fontSize: 9, lineHeight: 1.4, color: C.inkFaint },
 
   /* ---------- experience ---------- */
-  role: { marginBottom: 9 },
+  role: { marginBottom: 6 },
   roleTitle: { fontSize: 11, fontWeight: 600, lineHeight: 1.3, color: C.ink },
   roleOrg: { fontSize: 9.8, lineHeight: 1.4, color: C.accent, fontWeight: 600, marginTop: 1 },
   roleOrgPlace: { color: C.inkFaint, fontWeight: 400 },
 
-  bulletRow: { flexDirection: 'row', marginTop: 3.5 },
+  bulletRow: { flexDirection: 'row', marginTop: 2.2 },
   bulletGlyph: { width: 10, flexShrink: 0, fontSize: 9.8, lineHeight: 1.45, color: C.accent },
   bulletText: {
     flexGrow: 1,
@@ -264,7 +273,7 @@ const styles = StyleSheet.create({
   italic: { fontStyle: 'italic' },
 
   /* ---------- skills ---------- */
-  skillRow: { flexDirection: 'row', marginBottom: 3.5 },
+  skillRow: { flexDirection: 'row', marginBottom: 2.2 },
   skillLabel: {
     width: 118,
     flexShrink: 0,
@@ -283,7 +292,7 @@ const styles = StyleSheet.create({
   },
 
   /* ---------- compact entries (recognition, education, projects) ---------- */
-  entry: { marginBottom: 6 },
+  entry: { marginBottom: 4 },
   entryTitle: { fontSize: 10, fontWeight: 600, lineHeight: 1.35, color: C.ink },
   entryMeta: { fontSize: 9.4, lineHeight: 1.4, color: C.accent, marginTop: 0.5 },
   entryDetail: { fontSize: 9.5, lineHeight: 1.45, color: C.inkSoft, marginTop: 1.5 },
@@ -403,8 +412,24 @@ export function ResumePDF() {
           ))}
         </Section>
 
-        <Section title="RECOGNITION & RESEARCH">
+        {/* Two sections, not one — a self-published writeup doesn't belong
+            filed next to a judged award and a committee-selected conference
+            poster; splitting them says plainly which is which. */}
+        <Section title="RECOGNITION">
           {resume.recognition.map((r) => (
+            <View key={r.title} style={styles.entry} wrap={false}>
+              <View style={styles.row}>
+                <Text style={[styles.entryTitle, styles.rowMain]}>{r.title}</Text>
+                <Text style={styles.rowAside}>{r.year}</Text>
+              </View>
+              <Text style={styles.entryMeta}>{r.venue}</Text>
+              {r.detail ? <Rich style={styles.entryDetail}>{r.detail}</Rich> : null}
+            </View>
+          ))}
+        </Section>
+
+        <Section title="RESEARCH">
+          {resume.research.map((r) => (
             <View key={r.title} style={styles.entry} wrap={false}>
               <View style={styles.row}>
                 <Text style={[styles.entryTitle, styles.rowMain]}>{r.title}</Text>

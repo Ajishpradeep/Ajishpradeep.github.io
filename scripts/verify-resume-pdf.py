@@ -33,13 +33,15 @@ MARGIN_X, TOLERANCE = 44.0, 2.0
 REQUIRED_HEADINGS = [
     "CORE SKILLS",
     "EXPERIENCE",
-    "RECOGNITION & RESEARCH",
+    "RECOGNITION",
+    "RESEARCH",
     "EDUCATION",
     "SELECTED PROJECTS",
 ]
 REQUIRED_STRINGS = [
     "ajishpradeep@gmail.com",  # visible text: full email, not a "click here"
-    "GitHub",  # visible text is the platform name; the URL lives in the link
+    "Portfolio",  # visible text is the platform name; the URL lives in the link
+    "GitHub",
     "LinkedIn",  # annotation only — see REQUIRED_LINK_URIS below
     "8 cm → 3 cm",  # the arrow the old base-14 font destroyed
     "7,000+",
@@ -50,6 +52,7 @@ REQUIRED_STRINGS = [
 # for why they can't both be checked the same way).
 REQUIRED_LINK_URIS = [
     "mailto:ajishpradeep@gmail.com",
+    "https://ajishpradeep.github.io",
     "https://github.com/Ajishpradeep",
     "https://linkedin.com/in/ajishpradeep",
 ]
