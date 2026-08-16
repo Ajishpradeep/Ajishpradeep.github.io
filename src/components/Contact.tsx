@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import {
   Mail,
   Github,
@@ -125,9 +126,9 @@ export default function Contact() {
                 )}
                 {copied ? 'Address copied' : 'Copy address'}
               </button>
-              <a href={site.resume} target="_blank" rel="noreferrer" className="btn-ghost">
+              <Link to="/resume" className="btn-ghost">
                 <Download size={15} strokeWidth={2} /> Résumé
-              </a>
+              </Link>
             </div>
             <p aria-live="polite" className="sr-only">
               {copied ? `${site.email} copied to the clipboard` : ''}

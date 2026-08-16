@@ -7,10 +7,12 @@
     "dev": "vite",
     "build": "tsc && vite build --emptyOutDir",
     "lint": "eslint src scripts --report-unused-disable-directives --max-warnings 0",
+    "resume:pdf": "./scripts/render-resume.sh public/Resume.pdf",
     "preview": "vite preview",
     "postbuild": "node scripts/postbuild.mjs"
   },
   "dependencies": {
+    "@react-pdf/renderer": "^4.6.1",
     "lucide-react": "^0.344.0",
     "motion": "^13.0.0",
     "react": "^18.3.1",

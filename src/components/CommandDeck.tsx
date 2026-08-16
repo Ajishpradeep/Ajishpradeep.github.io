@@ -106,12 +106,12 @@ export default function CommandDeck() {
       },
       {
         id: 'cv',
-        label: 'download cv',
-        hint: 'pdf',
-        group: 'external',
+        label: 'open résumé',
+        hint: 'view + pdf',
+        group: 'navigate',
         run: () => {
           close();
-          window.open(site.resume, '_blank', 'noopener');
+          navigate('/resume');
         },
       },
       {
