@@ -336,34 +336,6 @@ export default function Resume() {
         </div>
       </section>
 
-      {/* No `lg:grid-cols-2` here — a single card in a two-column grid leaves
-          the same kind of empty right-hand gap the header block had. One
-          research entry today is a full-width card, not a half-width one
-          beside nothing. */}
-      <section className="border-b border-cyan/15 py-14">
-        <div className="shell">
-          <Heading>Research</Heading>
-          <ul className="mt-8 grid gap-4">
-            {resume.research.map((r) => (
-              <li key={r.title} className="card p-5" data-reveal>
-                <div className="flex items-baseline justify-between gap-4">
-                  <h3 className="font-display text-base font-bold text-cyan">{r.title}</h3>
-                  <span className="shrink-0 font-mono text-micro text-dim">{r.year}</span>
-                </div>
-                <p className="mt-1.5 break-words font-mono text-micro uppercase tracking-[0.12em] text-amber">
-                  {r.venue}
-                </p>
-                {r.detail && (
-                  <Rich className="mt-3 block text-fine leading-relaxed text-cyan/65 text-pretty">
-                    {r.detail}
-                  </Rich>
-                )}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
-
       <section className="border-b border-cyan/15 py-14">
         <div className="shell">
           <Heading>Education</Heading>
@@ -408,11 +380,23 @@ export default function Resume() {
             ))}
           </ul>
 
+          {/* Where the Transformer walkthrough landed after the dedicated
+              Research section was undone — see the comment on
+              `technicalWriting` in resume.ts. A quiet trailing line, not a
+              section of its own. */}
+          {resume.technicalWriting && (
+            <p data-reveal>
+              <Rich className="mt-6 block max-w-[70ch] font-mono text-micro text-dim">
+                {resume.technicalWriting}
+              </Rich>
+            </p>
+          )}
+
           <a
             href="https://github.com/Ajishpradeep"
             target="_blank"
             rel="noreferrer"
-            className="mt-7 inline-flex items-center gap-1.5 font-mono text-micro uppercase tracking-[0.12em] text-dim transition-colors hover:text-amber"
+            className="mt-4 inline-flex items-center gap-1.5 font-mono text-micro uppercase tracking-[0.12em] text-dim transition-colors hover:text-amber"
             data-reveal
           >
             More on GitHub

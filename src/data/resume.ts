@@ -239,18 +239,40 @@ export const resume = {
     Experience bullet 1's exact 8cm→3cm figure one line below it for no
     reason — pure duplication, not reinforcement.
 
-    The replacement leads with the contribution instead of the product: the
-    frozen-pathway adapter and the correctness guarantee it buys (bit-identical
-    by construction, verified by weight diff) — a different, non-duplicated
-    fact from the same case study, chosen specifically because it is not
-    already stated verbatim in the bullet immediately below. The retail line
-    keeps its two strongest facts (7,000+ stores, GTC 2025) because those
-    aren't restated elsewhere in the summary/bullet-1 overlap zone the same
-    way — a summary is allowed to name its strongest external validators, that
-    isn't the pattern being corrected here.
+    REWRITTEN AGAIN 2026-08-16, on Pradeep's explicit instruction, and this
+    is a correction of a different and more basic mistake than the one above.
+    The previous version fixed the *tone* (contribution over product) but got
+    the *altitude* wrong: it spent the entire summary on one implementation
+    detail from one bullet of one role — the frozen-pathway adapter, verified
+    bit-identical by weight diff. That is exactly the kind of thing a
+    professional summary is not for. A summary compresses years of scope into
+    a few lines before the reader commits to the rest of the document
+    (content-and-structure.md, on senior-level summaries); implementation
+    detail is the bullets' job, and this document's bullets already carry that
+    exact fact verbatim two lines down. Restating it in the summary at the
+    same depth isn't reinforcement, it's just the same mistake in a new
+    location.
+
+    The deeper error was missing what actually belonged at summary altitude.
+    The pose-lifting work didn't stay a shipped feature — he authored the
+    proposal that argued it generalises to a different sport, and that
+    argument won an international competition and got him selected to present
+    in Europe. That is the real "expansion of expertise" story: not a
+    technique, but evidence of scope and leadership beyond the original
+    engineering task, which is precisely what a cold reader with zero context
+    is trained to look for (faang-expectations.md: Role-Related Knowledge and
+    Leadership are the two axes a resume can actually move). The technique
+    stays — richly — in the Experience bullets, where XYZ-formula depth
+    belongs. The summary now carries the outcome-of-outcomes instead: what the
+    pose-lifting work became, not how the adapter was built.
+
+    Retail keeps its place for the same reason as before — it's the second
+    body of work, with its own independent external validation (7,000+
+    stores, GTC 2025) — but no year count is reintroduced; that rule from the
+    first rewrite still holds and isn't what was wrong here.
   */
   summary:
-    'AI research engineer specialising in 3D human-motion perception and on-device inference. Architected the 2D-to-3D pose-lifting and club-tracking system behind a markerless motion-capture pipeline — engineering a frozen-pathway adapter that made regression on the general body model structurally impossible rather than merely unlikely, verified **bit-identical** to the base model by weight diff. Previously led the vision architecture for an open-set retail recognition system deployed across **7,000+ stores**, presented as a technical poster at **NVIDIA GTC 2025**.',
+    'AI Research Engineer building production 3D computer vision and on-device AI systems. Led R&D on the pose-lifting and biomechanics engine behind a markerless motion-capture product, then authored the technical proposal that extended that work into a new sport — winning **1 of 3 global awards from 638 proposals across 55 countries** and earning selection to present the technology at **Taiwan Expo Europe**. Previously led the vision architecture for an open-set retail recognition system deployed across **7,000+ stores**, presented at **NVIDIA GTC 2025**.',
 
   /*
     Wording here is matched to the terms real postings use — "3D human pose
@@ -348,13 +370,26 @@ export const resume = {
         checked. Confirm all three roles before sending.
       */
       period: 'May 2025 — Present',
+      /*
+        REORDERED 2026-08-16. The TAITRA award bullet used to sit last (6th).
+        It's now 2nd, directly under the pose-lifting result it extends, on
+        Pradeep's explicit direction: the award isn't a separate, lesser
+        achievement tacked onto the end of the list — it's what the pose-
+        lifting work *became*. He authored the proposal arguing that a
+        golf-tuned lifting stack generalises to a different high-speed sport,
+        and that argument won an international competition and got him
+        selected to present in Europe. Burying that after three bullets of
+        implementation detail hid the fact that this is a scope/leadership
+        signal, not a fourth technical achievement — it belongs beside the
+        result it grew out of, not after it.
+      */
       bullets: [
         'Led R&D on the 2D-to-3D human pose lifting system behind **XView AI**, a markerless golf-swing analysis app: reduced mean per-joint 3D error **8 cm → 3 cm** (pelvis-relative) through temporal consistency modelling, motion-aligned lifting and spatial refinement, with **+30%** reconstruction fidelity under occlusion and fast motion.',
+        'Authored the technical proposal extending that work to a new sport — arguing how far a golf-tuned lifting stack generalises to a different high-speed motion class — and won TAITRA’s **“Go Healthy with Taiwan” 2025** award, **1 of 3 winners from 638 proposals across 55 countries**; selected to present the technology at Taiwan Expo Europe 2026.',
         'Shipped the full analysis pipeline **on-device** on Apple ARM silicon via Core ML — no cloud round-trip, no footage leaving the handset — in an iOS app used by **PGA Tour professionals**.',
         'Extended the pose model to club tracking without regressing the general body model: froze the backbone and every body keypoint channel and trained through a parallel adapter, leaving the deployed body pathway **bit-identical** to the base model (verified by weight diff) while club accuracy reached production quality.',
         'Diagnosed and corrected calibration and reconstruction faults across the multi-camera stack — **4.8×** lower reconstruction noise and **−73%** event-detection timing error — validated against published anthropometric ratios over **204** bone measurements.',
         'Architected a domain-grounded agentic LLM coaching system in which a deterministic rule engine computes every number and the model is constrained to narration, making fabricated biomechanics structurally impossible rather than merely unlikely; **69** weighted rules, **8** languages. Validated the rulebook against real sessions — rules firing on 100% of sessions were self-detecting bugs, and one intuitive explanation for a misfire was tested and disproved before it reached a user.',
-        'Authored the technical proposal that won TAITRA’s **“Go Healthy with Taiwan” 2025** award — **1 of 3 winners from 638 proposals across 55 countries**.',
       ],
     },
     {
@@ -418,6 +453,21 @@ export const resume = {
     next to genuine external recognitions borrows credibility it didn't earn
     the same way. Two headings now, RECOGNITION and RESEARCH, so each entry
     sits in the category it actually belongs to.
+
+    UNDONE 2026-08-16, same day, on Pradeep's explicit instruction — and this
+    is a real reversal, not a refinement. Splitting it into its own section
+    fixed the miscategorisation but created a worse problem: a whole
+    top-level heading, the same visual weight as RECOGNITION and EDUCATION,
+    spent on one self-published writeup. That overstates it more than lumping
+    it with real recognitions did — a dedicated section reads as "this is a
+    body of research," and one GitHub walkthrough is not that. credibility-
+    artifacts.md's own ranking already had this near the bottom of the
+    substitute list, below patents, posters and peer-reviewed work; giving it
+    a full section contradicted the research this file is supposed to be
+    built on. It now appears as a single quiet line under Selected Projects —
+    visible, honestly framed as a writing sample, competing for exactly as
+    much attention as it has earned. No RESEARCH heading. Two pages of a
+    senior engineer's resume are worth more than that.
   */
   recognition: [
     {
@@ -440,16 +490,6 @@ export const resume = {
       year: '2026',
       detail:
         'Selected to present the 3D motion-analysis work under the Taiwan Excellence banner.',
-    },
-  ] satisfies ResumeRecognition[],
-
-  research: [
-    {
-      title: 'The Transformer Architecture — a mathematical walkthrough',
-      venue: 'Public technical writing · github.com/Ajishpradeep/Case_Study',
-      year: '2024',
-      detail:
-        'One worked example carried from tokenisation and positional encoding through multi-head self-attention to the decoder’s masked attention.',
     },
   ] satisfies ResumeRecognition[],
 
@@ -508,4 +548,12 @@ export const resume = {
         'A parallelised data-preparation pipeline converting PDFs, web pages and source files into clean Markdown for LLM consumption — preserving LaTeX formulae and code blocks, with optional OCR for scientific PDFs. *github.com/Ajishpradeep/data_automation_pipeline*',
     },
   ] satisfies ResumeProject[],
+
+  /*
+    Where the Transformer walkthrough landed after the RESEARCH section was
+    undone — see the comment above `recognition`. One quiet line, not a
+    section: honestly framed as a writing sample, not as a body of research.
+  */
+  technicalWriting:
+    'Also: *The Transformer Architecture — a mathematical walkthrough* — one worked example carried from tokenisation through masked attention. github.com/Ajishpradeep/Case_Study',
 } as const;

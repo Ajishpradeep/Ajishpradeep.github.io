@@ -35,6 +35,7 @@
  * and looked at. `./scripts/render-resume.sh out.pdf` exists for exactly that.
  */
 import { Document, Page, Text, View, StyleSheet, Font, Link } from '@react-pdf/renderer';
+import type { StyleProp } from '@react-pdf/types';
 import { resume } from '../data/resume';
 import { parseEmphasis } from './emphasis';
 
@@ -296,10 +297,15 @@ const styles = StyleSheet.create({
   entryTitle: { fontSize: 10, fontWeight: 600, lineHeight: 1.35, color: C.ink },
   entryMeta: { fontSize: 9.4, lineHeight: 1.4, color: C.accent, marginTop: 0.5 },
   entryDetail: { fontSize: 9.5, lineHeight: 1.45, color: C.inkSoft, marginTop: 1.5 },
+  /* Quiet trailing line — where the Transformer walkthrough landed after the
+     RESEARCH section was undone. Smaller and fainter than an entry, on
+     purpose: a writing sample competing for exactly the attention it earns,
+     not a fourth project. */
+  note: { fontSize: 8.6, lineHeight: 1.4, color: C.inkFaint, marginTop: 5 },
 });
 
 /** Renders `**bold**` / `*italic*` runs as real nested style changes. */
-function Rich({ children, style }: { children: string; style?: object }) {
+function Rich({ children, style }: { children: string; style?: StyleProp }) {
   return (
     <Text style={style}>
       {parseEmphasis(children).map((run, i) => {
@@ -412,24 +418,8 @@ export function ResumePDF() {
           ))}
         </Section>
 
-        {/* Two sections, not one — a self-published writeup doesn't belong
-            filed next to a judged award and a committee-selected conference
-            poster; splitting them says plainly which is which. */}
         <Section title="RECOGNITION">
           {resume.recognition.map((r) => (
-            <View key={r.title} style={styles.entry} wrap={false}>
-              <View style={styles.row}>
-                <Text style={[styles.entryTitle, styles.rowMain]}>{r.title}</Text>
-                <Text style={styles.rowAside}>{r.year}</Text>
-              </View>
-              <Text style={styles.entryMeta}>{r.venue}</Text>
-              {r.detail ? <Rich style={styles.entryDetail}>{r.detail}</Rich> : null}
-            </View>
-          ))}
-        </Section>
-
-        <Section title="RESEARCH">
-          {resume.research.map((r) => (
             <View key={r.title} style={styles.entry} wrap={false}>
               <View style={styles.row}>
                 <Text style={[styles.entryTitle, styles.rowMain]}>{r.title}</Text>
@@ -467,6 +457,9 @@ export function ResumePDF() {
               <Rich style={styles.entryDetail}>{p.description}</Rich>
             </View>
           ))}
+          {resume.technicalWriting ? (
+            <Rich style={styles.note}>{resume.technicalWriting}</Rich>
+          ) : null}
         </Section>
       </Page>
     </Document>

@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build --emptyOutDir",
+    "build": "tsc -b && vite build --emptyOutDir",
     "lint": "eslint src scripts --report-unused-disable-directives --max-warnings 0",
     "resume:pdf": "./scripts/render-resume.sh public/Resume.pdf",
     "preview": "vite preview",
@@ -21,6 +21,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.9.1",
+    "@types/node": "^26.2.0",
     "@types/react": "^18.3.5",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.1",

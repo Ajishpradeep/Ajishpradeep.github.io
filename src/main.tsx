@@ -8,7 +8,9 @@ import './index.css';
 createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <ErrorBoundary>
-      <RouterProvider router={router} />
+      {/* v7_startTransition belongs here, not in createBrowserRouter's
+          options — see the comment in router.tsx for why. */}
+      <RouterProvider router={router} future={{ v7_startTransition: true }} />
     </ErrorBoundary>
   </React.StrictMode>
 );
