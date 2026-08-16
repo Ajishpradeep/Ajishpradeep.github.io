@@ -19,6 +19,8 @@ export default {
         display: ['"Funnel Display"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
         text: ['"Source Serif 4"', 'ui-serif', 'Georgia', 'serif'],
         mono: ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'monospace'],
+        // Scoped to the homepage h1's connective words only — see fonts.css.
+        script: ['"Caveat"', 'cursive'],
       },
       /*
        * Six steps and no more. The page previously carried these four tokens
