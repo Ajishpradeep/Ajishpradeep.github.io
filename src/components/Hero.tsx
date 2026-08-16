@@ -125,13 +125,39 @@ export default function Hero() {
               entrances on one element, and the reveal's `translateY` was
               sliding the hinge up while the hinge was still turning.
             */}
+            {/*
+              "AI" and "mathematics" are the sentence's two terms and stay in
+              Funnel Display caps. "works", "because", "does" are what joins
+              them, so they carry Caveat instead (see fonts.css) — set in
+              natural lowercase, since an all-caps script loses the joins that
+              are the entire point, and with tracking reset to normal, since
+              `mega`'s -0.028em is tuned for extrabold caps and collides
+              script strokes into each other.
+
+              This is five roll units, not two — one `TextRoll` per word — so
+              each can carry its own font class. The `delay` on each is hand-
+              continued from the same 0.045 step the two-clause version used,
+              so the stagger timing is unchanged; only the split is new.
+            */}
             <h1
               id="hero-title"
               className="max-w-[18ch] text-balance font-display text-mega font-extrabold uppercase text-cyan glow-cyan"
             >
-              <TextRoll delay={0.15}>AI works because</TextRoll>{' '}
+              <TextRoll delay={0.15}>AI</TextRoll>{' '}
+              <TextRoll className="font-script font-bold normal-case tracking-normal" delay={0.15 + 1 * 0.045}>
+                works
+              </TextRoll>{' '}
+              <TextRoll className="font-script font-bold normal-case tracking-normal" delay={0.15 + 2 * 0.045}>
+                because
+              </TextRoll>{' '}
               <TextRoll className="text-amber glow-amber" delay={0.15 + 3 * 0.045}>
-                mathematics does.
+                mathematics
+              </TextRoll>{' '}
+              <TextRoll
+                className="text-amber glow-amber font-script font-bold normal-case tracking-normal"
+                delay={0.15 + 4 * 0.045}
+              >
+                does.
               </TextRoll>
             </h1>
 
