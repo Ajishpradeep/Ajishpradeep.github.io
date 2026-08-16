@@ -178,7 +178,21 @@ export const resume = {
     sending, and confirm "Basic" is the right band for Chinese.
   */
   languages: 'English (professional) · Chinese (Basic)',
+  /*
+    ADDED 2026-08-16: the portfolio site itself, on Pradeep's explicit
+    instruction ("add the website link"). Listed first among the links — it's
+    the one destination that carries the full case-study depth (the failure
+    diagnosis, the literature grounding, the numbers with their sourcing)
+    behind every compressed claim on this page; GitHub and LinkedIn are
+    thinner artifacts by comparison. Canonical URL taken from
+    `scripts/postbuild.mjs`'s own ORIGIN constant, not guessed.
+  */
   links: [
+    {
+      label: 'Portfolio',
+      value: 'ajishpradeep.github.io',
+      href: 'https://ajishpradeep.github.io',
+    },
     { label: 'GitHub', value: 'github.com/Ajishpradeep', href: 'https://github.com/Ajishpradeep' },
     {
       label: 'LinkedIn',
@@ -216,9 +230,27 @@ export const resume = {
     "Motion capture" stays cut: in posting language it reads as VFX and
     hardware rather than perception, and leading with "biomechanics" reads as
     sports science and narrows a substrate that is domain-agnostic.
+
+    REWRITTEN 2026-08-16, on Pradeep's explicit instruction: the previous
+    version read as app-store marketing rather than as an account of his own
+    work — "an iOS app used by PGA Tour professionals... on Apple ARM silicon,
+    no cloud round-trip, no footage leaving the handset" is a feature list for
+    the *product*, not a claim about what *he* engineered, and it restated
+    Experience bullet 1's exact 8cm→3cm figure one line below it for no
+    reason — pure duplication, not reinforcement.
+
+    The replacement leads with the contribution instead of the product: the
+    frozen-pathway adapter and the correctness guarantee it buys (bit-identical
+    by construction, verified by weight diff) — a different, non-duplicated
+    fact from the same case study, chosen specifically because it is not
+    already stated verbatim in the bullet immediately below. The retail line
+    keeps its two strongest facts (7,000+ stores, GTC 2025) because those
+    aren't restated elsewhere in the summary/bullet-1 overlap zone the same
+    way — a summary is allowed to name its strongest external validators, that
+    isn't the pattern being corrected here.
   */
   summary:
-    'AI research engineer building 3D human-motion perception that runs entirely **on device**. Led the 3D pose estimation and lifting stack behind an iOS app used by **PGA Tour professionals** — full analysis pipeline on Apple ARM silicon, no cloud round-trip, no footage leaving the handset. Previously led the vision architecture for an open-set retail recognition system running across **7,000+ stores**. Methodology selected for a technical poster at **NVIDIA GTC 2025**.',
+    'AI research engineer specialising in 3D human-motion perception and on-device inference. Architected the 2D-to-3D pose-lifting and club-tracking system behind a markerless motion-capture pipeline — engineering a frozen-pathway adapter that made regression on the general body model structurally impossible rather than merely unlikely, verified **bit-identical** to the base model by weight diff. Previously led the vision architecture for an open-set retail recognition system deployed across **7,000+ stores**, presented as a technical poster at **NVIDIA GTC 2025**.',
 
   /*
     Wording here is matched to the terms real postings use — "3D human pose
@@ -375,6 +407,17 @@ export const resume = {
     says "selected" because NVIDIA's poster call is committee-reviewed against
     technical criteria with an extended abstract required — it is not
     attendance.
+
+    SPLIT 2026-08-16, on Pradeep's explicit instruction: the Transformer
+    walkthrough moved out of `recognition` into its own `research` array,
+    because it is a different category of thing and reads wrong lumped in
+    with the other three entries. The award, the GTC poster, and Taiwan Expo
+    Europe are all third-party judged or selected — someone else decided he
+    belonged there. The Transformer walkthrough is self-published technical
+    writing: real and worth showing, but nobody vetted it, and presenting it
+    next to genuine external recognitions borrows credibility it didn't earn
+    the same way. Two headings now, RECOGNITION and RESEARCH, so each entry
+    sits in the category it actually belongs to.
   */
   recognition: [
     {
@@ -398,6 +441,9 @@ export const resume = {
       detail:
         'Selected to present the 3D motion-analysis work under the Taiwan Excellence banner.',
     },
+  ] satisfies ResumeRecognition[],
+
+  research: [
     {
       title: 'The Transformer Architecture — a mathematical walkthrough',
       venue: 'Public technical writing · github.com/Ajishpradeep/Case_Study',
@@ -425,6 +471,23 @@ export const resume = {
     },
   ] satisfies ResumeEducation[],
 
+  /*
+    EXPANDED 2026-08-16, on Pradeep's explicit instruction, from one project
+    to three. The original one-project decision was a response to a specific
+    problem: his public GitHub has 20 repos, four forks, every one at zero
+    stars, mostly dated exercises — so a second, weaker entry made the strong
+    one look like the exception rather than the norm. That problem doesn't
+    apply here, because Magic Shuffle and the data pipeline aren't weaker —
+    both are 2025/2026 builds with real architectural decisions (a
+    deterministic no-API-key fallback path; parallelised OCR-aware document
+    conversion), verified against each repo's own README the same way
+    CarbonPass was. Three substantial builds reads as a pattern; three builds
+    of uneven caliber would have read as padding, which is what was actually
+    being avoided the first time, not "exactly one project."
+
+    pi_generator stays out — it's the dated exercise the reasoning above was
+    protecting against, not an oversight.
+  */
   projects: [
     {
       name: 'CarbonPass',
@@ -432,22 +495,17 @@ export const resume = {
       description:
         'Local-first vision-language model turning a factory’s photographed paperwork into EU **CBAM** carbon accounting, with MILP production scheduling. Runs on-premise so documents never leave the building. *github.com/Ajishpradeep/CarbonPass*',
     },
-    /*
-      pi_generator was cut here, and the reason is worth keeping. A review of
-      the public GitHub found 20 repositories, four of them forks, every one at
-      zero stars, and mostly dated exercises — so the account a hiring manager
-      opens after reading this CV currently reads as a learner's portfolio
-      rather than as evidence. Against that backdrop, listing a
-      distribution-comparison exercise beside a substantial 2026 build makes
-      the strong one look like the exception. One project that earns the space
-      is worth more than two that average out.
-
-      The real fix is not a CV edit: the highest-value action available to him
-      is publishing a deep technical writeup of the frozen-pathway adapter —
-      roughly 20 hours, no employer permission needed at technique level, and
-      it converts his single strongest claim from assertion into something a
-      reader can check. Raise an invention disclosure first; publishing can
-      destroy patent novelty and that door does not reopen.
-    */
+    {
+      name: 'Magic Shuffle',
+      year: '2026',
+      description:
+        'A context-aware music recommender reading energy, sleep, stress, weather and calendar to choose and explain a track. Every suggestion is verified against Spotify’s catalogue; a deterministic fallback works with **no API keys**. *github.com/Ajishpradeep/Magic-Shuffle*',
+    },
+    {
+      name: 'Data Automation Pipeline',
+      year: '2025',
+      description:
+        'A parallelised data-preparation pipeline converting PDFs, web pages and source files into clean Markdown for LLM consumption — preserving LaTeX formulae and code blocks, with optional OCR for scientific PDFs. *github.com/Ajishpradeep/data_automation_pipeline*',
+    },
   ] satisfies ResumeProject[],
 } as const;

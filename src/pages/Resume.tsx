@@ -305,9 +305,12 @@ export default function Resume() {
         </div>
       </section>
 
+      {/* Two sections, not one — a self-published writeup doesn't belong
+          filed next to a judged award and a committee-selected conference
+          poster; splitting them says plainly which is which. */}
       <section className="border-b border-cyan/15 py-14">
         <div className="shell">
-          <Heading>Recognition &amp; research</Heading>
+          <Heading>Recognition</Heading>
           <ul className="mt-8 grid gap-4 lg:grid-cols-2">
             {resume.recognition.map((r) => (
               <li key={r.title} className="card p-5" data-reveal>
@@ -319,6 +322,34 @@ export default function Resume() {
                     break opportunity and measured 343px min-content against a
                     ~320px content box on a 360px phone — i.e. it would have
                     pushed the card sideways. */}
+                <p className="mt-1.5 break-words font-mono text-micro uppercase tracking-[0.12em] text-amber">
+                  {r.venue}
+                </p>
+                {r.detail && (
+                  <Rich className="mt-3 block text-fine leading-relaxed text-cyan/65 text-pretty">
+                    {r.detail}
+                  </Rich>
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      {/* No `lg:grid-cols-2` here — a single card in a two-column grid leaves
+          the same kind of empty right-hand gap the header block had. One
+          research entry today is a full-width card, not a half-width one
+          beside nothing. */}
+      <section className="border-b border-cyan/15 py-14">
+        <div className="shell">
+          <Heading>Research</Heading>
+          <ul className="mt-8 grid gap-4">
+            {resume.research.map((r) => (
+              <li key={r.title} className="card p-5" data-reveal>
+                <div className="flex items-baseline justify-between gap-4">
+                  <h3 className="font-display text-base font-bold text-cyan">{r.title}</h3>
+                  <span className="shrink-0 font-mono text-micro text-dim">{r.year}</span>
+                </div>
                 <p className="mt-1.5 break-words font-mono text-micro uppercase tracking-[0.12em] text-amber">
                   {r.venue}
                 </p>
