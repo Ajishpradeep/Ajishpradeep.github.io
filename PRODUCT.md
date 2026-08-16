@@ -47,14 +47,13 @@ Based in New Taipei City, Taiwan; open to relocation. Currently at IdeasLab Form
 
 **Hard technical constraints:**
 
-- **Fully static, deployed to GitHub Pages** via `.github/workflows/deploy.yml` on push to `main`. No serverless functions and no runtime secrets. The Netlify config, `netlify/functions/`, and the Gemini-powered terminal are legacy from an earlier version of the site; future work must not reintroduce a runtime backend dependency.
+- **Fully static, deployed to GitHub Pages** via `.github/workflows/deploy.yml` on push to `main`. No serverless functions and no runtime secrets. An earlier version of the site had a Netlify config, `netlify/functions/`, and a Gemini-powered terminal — all since removed; future work must not reintroduce a runtime backend dependency.
 - **No SPA rewrite on Pages** — the build copies `index.html` to `404.html` to serve client routes.
 - **Bilingual EN / zh-TW is future work, not current scope.** Not required now, but design and implementation must not make it impossible: keep copy in `src/data/*.ts`, keep text out of images, and leave layouts tolerant of denser CJK line lengths and different line-break behaviour.
 
 **Content constraints:**
 
-- Copy lives in typed data modules under [src/data/](src/data/) — site, work (case studies), research, impact, lab, about, domains — and is authored, not templated.
-- `script.js` and `style.css` at the repository root are legacy artifacts of the pre-React site and are not loaded by the current build.
+- Copy lives in typed data modules under [src/data/](src/data/) — site, work (case studies), research, impact, lab, about, domains, resume — and is authored, not templated.
 
 ## Brand Commitments
 
