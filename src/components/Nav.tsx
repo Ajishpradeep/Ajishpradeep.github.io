@@ -158,10 +158,8 @@ export default function Nav() {
           {/* The switch that changes the world the rest of this bar is drawn in. */}
           <SwitchMode size={26} className="mr-1.5" />
 
-          <a
-            href={site.resume}
-            target="_blank"
-            rel="noreferrer"
+          <Link
+            to="/resume"
             className="group flex w-[5rem] flex-col items-center gap-1 rounded-sm border border-transparent px-1 py-2 transition-all duration-300 hover:border-cyan/25 hover:bg-panel/50"
           >
             <Download
@@ -172,7 +170,7 @@ export default function Nav() {
             <span className="font-mono text-micro text-dim transition-colors group-hover:text-cyan">
               CV
             </span>
-          </a>
+          </Link>
 
           {/*
             This dispatched a synthetic KeyboardEvent with metaKey:true and let
@@ -302,15 +300,13 @@ export default function Nav() {
               </Link>
             );
           })}
-          <a
-            href={site.resume}
-            target="_blank"
-            rel="noreferrer"
+          <Link
+            to="/resume"
             className="flex min-h-[2.75rem] flex-col items-center justify-center gap-1.5 rounded-sm border border-cyan/30 bg-deep/60 px-1 py-3"
           >
             <Download size={20} strokeWidth={1.7} className="text-amber/80" />
             <span className="font-mono text-micro text-cyan/80">CV</span>
-          </a>
+          </Link>
         </nav>
         </div>
       </div>

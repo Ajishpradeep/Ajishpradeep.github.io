@@ -3,6 +3,7 @@ import App from './App';
 import Home from './pages/Home';
 import About from './pages/About';
 import CaseStudy from './pages/CaseStudy';
+import Resume from './pages/Resume';
 import NotFound from './pages/NotFound';
 
 const router = createBrowserRouter(
@@ -14,6 +15,7 @@ const router = createBrowserRouter(
       children: [
         { index: true, element: <Home /> },
         { path: 'about', element: <About /> },
+        { path: 'resume', element: <Resume /> },
         { path: 'work/:slug', element: <CaseStudy /> },
         { path: '*', element: <NotFound /> },
       ],

@@ -190,9 +190,9 @@ export default function Hero() {
               <a href="#work" className="btn-amber">
                 Read the case studies <ArrowRight size={15} strokeWidth={2.2} />
               </a>
-              <a href={site.resume} target="_blank" rel="noreferrer" className="btn-ghost">
+              <Link to="/resume" className="btn-ghost">
                 <FileText size={15} strokeWidth={2} /> Résumé
-              </a>
+              </Link>
               <Link to="/about" className="btn-ghost">
                 <User size={15} strokeWidth={2} /> About
               </Link>

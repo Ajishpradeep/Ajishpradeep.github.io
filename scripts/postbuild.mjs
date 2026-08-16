@@ -112,6 +112,13 @@ const routes = [
     description:
       'AI Research Engineer in Taiwan working on 3D computer vision, on-device inference and agentic LLM systems. Background, timeline and what I am looking for.',
   },
+  {
+    path: '/resume/',
+    priority: '0.7',
+    title: 'Resume — Pradeep Rajasekar (Ajish Pradeep), AI Research Engineer',
+    description:
+      'Experience, education and skills for Pradeep Rajasekar, AI Research Engineer — on-screen resume with an ATS-friendly PDF download.',
+  },
   ...studies.map((study) => ({
     path: `/work/${study.slug}/`,
     priority: '0.8',
