@@ -139,8 +139,10 @@ write('404.html', shell);
  * - Only required <loc>; <lastmod> optional (Google uses it when accurate)
  * - Google ignores <changefreq> and <priority>, so they are omitted
  * - Text sitemap (.txt) is an officially supported alternate format
- *   (one absolute URL per line) — useful when GSC cannot fetch XML on
- *   github.io hosts
+ *
+ * Files are written to BOTH the site root and /sitemaps/. Google Search
+ * Console often sticks on "Couldn't fetch" for a previously failed root URL
+ * on github.io; a nested path is a fresh URL that forces a new fetch.
  * @see https://developers.google.com/search/docs/crawling-indexing/sitemaps/build-sitemap
  * @see https://www.sitemaps.org/protocol.html
  */
@@ -158,11 +160,15 @@ ${absoluteUrls
   .join('\n')}
 </urlset>
 `;
-write('sitemap.xml', sitemapXml);
 
 const sitemapTxt = `${absoluteUrls.join('\n')}\n`;
-write('sitemap.txt', sitemapTxt);
+
+// Root copies (robots.txt / legacy bookmarks) + nested copies for GSC.
+for (const dir of ['', 'sitemaps/']) {
+  write(`${dir}sitemap.xml`, sitemapXml);
+  write(`${dir}sitemap.txt`, sitemapTxt);
+}
 
 console.log(
-  `postbuild: ${routes.length - 1} route pages + 404.html + sitemap.xml + sitemap.txt (${studies.length} case studies)`,
+  `postbuild: ${routes.length - 1} route pages + 404.html + sitemap.xml/txt at / and /sitemaps/ (${studies.length} case studies)`,
 );
