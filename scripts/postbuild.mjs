@@ -104,24 +104,21 @@ const studies = readCaseStudies();
 const today = new Date().toISOString().slice(0, 10);
 
 const routes = [
-  { path: '/', priority: '1.0' },
+  { path: '/' },
   {
     path: '/about/',
-    priority: '0.9',
     title: 'About — Pradeep Rajasekar (Ajish Pradeep), AI Research Engineer',
     description:
       'AI Research Engineer in Taiwan working on 3D computer vision, on-device inference and agentic LLM systems. Background, timeline and what I am looking for.',
   },
   {
     path: '/resume/',
-    priority: '0.7',
     title: 'Resume — Pradeep Rajasekar (Ajish Pradeep), AI Research Engineer',
     description:
       'Experience, education and skills for Pradeep Rajasekar, AI Research Engineer — on-screen resume with an ATS-friendly PDF download.',
   },
   ...studies.map((study) => ({
     path: `/work/${study.slug}/`,
-    priority: '0.8',
     title: `${study.title} — Pradeep Rajasekar`,
     description: study.teaser,
   })),
@@ -136,22 +133,36 @@ for (const route of routes) {
 // Catch-all for paths that genuinely do not exist.
 write('404.html', shell);
 
-const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+/*
+ * Sitemaps follow Google Search Central + sitemaps.org:
+ * - UTF-8 XML with absolute https URLs
+ * - Only required <loc>; <lastmod> optional (Google uses it when accurate)
+ * - Google ignores <changefreq> and <priority>, so they are omitted
+ * - Text sitemap (.txt) is an officially supported alternate format
+ *   (one absolute URL per line) — useful when GSC cannot fetch XML on
+ *   github.io hosts
+ * @see https://developers.google.com/search/docs/crawling-indexing/sitemaps/build-sitemap
+ * @see https://www.sitemaps.org/protocol.html
+ */
+const absoluteUrls = routes.map((route) => `${ORIGIN}${route.path}`);
+
+const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${routes
+${absoluteUrls
   .map(
-    (route) => `  <url>
-    <loc>${ORIGIN}${route.path}</loc>
+    (url) => `  <url>
+    <loc>${url}</loc>
     <lastmod>${today}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>${route.priority}</priority>
   </url>`,
   )
   .join('\n')}
 </urlset>
 `;
-write('sitemap.xml', sitemap);
+write('sitemap.xml', sitemapXml);
+
+const sitemapTxt = `${absoluteUrls.join('\n')}\n`;
+write('sitemap.txt', sitemapTxt);
 
 console.log(
-  `postbuild: ${routes.length - 1} route pages + 404.html + sitemap.xml (${studies.length} case studies)`,
+  `postbuild: ${routes.length - 1} route pages + 404.html + sitemap.xml + sitemap.txt (${studies.length} case studies)`,
 );

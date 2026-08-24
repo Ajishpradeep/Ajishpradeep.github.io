@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://ajishpradeep.github.io/sitemap.xml
+Sitemap: https://ajishpradeep.github.io/sitemap.txt
