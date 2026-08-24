@@ -1,9 +1,5 @@
 User-agent: *
 Allow: /
 
-# Prefer the nested path in Search Console — root URLs often stick on
-# "Couldn't fetch" after an early failed fetch on github.io.
-Sitemap: https://ajishpradeep.github.io/sitemaps/sitemap.xml
-Sitemap: https://ajishpradeep.github.io/sitemaps/sitemap.txt
 Sitemap: https://ajishpradeep.github.io/sitemap.xml
 Sitemap: https://ajishpradeep.github.io/sitemap.txt
