@@ -1,7 +1,5 @@
 # Product
 
-<!-- impeccable:product-schema 1 -->
-
 ## Platform
 
 web
@@ -59,7 +57,7 @@ Based in New Taipei City, Taiwan; open to relocation. Currently at IdeasLab Form
 
 - **Both names, deliberately.** *Pradeep Rajasekar* is the professional name and leads the site; *Ajish Pradeep* is the handle people search, and it is the GitHub account, the domain (`ajishpradeep.github.io`), and the schema.org `alternateName`. Future work must keep both legible together rather than suppressing either.
 - Voice is first-person, plainly stated, and unhedged — technical claims are made precisely and failures are described directly. Copy in [src/data/about.ts](src/data/about.ts) is the reference for register.
-- Assets: `public/profile_pic.png` (portrait), `public/Resume.pdf`, `public/favicon.svg`.
+- Assets: `public/portrait.jpg` / `public/portrait-sm.jpg` (portrait), `public/Resume.pdf`, `public/favicon.svg`.
 
 ## Evidence on Hand
 
@@ -69,7 +67,7 @@ Real and verified, in the repository:
 - **Impact dossier** — [src/data/impact.ts](src/data/impact.ts): milestones carrying independent public sources, including the TAITRA "Go Healthy with Taiwan" 2025 win (1 of 3 from 638 proposals across 55 countries) and Taiwan Expo Europe 2026 exhibitor listing. Every figure quoted was read from an attached source.
 - **Research** — [src/data/research.ts](src/data/research.ts): NVIDIA GTC 2025 technical poster, MSc thesis on content- and spatial-aware generative inpainting, in-progress KAN inference work.
 - **Lab** — [src/data/lab.ts](src/data/lab.ts): personal repositories verified against each project's own README. Forks, tutorial follow-alongs, and empty repos are deliberately excluded.
-- **Résumé** — `Pradeep_Rajasekar_Resume_Research_Engineering.md` and `public/Resume.pdf`.
+- **Résumé** — [src/data/resume.ts](src/data/resume.ts), rendered on-screen ([src/pages/Resume.tsx](src/pages/Resume.tsx)) and as a client-generated PDF ([src/lib/resumePdf.tsx](src/lib/resumePdf.tsx)); `public/Resume.pdf` ships the pre-rendered download.
 
 **The sourcing rule is binding and generalises beyond the dossier:** no number, award, or affiliation appears without a real source. Where the public record credits an organisation rather than an individual, the personal contribution is stated in a separately labelled field so the two are never blurred. Do not fabricate testimonials, client names, metrics, or endorsements — there are none on hand, and their absence is deliberate.
 

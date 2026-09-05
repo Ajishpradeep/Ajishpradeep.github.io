@@ -31,7 +31,7 @@ it is no longer read by anything.
 ```
 index.html                 document shell, JSON-LD, <noscript> fallback
 scripts/postbuild.mjs      emits a real page per route + 404.html + sitemap.xml
-public/                    Resume.pdf, profile_pic.png, favicon, robots.txt, service-worker tombstone
+public/                    Resume.pdf, portrait.jpg, favicon, robots.txt, service-worker tombstone
 src/
   data/                    all site copy — the source of truth for content
     site.ts                name, role, location, links, headline figures
@@ -40,9 +40,9 @@ src/
     research.ts            papers, posters, in-progress work
     lab.ts                 personal repositories
     about.ts               biography and timeline
-    domains.ts             the four capability areas
+    resume.ts              on-screen and PDF resume content
   components/              section and interactive components
-  pages/                   Home, About, CaseStudy, NotFound
+  pages/                   Home, About, Resume, CaseStudy, NotFound
 ```
 
 **Copy lives in `src/data/`, not in components.** That is deliberate: it keeps the writing
