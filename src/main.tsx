@@ -1,9 +1,9 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import router from './router';
+import router from './app/router';
 import { RouterProvider } from 'react-router-dom';
-import ErrorBoundary from './ErrorBoundary';
-import './index.css';
+import ErrorBoundary from './app/ErrorBoundary';
+import './styles/index.css';
 
 createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

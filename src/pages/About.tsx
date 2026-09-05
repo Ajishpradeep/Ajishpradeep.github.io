@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
-import { about } from '../data/about';
-import { site } from '../data/site';
+import { about } from '@/data/about';
+import { site } from '@/data/site';
 
 export default function About() {
   return (

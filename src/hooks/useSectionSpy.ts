@@ -1,5 +1,5 @@
 import { useSyncExternalStore } from 'react';
-import { sections } from '../data/site';
+import { sections } from '@/data/site';
 
 export type SectionSpy = {
   /** id of the section being read, or '' while above the first one. */

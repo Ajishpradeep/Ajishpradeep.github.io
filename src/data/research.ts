@@ -1,4 +1,4 @@
-import type { PlateKind } from '../components/ResearchPlate';
+import type { PlateKind } from '@/sections/ResearchPlate';
 
 export type Entry = {
   title: string;

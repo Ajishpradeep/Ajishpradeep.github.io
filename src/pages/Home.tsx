@@ -1,11 +1,11 @@
-import Hero from '../components/Hero';
-import WorkConsole from '../components/WorkConsole';
-import Impact from '../components/Impact';
-import Approach from '../components/Approach';
-import Capabilities from '../components/Capabilities';
-import Research from '../components/Research';
-import Lab from '../components/Lab';
-import Contact from '../components/Contact';
+import Hero from '@/sections/Hero';
+import WorkConsole from '@/sections/WorkConsole';
+import Impact from '@/sections/Impact';
+import Approach from '@/sections/Approach';
+import Capabilities from '@/sections/Capabilities';
+import Research from '@/sections/Research';
+import Lab from '@/sections/Lab';
+import Contact from '@/sections/Contact';
 
 /**
  * Research sits above Lab: peer-reviewed and conference work should outrank

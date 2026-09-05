@@ -9,7 +9,7 @@ A static React site. No backend, no runtime secrets, no third-party runtime depe
 
 - **React 18 + TypeScript**, routed with React Router
 - **Vite** for build
-- **Tailwind CSS** over a small set of CSS custom properties in `src/index.css`
+- **Tailwind CSS** over a small set of CSS custom properties in `src/styles/index.css`
 - **lucide-react** for icons
 - Deployed to **GitHub Pages** by `.github/workflows/deploy.yml` on push to `main`
 
@@ -33,6 +33,12 @@ index.html                 document shell, JSON-LD, <noscript> fallback
 scripts/postbuild.mjs      emits a real page per route + 404.html + sitemap.xml
 public/                    Resume.pdf, portrait.jpg, favicon, robots.txt, service-worker tombstone
 src/
+  app/                     composition root — App shell, router, error boundary
+  pages/                   route-level components: Home, About, Resume, CaseStudy, NotFound
+  sections/                page-section components, each used on exactly one page
+  shell/                   persistent site-wide UI mounted in App.tsx: Nav, Footer, Dock,
+                           CommandDeck, SectionRail — not page content
+  motion/                  generic, content-agnostic animation primitives
   data/                    all site copy — the source of truth for content
     site.ts                name, role, location, links, headline figures
     work.ts                case studies (the long-form writing)
@@ -41,12 +47,32 @@ src/
     lab.ts                 personal repositories
     about.ts               biography and timeline
     resume.ts              on-screen and PDF resume content
-  components/              section and interactive components
-  pages/                   Home, About, Resume, CaseStudy, NotFound
+  hooks/                   shared React hooks
+  lib/                     shared utilities (cn, motion, variants, emphasis)
+    resume/                resume-specific PDF generation (resumePdf.tsx, downloadResumePdf.ts)
+  styles/                  index.css, fonts.css
+  main.tsx                 Vite entry point
 ```
+
+Cross-folder imports use the `@/` alias (`@/data/site`, `@/sections/Hero`, …), configured in
+`vite.config.ts` and `tsconfig.app.json`. Only same-folder sibling imports stay relative
+(`./NotFound` from another file in `pages/`).
 
 **Copy lives in `src/data/`, not in components.** That is deliberate: it keeps the writing
 reviewable in one place and keeps a future zh-TW translation possible.
+
+## Adding new content later
+
+This layout is meant to take two kinds of future additions without restructuring again:
+
+- **A blog.** Add a `src/content/` directory for the post source (Markdown/MDX), a
+  `src/pages/Blog.tsx` (index) and `src/pages/BlogPost.tsx` (single post) alongside the existing
+  pages, and route them in `src/app/router.tsx`. Reuse `shell/` for nav/footer and `lib/` for
+  shared utilities rather than duplicating them.
+- **A standalone interactive app** (a personal tool, not a portfolio section). Give it its own
+  top-level `src/apps/<name>/` directory rather than folding it into `sections/`, and route to it
+  lazily (`React.lazy`) so its bundle doesn't ship on every other page — the pattern the
+  `downloadResumePdf` chunk already uses via dynamic `import()`.
 
 ## Content rules
 

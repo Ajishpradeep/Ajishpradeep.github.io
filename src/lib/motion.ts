@@ -6,8 +6,7 @@ import type { Transition } from 'motion/react';
  * The site already had one easing curve — `cubic-bezier(0.16, 1, 0.3, 1)`, an
  * exponential ease-out — used for every CSS transition on the page. Springs
  * introduced by `motion` have to sound like that curve or the site acquires two
- * motion accents, which is the same defect as the two h2 registers DESIGN.md
- * records fixing.
+ * motion accents — the same defect as having two h2 registers on the page.
  *
  * So: confident arrival, no bounce, exit faster than entrance. `bounce` is
  * zero or near it everywhere except `press`, where a control being struck is

@@ -1,4 +1,4 @@
-import type { VisualKind } from '../components/CaseVisual';
+import type { VisualKind } from '@/sections/CaseVisual';
 
 export type Metric = { value: string; label: string };
 

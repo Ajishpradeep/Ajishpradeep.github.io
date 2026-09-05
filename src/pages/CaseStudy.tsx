@@ -1,5 +1,5 @@
 import { Link, useParams } from 'react-router-dom';
-import { byslug, work } from '../data/work';
+import { byslug, work } from '@/data/work';
 import NotFound from './NotFound';
 
 export default function CaseStudy() {

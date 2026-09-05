@@ -1,11 +1,11 @@
 import { useCallback, useState } from 'react';
 import { Download, ArrowUpRight, Check } from 'lucide-react';
-import { resume } from '../data/resume';
-import { parseEmphasis } from '../lib/emphasis';
+import { resume } from '@/data/resume';
+import { parseEmphasis } from '@/lib/emphasis';
 
 /**
  * The on-screen resume. Renders from `src/data/resume.ts` — the same content,
- * in the same order, as the PDF at `src/lib/resumePdf.tsx`.
+ * in the same order, as the PDF at `src/lib/resume/resumePdf.tsx`.
  *
  * The two surfaces are deliberately *not* the same design, and that is the
  * point rather than an inconsistency. The PDF has to survive an ATS parser and
@@ -78,7 +78,7 @@ export default function Resume() {
   const download = useCallback(async () => {
     setState('working');
     try {
-      const { buildResumePdfUrl } = await import('../lib/downloadResumePdf');
+      const { buildResumePdfUrl } = await import('@/lib/resume/downloadResumePdf');
       const url = await buildResumePdfUrl();
       const a = document.createElement('a');
       a.href = url;

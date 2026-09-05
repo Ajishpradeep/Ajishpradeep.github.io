@@ -26,7 +26,7 @@ export const RISE: Variants = {
 /**
  * Stagger container. Children opt in with `RISE_ITEM`.
  *
- * 0.06s a step: DESIGN.md's rule is one authored moment per surface, and a
+ * 0.06s a step: the rule is one authored moment per surface, and a
  * stagger that takes a second to clear stops being an entrance and becomes a
  * queue the reader waits in.
  */
