@@ -87,19 +87,21 @@ export default function TextRoll({
     by === 'word'
       ? children.split(/(\s+)/).filter((u) => u.length > 0)
       : children.split('');
+  const indexedUnits = units.map((unit, k) => ({
+    unit,
+    k,
+    index: /^\s+$/.test(unit) ? null : units.slice(0, k).filter((u) => !/^\s+$/.test(u)).length,
+  }));
 
   const base: Transition = transition ?? { ease: [0.16, 1, 0.3, 1], duration };
-
-  let index = -1;
 
   return (
     <span className={className}>
       <span aria-hidden className="select-none">
-        {units.map((unit, k) => {
+        {indexedUnits.map(({ unit, k, index }) => {
           // Whitespace is layout, not a unit: rolling it produces a gap that
           // opens and closes and makes the line breathe in and out.
-          if (/^\s+$/.test(unit)) return <span key={k}>{unit}</span>;
-          index += 1;
+          if (index === null) return <span key={k}>{unit}</span>;
           const at = delay + index * step;
 
           return (

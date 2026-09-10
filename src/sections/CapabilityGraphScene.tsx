@@ -93,11 +93,14 @@ function GraphContent({
   const origin = useMemo(() => new THREE.Vector3(0, 0, 0), []);
 
   const litRef = useRef(lit);
-  litRef.current = lit;
   const halfLitRef = useRef(halfLit);
-  halfLitRef.current = halfLit;
   const pointingRef = useRef(pointing);
-  pointingRef.current = pointing;
+
+  useEffect(() => {
+    litRef.current = lit;
+    halfLitRef.current = halfLit;
+    pointingRef.current = pointing;
+  }, [halfLit, lit, pointing]);
 
   const targetFor = (n: GraphNode) =>
     n.kind === 'core' || litRef.current.has(n.id) ? 1 : halfLitRef.current.has(n.id) ? 0.45 : 0;

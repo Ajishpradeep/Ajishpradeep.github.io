@@ -61,7 +61,10 @@ export default function Nav() {
   */
   const { active } = useSectionSpy();
 
-  useEffect(() => setOpen(false), [pathname, hash]);
+  useEffect(() => {
+    const id = window.setTimeout(() => setOpen(false), 0);
+    return () => window.clearTimeout(id);
+  }, [pathname, hash]);
 
   const isOn = (it: (typeof items)[number]) =>
     it.href === '/about' ? pathname === '/about' : pathname === '/' && active === it.id;

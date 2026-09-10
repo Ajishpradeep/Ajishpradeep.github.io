@@ -90,6 +90,17 @@ function pageFor(shell, { path, title, description }) {
     .replace(/(<meta\s+property="og:url"\s+content=)"[^"]*"/, `$1"${url}"`);
 }
 
+function noIndex(page) {
+  if (/<meta\s+name="robots"/.test(page)) {
+    return page.replace(/(<meta\s+name="robots"\s+content=)"[^"]*"/, '$1"noindex"');
+  }
+
+  return page.replace(
+    /(<link\s+rel="canonical"\s+href="[^"]*"\s*\/>)/,
+    '$1\n    <meta name="robots" content="noindex" />',
+  );
+}
+
 function escapeHtml(value) {
   return value
     .replace(/&/g, '&amp;')
@@ -172,7 +183,16 @@ for (const route of routes) {
 }
 
 // Catch-all for paths that genuinely do not exist.
-write('404.html', shell);
+write(
+  '404.html',
+  noIndex(
+    pageFor(shell, {
+      path: '/404/',
+      title: 'Not found — Pradeep Rajasekar',
+      description: 'This page does not exist.',
+    }),
+  ),
+);
 
 /*
  * Sitemaps follow Google Search Central + sitemaps.org:

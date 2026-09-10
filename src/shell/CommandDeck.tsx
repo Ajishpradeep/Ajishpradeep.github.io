@@ -234,8 +234,6 @@ export default function CommandDeck() {
     };
   }, [open]);
 
-  useEffect(() => setSel(0), [q]);
-
   if (!open) return null;
 
   const onKeyDown = (e: React.KeyboardEvent) => {
@@ -275,7 +273,10 @@ export default function CommandDeck() {
           <input
             ref={inputRef}
             value={q}
-            onChange={(e) => setQ(e.target.value)}
+            onChange={(e) => {
+              setQ(e.target.value);
+              setSel(0);
+            }}
             onKeyDown={onKeyDown}
             placeholder="type a command…"
             aria-label="Command input"

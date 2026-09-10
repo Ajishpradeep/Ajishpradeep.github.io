@@ -98,9 +98,10 @@ yarn-error.log*
 .DS_Store
 Thumbs.db
 
-# Internal reference material — proprietary, must not be published
+# Internal reference material and local assistant tooling must not be published.
 project_docs/
 .claude/*
-.github/*
+.github/hooks/
+.github/skills/
 # Wrangler
 .wrangler/

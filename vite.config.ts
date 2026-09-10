@@ -9,27 +9,21 @@ export default defineConfig({
     outDir: 'dist',
     assetsDir: 'assets',
     emptyOutDir: true,
-    sourcemap: true,
     rollupOptions: {
       output: {
-        manualChunks: {
-          vendor: ['react', 'react-dom', 'react-router-dom'],
-          /*
-            Its own chunk, not folded into `vendor` and not left in the app
-            bundle. It is ~44KB gzipped and it changes on a completely
-            different clock from the copy in `src` — a wording fix in
-            `work.ts` should not make a returning visitor re-download the
-            animation runtime, and a motion upgrade should not invalidate
-            React.
-          */
-          motion: ['motion'],
-          /*
-            The capability graph is the only consumer of the three.js stack,
-            it's lazy-loaded (see CapabilityGraph.tsx), and it's real weight
-            (~150KB+ gzip) — its own chunk so a copy or theme change doesn't
-            force a re-download of WebGL machinery, and vice versa.
-          */
-          three: ['three', '@react-three/fiber', '@react-three/drei'],
+        manualChunks(id) {
+          if (!id.includes('/node_modules/')) return;
+          if (/[\\/]node_modules[\\/](react|react-dom|react-router|react-router-dom)[\\/]/.test(id)) {
+            return 'vendor';
+          }
+          if (/[\\/]node_modules[\\/]motion[\\/]/.test(id)) {
+            return 'motion';
+          }
+          if (
+            /[\\/]node_modules[\\/](three|@react-three[\\/]fiber|@react-three[\\/]drei)[\\/]/.test(id)
+          ) {
+            return 'three';
+          }
         },
       },
     },
