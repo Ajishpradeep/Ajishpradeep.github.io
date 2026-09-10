@@ -16,6 +16,7 @@ mkdir -p "$TMP"
 npx esbuild "$ROOT/scripts/render-resume.tsx" \
   --bundle --platform=node --format=esm --packages=external \
   --jsx=automatic --loader:.tsx=tsx \
+  --alias:@="$ROOT/src" \
   --outfile="$TMP/render.mjs" --log-level=warning
 
 node "$TMP/render.mjs" "$OUT"

@@ -64,30 +64,6 @@ Cross-folder imports use the `@/` alias (`@/data/site`, `@/sections/Hero`, …),
 **Copy lives in `src/data/`, not in components.** That is deliberate: it keeps the writing
 reviewable in one place and keeps a future zh-TW translation possible.
 
-## Adding new content later
-
-This layout is meant to take two kinds of future additions without restructuring again:
-
-- **A blog.** Add a `src/content/` directory for the post source (Markdown/MDX), a
-  `src/pages/Blog.tsx` (index) and `src/pages/BlogPost.tsx` (single post) alongside the existing
-  pages, and route them in `src/app/router.tsx`. Reuse `shell/` for nav/footer and `lib/` for
-  shared utilities rather than duplicating them.
-- **A standalone interactive app** (a personal tool, not a portfolio section). Give it its own
-  top-level `src/apps/<name>/` directory rather than folding it into `sections/`, and route to it
-  lazily (`React.lazy`) so its bundle doesn't ship on every other page — the pattern the
-  `downloadResumePdf` chunk already uses via dynamic `import()`.
-
-## Content rules
-
-Two rules govern what may appear on this site:
-
-1. **Every claim carries its source.** No figure, award, or affiliation appears without a real
-   reference. `src/data/impact.ts` keeps the externally corroborated record separate from personal
-   account, and labels which is which — the public record credits organisations, and this site does
-   not blur that into individual credit.
-2. **Nothing is fabricated.** There are no testimonials, client names, or invented metrics, and
-   their absence is intentional.
-
 ## Hosting, routing and search
 
 The site is an assets-only Cloudflare Worker: no server code, static requests are free and
