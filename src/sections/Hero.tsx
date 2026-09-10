@@ -63,24 +63,9 @@ export default function Hero() {
         whose subject is measuring a body in three dimensions. The hero has one
         authored moment now and it is the instrument in the right column.
       */}
-      <div className="grid-veil absolute inset-0" />
 
       <div className="shell relative pb-4 pt-6 lg:pt-8">
-        {/*
-          `items-center`, not `items-start`. This was tried once before and
-          reverted: at the previous, longer headline it pushed the CTA to 3px
-          of clearance above the fold at 885px — the same regression
-          fixed once already, not worth trading a
-          visible gap for. The headline is three words now ("It's
-          mathematics."), the text column is ~165px shorter as a direct
-          result, and the same measurement redone at the same 885px height
-          puts the CTA at 722px — 163px of clearance, not 3. Centering splits
-          the graph card's remaining height surplus above and below the text
-          instead of leaving it as one gap between the hero and Selected
-          systems. Re-measure this at the CTA's own position before reverting
-          it again; the number that mattered moved.
-        */}
-        <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12">
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-12">
           {/* LEFT — the claim, the person, the numbers, the way in */}
           <div className="flex flex-col lg:col-span-7">
             {/*
@@ -141,7 +126,7 @@ export default function Hero() {
             */}
             <h1
               id="hero-title"
-              className="max-w-[18ch] text-balance font-display text-mega font-extrabold uppercase text-cyan glow-cyan"
+              className="max-w-[18ch] text-balance font-display text-mega font-extrabold uppercase text-cyan"
             >
               <TextRoll delay={0.15}>AI</TextRoll>{' '}
               <TextRoll className="font-script font-bold normal-case tracking-normal" delay={0.15 + 1 * 0.045}>
@@ -150,11 +135,11 @@ export default function Hero() {
               <TextRoll className="font-script font-bold normal-case tracking-normal" delay={0.15 + 2 * 0.045}>
                 because
               </TextRoll>{' '}
-              <TextRoll className="text-amber glow-amber" delay={0.15 + 3 * 0.045}>
+              <TextRoll className="text-amber" delay={0.15 + 3 * 0.045}>
                 mathematics
               </TextRoll>{' '}
               <TextRoll
-                className="text-amber glow-amber font-script font-bold normal-case tracking-normal"
+                className="text-amber font-script font-bold normal-case tracking-normal"
                 delay={0.15 + 4 * 0.045}
               >
                 does.
@@ -255,11 +240,12 @@ export default function Hero() {
             expert in". The graph does that in one picture. The instrument now
             sits in Method, next to the finding it dramatises.
           */}
-          <div
-            className="lg:col-span-5"
-            data-reveal
-            style={{ '--reveal-delay': '200ms' } as React.CSSProperties}
-          >
+          {/*
+            No `data-reveal` on this column — the graph is meant to read as
+            already part of the page, not something that fades in on load,
+            so the whole column (graph and card both) opts out of the reveal.
+          */}
+          <div className="lg:col-span-5">
             <CapabilityGraph />
           </div>
         </div>

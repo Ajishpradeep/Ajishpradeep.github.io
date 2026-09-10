@@ -5,9 +5,9 @@ export default function NotFound() {
     <section className="relative flex min-h-[80svh] items-center overflow-hidden pt-24">
       <div className="shell relative">
         <p className="tag text-signal flicker">
-          <span className="bracket">signal lost · 404</span>
+          signal lost · 404
         </p>
-        <h1 className="mt-7 max-w-[18ch] font-display text-mega font-extrabold uppercase leading-[1.02] text-cyan glow-cyan">
+        <h1 className="mt-7 max-w-[18ch] font-display text-mega font-extrabold uppercase leading-[1.02] text-cyan">
           No route
           <br />
           <span className="text-amber">to that page</span>

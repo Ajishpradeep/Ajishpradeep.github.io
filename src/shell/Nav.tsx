@@ -1,16 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import {
-  Layers,
-  Trophy,
-  Compass,
-  FlaskConical,
-  BookOpen,
-  User,
-  Mail,
-  Download,
-  Command,
-} from 'lucide-react';
+import { Download, Command } from 'lucide-react';
 import { motion } from 'motion/react';
 import { site, nav as items } from '@/data/site';
 import SwitchMode from '@/motion/SwitchMode';
@@ -35,16 +25,6 @@ const isMac =
 
 /** Both the header button and the command deck itself listen for this. */
 export const OPEN_DECK = 'commanddeck:open';
-
-const navIcon = {
-  work: Layers,
-  impact: Trophy,
-  method: Compass,
-  research: BookOpen,
-  lab: FlaskConical,
-  contact: Mail,
-  about: User,
-} as const;
 
 export default function Nav() {
   const [open, setOpen] = useState(false);
@@ -103,73 +83,44 @@ export default function Nav() {
           </span>
         </Link>
 
-        {/* icon tiles */}
-        <nav aria-label="Sections" className="hidden items-center gap-1.5 lg:flex">
+        {/* plain text links */}
+        <nav aria-label="Sections" className="hidden items-center gap-6 lg:flex">
           {items.map((it) => {
-            const Icon = navIcon[it.id];
             const on = isOn(it);
             return (
               <Link
                 key={it.href}
                 to={it.href}
                 aria-current={on ? 'page' : undefined}
-                className={`group relative flex w-[5rem] flex-col items-center gap-1 rounded-sm border px-1 py-2 transition-all duration-300 ${
-                  on
-                    ? 'border-amber/60 bg-amber/12'
-                    : 'border-transparent hover:border-cyan/25 hover:bg-panel/50'
+                className={`relative py-2 font-mono text-fine transition-colors duration-300 ${
+                  on ? 'text-amber' : 'text-dim hover:text-cyan'
                 }`}
               >
-                <Icon
-                  size={20}
-                  strokeWidth={1.7}
-                  className={`transition-all duration-300 ${
-                    on ? 'text-amber' : 'text-cyan/70 group-hover:-translate-y-0.5 group-hover:text-amber'
-                  }`}
-                />
-                <span
-                  className={`font-mono text-micro tracking-[0.02em] transition-colors duration-300 ${
-                    on ? 'text-amber' : 'text-dim group-hover:text-cyan'
-                  }`}
-                >
-                  {it.label}
-                </span>
-                {/*
-                  The same travelling marker as the work console's rail and the
-                  dock's dot. It used to blink out under one tile and in under
-                  the next, which on a bar of seven tiles reads as a redraw; it
-                  slides now, so the header reports the reader's progress
-                  through the document as a movement rather than as a series of
-                  unrelated states.
-                */}
+                {it.label}
+                {/* The same travelling marker as the work console's tab rail. */}
                 {on && (
                   <motion.span
                     layoutId="nav-marker"
                     transition={springOr(still, SPRING.marker)}
                     aria-hidden
-                    className="absolute inset-x-3 -bottom-px h-0.5 rounded-full bg-amber"
+                    className="absolute inset-x-0 -bottom-px h-0.5 rounded-full bg-amber"
                   />
                 )}
               </Link>
             );
           })}
 
-          <span className="mx-1.5 h-8 w-px bg-cyan/15" />
+          <span className="h-5 w-px bg-cyan/15" />
 
           {/* The switch that changes the world the rest of this bar is drawn in. */}
-          <SwitchMode size={26} className="mr-1.5" />
+          <SwitchMode size={24} />
 
           <Link
             to="/resume"
-            className="group flex w-[5rem] flex-col items-center gap-1 rounded-sm border border-transparent px-1 py-2 transition-all duration-300 hover:border-cyan/25 hover:bg-panel/50"
+            className="flex items-center gap-1.5 font-mono text-fine text-dim transition-colors duration-300 hover:text-amber"
           >
-            <Download
-              size={20}
-              strokeWidth={1.7}
-              className="text-cyan/70 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:text-amber"
-            />
-            <span className="font-mono text-micro text-dim transition-colors group-hover:text-cyan">
-              CV
-            </span>
+            <Download size={15} strokeWidth={1.8} />
+            CV
           </Link>
 
           {/*
@@ -182,16 +133,10 @@ export default function Nav() {
             type="button"
             onClick={() => window.dispatchEvent(new CustomEvent(OPEN_DECK))}
             aria-label="Open command deck"
-            className="group flex w-[5rem] flex-col items-center gap-1 rounded-sm border border-cyan/25 px-1 py-2 transition-all duration-300 hover:border-amber hover:bg-amber/10"
+            className="flex items-center gap-1.5 rounded-sm border border-cyan/25 px-2.5 py-1.5 font-mono text-fine text-dim transition-colors duration-300 hover:border-amber hover:text-amber"
           >
-            <Command
-              size={20}
-              strokeWidth={1.7}
-              className="text-cyan/70 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:text-amber"
-            />
-            <span className="font-mono text-micro text-dim transition-colors group-hover:text-amber">
-              {isMac ? '⌘K' : 'Ctrl K'}
-            </span>
+            <Command size={14} strokeWidth={1.8} />
+            {isMac ? '⌘K' : 'Ctrl K'}
           </button>
         </nav>
 
@@ -260,9 +205,8 @@ export default function Nav() {
           visible while closed.
         */}
         <div className="overflow-hidden">
-        <nav aria-label="Sections" className="shell grid grid-cols-4 gap-2 py-4">
+        <nav aria-label="Sections" className="shell grid grid-cols-2 gap-2 py-4">
           {items.map((it, idx) => {
-            const Icon = navIcon[it.id];
             const on = isOn(it);
             return (
               <Link
@@ -270,42 +214,19 @@ export default function Nav() {
                 to={it.href}
                 data-autofocus={idx === 0 ? '' : undefined}
                 aria-current={on ? 'page' : undefined}
-                className={`flex min-h-[2.75rem] flex-col items-center justify-center gap-1.5 rounded-sm border px-1 py-3 ${
-                  on ? 'border-amber/60 bg-amber/12' : 'border-cyan/30 bg-deep/60'
+                className={`flex min-h-[2.75rem] items-center rounded-sm border px-3 font-mono text-fine ${
+                  on ? 'border-amber/60 bg-amber/12 text-amber' : 'border-cyan/30 bg-deep/60 text-cyan/80'
                 }`}
               >
-                <Icon
-                  size={20}
-                  strokeWidth={1.7}
-                  className={on ? 'text-amber' : 'text-amber/80'}
-                />
-                {/*
-                  `w-full`, and this is the actual fix — `min-w-0` alone did
-                  nothing here. The container is `items-center`, and a centred
-                  flex item is sized to its own content and never stretched, so
-                  the span was rendering at "Research"'s natural one-line width
-                  (74px) regardless of how small its *allowed minimum* was —
-                  there was no force making it any narrower. `min-width:0` only
-                  raises the ceiling on how far something CAN shrink; it does
-                  not shrink it. `w-full` gives the span the container's actual
-                  width to wrap against, and `break-words` is what lets it
-                  break the one long word once it has that width to break
-                  inside of.
-                */}
-                <span
-                  className={`w-full break-words text-center font-mono text-micro ${on ? 'text-amber' : 'text-cyan/80'}`}
-                >
-                  {it.label}
-                </span>
+                {it.label}
               </Link>
             );
           })}
           <Link
             to="/resume"
-            className="flex min-h-[2.75rem] flex-col items-center justify-center gap-1.5 rounded-sm border border-cyan/30 bg-deep/60 px-1 py-3"
+            className="flex min-h-[2.75rem] items-center gap-2 rounded-sm border border-cyan/30 bg-deep/60 px-3 font-mono text-fine text-cyan/80"
           >
-            <Download size={20} strokeWidth={1.7} className="text-amber/80" />
-            <span className="font-mono text-micro text-cyan/80">CV</span>
+            <Download size={16} strokeWidth={1.8} /> CV
           </Link>
         </nav>
         </div>

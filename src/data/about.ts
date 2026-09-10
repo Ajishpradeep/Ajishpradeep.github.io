@@ -16,7 +16,7 @@ export const about = {
         'Led R&D of the 2D-to-3D pose lifting system behind a markerless golf-swing analysis app that runs its whole pipeline on the phone.',
         'Reduced mean per-joint error 8cm → 3cm, pelvis-relative; +30% reconstruction fidelity under occlusion and fast motion.',
         'Deployed to Apple ARM silicon via CoreML with no cloud round-trip and no footage leaving the device, used by PGA professionals.',
-        'Architecting a domain-grounded agentic LLM coaching system with deterministic scoring and citable output.',
+        'Architecting an LLM coaching system with deterministic scoring and citable output.',
         'Authored the organisation\'s AI coding agent rules, skills and hooks; mentor the engineering team on AI-assisted development.',
         'Technical lead on the proposal that won the TAITRA "Go Healthy Taiwan" award; selected to represent engineering at Taiwan Expo Europe.',
       ],

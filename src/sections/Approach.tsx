@@ -187,7 +187,7 @@ export default function Approach() {
           >
             Method
           </h2>
-          <p className="tag-sm text-dim">Six findings · from being wrong measurably</p>
+          <p className="tag-sm text-dim">What being wrong, measurably, actually taught</p>
         </div>
 
         {/*

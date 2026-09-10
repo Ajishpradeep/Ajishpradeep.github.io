@@ -6,13 +6,12 @@ export default function About() {
   return (
     <>
       <header className="relative overflow-hidden border-b border-cyan/15 pt-[5.5rem]">
-        <div className="grid-veil absolute inset-0" />
         <div className="shell relative py-16">
           {/* 24ch: 16ch balanced "I work on the part of AI that has to be
               true." across three lines; this is the narrowest measure
               `text-balance` settles it into two instead. */}
           <h1
-            className="max-w-[24ch] font-display text-mega font-extrabold uppercase leading-[1.02] text-cyan glow-cyan text-balance"
+            className="max-w-[24ch] font-display text-mega font-extrabold uppercase leading-[1.02] text-cyan text-balance"
             data-reveal
             style={{ '--reveal-delay': '60ms' } as React.CSSProperties}
           >
@@ -24,7 +23,7 @@ export default function About() {
       <section className="border-b border-cyan/15 py-16">
         <div className="shell grid gap-10 lg:grid-cols-12 lg:gap-10">
           <div className="lg:col-span-4" data-reveal>
-            <div className="hud hud-amber relative overflow-hidden p-2 lg:sticky lg:top-28">
+            <div className="card overflow-hidden p-0 lg:sticky lg:top-28">
               <img
                 src={site.portrait}
                 alt={`${site.name}, AI Research Engineer`}
@@ -34,18 +33,6 @@ export default function About() {
                 className="aspect-[4/5] w-full object-cover"
                 style={{ filter: 'saturate(0.55) contrast(1.08)' }}
               />
-              <div
-                className="pointer-events-none absolute inset-0 mix-blend-color"
-                style={{ background: 'rgb(var(--cyan) / 0.14)' }}
-              />
-              <div className="absolute inset-x-2 bottom-2 flex items-center justify-between bg-void/80 px-3 py-1.5">
-                <span className="font-mono text-micro uppercase tracking-[0.14em] text-amber">
-                  id · pr
-                </span>
-                <span className="font-mono text-micro uppercase tracking-[0.14em] text-dim">
-                  taiwan
-                </span>
-              </div>
             </div>
 
             <dl className="mt-5 space-y-2.5">
@@ -85,17 +72,17 @@ export default function About() {
         <div className="shell">
           <div className="flex items-end justify-between gap-6 border-b border-cyan/15 pb-5">
             <h2 className="font-display text-headline font-extrabold uppercase text-cyan" data-reveal>
-              <span className="text-amber">[</span>Trajectory<span className="text-amber">]</span>
+              Trajectory
             </h2>
           </div>
 
           <ol className="mt-8">
-            {about.timeline.map((t, i) => (
+            {about.timeline.map((t) => (
               <li key={t.year + t.role} className="border-b border-cyan/20 py-8" data-reveal>
                 <div className="grid gap-5 lg:grid-cols-12 lg:gap-10">
                   <div className="lg:col-span-3">
                     <p className="font-mono text-micro uppercase tracking-[0.14em] text-amber">
-                      ·{String(i + 1).padStart(2, '0')}· {t.year}
+                      {t.year}
                     </p>
                   </div>
                   <div className="lg:col-span-9">
@@ -126,7 +113,7 @@ export default function About() {
       <section className="py-16">
         <div className="shell grid gap-8 lg:grid-cols-12 lg:gap-10">
           <p className="tag text-amber lg:col-span-3" data-reveal>
-            <span className="bracket">{about.open.heading}</span>
+            {about.open.heading}
           </p>
           <div className="lg:col-span-9">
             <h2 className="max-w-[52ch] text-balance font-display text-headline font-extrabold uppercase text-cyan" data-reveal>

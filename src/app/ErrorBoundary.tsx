@@ -29,7 +29,7 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
         <section className="relative flex min-h-screen items-center overflow-hidden bg-void pt-24">
           <div className="shell relative">
             <p className="tag text-signal">
-              <span className="bracket">interface fault</span>
+              interface fault
             </p>
             <h1 className="mt-7 max-w-[18ch] font-display text-headline font-extrabold uppercase leading-[1.02] text-cyan">
               This page stopped

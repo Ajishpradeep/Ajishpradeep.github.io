@@ -241,9 +241,9 @@ export default function Impact() {
             className="font-display text-headline font-extrabold uppercase text-cyan"
             data-reveal
           >
-            Impact dossier
+            Impact
           </h2>
-          <p className="tag-sm text-dim">Externally corroborated · sources attached</p>
+          <p className="tag-sm text-dim">Sourced, not just claimed</p>
         </div>
 
         {/*

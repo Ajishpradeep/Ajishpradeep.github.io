@@ -19,9 +19,10 @@ import { springOr, SPRING } from '@/lib/motion';
   the less transferable, which is exactly why the base is the part that moved
   with him.
 
-  The isometric skew is 12°, which is enough to read as a solid and not enough
-  to make the labels a rhombus. Labels are HTML on top, at the site's own sizes,
-  because the viewBox scales and 14px does not.
+  Flat rectangles, not an isometric skew — the fake-3D "tech stack" illustration
+  is a stock SaaS-marketing shape, and the ordering argument reads just as
+  clearly as a plain stratigraphic section. Labels are HTML on top, at the
+  site's own sizes, because the viewBox scales and 14px does not.
 */
 
 type Layer = {
@@ -116,29 +117,20 @@ export default function CapabilityStack({
               style={{ cursor: 'pointer' }}
               onClick={() => onSelect(i)}
             >
-              {/* the slab's top face — a parallelogram, skewed right */}
-              <motion.path
-                d={`M ${x + 14} ${y} L ${x + w} ${y} L ${x + w - 14} ${y + 12} L ${x} ${y + 12} Z`}
+              <motion.rect
+                x={x}
+                y={y}
+                width={w}
+                height={H}
+                rx="2"
                 animate={{
-                  fill: on ? 'rgb(var(--amber) / 0.28)' : 'rgb(var(--cyan) / 0.1)',
+                  fill: on ? 'rgb(var(--amber) / 0.16)' : 'rgb(var(--cyan) / 0.06)',
                 }}
                 transition={t}
                 stroke={on ? 'rgb(var(--amber))' : 'rgb(var(--cyan))'}
-                strokeOpacity={on ? 0.9 : 0.35}
+                strokeOpacity={on ? 0.9 : 0.32}
                 strokeWidth="0.9"
               />
-              {/* the front face */}
-              <motion.path
-                d={`M ${x} ${y + 12} L ${x + w - 14} ${y + 12} L ${x + w - 14} ${y + H} L ${x} ${y + H} Z`}
-                animate={{
-                  fill: on ? 'rgb(var(--amber) / 0.14)' : 'rgb(var(--cyan) / 0.05)',
-                }}
-                transition={t}
-                stroke={on ? 'rgb(var(--amber))' : 'rgb(var(--cyan))'}
-                strokeOpacity={on ? 0.75 : 0.28}
-                strokeWidth="0.9"
-              />
-
             </motion.g>
           );
         })}

@@ -15,10 +15,9 @@ import CaseVisual from './CaseVisual';
 import ConstraintLab from './ConstraintLab';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 import { springOr, SPRING } from '@/lib/motion';
-import TextScramble from '@/motion/TextScramble';
-import SpotlightBorder from '@/motion/SpotlightBorder';
 import InView from '@/motion/InView';
 import { RISE_GROUP, RISE_ITEM } from '@/lib/variants';
+
 
 /** Org, period and role. One row, three columns, wherever it is placed. */
 function Facts({
@@ -195,7 +194,6 @@ export default function WorkConsole() {
       aria-labelledby="work-title"
       className="relative scroll-mt-[5.5rem] overflow-hidden border-b border-cyan/15 pb-14 pt-6 sm:pb-16 sm:pt-8 lg:pb-20 lg:pt-10"
     >
-      <div className="grid-veil absolute inset-0 opacity-70" />
 
       <div className="shell relative">
         <div className="flex flex-wrap items-end justify-between gap-4 border-b border-cyan/15 pb-5">
@@ -215,7 +213,7 @@ export default function WorkConsole() {
             className="font-display text-headline font-extrabold uppercase text-cyan"
             data-reveal
           >
-            Selected systems
+            Selected work
           </h2>
 
           {/*
@@ -364,12 +362,8 @@ export default function WorkConsole() {
               id="case-readout"
               role="tabpanel"
               aria-labelledby={`case-tab-${study.slug}`}
-              className="card trace p-6 sm:p-8"
+              className="card p-6 sm:p-8"
             >
-              <div className="pointer-events-none absolute inset-x-0 top-0 h-px overflow-hidden">
-                <div className="sweep h-px w-1/3 bg-gradient-to-r from-transparent via-amber to-transparent" />
-              </div>
-
               {/*
                 THE READOUT ARRIVES FROM THE DIRECTION YOU LEFT.
 
@@ -408,24 +402,7 @@ export default function WorkConsole() {
               {study.visual === 'solver' ? (
                 <div className="grid grid-cols-1 gap-6 lg:grid-cols-12 lg:gap-8">
                   <div className="flex flex-col lg:col-span-7">
-                    {/*
-                      THE READOUT RETUNES.
-
-                      This line changes on every case, and it is a measurement
-                      label on an instrument — mono, uppercase, technical
-                      nouns. Resolving it character by character is what a
-                      readout does when the thing under it has been switched;
-                      a hard swap is what a static caption does.
-
-                      Scrambled through letters, digits and the middot the
-                      labels already contain, never through `#$%^&*`. That
-                      alphabet reads as a glitch — something broke and is
-                      repairing itself — and this page does not get to imply a
-                      state the system is not in. See `motion/TextScramble`.
-                    */}
-                    <p className="tag-sm text-amber">
-                      <TextScramble trigger={study.slug}>{study.domain}</TextScramble>
-                    </p>
+                    <p className="tag-sm text-amber">{study.domain}</p>
                     <h3 className="mt-4 max-w-[22ch] text-balance font-display text-title font-extrabold uppercase leading-[1.12] text-cyan">
                       {study.title}
                     </h3>
@@ -469,9 +446,7 @@ export default function WorkConsole() {
                     </div>
                   </div>
 
-                  <p className="tag-sm text-amber">
-                    <TextScramble trigger={study.slug}>{study.domain}</TextScramble>
-                  </p>
+                  <p className="tag-sm text-amber">{study.domain}</p>
                   <h3 className="mt-4 max-w-[26ch] text-balance font-display text-title font-extrabold uppercase leading-[1.12] text-cyan">
                     {study.title}
                   </h3>
@@ -532,27 +507,13 @@ export default function WorkConsole() {
                 argument before you commit to reading it.
               */}
               {/*
-                THE BORDER LIGHTS WHERE YOU POINT AT IT.
-
-                This is the most important link on the site for the audience it
-                exists to reach, and `SpotlightBorder` is spent here rather than
-                scattered across the cards. The light is confined to the 1px
-                frame by an opaque inner surface, so it never crosses the text
-                — which is the whole reason a spotlight is usable on this page
-                at all. A soft blob drifting over 17px serif prose is a
-                legibility cost paid for atmosphere; a frame that brightens
-                under the cursor is the same family as the `.trace` corner
-                brackets used elsewhere.
+                The most important link on the site for the audience it
+                exists to reach: its own band, saying what is behind it and
+                showing the argument before you commit to reading it.
               */}
-              <SpotlightBorder
-                className="mt-8 block"
-                ringClassName="bg-amber/50"
-                innerClassName="bg-deep"
-                size={200}
-              >
               <Link
                 to={`/work/${study.slug}`}
-                className="group block rounded-[3px] bg-amber/10 p-5 transition-colors duration-300 hover:bg-amber/20 sm:p-6"
+                className="group mt-8 block rounded-[3px] border border-amber/30 bg-amber/10 p-5 transition-colors duration-300 hover:border-amber hover:bg-amber/20 sm:p-6"
               >
                 <div className="flex flex-wrap items-center justify-between gap-3">
                   <p className="font-display text-lead font-bold text-amber">
@@ -575,7 +536,6 @@ export default function WorkConsole() {
                   ))}
                 </ul>
               </Link>
-              </SpotlightBorder>
               </motion.div>
             </div>
           </div>

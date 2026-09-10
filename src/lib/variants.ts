@@ -10,17 +10,17 @@ import type { Variants } from 'motion/react';
 */
 
 /**
- * The blur is the part worth keeping from Motion Primitives' default.
- *
- * A plain fade-and-rise is the most-shipped scroll reveal on the web and this
- * site already carries one — `[data-reveal]`, in CSS, on most of the page.
- * These variants exist for the places that need to stagger *children*, which a
- * CSS transition cannot coordinate, and the short defocus is what stops the
- * two reading as the same effect fired twice.
+ * A plain fade-and-rise, matching `[data-reveal]`'s CSS entrance elsewhere on
+ * the page — these variants exist only for the places that need to stagger
+ * *children* on remount (e.g. Selected work's metrics, keyed on case), which
+ * a CSS transition cannot coordinate. No blur: two visually different
+ * "reveal" effects on one page reads as two unrelated systems rather than one
+ * considered one, so this uses the same fade+rise `[data-reveal]` already
+ * carries.
  */
 export const RISE: Variants = {
-  hidden: { opacity: 0, y: 22, filter: 'blur(4px)' },
-  visible: { opacity: 1, y: 0, filter: 'blur(0px)' },
+  hidden: { opacity: 0, y: 16 },
+  visible: { opacity: 1, y: 0 },
 };
 
 /**
@@ -36,6 +36,6 @@ export const RISE_GROUP: Variants = {
 };
 
 export const RISE_ITEM: Variants = {
-  hidden: { opacity: 0, y: 18, scale: 0.98, filter: 'blur(5px)' },
-  visible: { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' },
+  hidden: { opacity: 0, y: 16 },
+  visible: { opacity: 1, y: 0 },
 };

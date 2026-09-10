@@ -48,7 +48,7 @@ export default function Capabilities() {
           >
             Capabilities
           </h2>
-          <p className="tag-sm text-dim">Five layers · the base is the one that moved</p>
+          <p className="tag-sm text-dim">The base is the layer that moved with him</p>
         </div>
 
         <div className="mt-10 grid grid-cols-1 items-start gap-10 lg:grid-cols-12 lg:gap-14">

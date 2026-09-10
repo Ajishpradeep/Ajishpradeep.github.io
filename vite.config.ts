@@ -23,6 +23,13 @@ export default defineConfig({
             React.
           */
           motion: ['motion'],
+          /*
+            The capability graph is the only consumer of the three.js stack,
+            it's lazy-loaded (see CapabilityGraph.tsx), and it's real weight
+            (~150KB+ gzip) — its own chunk so a copy or theme change doesn't
+            force a re-download of WebGL machinery, and vice versa.
+          */
+          three: ['three', '@react-three/fiber', '@react-three/drei'],
         },
       },
     },

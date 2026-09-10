@@ -125,10 +125,10 @@ export const work: CaseStudy[] = [
     index: '02',
     title: 'An LLM that is never allowed to do the maths',
     subtitle:
-      'A domain-grounded agentic coaching system where every number is computed deterministically in Python and the model is constrained to narration — with a second pipeline that inverts the arrangement.',
+      'A coaching system where every number is computed in Python, never by the model — which is constrained to narration — with a second pipeline that inverts the arrangement.',
     org: 'IdeasLab Formosa',
     period: '2025 — present',
-    domain: 'LLMs · Agentic Systems · Domain Grounding',
+    domain: 'LLMs · Rule Engines · Coaching Systems',
     role: 'Architect — rule engine, scoring, prompt design, evaluation',
     stack: ['Claude', 'Gemini', 'Tool use', 'RAG', 'Python', 'Structured prompting'],
     teaser:
@@ -151,9 +151,9 @@ export const work: CaseStudy[] = [
         ],
       },
       {
-        heading: 'Two pipelines, deliberately opposite',
+        heading: 'Same input, opposite pipeline',
         body: [
-          'The same input feeds two paths. In the first, the LLM is a narrator: a rule engine and weighted scorer produce citable verdicts, the model writes prose around them, and the output is reproducible and auditable. In the second, the LLM is the brain: it receives cleaned measurements and reasons holistically from first principles, streamed, with no determinism guarantee.',
+          'The same input feeds two paths. In the first, the LLM is a narrator: a rule engine and weighted scorer produce citable verdicts, the model writes prose around them, and the output is reproducible and auditable. In the second, the LLM is the brain: it receives cleaned measurements and reasons from first principles, streamed, with no determinism guarantee.',
           'Shipping both was a decision about honesty in interface design. The auditable path answers "what does our rulebook say, with scores and citations". The reasoning path answers "what should this player actually work on". Those are different questions and pretending one system answers both well would degrade both.',
           'Both share a physics-validation gate, so no output — however it was generated — escapes without passing range-of-motion, consistency and continuity checks.',
         ],

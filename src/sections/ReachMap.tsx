@@ -35,14 +35,6 @@ export default function ReachMap({ className = '' }: { className?: string }) {
       fill="none"
       role="presentation"
     >
-      <defs>
-        <linearGradient id="reach-arc" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%" stopColor="rgb(var(--cyan))" stopOpacity="0.15" />
-          <stop offset="50%" stopColor="rgb(var(--amber))" stopOpacity="0.75" />
-          <stop offset="100%" stopColor="rgb(var(--cyan))" stopOpacity="0.15" />
-        </linearGradient>
-      </defs>
-
       {/* Latitude / longitude scaffold — enough to read as a globe, not a chart. */}
       {[40, 70, 100, 130, 160].map((y) => (
         <line
@@ -66,27 +58,17 @@ export default function ReachMap({ className = '' }: { className?: string }) {
         />
       ))}
 
-      {/* Taipei → Warsaw: the one journey the dossier actually documents. */}
+      {/* Taipei → Warsaw: the one journey this record actually documents. */}
       <path
         d="M 282 128 Q 217 34 152 84"
-        stroke="url(#reach-arc)"
-        strokeWidth="1.6"
+        stroke="rgb(var(--amber))"
+        strokeOpacity="0.4"
+        strokeWidth="1.2"
         strokeDasharray="3 4"
       />
 
       {nodes.map((n) => (
         <g key={n.id}>
-          {n.primary && (
-            <circle
-              cx={n.x}
-              cy={n.y}
-              r="7"
-              fill="rgb(var(--amber))"
-              fillOpacity="0.28"
-              className="pulse-ring"
-              style={{ transformOrigin: `${n.x}px ${n.y}px` }}
-            />
-          )}
           <circle
             cx={n.x}
             cy={n.y}

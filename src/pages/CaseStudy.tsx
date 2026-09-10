@@ -16,18 +16,17 @@ export default function CaseStudy() {
     <article>
       {/* MASTHEAD */}
       <header className="relative overflow-hidden border-b border-cyan/15 pt-[5.5rem]">
-        <div className="grid-veil absolute inset-0" />
         <div className="shell relative py-14">
           <Link
             to={`/?case=${study.slug}#work`}
             className="tag -mx-2 inline-block rounded-sm px-2 py-1.5 text-amber transition-opacity hover:opacity-70"
           >
-            <span className="bracket">← index</span>
+            ← index
           </Link>
 
           <div className="mt-10 flex flex-wrap items-baseline justify-between gap-4">
             <p className="tag text-dim">
-              <span className="bracket">{study.domain}</span>
+              {study.domain}
             </p>
             <p className="font-mono text-micro uppercase tracking-[0.14em] text-amber">
               case {study.index} / {String(work.length).padStart(2, '0')} · {study.slug}
@@ -35,7 +34,7 @@ export default function CaseStudy() {
           </div>
 
           <h1
-            className="mt-6 max-w-[18ch] font-display text-mega font-extrabold uppercase leading-[1.02] text-cyan glow-cyan text-balance"
+            className="mt-6 max-w-[18ch] font-display text-mega font-extrabold uppercase leading-[1.02] text-cyan text-balance"
             data-reveal
           >
             {study.title}
@@ -62,7 +61,7 @@ export default function CaseStudy() {
           ].map(([k, v]) => (
             <div key={k}>
               <p className="tag text-amber/80">
-                <span className="bracket">{k}</span>
+                {k}
               </p>
               <p className="mt-3 max-w-[34ch] text-fine leading-relaxed text-cyan/75 text-pretty">
                 {v}
@@ -77,15 +76,12 @@ export default function CaseStudy() {
         <div className="shell">
           <div className="overflow-hidden">
           <ul className="-mb-px -mr-px grid sm:grid-cols-2 lg:grid-cols-4">
-            {study.metrics.map((m, i) => (
+            {study.metrics.map((m) => (
               <li
                 key={m.label}
                 className="border-b border-r border-cyan/20 py-7 pl-5 pr-5 first:pl-0"
               >
-                <p className="font-mono text-micro uppercase tracking-[0.14em] text-dim">
-                  ·{String(i + 1).padStart(2, '0')}·
-                </p>
-                <p className="mt-2.5 font-display text-title font-bold text-amber glow-amber">
+                <p className="font-display text-title font-bold text-amber">
                   {m.value}
                 </p>
                 <p className="mt-2 max-w-[26ch] font-mono text-micro leading-snug text-dim">
@@ -102,7 +98,7 @@ export default function CaseStudy() {
       <section className="border-b border-cyan/15 bg-panel/20 py-16">
         <div className="shell grid gap-6 lg:grid-cols-12 lg:gap-10">
           <p className="tag text-amber lg:col-span-3" data-reveal>
-            <span className="bracket">the constraint</span>
+            the constraint
           </p>
           <p
             className="font-display text-[clamp(1.125rem,2.1vw,1.6rem)] font-medium leading-[1.5] text-cyan text-pretty lg:col-span-9"
@@ -114,14 +110,11 @@ export default function CaseStudy() {
       </section>
 
       {/* LOG ENTRIES */}
-      {study.sections.map((s, i) => (
+      {study.sections.map((s) => (
         <section key={s.heading} className="border-b border-cyan/20 py-14">
           <div className="shell grid gap-6 lg:grid-cols-12 lg:gap-10">
             <div className="lg:col-span-3" data-reveal>
-              <span className="font-mono text-micro text-amber">
-                ·{String(i + 1).padStart(2, '0')}·
-              </span>
-              <h2 className="mt-3 max-w-[26ch] font-display text-lead font-bold leading-snug text-cyan lg:sticky lg:top-28 text-balance">
+              <h2 className="max-w-[26ch] font-display text-lead font-bold leading-snug text-cyan lg:sticky lg:top-28 text-balance">
                 {s.heading}
               </h2>
             </div>
@@ -143,7 +136,7 @@ export default function CaseStudy() {
       <section className="border-b border-cyan/15 py-16">
         <div className="shell grid gap-6 lg:grid-cols-12 lg:gap-10">
           <p className="tag text-amber lg:col-span-3" data-reveal>
-            <span className="bracket">outcome</span>
+            outcome
           </p>
           <ul className="lg:col-span-8 lg:col-start-5">
             {study.outcome.map((o, i) => (
@@ -172,7 +165,7 @@ export default function CaseStudy() {
           to={`/?case=${study.slug}#work`}
           className="tag rounded-sm px-2 py-1.5 text-dim transition-colors hover:text-amber"
         >
-          <span className="bracket">index</span>
+          index
         </Link>
         <Link to={`/work/${next.slug}`} className="btn-amber">
           {next.index} · next <span aria-hidden>→</span>

@@ -6,24 +6,21 @@
 
 @layer base {
   :root {
-    /* Deep terminal teal-black ground, brighter text than before for legibility. */
-    --void: 3 12 14;
-    --deep: 6 26 27;
-    --panel: 10 46 46;
-    --panel-hi: 17 74 72;
-    --cyan: 190 255 244;
-    --cyan-hot: 0 255 231;
-    --amber: 250 189 63;
-    --amber-hot: 255 205 96;
-    --signal: 255 92 48;
-    --dim: 135 183 180;
-
-    /* Text shadows are a dark-world device. See the light block. */
-    --glow-cyan: 0 0 24px rgb(var(--cyan-hot) / 0.35);
-    --glow-amber: 0 0 26px rgb(var(--amber) / 0.4);
-    /* How strongly the ruled grid and the vignette read. */
-    --veil: 0.05;
-    --vignette: 0.28;
+    /* Near-black ground with a faint blue undertone — precise, not warm. */
+    --void: 18 19 23;
+    --deep: 27 28 34;
+    --panel: 38 40 48;
+    --panel-hi: 51 54 64;
+    /* `cyan` is the reading colour: cool off-white on the near-black ground. */
+    --cyan: 228 230 236;
+    /* `cyan-hot` is the one muted secondary hue, for data markers that need
+       to read as distinct from the accent without competing with it. */
+    --cyan-hot: 94 190 214;
+    /* `amber` is the single accent — an indigo blue, not a neon gold. */
+    --amber: 91 141 239;
+    --amber-hot: 127 166 255;
+    --signal: 224 94 94;
+    --dim: 138 143 156;
 
     color-scheme: dark;
   }
@@ -31,55 +28,34 @@
   /*
    * THE SECOND WORLD.
    *
-   * Not the instrument panel inverted. An inverted dark UI is the most common
-   * way a light theme goes wrong: the greys become washes, the accent becomes
-   * unreadable, and the result is the same layout with the confidence drained
-   * out of it.
-   *
-   * This is a *drafting sheet* — the other object the site could plausibly be.
-   * Warm paper rather than white, deep teal ink rather than pale teal light,
-   * and the amber stays but drops two stops to an ochre that can be read at
-   * 14px on paper. The ruled grid that was a faint scanline in the dark becomes
-   * a graph-paper grid, which is what it always looked like it wanted to be.
+   * The same cool, precise palette lightened rather than a separate warm
+   * world — a cool white sheet, navy ink, the same indigo accent darkened to
+   * hold contrast on white.
    *
    * Every colour on this site is `rgb(var(--x) / <alpha>)`, so the whole page
    * turns on these ten lines. The names still mean what they meant:
    *
-   *   --void   the page ground        paper
-   *   --deep   the raised card        white, one step ABOVE the paper
-   *   --panel  hover / fill           a cool grey-green wash
-   *   --cyan   the reading colour     teal ink
-   *   --amber  the single accent      ochre
+   *   --void   the page ground        cool white
+   *   --deep   the raised card        pure white, one step ABOVE the ground
+   *   --panel  hover / fill           a cool grey-blue wash
+   *   --cyan   the reading colour     near-black navy ink
+   *   --amber  the single accent      indigo blue
    *
    * `.card` is `bg-deep` on `bg-void` and `.well` is `bg-void` inside a card,
    * so the directional surface rule survives the swap without touching a single
    * component: white on paper is raised, paper inside white is recessed.
    */
   :root[data-theme='light'] {
-    --void: 244 242 235;
-    --deep: 255 254 250;
-    --panel: 222 230 226;
-    --panel-hi: 198 214 208;
-    --cyan: 11 54 53;
-    --cyan-hot: 0 122 110;
-    --amber: 150 92 4;
-    --amber-hot: 116 70 0;
-    --signal: 186 44 12;
-    --dim: 92 112 109;
-
-    /*
-     * A glow is light emitted by a screen. On paper it is a smudge, and at
-     * `text-mega` it made the h1 look out of focus. The dark world keeps it;
-     * here both resolve to nothing rather than being overridden at 26 call
-     * sites.
-     */
-    --glow-cyan: none;
-    --glow-amber: none;
-
-    /* Ink on paper takes a stronger rule than light on black, and the vignette
-       has to nearly vanish — a dark corner on a white page reads as dirt. */
-    --veil: 0.09;
-    --vignette: 0.05;
+    --void: 244 245 248;
+    --deep: 255 255 255;
+    --panel: 227 231 238;
+    --panel-hi: 208 214 224;
+    --cyan: 26 29 37;
+    --cyan-hot: 20 110 130;
+    --amber: 51 90 199;
+    --amber-hot: 33 66 163;
+    --signal: 189 45 45;
+    --dim: 100 107 122;
 
     color-scheme: light;
   }
@@ -178,15 +154,6 @@
     @apply font-mono text-micro font-medium uppercase;
   }
 
-  .bracket::before {
-    content: '[';
-    @apply mr-1 text-amber/70;
-  }
-  .bracket::after {
-    content: ']';
-    @apply ml-1 text-amber/70;
-  }
-
   /*
    * Prose is set in the serif, not in the display face. Funnel Display was
    * doing both jobs and doing the second one badly: at 16px its tight counters
@@ -229,32 +196,6 @@
   .eq .norm {
     letter-spacing: -0.16em;
     padding-right: 0.16em;
-  }
-
-  /* Panel with corner brackets, drawn without extra markup. */
-  .hud {
-    position: relative;
-    background:
-      linear-gradient(to right, rgb(var(--cyan) / 0.45) 1px, transparent 1px) 0 0 / 16px 1px no-repeat,
-      linear-gradient(to bottom, rgb(var(--cyan) / 0.45) 1px, transparent 1px) 0 0 / 1px 16px no-repeat,
-      linear-gradient(to left, rgb(var(--cyan) / 0.45) 1px, transparent 1px) 100% 0 / 16px 1px no-repeat,
-      linear-gradient(to bottom, rgb(var(--cyan) / 0.45) 1px, transparent 1px) 100% 0 / 1px 16px no-repeat,
-      linear-gradient(to right, rgb(var(--cyan) / 0.45) 1px, transparent 1px) 0 100% / 16px 1px no-repeat,
-      linear-gradient(to top, rgb(var(--cyan) / 0.45) 1px, transparent 1px) 0 100% / 1px 16px no-repeat,
-      linear-gradient(to left, rgb(var(--cyan) / 0.45) 1px, transparent 1px) 100% 100% / 16px 1px no-repeat,
-      linear-gradient(to top, rgb(var(--cyan) / 0.45) 1px, transparent 1px) 100% 100% / 1px 16px no-repeat;
-  }
-
-  .hud-amber {
-    background-image:
-      linear-gradient(to right, rgb(var(--amber) / 0.9) 1px, transparent 1px),
-      linear-gradient(to bottom, rgb(var(--amber) / 0.9) 1px, transparent 1px),
-      linear-gradient(to left, rgb(var(--amber) / 0.9) 1px, transparent 1px),
-      linear-gradient(to bottom, rgb(var(--amber) / 0.9) 1px, transparent 1px),
-      linear-gradient(to right, rgb(var(--amber) / 0.9) 1px, transparent 1px),
-      linear-gradient(to top, rgb(var(--amber) / 0.9) 1px, transparent 1px),
-      linear-gradient(to left, rgb(var(--amber) / 0.9) 1px, transparent 1px),
-      linear-gradient(to top, rgb(var(--amber) / 0.9) 1px, transparent 1px);
   }
 
   /*
@@ -322,46 +263,6 @@
     box-shadow: inset 0 1px 3px rgb(var(--cyan) / 0.07);
   }
 
-  /*
-   * Corner brackets that draw themselves in on hover — an instrument framing
-   * its reading, rather than a generic glow following the cursor.
-   */
-  .trace::before,
-  .trace::after {
-    content: '';
-    position: absolute;
-    width: 15px;
-    height: 15px;
-    pointer-events: none;
-    opacity: 0;
-    transition:
-      opacity 0.4s ease,
-      transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-    border-color: rgb(var(--amber));
-  }
-  .trace::before {
-    top: 6px;
-    left: 6px;
-    border-top: 1px solid;
-    border-left: 1px solid;
-    transform: translate(6px, 6px);
-  }
-  .trace::after {
-    right: 6px;
-    bottom: 6px;
-    border-bottom: 1px solid;
-    border-right: 1px solid;
-    transform: translate(-6px, -6px);
-  }
-  /* Keyboard parity: the corner brackets were mouse-only by construction. */
-  .trace:hover::before,
-  .trace:hover::after,
-  .trace:focus-within::before,
-  .trace:focus-within::after {
-    opacity: 1;
-    transform: none;
-  }
-
   /* Lifts slightly on hover — enough to feel responsive, not enough to jump. */
   .lift {
     @apply transition-transform duration-500;
@@ -380,41 +281,6 @@
    */
   .icon-mark {
     @apply shrink-0 text-amber;
-  }
-
-  /*
-   * The CRT scanline veil was removed: laid over the whole document it striped
-   * the display type and was the single biggest legibility cost on the page.
-   * A faint vignette gives depth without touching text.
-   */
-  /*
-   * The vignette sits above content, so its alpha is a contrast tax on every
-   * line of text near the viewport edge. At 0.55 it pulled `text-dim` in the
-   * corners down to 2.61:1. Held to 0.28 and starting further out, the deepest
-   * point still measures ≈5:1 — the depth survives, the reading does too.
-   */
-  .scanlines::after {
-    content: '';
-    position: fixed;
-    inset: 0;
-    z-index: 40;
-    pointer-events: none;
-    background: radial-gradient(
-      ellipse at center,
-      transparent 62%,
-      rgb(var(--void) / var(--vignette)) 100%
-    );
-  }
-
-  /*
-   * A faint scanline field in the dark; graph paper in the light, where it
-   * needs nearly twice the alpha to register at all against the sheet.
-   */
-  .grid-veil {
-    background-image:
-      linear-gradient(to right, rgb(var(--cyan) / var(--veil)) 1px, transparent 1px),
-      linear-gradient(to bottom, rgb(var(--cyan) / var(--veil)) 1px, transparent 1px);
-    background-size: 52px 52px;
   }
 
   /* min-h holds the 44px pointer-target floor regardless of label length. */
@@ -527,15 +393,6 @@
     letter-spacing: 0.06em;
   }
 
-  /* Resolved from a token so the light world can turn them off in one place
-     rather than at every call site. On paper a glow is a smudge. */
-  .glow-cyan {
-    text-shadow: var(--glow-cyan);
-  }
-  .glow-amber {
-    text-shadow: var(--glow-amber);
-  }
-
   [data-reveal] {
     opacity: 0;
     transform: translateY(16px);
@@ -547,14 +404,6 @@
   [data-reveal='in'] {
     opacity: 1;
     transform: none;
-  }
-
-  @keyframes sweep {
-    from { transform: translateX(-100%); }
-    to { transform: translateX(100%); }
-  }
-  .sweep {
-    animation: sweep 3.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
   }
 
   @keyframes blink {
@@ -578,29 +427,10 @@
     animation: drift 2.4s linear infinite;
   }
 
-  @keyframes pulse-ring {
-    0% { transform: scale(0.85); opacity: 0.9; }
-    100% { transform: scale(2.2); opacity: 0; }
-  }
-  .pulse-ring {
-    animation: pulse-ring 2.6s cubic-bezier(0.16, 1, 0.3, 1) infinite;
-  }
-
   @media (prefers-reduced-motion: reduce) {
     [data-reveal] {
       opacity: 1;
       transform: none;
-    }
-
-    /*
-     * The blanket duration kill in the base layer freezes every animation at
-     * its final keyframe, which for these two means "invisible" rather than
-     * "still". Each has a solid element underneath it, so hiding the animated
-     * ring outright is the honest resting state.
-     */
-    .pulse-ring,
-    .sweep {
-      display: none;
     }
 
     .blink {

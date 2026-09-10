@@ -42,16 +42,13 @@ function Rich({ children, className }: { children: string; className?: string })
   );
 }
 
-/** Section heading, matching the bracket device the rest of the site uses. */
 function Heading({ children }: { children: string }) {
   return (
     <h2
       className="font-display text-headline font-extrabold uppercase text-cyan"
       data-reveal
     >
-      <span className="text-amber">[</span>
       {children}
-      <span className="text-amber">]</span>
     </h2>
   );
 }
@@ -102,16 +99,15 @@ export default function Resume() {
   return (
     <>
       <header className="relative overflow-hidden border-b border-cyan/15 pt-[5.5rem]">
-        <div className="grid-veil absolute inset-0" />
         <div className="shell relative py-14">
           <p className="tag text-amber" data-reveal>
-            <span className="bracket">Resume</span>
+            Resume
           </p>
 
           <div className="mt-5 flex flex-wrap items-start justify-between gap-x-8 gap-y-5">
             <div className="min-w-0">
               <h1
-                className="font-display text-mega font-extrabold uppercase leading-[1.02] text-cyan glow-cyan text-balance"
+                className="font-display text-mega font-extrabold uppercase leading-[1.02] text-cyan text-balance"
                 data-reveal
                 style={{ '--reveal-delay': '60ms' } as React.CSSProperties}
               >

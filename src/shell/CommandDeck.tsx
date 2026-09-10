@@ -263,13 +263,10 @@ export default function CommandDeck() {
         role="dialog"
         aria-modal="true"
         aria-label="Command deck"
-        className="hud hud-amber w-full max-w-2xl bg-deep/95"
+        className="card w-full max-w-2xl border-cyan/25 bg-deep/95"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center gap-3 border-b border-cyan/15 px-5 py-4">
-          <span aria-hidden className="font-mono text-fine text-amber">
-            ›
-          </span>
           {/*
             A real combobox. Without these the palette was silent: a screen
             reader announced a bare text field, never named the highlighted
@@ -315,7 +312,7 @@ export default function CommandDeck() {
                     aria-hidden
                     className="px-5 pb-1.5 pt-3 font-mono text-micro uppercase tracking-[0.16em] text-dim"
                   >
-                    ·{header}·
+                    {header}
                   </p>
                 )}
                 <button
@@ -331,10 +328,7 @@ export default function CommandDeck() {
                     on ? 'bg-amber text-void' : 'text-cyan/80 hover:bg-panel/50'
                   }`}
                 >
-                  <span className="font-mono text-fine">
-                    <span className={on ? 'text-void/75' : 'text-amber/70'}>›&nbsp;</span>
-                    {c.label}
-                  </span>
+                  <span className="font-mono text-fine">{c.label}</span>
                   <span
                     className={`truncate font-mono text-micro uppercase tracking-[0.14em] ${
                       on ? 'text-void/70' : 'text-dim'

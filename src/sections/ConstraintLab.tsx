@@ -373,8 +373,7 @@ export default function ConstraintLab() {
                 fill="none"
                 stroke="rgb(var(--amber))"
                 strokeWidth="1"
-                className="pulse-ring"
-                style={{ transformOrigin: `${head.x}px ${head.y}px` }}
+                strokeOpacity="0.5"
               />
             )}
           </g>
