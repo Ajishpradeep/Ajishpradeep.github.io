@@ -103,6 +103,9 @@ description and canonical in sync on client-side navigation.
 
 Manual deploy: `npx wrangler login` once, then `npm run build && npx wrangler deploy`.
 
+`ajishpradeep.github.io` is the site's former home; GitHub Pages now 301-redirects every path there to
+`ajishpradeep.com` (custom domain set in the repo's Pages settings, not by any file here).
+
 ## Accessibility
 
 WCAG 2.1 AA is treated as a requirement. In particular: every animation and simulation has a
