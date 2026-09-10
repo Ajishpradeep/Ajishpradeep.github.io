@@ -52,6 +52,13 @@ jobs:
       url: https://ajishpradeep.com
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      # wrangler-action runs the wrangler pinned in package.json, so it has to
+      # be installed here; a stale global wrangler can't read assets-only config.
+      - run: npm ci --ignore-scripts
       - uses: actions/download-artifact@v4
         with:
           name: dist
