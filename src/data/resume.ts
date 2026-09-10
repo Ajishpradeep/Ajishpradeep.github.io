@@ -190,8 +190,8 @@ export const resume = {
   links: [
     {
       label: 'Portfolio',
-      value: 'ajishpradeep.github.io',
-      href: 'https://ajishpradeep.github.io',
+      value: 'ajishpradeep.com',
+      href: 'https://ajishpradeep.com',
     },
     { label: 'GitHub', value: 'github.com/Ajishpradeep', href: 'https://github.com/Ajishpradeep' },
     {

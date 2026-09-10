@@ -51,7 +51,7 @@ REQUIRED_STRINGS = [
 # for why they can't both be checked the same way).
 REQUIRED_LINK_URIS = [
     "mailto:ajishpradeep@gmail.com",
-    "https://ajishpradeep.github.io",
+    "https://ajishpradeep.com",
     "https://github.com/Ajishpradeep",
     "https://linkedin.com/in/ajishpradeep",
 ]

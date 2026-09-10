@@ -1,27 +1,32 @@
 /*
- * Post-build step for GitHub Pages.
+ * Post-build step for a static host.
  *
- * Pages has no SPA rewrite rule. The usual workaround — copy index.html to
- * 404.html — renders every client route correctly but answers with an HTTP 404
- * status, so crawlers drop the URLs the sitemap advertises.
+ * The usual SPA workaround — serve index.html for every path — renders each
+ * client route correctly but either answers unknown paths with 200 (soft 404s)
+ * or, on hosts without a rewrite rule, answers real routes with 404. Both make
+ * crawlers drop the URLs the sitemap advertises.
  *
  * This script instead emits a real static file for every route the site claims
  * exists, each carrying its own title, description and canonical URL, so those
- * URLs return 200 with correct metadata before React has run. 404.html still
- * ships as the catch-all for genuinely unknown paths.
+ * URLs return 200 with correct metadata before React has run. 404.html ships as
+ * the catch-all for genuinely unknown paths; Cloudflare serves it with a real
+ * 404 status (`not_found_handling: "404-page"` in wrangler.jsonc).
  *
- * Route metadata is read from src/data/work.ts so the slugs, the sitemap and
- * the emitted pages cannot drift apart.
+ * Route metadata is read from src/data/seo.json and src/data/work.ts — the same
+ * sources the runtime head hook uses — so the slugs, the sitemap, the emitted
+ * pages and what React writes on navigation cannot drift apart.
  */
 
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import { execFileSync } from 'node:child_process';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const dist = join(root, 'dist');
 
-const ORIGIN = 'https://ajishpradeep.github.io';
+const seo = JSON.parse(readFileSync(join(root, 'src/data/seo.json'), 'utf8'));
+const ORIGIN = seo.origin;
 
 /** Reads a single-quoted TS string literal starting at `from`, honouring escapes. */
 function readStringLiteral(source, from) {
@@ -99,32 +104,68 @@ function write(relativePath, contents) {
   writeFileSync(target, contents);
 }
 
+/*
+ * Google only uses <lastmod> when it is consistently accurate, and stamping
+ * every URL with the build date on every deploy is the opposite of that. Each
+ * route is dated by the last commit that touched the files its content comes
+ * from. Falls back to today when git history isn't available (shallow CI
+ * checkout, tarball) — the deploy workflow fetches full history to avoid that.
+ */
+function lastCommitDate(files) {
+  try {
+    const out = execFileSync('git', ['log', '-1', '--format=%cI', '--', ...files], {
+      cwd: root,
+      encoding: 'utf8',
+      stdio: ['ignore', 'pipe', 'ignore'],
+    }).trim();
+    if (out) return out.slice(0, 10);
+  } catch {
+    // not a git checkout, or shallow clone without the relevant commit
+  }
+  return new Date().toISOString().slice(0, 10);
+}
+
 const shell = readFileSync(join(dist, 'index.html'), 'utf8');
 const studies = readCaseStudies();
-const today = new Date().toISOString().slice(0, 10);
 
+// Route → the source files whose edits genuinely change that page's content.
+const shellSources = ['index.html', 'src/data/site.ts', 'src/data/seo.json'];
 const routes = [
-  { path: '/' },
+  {
+    path: '/',
+    lastmod: lastCommitDate([
+      ...shellSources,
+      'src/data/impact.ts',
+      'src/data/research.ts',
+      'src/data/lab.ts',
+      'src/data/work.ts',
+      'src/sections',
+    ]),
+  },
   {
     path: '/about/',
-    title: 'About — Pradeep Rajasekar (Ajish Pradeep), AI Research Engineer',
-    description:
-      'AI Research Engineer in Taiwan working on 3D computer vision, on-device inference and agentic LLM systems. Background, timeline and what I am looking for.',
+    ...seo.pages['/about/'],
+    lastmod: lastCommitDate([...shellSources, 'src/data/about.ts', 'src/pages/About.tsx']),
   },
   {
     path: '/resume/',
-    title: 'Resume — Pradeep Rajasekar (Ajish Pradeep), AI Research Engineer',
-    description:
-      'Experience, education and skills for Pradeep Rajasekar, AI Research Engineer — on-screen resume with an ATS-friendly PDF download.',
+    ...seo.pages['/resume/'],
+    lastmod: lastCommitDate([
+      ...shellSources,
+      'src/data/resume.ts',
+      'src/pages/Resume.tsx',
+      'public/Resume.pdf',
+    ]),
   },
   ...studies.map((study) => ({
     path: `/work/${study.slug}/`,
     title: `${study.title} — Pradeep Rajasekar`,
     description: study.teaser,
+    lastmod: lastCommitDate([...shellSources, 'src/data/work.ts', 'src/pages/CaseStudy.tsx']),
   })),
 ];
 
-// Every advertised route gets a real file, so Pages answers 200 rather than 404.
+// Every advertised route gets a real file, so the host answers 200 rather than 404.
 for (const route of routes) {
   if (route.path === '/') continue;
   write(`${route.path}index.html`, pageFor(shell, route));
@@ -142,22 +183,20 @@ write('404.html', shell);
  * @see https://developers.google.com/search/docs/crawling-indexing/sitemaps/build-sitemap
  * @see https://www.sitemaps.org/protocol.html
  */
-const absoluteUrls = routes.map((route) => `${ORIGIN}${route.path}`);
-
 const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${absoluteUrls
+${routes
   .map(
-    (url) => `  <url>
-    <loc>${url}</loc>
-    <lastmod>${today}</lastmod>
+    (route) => `  <url>
+    <loc>${ORIGIN}${route.path}</loc>
+    <lastmod>${route.lastmod}</lastmod>
   </url>`,
   )
   .join('\n')}
 </urlset>
 `;
 
-const sitemapTxt = `${absoluteUrls.join('\n')}\n`;
+const sitemapTxt = `${routes.map((route) => `${ORIGIN}${route.path}`).join('\n')}\n`;
 
 write('sitemap.xml', sitemapXml);
 write('sitemap.txt', sitemapTxt);

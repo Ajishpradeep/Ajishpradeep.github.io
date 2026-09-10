@@ -1,4 +1,4 @@
-# ajishpradeep.github.io
+# ajishpradeep.com
 
 The personal site of **Pradeep Rajasekar** (also known as Ajish Pradeep), AI Research Engineer —
 3D computer vision, on-device inference and agentic LLM systems.
@@ -11,7 +11,8 @@ A static React site. No backend, no runtime secrets, no third-party runtime depe
 - **Vite** for build
 - **Tailwind CSS** over a small set of CSS custom properties in `src/styles/index.css`
 - **lucide-react** for icons
-- Deployed to **GitHub Pages** by `.github/workflows/deploy.yml` on push to `main`
+- Deployed to **Cloudflare Workers** (static assets, config in `wrangler.jsonc`) by
+  `.github/workflows/deploy.yml` on push to `main`; live at <https://ajishpradeep.com>
 
 ## Local development
 
@@ -30,8 +31,9 @@ it is no longer read by anything.
 
 ```
 index.html                 document shell, JSON-LD, <noscript> fallback
+wrangler.jsonc             Cloudflare Workers config (assets dir, 404 handling, custom domain)
 scripts/postbuild.mjs      emits a real page per route + 404.html + sitemap.xml
-public/                    Resume.pdf, portrait.jpg, favicon, robots.txt, service-worker tombstone
+public/                    Resume.pdf, portrait.jpg, favicon, robots.txt, _headers, service-worker tombstone
 src/
   app/                     composition root — App shell, router, error boundary
   pages/                   route-level components: Home, About, Resume, CaseStudy, NotFound
@@ -41,6 +43,7 @@ src/
   motion/                  generic, content-agnostic animation primitives
   data/                    all site copy — the source of truth for content
     site.ts                name, role, location, links, headline figures
+    seo.json               canonical origin + per-page title/description (read by the build and at runtime)
     work.ts                case studies (the long-form writing)
     impact.ts              externally corroborated milestones, with sources
     research.ts            papers, posters, in-progress work
@@ -85,12 +88,20 @@ Two rules govern what may appear on this site:
 2. **Nothing is fabricated.** There are no testimonials, client names, or invented metrics, and
    their absence is intentional.
 
-## Routing on GitHub Pages
+## Hosting, routing and search
 
-Pages has no SPA rewrite rule. Rather than relying only on a `404.html` fallback — which renders
-correctly but answers with an HTTP 404 status, so crawlers drop the URLs — `scripts/postbuild.mjs`
-writes a real `index.html` for every route the sitemap advertises, each with its own title,
-description and canonical URL. `404.html` remains as the catch-all for unknown paths.
+The site is an assets-only Cloudflare Worker: no server code, static requests are free and
+unlimited, and there is room to add a Worker script later (blog API, chatbot, Cloudflare Access
+for a private area) without changing hosts.
+
+Rather than a single-page-application rewrite — which answers every unknown URL with a 200 and
+shows up in Search Console as soft 404s — `scripts/postbuild.mjs` writes a real `index.html` for
+every route the sitemap advertises, each with its own title, description and canonical URL, and
+`wrangler.jsonc` serves `404.html` with a real 404 status for anything else. Sitemap `<lastmod>`
+dates come from git history, not the build clock. `src/hooks/useDocumentHead.ts` keeps title,
+description and canonical in sync on client-side navigation.
+
+Manual deploy: `npx wrangler login` once, then `npm run build && npx wrangler deploy`.
 
 ## Accessibility
 

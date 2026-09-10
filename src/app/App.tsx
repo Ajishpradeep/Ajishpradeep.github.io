@@ -5,6 +5,7 @@ import Footer from '@/shell/Footer';
 import CommandDeck from '@/shell/CommandDeck';
 import { useReveal, useScrollReset } from '@/hooks/useReveal';
 import { remeasureSections } from '@/hooks/useSectionSpy';
+import { useDocumentHead } from '@/hooks/useDocumentHead';
 import '@/styles/index.css';
 
 export default function App() {
@@ -12,6 +13,7 @@ export default function App() {
 
   useScrollReset(pathname, hash);
   useReveal(pathname + hash);
+  useDocumentHead(pathname);
 
   /*
     The section store recomputes on scroll and resize, and a client-side route

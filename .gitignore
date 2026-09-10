@@ -102,3 +102,5 @@ Thumbs.db
 project_docs/
 .claude/*
 .github/*
+# Wrangler
+.wrangler/

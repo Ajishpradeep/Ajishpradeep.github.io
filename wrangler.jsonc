@@ -1,0 +1,48 @@
+/**
+ * Cloudflare Workers deployment — static assets only, no Worker script.
+ *
+ * Assets-only Workers serve every request straight from Cloudflare's edge:
+ * static asset requests are free and don't count against the Workers request
+ * quota. When the site grows a backend (blog API, chatbot, auth-gated tools),
+ * add a `main` script; requests that match a static file keep being served
+ * directly unless `assets.run_worker_first` says otherwise.
+ *
+ * Docs: https://developers.cloudflare.com/workers/static-assets/
+ *       https://developers.cloudflare.com/workers/wrangler/configuration/
+ */
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "ajishpradeep-com",
+  "compatibility_date": "2026-09-10",
+
+  "assets": {
+    "directory": "./dist",
+    /*
+      Routes are emitted as `/about/index.html` etc. by scripts/postbuild.mjs
+      and advertised in the sitemap with the trailing slash, so `/about` is
+      redirected to `/about/` rather than served as a duplicate.
+    */
+    "html_handling": "auto-trailing-slash",
+    /*
+      NOT "single-page-application": that answers every unknown path with a
+      200, which Search Console reports as soft 404s. Every real route already
+      has its own HTML file, so unknown paths get dist/404.html with a real 404.
+    */
+    "not_found_handling": "404-page"
+  },
+
+  /*
+    Custom Domain — Cloudflare creates the DNS record and certificate on deploy.
+    Requires the zone `ajishpradeep.com` to be active in this Cloudflare account
+    first (nameservers moved from GoDaddy). Custom Domains match the exact
+    hostname, so `www` is handled by a DNS placeholder + Redirect Rule (301 to
+    the apex) rather than a second route here — that keeps one canonical host.
+  */
+  "routes": [{ "pattern": "ajishpradeep.com", "custom_domain": true }],
+
+  // Keep the *.workers.dev URL as a pre-DNS smoke test; _headers marks it noindex.
+  "workers_dev": true,
+  "preview_urls": true,
+
+  "observability": { "enabled": true }
+}

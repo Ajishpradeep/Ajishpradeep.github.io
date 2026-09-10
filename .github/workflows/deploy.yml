@@ -1,4 +1,4 @@
-name: Deploy to GitHub Pages
+name: Deploy
 
 on:
   push:
@@ -11,7 +11,7 @@ permissions:
   id-token: write
 
 concurrency:
-  group: pages
+  group: deploy
   cancel-in-progress: true
 
 jobs:
@@ -19,6 +19,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          # postbuild dates each sitemap entry from git history; a shallow
+          # clone would make every <lastmod> collapse to today.
+          fetch-depth: 0
 
       - uses: actions/setup-node@v4
         with:
@@ -26,23 +30,55 @@ jobs:
           cache: npm
 
       - run: npm ci
+      - run: npm run lint
 
-      # postbuild emits a real page per route (so Pages answers 200, not 404),
-      # plus 404.html as the catch-all and a sitemap generated from the routes.
+      # postbuild emits a real page per route, 404.html and sitemap.xml/txt.
       - run: npm run build
 
-      - uses: actions/configure-pages@v5
-
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
+          name: dist
           path: dist
+          retention-days: 3
 
-  deploy:
+  # Production: https://ajishpradeep.com (Cloudflare Workers, static assets).
+  # Needs repo secrets CLOUDFLARE_API_TOKEN (template "Edit Cloudflare Workers")
+  # and CLOUDFLARE_ACCOUNT_ID. See wrangler.jsonc for the site config.
+  cloudflare:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: https://ajishpradeep.com
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist
+      - uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: deploy
+
+  # Legacy: ajishpradeep.github.io. Kept serving the same build (whose canonicals
+  # now point at ajishpradeep.com) until the Pages custom domain is set, which
+  # turns *.github.io into a 301 to the new domain. Delete this job after that.
+  github-pages:
     needs: build
     runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
       - id: deployment
         uses: actions/deploy-pages@v4
