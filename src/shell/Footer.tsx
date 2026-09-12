@@ -7,7 +7,7 @@ import { site } from '@/data/site';
  */
 export default function Footer() {
   return (
-    <footer className="border-t border-cyan/15 bg-void py-10">
+    <footer className="relative z-10 border-t border-cyan/15 bg-void py-10">
       <div className="shell flex flex-col gap-4 sm:flex-row sm:items-baseline sm:justify-between">
         <div>
           <p className="font-display text-base font-bold text-cyan">

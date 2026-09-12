@@ -7,20 +7,20 @@
 @layer base {
   :root {
     /* Near-black ground with a faint blue undertone — precise, not warm. */
-    --void: 18 19 23;
-    --deep: 27 28 34;
-    --panel: 38 40 48;
-    --panel-hi: 51 54 64;
+    --void: 14 16 19;
+    --deep: 22 25 29;
+    --panel: 34 38 43;
+    --panel-hi: 58 64 70;
     /* `cyan` is the reading colour: cool off-white on the near-black ground. */
-    --cyan: 228 230 236;
+    --cyan: 234 235 232;
     /* `cyan-hot` is the one muted secondary hue, for data markers that need
        to read as distinct from the accent without competing with it. */
-    --cyan-hot: 94 190 214;
+    --cyan-hot: 139 158 176;
     /* `amber` is the single accent — an indigo blue, not a neon gold. */
-    --amber: 91 141 239;
-    --amber-hot: 127 166 255;
-    --signal: 224 94 94;
-    --dim: 138 143 156;
+    --amber: 148 166 183;
+    --amber-hot: 181 195 207;
+    --signal: 184 91 79;
+    --dim: 142 147 151;
 
     color-scheme: dark;
   }
@@ -46,16 +46,16 @@
    * component: white on paper is raised, paper inside white is recessed.
    */
   :root[data-theme='light'] {
-    --void: 244 245 248;
-    --deep: 255 255 255;
-    --panel: 227 231 238;
-    --panel-hi: 208 214 224;
-    --cyan: 26 29 37;
-    --cyan-hot: 20 110 130;
-    --amber: 51 90 199;
-    --amber-hot: 33 66 163;
-    --signal: 189 45 45;
-    --dim: 100 107 122;
+    --void: 244 244 241;
+    --deep: 252 252 249;
+    --panel: 231 232 229;
+    --panel-hi: 205 208 205;
+    --cyan: 28 31 34;
+    --cyan-hot: 74 97 117;
+    --amber: 69 92 112;
+    --amber-hot: 43 67 88;
+    --signal: 154 67 56;
+    --dim: 96 102 106;
 
     color-scheme: light;
   }
@@ -223,7 +223,7 @@
    * a .card that has already stated the extent.
    */
   .card {
-    @apply relative overflow-hidden rounded-sm border border-cyan/28 bg-deep/70 transition-all duration-500;
+    @apply relative overflow-hidden rounded-sm border border-cyan/28 bg-deep/70 transition-[border-color,background-color,box-shadow,transform] duration-500;
   }
   .card:hover,
   .card:focus-within {
@@ -285,7 +285,7 @@
 
   /* min-h holds the 44px pointer-target floor regardless of label length. */
   .btn {
-    @apply inline-flex min-h-[2.75rem] items-center gap-2.5 rounded-sm px-5 py-3 font-mono text-fine font-medium uppercase tracking-[0.08em] transition-all duration-300;
+    @apply inline-flex min-h-[2.75rem] items-center gap-2.5 rounded-sm px-5 py-3 font-mono text-fine font-medium uppercase tracking-[0.08em] transition-[color,background-color,border-color,transform,box-shadow] duration-300;
   }
   .btn-amber {
     @apply btn bg-amber text-void hover:bg-amber-hot;
@@ -436,5 +436,578 @@
     .blink {
       opacity: 1;
     }
+  }
+}
+
+/*
+ * THE LIVING OBSERVATORY.
+ *
+ * The DOM remains the document and the WebGL field remains atmosphere. The
+ * canvas never takes pointer input, never enters the accessibility tree, and
+ * never owns navigation. It responds to the page state that the content has
+ * already established.
+ */
+.site-frame {
+  position: relative;
+  isolation: isolate;
+  background:
+    radial-gradient(circle at var(--scene-x, 78%) var(--scene-y, 28%), rgb(var(--amber) / 0.075), transparent 28rem),
+    rgb(var(--void));
+  transition: background 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html[data-scene='work'] { --scene-x: 86%; --scene-y: 35%; }
+html[data-scene='impact'] { --scene-x: 72%; --scene-y: 52%; }
+html[data-scene='method'] { --scene-x: 82%; --scene-y: 40%; }
+html[data-scene='capabilities'] { --scene-x: 75%; --scene-y: 66%; }
+html[data-scene='research'] { --scene-x: 88%; --scene-y: 44%; }
+html[data-scene='lab'] { --scene-x: 70%; --scene-y: 58%; }
+html[data-scene='contact'] { --scene-x: 50%; --scene-y: 78%; }
+
+.site-frame::before {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  pointer-events: none;
+  content: '';
+  opacity: 0.032;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.92' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.82'/%3E%3C/svg%3E");
+  mix-blend-mode: soft-light;
+}
+
+.context-world {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0.9;
+  transition: opacity 600ms ease;
+}
+
+.context-world::after {
+  position: absolute;
+  inset: 0;
+  content: '';
+  background:
+    linear-gradient(90deg, rgb(var(--void) / 0.78) 0%, transparent 38%, transparent 82%, rgb(var(--void) / 0.45) 100%),
+    linear-gradient(180deg, rgb(var(--void) / 0.45), transparent 22%, transparent 78%, rgb(var(--void) / 0.65));
+}
+
+.world-progress {
+  position: absolute;
+  top: 7rem;
+  bottom: 2.25rem;
+  left: 1rem;
+  width: 1px;
+  background: rgb(var(--cyan) / 0.13);
+}
+
+.world-progress span {
+  display: block;
+  width: 1px;
+  height: 100%;
+  background: rgb(var(--amber));
+  transform: scaleY(var(--world-progress));
+  transform-origin: top;
+  box-shadow: 0 0 18px rgb(var(--amber) / 0.7);
+}
+
+.world-coordinate {
+  position: absolute;
+  right: 1.1rem;
+  bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: rgb(var(--dim));
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.7rem;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.08em;
+}
+
+.world-coordinate i {
+  width: 2.2rem;
+  height: 1px;
+  background: rgb(var(--amber) / 0.55);
+}
+
+.world-motion-toggle {
+  position: fixed;
+  right: 1rem;
+  bottom: 2.35rem;
+  z-index: 30;
+  min-height: 2.75rem;
+  padding: 0.55rem 0.7rem;
+  border: 1px solid rgb(var(--cyan) / 0.2);
+  border-radius: 0.12rem;
+  background: rgb(var(--void) / 0.72);
+  color: rgb(var(--dim));
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  pointer-events: auto;
+  backdrop-filter: blur(12px);
+  transition: color 220ms ease, border-color 220ms ease, background-color 220ms ease;
+}
+
+.world-motion-toggle:hover,
+.world-motion-toggle[aria-pressed='true'] {
+  border-color: rgb(var(--amber) / 0.55);
+  color: rgb(var(--amber));
+}
+
+.site-header {
+  top: 0.75rem;
+  right: 0.75rem;
+  left: 0.75rem;
+  border: 1px solid rgb(var(--cyan) / 0.16);
+  background: rgb(var(--void) / 0.72);
+  box-shadow:
+    inset 0 1px 0 rgb(var(--cyan) / 0.07),
+    0 18px 65px rgb(var(--void) / 0.42);
+  backdrop-filter: blur(22px) saturate(125%);
+}
+
+main > section {
+  background:
+    linear-gradient(90deg, rgb(var(--void) / 0.92) 0%, rgb(var(--void) / 0.73) 48%, rgb(var(--void) / 0.16) 100%);
+}
+
+main > section:not(.hero-stage) {
+  min-height: min(62rem, 92dvh);
+  border-bottom-color: rgb(var(--cyan) / 0.13);
+}
+
+main > section:not(.hero-stage)::after {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  content: '';
+  opacity: 0.5;
+  background-image:
+    linear-gradient(rgb(var(--cyan) / 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(var(--cyan) / 0.035) 1px, transparent 1px);
+  background-size: 5rem 5rem;
+  mask-image: linear-gradient(90deg, black, transparent 75%);
+}
+
+.hero-stage {
+  min-height: 100dvh;
+  background:
+    radial-gradient(circle at 76% 46%, rgb(var(--amber) / 0.09), transparent 30rem),
+    linear-gradient(90deg, rgb(var(--void) / 0.96) 0%, rgb(var(--void) / 0.72) 49%, transparent 100%);
+}
+
+.hero-stage::before {
+  position: absolute;
+  top: 15%;
+  right: -9rem;
+  width: min(52vw, 48rem);
+  aspect-ratio: 1;
+  border: 1px solid rgb(var(--amber) / 0.13);
+  content: '';
+  transform: rotate(18deg);
+  box-shadow:
+    0 0 0 3rem rgb(var(--cyan) / 0.012),
+    0 0 0 8rem rgb(var(--cyan) / 0.008);
+}
+
+.hero-stage .shell {
+  display: flex;
+  min-height: calc(100dvh - 5rem);
+  align-items: center;
+}
+
+.hero-stage h1 {
+  max-width: 15ch;
+  font-size: clamp(3.25rem, 6.4vw, 6.8rem);
+  line-height: 0.87;
+  letter-spacing: -0.055em;
+  text-wrap: balance;
+  text-shadow: 0 18px 70px rgb(var(--void) / 0.65);
+}
+
+section[id]:not(#top)::before {
+  position: absolute;
+  top: 5rem;
+  right: clamp(1rem, 4vw, 4.5rem);
+  z-index: -1;
+  color: rgb(var(--cyan) / 0.035);
+  font-family: 'Funnel Display', ui-sans-serif, sans-serif;
+  font-size: clamp(8rem, 20vw, 20rem);
+  font-weight: 800;
+  line-height: 0.7;
+  letter-spacing: -0.08em;
+}
+
+#work::before { content: '01'; }
+#impact::before { content: '02'; }
+#method::before { content: '03'; }
+#capabilities::before { content: '04'; }
+#research::before { content: '05'; }
+#lab::before { content: '06'; }
+#contact::before { content: '07'; }
+
+section h2 {
+  max-width: 14ch;
+  line-height: 0.9 !important;
+  letter-spacing: -0.045em !important;
+  text-wrap: balance;
+}
+
+section h2::after {
+  display: inline-block;
+  width: 0.24em;
+  height: 0.24em;
+  margin-left: 0.16em;
+  background: rgb(var(--amber));
+  content: '';
+  box-shadow: 0 0 22px rgb(var(--amber) / 0.65);
+  transform: translateY(-0.02em);
+}
+
+.card {
+  border-color: rgb(var(--cyan) / 0.2);
+  border-radius: 0.15rem;
+  background: linear-gradient(145deg, rgb(var(--deep) / 0.88), rgb(var(--void) / 0.72));
+  box-shadow:
+    inset 0 1px 0 rgb(var(--cyan) / 0.065),
+    0 24px 80px rgb(var(--void) / 0.32);
+  backdrop-filter: blur(22px) saturate(120%);
+}
+
+.card::before {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background: radial-gradient(circle at 85% 0%, rgb(var(--amber) / 0.09), transparent 32%);
+  content: '';
+}
+
+.card::after {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background: radial-gradient(
+    circle 22rem at var(--spot-x, 50%) var(--spot-y, 50%),
+    rgb(var(--amber) / 0.16),
+    transparent 58%
+  );
+  content: '';
+  opacity: 0;
+  transition: opacity 350ms ease;
+}
+
+.card[data-pointer='on']::after {
+  opacity: 1;
+}
+
+.card > :not(.absolute) {
+  position: relative;
+  z-index: 1;
+}
+
+.card:hover,
+.card:focus-within {
+  border-color: rgb(var(--amber) / 0.45);
+  background: linear-gradient(145deg, rgb(var(--panel) / 0.74), rgb(var(--deep) / 0.82));
+  box-shadow:
+    inset 0 1px 0 rgb(var(--cyan) / 0.1),
+    0 28px 90px rgb(var(--void) / 0.4),
+    0 0 45px rgb(var(--amber) / 0.035);
+}
+
+.well {
+  border-color: rgb(var(--cyan) / 0.13);
+  background: rgb(var(--void) / 0.62);
+  box-shadow: inset 0 0 45px rgb(var(--void) / 0.4);
+  backdrop-filter: blur(18px);
+}
+
+.btn {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.12rem;
+  transition:
+    color 240ms ease,
+    background-color 240ms ease,
+    border-color 240ms ease,
+    transform 240ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 240ms ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn:active {
+  transform: translateY(1px) scale(0.985);
+}
+
+.btn-amber {
+  box-shadow: 0 12px 30px rgb(var(--amber) / 0.14);
+}
+
+a,
+button {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+[role='dialog'] {
+  overscroll-behavior: contain;
+}
+
+[data-reveal] {
+  transform: translate3d(0, 2rem, 0) rotateX(-3deg);
+  transform-origin: 0 100%;
+  transition:
+    opacity 900ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 900ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-reveal='in'] {
+  transform: translate3d(0, 0, 0) rotateX(0);
+}
+
+[data-reveal='after'] {
+  opacity: 0.18;
+  transform: translate3d(0, -1.5rem, 0) rotateX(2deg);
+}
+
+[data-kinetic] {
+  transform-origin: 50% 0;
+  transition:
+    opacity 850ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 850ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+
+[data-kinetic='before'] {
+  opacity: 0.12;
+  transform: perspective(1100px) translate3d(0, 5rem, -3rem) rotateX(8deg) scale(0.94);
+}
+
+[data-kinetic='in'] {
+  opacity: 1;
+  transform: perspective(1100px) translate3d(0, 0, 0) rotateX(0) scale(1);
+}
+
+[data-kinetic='after'] {
+  opacity: 0.2;
+  transform: perspective(1100px) translate3d(0, -2.75rem, -2rem) rotateX(-5deg) scale(0.975);
+}
+
+@media (max-width: 1023px) {
+  .context-world {
+    opacity: 0.55;
+  }
+
+  .context-world::after {
+    background: linear-gradient(180deg, rgb(var(--void) / 0.56), transparent 28%, rgb(var(--void) / 0.62));
+  }
+
+  main > section,
+  .hero-stage {
+    background: rgb(var(--void) / 0.78);
+  }
+
+  .hero-stage .shell {
+    min-height: auto;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 639px) {
+  .site-header {
+    top: 0.4rem;
+    right: 0.4rem;
+    left: 0.4rem;
+  }
+
+  .world-progress {
+    left: 0.3rem;
+  }
+
+  .world-coordinate {
+    display: none;
+  }
+
+  .world-motion-toggle {
+    right: 0.55rem;
+    bottom: 0.55rem;
+  }
+
+  .hero-stage h1 {
+    max-width: 12ch;
+    font-size: clamp(2.85rem, 13vw, 4rem);
+    line-height: 0.9;
+  }
+
+  section[id]:not(#top)::before {
+    top: 4rem;
+    right: 0.75rem;
+    font-size: 8rem;
+  }
+}
+
+:root[data-theme='light'] .context-world {
+  opacity: 0.38;
+  filter: saturate(0.75) contrast(1.15);
+}
+
+:root[data-theme='light'] .site-frame::before {
+  opacity: 0.018;
+  mix-blend-mode: multiply;
+}
+
+:root[data-theme='light'] .site-header,
+:root[data-theme='light'] .card,
+:root[data-theme='light'] .well {
+  box-shadow: 0 20px 65px rgb(var(--cyan) / 0.09);
+}
+
+/*
+ * EDITORIAL SURFACE RESET.
+ *
+ * Elevation now means something: only a dialog floats. Everything in the
+ * document is allowed to live directly on the page and is separated by type,
+ * whitespace and one directional rule instead of nested rectangles.
+ */
+.site-header {
+  top: 0;
+  right: 0;
+  left: 0;
+  border: 0;
+  border-bottom: 1px solid rgb(var(--cyan) / 0.12);
+  background: rgb(var(--void) / 0.8);
+  box-shadow: none;
+}
+
+main > section:not(.hero-stage) {
+  min-height: 0;
+}
+
+main > section:not(.hero-stage)::after,
+section[id]:not(#top)::before,
+section h2::after,
+.world-coordinate {
+  display: none;
+}
+
+.hero-stage::before {
+  border-radius: 50%;
+  transform: none;
+  box-shadow: 0 0 0 5rem rgb(var(--cyan) / 0.008);
+}
+
+.card {
+  overflow: hidden;
+  border: 0;
+  border-top: 1px solid rgb(var(--cyan) / 0.17);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+.card::before {
+  display: none;
+}
+
+.card::after {
+  background: radial-gradient(
+    circle 24rem at var(--spot-x, 50%) var(--spot-y, 50%),
+    rgb(var(--amber) / 0.065),
+    transparent 62%
+  );
+}
+
+.card:hover,
+.card:focus-within {
+  border-color: rgb(var(--amber) / 0.55);
+  background: linear-gradient(90deg, rgb(var(--amber) / 0.035), transparent 68%);
+  box-shadow: none;
+}
+
+.card[role='dialog'] {
+  border: 1px solid rgb(var(--cyan) / 0.18);
+  border-radius: 0.25rem;
+  background: rgb(var(--deep) / 0.97);
+  box-shadow: 0 32px 110px rgb(var(--void) / 0.7);
+  backdrop-filter: blur(24px);
+}
+
+.well {
+  border: 0;
+  border-left: 1px solid rgb(var(--amber) / 0.42);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+.btn-ghost {
+  border-color: transparent;
+  border-bottom: 1px solid rgb(var(--cyan) / 0.3);
+  padding-right: 0.3rem;
+  padding-left: 0.3rem;
+  background: transparent;
+}
+
+.btn-ghost:hover {
+  border-bottom-color: rgb(var(--amber));
+  background: transparent;
+}
+
+.world-motion-toggle {
+  border-color: transparent;
+  background: transparent;
+  backdrop-filter: none;
+}
+
+[data-kinetic] {
+  transition-duration: 720ms;
+}
+
+[data-kinetic='before'] {
+  opacity: 0.32;
+  transform: perspective(1100px) translate3d(0, 2.25rem, -0.5rem) scale(0.985);
+}
+
+[data-kinetic='after'] {
+  opacity: 0.35;
+  transform: perspective(1100px) translate3d(0, -1.25rem, -0.5rem) scale(0.99);
+}
+
+:root[data-theme='light'] .site-header,
+:root[data-theme='light'] .card:not([role='dialog']),
+:root[data-theme='light'] .well {
+  box-shadow: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .context-world canvas {
+    opacity: 0.42;
+  }
+
+  [data-reveal] {
+    transform: none;
+  }
+
+  [data-kinetic] {
+    opacity: 1;
+    transform: none;
+  }
+
+  .world-motion-toggle {
+    display: none;
   }
 }

@@ -23,7 +23,7 @@ export default function About() {
       <section className="border-b border-cyan/15 py-16">
         <div className="shell grid gap-10 lg:grid-cols-12 lg:gap-10">
           <div className="lg:col-span-4" data-reveal>
-            <div className="card overflow-hidden p-0 lg:sticky lg:top-28">
+            <div className="overflow-hidden lg:sticky lg:top-28">
               <img
                 src={site.portrait}
                 alt={`${site.name}, AI Research Engineer`}

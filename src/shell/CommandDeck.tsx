@@ -254,15 +254,19 @@ export default function CommandDeck() {
   return (
     <div
       className="fixed inset-0 z-[65] flex items-start justify-center bg-void/85 px-4 pt-[12vh] backdrop-blur-sm"
-      onClick={close}
     >
+      <button
+        type="button"
+        aria-label="Close command deck"
+        className="absolute inset-0 cursor-default"
+        onClick={close}
+      />
       <div
         ref={panelRef}
         role="dialog"
         aria-modal="true"
         aria-label="Command deck"
-        className="card w-full max-w-2xl border-cyan/25 bg-deep/95"
-        onClick={(e) => e.stopPropagation()}
+        className="card relative z-10 w-full max-w-2xl border-cyan/25 bg-deep/95"
       >
         <div className="flex items-center gap-3 border-b border-cyan/15 px-5 py-4">
           {/*

@@ -309,7 +309,7 @@ export default function Resume() {
           <Heading>Recognition</Heading>
           <ul className="mt-8 grid gap-4 lg:grid-cols-2">
             {resume.recognition.map((r) => (
-              <li key={r.title} className="card p-5" data-reveal>
+              <li key={r.title} className="border-b border-cyan/15 py-6" data-reveal>
                 <div className="flex items-baseline justify-between gap-4">
                   <h3 className="font-display text-base font-bold text-cyan">{r.title}</h3>
                   <span className="shrink-0 font-mono text-micro text-dim">{r.year}</span>
@@ -364,7 +364,7 @@ export default function Resume() {
           <Heading>Selected projects</Heading>
           <ul className="mt-8 grid gap-4 sm:grid-cols-2">
             {resume.projects.map((p) => (
-              <li key={p.name} className="well p-5" data-reveal>
+              <li key={p.name} className="border-b border-cyan/15 py-6" data-reveal>
                 <div className="flex items-baseline justify-between gap-4">
                   <h3 className="font-display text-base font-bold text-cyan">{p.name}</h3>
                   <span className="shrink-0 font-mono text-micro text-dim">{p.year}</span>

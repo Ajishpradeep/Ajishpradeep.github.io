@@ -79,15 +79,15 @@ export default function Capabilities() {
               to 01 at the base, which also says the thing the section is
               about: the foundation is the first layer, not the fifth.
             */}
-            <ul className="mt-8 space-y-2">
+            <ul className="mt-8 border-t border-cyan/15">
               {[...capabilities].reverse().map((c, r) => {
                 const i = capabilities.length - 1 - r;
                 const on = i === open;
                 return (
                   <li key={c.area}>
                     <div
-                      className={`rounded-sm border transition-colors duration-500 ${
-                        on ? 'border-amber/40 bg-amber/[0.06]' : 'border-cyan/20 bg-void/40'
+                      className={`border-b transition-colors duration-500 ${
+                        on ? 'border-amber/45 bg-transparent' : 'border-cyan/15 bg-transparent'
                       }`}
                     >
                       <h3>
@@ -96,7 +96,7 @@ export default function Capabilities() {
                           onClick={() => setOpen(on ? -1 : i)}
                           aria-expanded={on}
                           aria-controls={`cap-panel-${i}`}
-                          className="flex min-h-[3.25rem] w-full items-center justify-between gap-4 px-4 text-left"
+                          className="flex min-h-[3.75rem] w-full items-center justify-between gap-4 px-0 text-left"
                         >
                           <span className="flex items-baseline gap-3">
                             <span className="font-mono text-micro tabular-nums text-amber/70">
@@ -139,14 +139,14 @@ export default function Capabilities() {
                             transition={still ? STILL : SPRING.panel}
                             className="overflow-hidden"
                           >
-                            <div className="px-4 pb-4">
+                            <div className="pb-5">
                               {/* No ch-cap: same reasoning as the section lede above — nothing shares this row. */}
                               <p className="copy-sm">{c.detail}</p>
                               <ul className="mt-3 flex flex-wrap gap-1.5">
                                 {c.items.map((item) => (
                                   <li
                                     key={item}
-                                    className="rounded-sm border border-cyan/20 bg-void/50 px-2 py-1 font-mono text-micro text-cyan/75"
+                                    className="border-b border-cyan/20 px-0 py-1 font-mono text-micro text-cyan/75"
                                   >
                                     {item}
                                   </li>
@@ -171,7 +171,7 @@ export default function Capabilities() {
             supposed to be lighting off the top of the screen.
           */}
           <div className="lg:col-span-5" data-reveal>
-            <div className="well p-5 sm:p-6 lg:sticky lg:top-28">
+            <div className="border-t border-cyan/15 pt-6 lg:sticky lg:top-28">
               <CapabilityStack
                 areas={capabilities.map((c) => c.area)}
                 activeIndex={open}

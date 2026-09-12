@@ -5,32 +5,6 @@ import { principles } from '@/data/research';
 import MetricBlindness from './MetricBlindness';
 import MinimalCarousel, { type CarouselCard } from '@/motion/MinimalCarousel';
 
-/*
-  SIX TONES, KEYED BY POSITION AND THAT IS FINE HERE.
-
-  The site's rule against index-mapped arrays exists because an icon assigned by
-  position makes a *claim* — a leaf means "environmental", a music note means
-  "audio" — and reassigns it silently when the list changes. A colour in an
-  ordered sequence claims nothing except its own place in the sequence, which is
-  exactly what these six are: numbered findings, referred to by number in the
-  copy.
-
-  The ramp runs cyan → teal → amber, which is the site's own two colours and the
-  space between them. It is not the demo's violet/emerald/rose: those are six
-  unrelated hues, and six unrelated hues on this page would read as six
-  unrelated ideas. This ramp reads as one argument getting warmer, which is what
-  the sequence actually does — 01 is the diagnosis and 06 is what you owe the
-  next person.
-*/
-const TONES = [
-  'border-cyan-hot/40 bg-cyan-hot/[0.07] hover:bg-cyan-hot/[0.12]',
-  'border-cyan-hot/35 bg-cyan-hot/[0.05] hover:bg-cyan-hot/[0.1]',
-  'border-cyan/25 bg-panel/40 hover:bg-panel/60',
-  'border-amber/25 bg-amber/[0.05] hover:bg-amber/[0.09]',
-  'border-amber/35 bg-amber/[0.08] hover:bg-amber/[0.13]',
-  'border-amber/45 bg-amber/[0.11] hover:bg-amber/[0.16]',
-];
-
 /**
  * Method.
  *
@@ -68,9 +42,8 @@ export default function Approach() {
 
   const cards = useMemo<CarouselCard[]>(
     () =>
-      principles.map((p, i) => ({
+      principles.map((p) => ({
         id: p.n,
-        tone: TONES[i] ?? TONES[TONES.length - 1],
         tile: (
           <>
             <span className="font-mono text-micro tabular-nums text-amber/80">{p.n}</span>

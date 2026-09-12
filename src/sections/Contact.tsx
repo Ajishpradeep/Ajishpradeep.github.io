@@ -122,7 +122,7 @@ export default function Contact() {
               when to clip. Without this the track just grows to fit the full
               un-ellipsised address and truncate never fires.
             */}
-            <ul className="grid grid-cols-1 gap-3">
+            <ul className="grid grid-cols-1 border-t border-cyan/15">
               {site.links.map((l) => {
                 const Icon = linkIcon[l.label] ?? Globe;
                 return (
@@ -132,7 +132,7 @@ export default function Contact() {
                       href={l.href}
                       target={l.href.startsWith('mailto') ? undefined : '_blank'}
                       rel="noreferrer"
-                      className="card group flex items-center gap-4 p-4"
+                      className="group flex items-center gap-4 border-b border-cyan/15 py-5 transition-colors duration-300 hover:border-amber"
                     >
                       <Icon size={24} strokeWidth={1.6} className="icon-mark" />
                       <span className="min-w-0 flex-1">
@@ -144,7 +144,7 @@ export default function Contact() {
                       <ArrowUpRight
                         size={17}
                         strokeWidth={2}
-                        className="shrink-0 text-dim transition-all duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-amber"
+                        className="shrink-0 text-dim transition-[color,transform] duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-amber"
                       />
                     </a>
                   </li>

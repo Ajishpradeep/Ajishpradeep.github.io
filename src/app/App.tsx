@@ -26,7 +26,7 @@ export default function App() {
   }, [pathname, hash]);
 
   return (
-    <div className="min-h-screen bg-void">
+    <div className="site-frame min-h-screen bg-void">
       <a
         href="#main"
         className="tag sr-only focus:not-sr-only focus:fixed focus:left-5 focus:top-5 focus:z-[60] focus:bg-amber focus:px-4 focus:py-2 focus:text-void"
@@ -36,7 +36,7 @@ export default function App() {
 
       <Nav />
       <CommandDeck />
-      <main id="main">
+      <main id="main" className="relative z-10">
         <Outlet />
       </main>
       <Footer />

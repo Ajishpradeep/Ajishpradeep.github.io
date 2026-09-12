@@ -331,7 +331,7 @@ export default function WorkConsole() {
                           layoutId="case-marker"
                           transition={springOr(still, SPRING.marker)}
                           aria-hidden
-                          className="absolute inset-0 rounded-sm border border-amber/45 bg-amber/10"
+                          className="absolute inset-y-2 left-0 w-px bg-amber shadow-[0_0_18px_rgb(var(--amber)_/_0.5)]"
                         />
                       )}
                       <span
@@ -362,7 +362,7 @@ export default function WorkConsole() {
               id="case-readout"
               role="tabpanel"
               aria-labelledby={`case-tab-${study.slug}`}
-              className="card p-6 sm:p-8"
+              className="relative border-t border-cyan/15 pt-7 sm:pt-8"
             >
               {/*
                 THE READOUT ARRIVES FROM THE DIRECTION YOU LEFT.

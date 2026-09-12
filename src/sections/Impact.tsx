@@ -258,7 +258,7 @@ export default function Impact() {
           links to its public record, and states separately what part of it was mine.
         </p>
 
-        <ul className="mt-10 grid grid-cols-1 gap-3">
+        <ul className="mt-10 grid grid-cols-1 border-t border-cyan/15 lg:grid-cols-2 lg:gap-x-12">
           {impact.map((m, i) => {
             const on = openId === m.id;
 
@@ -281,21 +281,10 @@ export default function Impact() {
                   layoutId={`dossier-${m.id}`}
                   transition={springOr(still, SPRING.panel)}
                   animate={{ opacity: on ? 0.25 : 1 }}
-                  onClick={() => open(m.id)}
-                  className="card group cursor-pointer p-5 sm:p-6"
+                  className="group relative h-full border-b border-cyan/15 py-8 sm:py-10"
                 >
                   <h3>
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        open(m.id);
-                      }}
-                      aria-haspopup="dialog"
-                      className="w-full text-left"
-                    >
-                      <DossierHead entry={m} open={false} still={still} />
-                    </button>
+                    <DossierHead entry={m} open={false} still={still} />
                   </h3>
 
                   {/*
@@ -315,7 +304,7 @@ export default function Impact() {
                     <p className="copy-sm">{m.claim}</p>
 
                     {m.role && (
-                      <div className="well p-4">
+                      <div className="border-l border-cyan/20 pl-4">
                         <p className="tag-sm inline-flex items-center gap-2 text-amber">
                           <UserCheck size={14} strokeWidth={2} /> My part
                         </p>
@@ -334,6 +323,13 @@ export default function Impact() {
                     <Expand size={13} strokeWidth={2} className="shrink-0" />
                     Open file · {m.sources.length} source{m.sources.length === 1 ? '' : 's'}
                   </p>
+                  <button
+                    type="button"
+                    onClick={() => open(m.id)}
+                    aria-label={`Open ${m.title}`}
+                    aria-haspopup="dialog"
+                    className="absolute inset-0 z-10 cursor-pointer"
+                  />
                 </motion.div>
               </li>
             );
@@ -382,7 +378,9 @@ export default function Impact() {
       <AnimatePresence>
         {entry && (
           <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 sm:p-6">
-            <motion.div
+            <motion.button
+              type="button"
+              aria-label="Close impact file"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}

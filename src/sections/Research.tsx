@@ -90,7 +90,7 @@ export default function Research() {
           <p className="tag-sm text-dim">Work that left the building</p>
         </div>
 
-        <ol className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <ol className="mt-10 grid grid-cols-1 border-t border-cyan/15 lg:grid-cols-2 lg:gap-x-12">
           {research.map((r, i) => {
             const on = openIdx === i;
             return (
@@ -103,14 +103,13 @@ export default function Research() {
                   layoutId={`paper-${i}`}
                   transition={t}
                   animate={{ opacity: on ? 0.2 : 1 }}
-                  className="card group h-full cursor-pointer"
-                  onClick={() => setOpenIdx(i)}
+                  className="group relative h-full border-b border-cyan/15 py-8 sm:py-10"
                 >
-                  <motion.div layoutId={`paper-plate-${i}`} transition={t} className="p-3 pb-0">
+                  <motion.div layoutId={`paper-plate-${i}`} transition={t}>
                     <Plate entry={r} />
                   </motion.div>
 
-                  <div className="p-4 sm:p-5">
+                  <div className="pt-5">
                     <div className="flex items-center justify-between gap-3">
                       <motion.span
                         layoutId={`paper-year-${i}`}
@@ -120,30 +119,20 @@ export default function Research() {
                         {r.year}
                       </motion.span>
                       <span
-                        className={`shrink-0 rounded-sm border px-2 py-0.5 font-mono text-micro ${statusStyle[r.status]}`}
+                        className={`shrink-0 border-b px-0 py-0.5 font-mono text-micro ${statusStyle[r.status]}`}
                       >
                         {statusLabel[r.status]}
                       </span>
                     </div>
 
-                    <h3 className="mt-3">
-                      <button
-                        type="button"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setOpenIdx(i);
-                        }}
-                        aria-haspopup="dialog"
-                        className="text-left"
+                    <h3 className="mt-3 text-left">
+                      <motion.span
+                        layoutId={`paper-title-${i}`}
+                        transition={t}
+                        className="block text-balance font-display text-lead font-bold leading-snug text-cyan transition-colors duration-300 group-hover:text-amber"
                       >
-                        <motion.span
-                          layoutId={`paper-title-${i}`}
-                          transition={t}
-                          className="block text-balance font-display text-lead font-bold leading-snug text-cyan transition-colors duration-300 group-hover:text-amber"
-                        >
-                          {r.title}
-                        </motion.span>
-                      </button>
+                        {r.title}
+                      </motion.span>
                     </h3>
 
                     <p className="mt-2 font-mono text-micro leading-snug text-dim">{r.venue}</p>
@@ -153,6 +142,13 @@ export default function Research() {
                       Open entry
                     </p>
                   </div>
+                  <button
+                    type="button"
+                    onClick={() => setOpenIdx(i)}
+                    aria-label={`Open ${r.title}`}
+                    aria-haspopup="dialog"
+                    className="absolute inset-0 z-10 cursor-pointer"
+                  />
                 </motion.div>
               </li>
             );
@@ -164,7 +160,9 @@ export default function Research() {
       <AnimatePresence>
         {entry && openIdx !== null && (
           <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 sm:p-6">
-            <motion.div
+            <motion.button
+              type="button"
+              aria-label="Close research entry"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}

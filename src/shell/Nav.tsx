@@ -70,7 +70,7 @@ export default function Nav() {
     it.href === '/about' ? pathname === '/about' : pathname === '/' && active === it.id;
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-cyan/15 bg-void/85 backdrop-blur-md">
+    <header className="site-header fixed inset-x-0 top-0 z-50 border-b border-cyan/15 bg-void/85 backdrop-blur-md">
       <div className="shell flex h-16 items-center justify-between gap-4 sm:h-[4.75rem]">
         {/*
           Name and role, on every breakpoint. The role used to be gated behind

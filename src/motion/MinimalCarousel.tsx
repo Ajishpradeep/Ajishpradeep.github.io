@@ -10,8 +10,6 @@ export type CarouselCard = {
   tile: ReactNode;
   /** The opened face. Everything the tile could not hold. */
   panel: ReactNode;
-  /** Tailwind classes for the card's fill and text. */
-  tone: string;
 };
 
 type MinimalCarouselProps = {
@@ -117,10 +115,7 @@ export default function MinimalCarousel({
             key={active.id}
             layoutId={`carousel-${active.id}`}
             transition={t}
-            className={cn(
-              'relative overflow-hidden rounded-sm border p-5 sm:p-7',
-              active.tone,
-            )}
+            className="relative overflow-hidden border-y border-cyan/15 py-6 sm:py-8"
           >
             {/*
               The panel's contents did not exist on the tile and so cannot morph
@@ -143,10 +138,10 @@ export default function MinimalCarousel({
         layout
         aria-label={label}
         transition={t}
-        className="grid grid-cols-2 gap-3 sm:grid-cols-3"
+        className="grid grid-cols-1 border-t border-cyan/15 sm:grid-cols-2 sm:gap-x-10"
       >
         {rest.map((card) => (
-          <motion.li key={card.id} layoutId={`carousel-${card.id}`} transition={t}>
+          <motion.li key={card.id} layoutId={`carousel-${card.id}`} transition={t} className="border-b border-cyan/15">
             <button
               type="button"
               data-card-id={card.id}
@@ -162,9 +157,8 @@ export default function MinimalCarousel({
                   reason the reader can see. Tight at the top, trailing space
                   below, identical on every tile.
                 */
-                'flex h-full w-full flex-col justify-start rounded-sm border p-4 text-left transition-transform duration-300',
-                'hover:-translate-y-0.5 focus-visible:-translate-y-0.5',
-                card.tone,
+                'flex h-full min-h-[8rem] w-full flex-col justify-start py-5 text-left transition-transform duration-300',
+                'hover:translate-x-1 focus-visible:translate-x-1',
               )}
             >
               {card.tile}

@@ -138,7 +138,7 @@ export default function CapabilityGraph() {
       */}
       <div
         key={current.key}
-        className="relative z-10 mt-4 w-full animate-[fadeUp_0.5s_ease-out] rounded-2xl bg-deep p-5 shadow-[0_12px_36px_-16px_rgb(0_0_0_/_0.18)] sm:p-6"
+        className="relative z-10 mt-4 w-full animate-[fadeUp_0.5s_ease-out] border-t border-cyan/20 bg-transparent px-0 pb-2 pt-5 sm:pt-6"
       >
         <p className="font-display text-lead font-bold leading-tight text-amber">{current.label}</p>
 

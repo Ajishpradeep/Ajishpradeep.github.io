@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { OrbitControls, Html, Line } from '@react-three/drei';
+import { Html, Line, OrbitControls } from '@react-three/drei';
 import type { Line2, LineGeometry, LineSegments2, LineMaterial } from 'three-stdlib';
 import * as THREE from 'three';
 import { useTheme } from '@/hooks/useTheme';
@@ -16,8 +16,8 @@ import type { GraphDomain, GraphNode, GraphEdge } from './capabilityGraphData';
   change only when the visitor flips the switch, not every frame.
 */
 const PALETTE = {
-  dark: { ink: '#e4e6ec', amber: '#5b8def', ground: '#121317' },
-  light: { ink: '#1a1d25', amber: '#335ac7', ground: '#f4f5f8' },
+  dark: { ink: '#eaebe8', amber: '#94a6b7', ground: '#0e1013' },
+  light: { ink: '#1c1f22', amber: '#455c70', ground: '#f4f4f1' },
 } as const;
 
 const mix = (a: number, b: number, t: number) => a + (b - a) * t;
@@ -508,20 +508,14 @@ export default function CapabilityGraphScene({
           onOpenDomain={onOpenDomain}
           onPreviewDomain={onPreviewDomain}
         />
-        {/*
-          `minDistance` is the geometric fit-distance itself (~18.1 for this
-          graph's radius, see the `REST_DISTANCE` comment above), not a
-          closer, more-cropped value: zooming in is capped at the point where
-          the whole graph just fits, so no amount of scrolling or pinching
-          can push a node — domain or skill — out of frame. `far` is the only
-          direction with room to move.
-        */}
         <OrbitControls
           enableDamping
+          enableRotate
+          enablePan
+          enableZoom={false}
           dampingFactor={0.08}
           rotateSpeed={0.55}
-          minDistance={18.2}
-          maxDistance={28.6}
+          panSpeed={0.65}
         />
       </Canvas>
     </div>

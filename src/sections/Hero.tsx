@@ -53,8 +53,9 @@ function Figure({
 export default function Hero() {
   return (
     <section
+      id="top"
       aria-labelledby="hero-title"
-      className="relative overflow-hidden pt-[4.5rem] sm:pt-[5.5rem]"
+      className="hero-stage relative overflow-hidden pt-[4.5rem] sm:pt-[5.5rem]"
     >
       {/*
         The particle canvas that used to sit here is gone. It was a
@@ -129,17 +130,17 @@ export default function Hero() {
               className="max-w-[18ch] text-balance font-display text-mega font-extrabold uppercase text-cyan"
             >
               <TextRoll delay={0.15}>AI</TextRoll>{' '}
-              <TextRoll className="font-script font-bold normal-case tracking-normal" delay={0.15 + 1 * 0.045}>
+              <TextRoll className="font-text font-semibold italic normal-case tracking-normal" delay={0.15 + 1 * 0.045}>
                 works
               </TextRoll>{' '}
-              <TextRoll className="font-script font-bold normal-case tracking-normal" delay={0.15 + 2 * 0.045}>
+              <TextRoll className="font-text font-semibold italic normal-case tracking-normal" delay={0.15 + 2 * 0.045}>
                 because
               </TextRoll>{' '}
               <TextRoll className="text-amber" delay={0.15 + 3 * 0.045}>
                 mathematics
               </TextRoll>{' '}
               <TextRoll
-                className="text-amber font-script font-bold normal-case tracking-normal"
+                className="text-amber font-text font-semibold italic normal-case tracking-normal"
                 delay={0.15 + 4 * 0.045}
               >
                 does.

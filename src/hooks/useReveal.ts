@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { prefersReducedMotion } from './useReducedMotion';
 
 /**
- * Reveals every [data-reveal] element once it enters the viewport.
+ * Stages every [data-reveal] element as it enters and leaves the viewport.
  * Re-runs on `key` so route changes pick up newly mounted nodes.
  */
 export function useReveal(key?: string) {
@@ -18,12 +18,17 @@ export function useReveal(key?: string) {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          entry.target.setAttribute('data-reveal', 'in');
-          observer.unobserve(entry.target);
+          if (entry.isIntersecting) {
+            entry.target.setAttribute('data-reveal', 'in');
+            return;
+          }
+          entry.target.setAttribute(
+            'data-reveal',
+            entry.boundingClientRect.bottom < 0 ? 'after' : 'before',
+          );
         });
       },
-      { rootMargin: '0px 0px -12% 0px', threshold: 0.08 },
+      { rootMargin: '-4% 0px -10% 0px', threshold: [0, 0.08, 0.45] },
     );
 
     nodes.forEach((n) => observer.observe(n));
